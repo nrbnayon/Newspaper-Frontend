@@ -21,65 +21,75 @@ const FeaturedArticleCard = ({
 }) => {
   const isHorizontal = layout === "horizontal";
 
-  console.log("FeaturedArticleCard article:", article?.imageAttribution);
-
   return (
-    <div className={cn("overflow-hidden pb-8", className)}>
+    <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
       <div
         className={cn(
-          isHorizontal
-            ? "flex justify-between items-start gap-10"
-            : "flex flex-col"
+          "flex flex-col gap-4 sm:gap-6",
+          isHorizontal && "lg:flex-row lg:items-start lg:gap-8 xl:gap-10"
         )}
       >
-        {/* Content */}
-        <div className="w-1/4 flex flex-col justify-center">
+        {/* Content Section */}
+        <div
+          className={cn(
+            "flex flex-col",
+            isHorizontal ? "lg:w-2/5 xl:w-1/3" : "w-full"
+          )}
+        >
           <SentimentBadge
             sentiment={article.sentiment}
-            className="mb-4 w-full"
+            className="mb-3 sm:mb-4 w-full"
           />
 
-          <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
             {article.title}
           </h1>
 
-          <p className="text-gray-600 mb-4 leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
             {article.excerpt}
           </p>
 
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
             {article.content}
           </p>
+
           <TimeIndicator
             type="readTime"
             value={article.readTime}
-            className="text-sm"
+            className="text-xs sm:text-sm"
           />
         </div>
 
-        {/* Image */}
-        <div className="w-3/4 ">
-          <div className="flex items-center justify-end ">
+        {/* Image Section */}
+        <div
+          className={cn(
+            "flex flex-col",
+            isHorizontal ? "lg:w-3/5 xl:w-2/3" : "w-full"
+          )}
+        >
+          <div className="relative overflow-hidden rounded-lg sm:rounded-xl">
             <img
               src={article.image}
               alt={article.title}
-              className="w-full h-full object-cover"
+              className="w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105"
+              loading="lazy"
             />
           </div>
 
-          <div className="flex items-center justify-between mt-3">
-            <div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mt-3">
+            <div className="order-2 sm:order-1">
               <InteractionButtons />
             </div>
+
             {article.imageAttribution && (
-              <div className="text-xs px-2 py-1">
+              <div className="order-1 sm:order-2 text-xs sm:text-sm text-gray-500 px-2 py-1 bg-gray-50 rounded">
                 {article.imageAttribution}
               </div>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
