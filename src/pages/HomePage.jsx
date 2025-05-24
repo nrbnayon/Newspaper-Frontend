@@ -6,6 +6,7 @@ import AudioNewsCard from "@/components/news/AudioNewsCard";
 import LiveUpdateCard from "@/components/news/LiveUpdateCard";
 import NewsGrid from "@/components/news/NewsGrid";
 import NewsSection from "@/components/news/NewsSection";
+import TabbedNewsSection from "@/components/news/TabbedNewsSection";
 import {
   audioNews,
   featuredArticle,
@@ -93,15 +94,32 @@ export default function HomePage() {
                 <LiveUpdateCard updates={liveUpdate} />
               </NewsSection>
 
-              {/* Latest News Grid */}
-              <div>
+              {/* Tabbed News Section - Replaces the simple grid */}
+              <div className='mb-8'>
+                <TabbedNewsSection />
+              </div>
+
+              {/* Long Read Article */}
+              <NewsSection>
+                <CommonNewsCard article={longReadArticle} />
+              </NewsSection>
+
+              {/* Live Updates Section */}
+              <NewsSection>
+                <LiveUpdateCard updates={liveUpdate} />
+              </NewsSection>
+
+              {/* Keep original grid as fallback or additional content */}
+              {/* <div className='mb-8'>
+                <h2 className='text-2xl font-bold text-gray-900 mb-6'>
+                  Latest Updates
+                </h2>
                 <NewsGrid columns={4}>
                   {sampleArticles.map((article) => (
                     <StandardArticleCard key={article.id} article={article} />
                   ))}
                 </NewsGrid>
-              </div>
-              {/* <NewsCard featured={true} /> */}
+              </div> */}
 
               <div className='w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center'>
                 <span className='text-gray-600 text-sm'>Ad Space</span>
