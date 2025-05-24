@@ -67,7 +67,7 @@ const FeaturedArticleCard = ({
             isHorizontal ? "lg:w-3/5 xl:w-2/3" : "w-full"
           )}
         >
-          <div className="relative overflow-hidden rounded-lg sm:rounded-xl">
+          <div className="relative overflow-hidden rounded-lg sm:rounded-none">
             <img
               src={article.image}
               alt={article.title}
