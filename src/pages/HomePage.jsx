@@ -1,13 +1,10 @@
+// src\pages\HomePage.jsx
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/layout/Navbar";
-import NewsCard from "@/components/news/NewsCard";
-import FeaturedArticleCard from "@/components/FeaturedArticleCard";
-import StandardArticleCard from "@/components/StandardArticleCard";
+import StandardArticleCard from "@/components/news/StandardArticleCard";
 import AudioNewsCard from "@/components/news/AudioNewsCard";
 import LiveUpdateCard from "@/components/news/LiveUpdateCard";
-import LongReadArticleCard from "@/components/LongReadArticleCard";
-import AdvertisementBox from "@/components/AdvertisementBox";
-import NewsGrid from "@/components/NewsGrid";
+import NewsGrid from "@/components/news/NewsGrid";
 import NewsSection from "@/components/news/NewsSection";
 import {
   audioNews,
@@ -80,7 +77,7 @@ export default function HomePage() {
             {/* Featured Article - Takes up most width */}
             <div className='flex-1'>
               <CommonNewsCard article={featuredArticle} />
-              
+
               {/* Audio News Section */}
               <div className='py-6'>
                 <AudioNewsCard {...audioNews} />
@@ -97,14 +94,18 @@ export default function HomePage() {
               </NewsSection>
 
               {/* Latest News Grid */}
-              <NewsSection title='Latest News'>
+              <div>
                 <NewsGrid columns={4}>
                   {sampleArticles.map((article) => (
                     <StandardArticleCard key={article.id} article={article} />
                   ))}
                 </NewsGrid>
-              </NewsSection>
+              </div>
               {/* <NewsCard featured={true} /> */}
+
+              <div className='w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center'>
+                <span className='text-gray-600 text-sm'>Ad Space</span>
+              </div>
             </div>
 
             {/* Vertical Separator */}
@@ -118,18 +119,6 @@ export default function HomePage() {
               <div className='w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center'>
                 <span className='text-gray-600 text-sm'>Ad Space</span>
               </div>
-            </div>
-          </div>
-
-          {/* Other Articles Grid */}
-          <div className='mb-8'>
-            <h2 className='text-2xl font-bold text-gray-900 mb-6'>
-              Latest News
-            </h2>
-            <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-              {sampleArticles.map((article) => (
-                <NewsCard key={article.id} article={article} />
-              ))}
             </div>
           </div>
         </main>

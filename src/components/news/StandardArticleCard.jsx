@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import TimeIndicator from "./common/TimeIndicator";
+import TimeIndicator from "../common/TimeIndicator";
+import InteractionButtons from "../common/InteractionButtons";
 
 const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
   const {
@@ -16,7 +17,7 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
   return (
     <div
       className={cn(
-        "bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200",
+        "rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200",
         isHorizontal ? "flex" : "flex-col",
         className
       )}
@@ -37,13 +38,16 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
           imagePosition === "right" ? "order-1" : "order-2"
         )}
       >
-        <div className='inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium mb-2'>
+        <div className='inline-block bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2'>
           {category}
         </div>
 
         <h3 className='font-bold text-gray-900 mb-2 line-clamp-2'>{title}</h3>
 
-        <p className='text-gray-600 text-sm mb-3 line-clamp-3'>{excerpt}</p>
+        <div className="mb-2">
+          <InteractionButtons />
+        </div>
+        {/* <p className='text-gray-600 text-sm mb-3 line-clamp-3'>{excerpt}</p> */}
 
         <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
           <TimeIndicator type='readTime' value={readTime} />

@@ -97,6 +97,9 @@ const LiveUpdateCard = ({ updates, className }) => {
               {updates.length}
             </span>
           </div>
+          <div>
+            <InteractionButtons />
+          </div>
         </div>
 
         {/* Image Section - Right side on desktop */}
