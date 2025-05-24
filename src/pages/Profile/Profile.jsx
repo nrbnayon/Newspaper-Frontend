@@ -1,12 +1,10 @@
 import { Edit } from 'lucide-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Profile = () => {
   return (
     <div className="flex-1 md:px-30  px-1">
             <h2 className="text-4xl font-bold text-secondary mb-8">My Profile</h2>
-
             <div className="flex mb-12">
               <div className="relative mr-6">
                 <div className="h-24 w-24 bg-gray-400 rounded-full overflow-hidden relative">

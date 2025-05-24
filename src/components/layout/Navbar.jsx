@@ -36,7 +36,7 @@ export default function Navbar() {
     <>
       <nav className="bg-white border-b border-gray-200">
         {/* Top section */}
-        <div className="flex items-center justify-between py-4 px-4">
+        <div className="flex items-center justify-between py-4">
           {/* Left side - Search and Date */}
           <div className="flex flex-col items-start space-y-2">
             <div className="relative">

@@ -21,16 +21,23 @@ const FeaturedArticleCard = ({
 }) => {
   const isHorizontal = layout === "horizontal";
 
+  console.log("FeaturedArticleCard article:", article?.imageAttribution);
+
   return (
-    <div className={cn("rounded-lg overflow-hidden", className)}>
+    <div className={cn("overflow-hidden pb-8", className)}>
       <div
         className={cn(
-          isHorizontal ? "grid md:grid-cols-3 gap-4" : "flex flex-col"
+          isHorizontal
+            ? "flex justify-between items-start gap-10"
+            : "flex flex-col"
         )}
       >
         {/* Content */}
-        <div className="flex flex-col justify-center grid-cols-1 ">
-          <SentimentBadge sentiment={article.sentiment} className="mb-4" />
+        <div className="w-1/4 flex flex-col justify-center">
+          <SentimentBadge
+            sentiment={article.sentiment}
+            className="mb-4 w-full"
+          />
 
           <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">
             {article.title}
@@ -43,30 +50,33 @@ const FeaturedArticleCard = ({
           <p className="text-gray-600 mb-6 leading-relaxed">
             {article.content}
           </p>
-
-          <div className="flex items-center justify-between">
-            <InteractionButtons />
-            <TimeIndicator
-              type="readTime"
-              value={article.readTime}
-              className="text-sm"
-            />
-          </div>
+          <TimeIndicator
+            type="readTime"
+            value={article.readTime}
+            className="text-sm"
+          />
         </div>
 
         {/* Image */}
-        <div className=" col-span-2 m-w-[592px] h-[400px] p-4">
-          <img
-            src={article.image}
-            alt={article.title}
-            className="w-full h-full object-cover"
-          />
+        <div className="w-3/4 ">
+          <div className="flex items-center justify-end ">
+            <img
+              src={article.image}
+              alt={article.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-          {article.imageAttribution && (
-            <div className="absolute bottom-4 right-4 text-xs text-white bg-black bg-opacity-50 px-2 py-1 rounded">
-              {article.imageAttribution}
+          <div className="flex items-center justify-between mt-3">
+            <div>
+              <InteractionButtons />
             </div>
-          )}
+            {article.imageAttribution && (
+              <div className="text-xs px-2 py-1">
+                {article.imageAttribution}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

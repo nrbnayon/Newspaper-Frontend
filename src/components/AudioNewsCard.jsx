@@ -13,7 +13,7 @@ const AudioNewsCard = ({
   className,
 }) => {
   return (
-    <div className={cn("flex border-y-1 border-primary py-6", className)}>
+    <div className={cn("flex border-y-1 border-black py-6", className)}>
       <div className="flex-shrink-0 w-[150px] h-28 relative overflow-hidden">
         <img src={image} alt={title} className="w-full h-full object-cover" />
       </div>
@@ -32,14 +32,14 @@ const AudioNewsCard = ({
           <button className="flex items-center text-gray-700 mr-2">
             <PlayCircle size={16} className="mr-1" />
             <span className="text-sm">{duration} MIN LISTEN</span>
-          </button>   
+          </button>
         </div>
         <div className="ml-auto">
-            <SentimentBadge
-              sentiment={sentiment}
-              className="text-xs py-0.5 px-2"
-            />
-          </div>
+          <SentimentBadge
+            sentiment={sentiment}
+            className="text-xs py-0.5 px-2"
+          />
+        </div>
       </div>
     </div>
   );

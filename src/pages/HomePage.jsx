@@ -115,7 +115,6 @@ export default function HomePage() {
             {/* Featured Article - Takes up most width */}
             <div className="flex-1">
               <FeaturedArticleCard article={featuredArticle} />
-              {/* <NewsCard featured={true} /> */}
               {/* Audio News Section */}
               <NewsSection>
                 <AudioNewsCard {...audioNews} />
