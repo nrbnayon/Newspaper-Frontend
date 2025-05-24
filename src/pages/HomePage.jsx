@@ -57,29 +57,41 @@ export default function HomePage() {
         />
       </Helmet>
 
-      <div className="min-h-screen w-full">
+      <div className="min-h-screen bg-gray-50">
         <Navbar />
 
-        <main>
-          {/* Featured Article */}
-          <div className="w-full flex items-center justify-between p-4">
-            <div className="w-4/5">
+        <main className="max-w-7xl mx-auto px-4 py-8">
+          {/* Featured Article Section */}
+          <div className="flex gap-6 mb-12">
+            {/* Featured Article - Takes up most width */}
+            <div className="flex-1">
               <NewsCard featured={true} />
             </div>
-            <Separator
-              orientation="vertical"
-              className="min-h-full mx-4 bg-red-800"
-            />
-            <div className="w-1/5 flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold mb-2">Advertisements Area</h3>
+
+            {/* Vertical Separator */}
+            <div className="w-px bg-gray-300 min-h-full"></div>
+
+            {/* Advertisement Area */}
+            <div className="w-80 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
+              <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
+                Advertisement Area
+              </h3>
+              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
+                <span className="text-gray-600 text-sm">Ad Space</span>
+              </div>
             </div>
           </div>
 
           {/* Other Articles Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {sampleArticles.map((article) => (
-              <NewsCard key={article.id} article={article} />
-            ))}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Latest News
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {sampleArticles.map((article) => (
+                <NewsCard key={article.id} article={article} />
+              ))}
+            </div>
           </div>
         </main>
       </div>
