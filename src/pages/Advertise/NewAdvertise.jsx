@@ -113,9 +113,9 @@ export default function NewAdvertise() {
           </div>
 
           <div className="flex justify-end mt-6">
-            <Button type="submit" className="bg-[#002855] hover:bg-[#00396b] text-white px-8 py-2">
+            <button type="submit" className="bg-[#002855] hover:bg-[#00396b] text-white px-8 py-4">
               Sent Request
-            </Button>
+            </button>
           </div>
         </form>
       </Card>
