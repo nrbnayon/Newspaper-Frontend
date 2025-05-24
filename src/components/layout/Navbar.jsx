@@ -64,9 +64,9 @@ export default function Navbar() {
 
           {/* Right side - Auth buttons and membership */}
           <div className="flex flex-col items-center space-y-2">
-            <div className="w-full flex justify-between items-center gap-2">
+            <div className="w-full flex justify-between items-center gap-2 ">
               <Button
-                variant="outline"
+                // variant="outline"
                 onClick={openSignIn}
                 className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white"
               >
@@ -74,7 +74,7 @@ export default function Navbar() {
               </Button>
               <Button
                 onClick={openSignUp}
-                className="text-[#00254a] hover:text-white hover:bg-[#001a38] bg-white border-[#00254a] border"
+                className="hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
               >
                 Sign Up
               </Button>
