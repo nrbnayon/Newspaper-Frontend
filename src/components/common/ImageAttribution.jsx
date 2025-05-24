@@ -1,3 +1,4 @@
+// src\components\ImageAttribution.jsx
 import { cn } from "@/lib/utils";
 
 const ImageAttribution = ({ attribution, className }) => {

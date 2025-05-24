@@ -3,18 +3,19 @@ import Navbar from "@/components/layout/Navbar";
 import NewsCard from "@/components/news/NewsCard";
 import FeaturedArticleCard from "@/components/FeaturedArticleCard";
 import StandardArticleCard from "@/components/StandardArticleCard";
-import AudioNewsCard from "@/components/AudioNewsCard";
-import LiveUpdateCard from "@/components/LiveUpdateCard";
+import AudioNewsCard from "@/components/news/AudioNewsCard";
+import LiveUpdateCard from "@/components/news/LiveUpdateCard";
 import LongReadArticleCard from "@/components/LongReadArticleCard";
 import AdvertisementBox from "@/components/AdvertisementBox";
 import NewsGrid from "@/components/NewsGrid";
-import NewsSection from "@/components/NewsSection";
+import NewsSection from "@/components/news/NewsSection";
 import {
   audioNews,
   featuredArticle,
   liveUpdate,
   longReadArticle,
 } from "@/data/sampleArticles";
+import CommonNewsCard from "@/components/news/CommonNewsCard";
 
 const sampleArticles = [
   {
@@ -65,73 +66,37 @@ export default function HomePage() {
       <Helmet>
         <title>ALAMOCITYPULSE - Latest News and Updates</title>
         <meta
-          name="description"
-          content="Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"
+          name='description'
+          content='Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE'
         />
       </Helmet>
 
-      <div className="min-h-screen">
+      <div className='min-h-screen'>
         <Navbar />
 
-        {/* <div className="w-full py-8">
-          <NewsSection>
-            <div className="flex flex-col md:flex-row gap-6 mb-12">
-              <div className="flex-1">
-                <FeaturedArticleCard article={featuredArticle} />
-              </div>
-
-              <div className="hidden md:block w-px bg-gray-300 min-h-full"></div>
-
-              <div className="md:w-80">
-                <AdvertisementBox />
-              </div>
-            </div>
-          </NewsSection>
-
-          <NewsSection>
-            <AudioNewsCard {...audioNews} />
-          </NewsSection>
-
-          <NewsSection>
-            <LongReadArticleCard {...longReadArticle} />
-          </NewsSection>
-
-          <NewsSection>
-            <LiveUpdateCard {...liveUpdate} />
-          </NewsSection>
-
-          <NewsSection title="Latest News">
-            <NewsGrid columns={4}>
-              {sampleArticles.map((article) => (
-                <StandardArticleCard key={article.id} article={article} />
-              ))}
-            </NewsGrid>
-          </NewsSection>
-        </div> */}
-
-        <main className="w-full py-8">
+        <main className='w-full py-8'>
           {/* Featured Article Section */}
-          <div className="flex gap-6 mb-12">
+          <div className='flex gap-6 mb-12'>
             {/* Featured Article - Takes up most width */}
-            <div className="flex-1">
-              <FeaturedArticleCard article={featuredArticle} />
+            <div className='flex-1'>
+              <CommonNewsCard article={featuredArticle} />
               {/* Audio News Section */}
-              <NewsSection>
+              <div className='py-6'>
                 <AudioNewsCard {...audioNews} />
-              </NewsSection>
+              </div>
 
               {/* Long Read Article */}
               <NewsSection>
-                <LongReadArticleCard {...longReadArticle} />
+                <CommonNewsCard article={longReadArticle} />
               </NewsSection>
 
               {/* Live Updates Section */}
               <NewsSection>
-                <LiveUpdateCard {...liveUpdate} />
+                <LiveUpdateCard updates={liveUpdate} />
               </NewsSection>
 
               {/* Latest News Grid */}
-              <NewsSection title="Latest News">
+              <NewsSection title='Latest News'>
                 <NewsGrid columns={4}>
                   {sampleArticles.map((article) => (
                     <StandardArticleCard key={article.id} article={article} />
@@ -142,25 +107,25 @@ export default function HomePage() {
             </div>
 
             {/* Vertical Separator */}
-            <div className="w-px bg-gray-300 min-h-full"></div>
+            <div className='w-px bg-gray-300 min-h-full'></div>
 
             {/* Advertisement Area */}
-            <div className="w-80 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
-              <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
+            <div className='w-80 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]'>
+              <h3 className='text-lg font-bold text-gray-700 mb-4 text-center'>
                 Advertisement Area
               </h3>
-              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-                <span className="text-gray-600 text-sm">Ad Space</span>
+              <div className='w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center'>
+                <span className='text-gray-600 text-sm'>Ad Space</span>
               </div>
             </div>
           </div>
 
           {/* Other Articles Grid */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <div className='mb-8'>
+            <h2 className='text-2xl font-bold text-gray-900 mb-6'>
               Latest News
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
               {sampleArticles.map((article) => (
                 <NewsCard key={article.id} article={article} />
               ))}

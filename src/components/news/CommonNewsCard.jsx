@@ -1,29 +1,20 @@
-import SentimentBadge from "./common/SentimentBadge";
-import TimeIndicator from "./common/TimeIndicator";
-import InteractionButtons from "./common/InteractionButtons";
 import { cn } from "@/lib/utils";
-import ImageAttribution from "./common/ImageAttribution";
+import ImageAttribution from "../common/ImageAttribution";
+import InteractionButtons from "../common/InteractionButtons";
+import SentimentBadge from "../common/SentimentBadge";
+import TimeIndicator from "../common/TimeIndicator";
 
-const FeaturedArticleCard = ({
-  article = {
-    title:
-      "Microsoft Hires Sam Altman Hours After OpenAI Rejects His Return As C.E.O.",
-    excerpt:
-      "The tech giant said it was hiring Mr. Altman and Greg Brockman, OpenAI's former president, to lead an advanced research lab.",
-    content:
-      "A board member who was part of Sam Altman's ouster as chief executive joined a majority of the company's staff in calling for the decision's reversal.",
-    sentiment: "Positive",
-    readTime: 5,
-    image: "/news1.png",
-    imageAttribution: "Ruth Fremson/The New York Times",
-  },
+const CommonNewsCard = ({
+  article,
   className,
   layout = "horizontal", // horizontal or vertical
 }) => {
   const isHorizontal = layout === "horizontal";
 
   return (
-    <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
+    <article
+      className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}
+    >
       <div
         className={cn(
           "flex flex-col gap-4 sm:gap-6",
@@ -37,10 +28,12 @@ const FeaturedArticleCard = ({
             isHorizontal ? "lg:w-2/5 xl:w-1/3" : "w-full"
           )}
         >
-          <SentimentBadge
-            sentiment={article.sentiment}
-            className='mb-3 sm:mb-4 w-full'
-          />
+          {article.isFeatured && (
+            <SentimentBadge
+              sentiment={article.sentiment}
+              className='mb-3 sm:mb-4 w-full'
+            />
+          )}
 
           <h1 className='text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight'>
             {article.title}
@@ -73,10 +66,13 @@ const FeaturedArticleCard = ({
           </div>
 
           <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
-            <div>
-              <InteractionButtons />
-            </div>
-            <div>
+            {article.isFeatured && (
+              <div>
+                <InteractionButtons />
+              </div>
+            )}
+            {!article.isFeatured && <div className=''></div>}
+            <div className='flex items-center justify-end'>
               <ImageAttribution
                 attribution={article?.imageAttribution}
                 className=' mb-1 text-xs sm:text-sm'
@@ -88,5 +84,4 @@ const FeaturedArticleCard = ({
     </article>
   );
 };
-
-export default FeaturedArticleCard;
+export default CommonNewsCard;

@@ -138,6 +138,9 @@ importers:
         specifier: ^3.25.23
         version: 3.25.23
     devDependencies:
+      '@tanstack/react-query-devtools':
+        specifier: ^5.76.2
+        version: 5.77.0(@tanstack/react-query@5.76.2(react@19.1.0))(react@19.1.0)
       '@types/node':
         specifier: ^22
         version: 22.15.21
@@ -1055,6 +1058,15 @@ packages:
 
   '@tanstack/query-core@5.76.2':
     resolution: {integrity: sha512-PFGwWh5ss9cJQ67l6bZ7hqXbisX2gy13G2jP+VGY1bgdbCfOMWh6UBVnN62QbFXro6CCoX9hYzTnZHr6Rz00YQ==}
+
+  '@tanstack/query-devtools@5.76.0':
+    resolution: {integrity: sha512-1p92nqOBPYVqVDU0Ua5nzHenC6EGZNrLnB2OZphYw8CNA1exuvI97FVgIKON7Uug3uQqvH/QY8suUKpQo8qHNQ==}
+
+  '@tanstack/react-query-devtools@5.77.0':
+    resolution: {integrity: sha512-Dwvs+ksXiK1tW4YnTtHwYPO5+d8IUk1l8QQJ4aGEIqKz6uTLu/67NIo7EnUF0G/Edv+UOn9P1V3tYWuVfvhbmg==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.77.0
+      react: ^18 || ^19
 
   '@tanstack/react-query@5.76.2':
     resolution: {integrity: sha512-rGkWberCrFdIxMdvSAJM/UOKeu0O/JVTbMmfhQoJpiU9Uq0EDx2EMCadnNuJWbXR4smDA2t7DY3NKkYFmDVS5A==}
@@ -2956,6 +2968,14 @@ snapshots:
       vite: 6.3.5(@types/node@22.15.21)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.30.1)(sass-embedded@1.89.0)(sass@1.89.0)(stylus@0.64.0)(sugarss@5.0.0(postcss@8.5.3))(terser@5.39.2)(tsx@4.19.4)(yaml@2.8.0)
 
   '@tanstack/query-core@5.76.2': {}
+
+  '@tanstack/query-devtools@5.76.0': {}
+
+  '@tanstack/react-query-devtools@5.77.0(@tanstack/react-query@5.76.2(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@tanstack/query-devtools': 5.76.0
+      '@tanstack/react-query': 5.76.2(react@19.1.0)
+      react: 19.1.0
 
   '@tanstack/react-query@5.76.2(react@19.1.0)':
     dependencies:

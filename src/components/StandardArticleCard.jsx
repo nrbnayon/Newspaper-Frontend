@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import TimeIndicator from "./TimeIndicator";
+import TimeIndicator from "./common/TimeIndicator";
 
 const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
   const {
@@ -27,7 +27,7 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
           imagePosition === "right" ? "order-2" : "order-1"
         )}
       >
-        <img src={image} alt={title} className="w-full h-48 object-cover" />
+        <img src={image} alt={title} className='w-full h-48 object-cover' />
       </div>
 
       <div
@@ -37,16 +37,16 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
           imagePosition === "right" ? "order-1" : "order-2"
         )}
       >
-        <div className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium mb-2">
+        <div className='inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium mb-2'>
           {category}
         </div>
 
-        <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">{title}</h3>
+        <h3 className='font-bold text-gray-900 mb-2 line-clamp-2'>{title}</h3>
 
-        <p className="text-gray-600 text-sm mb-3 line-clamp-3">{excerpt}</p>
+        <p className='text-gray-600 text-sm mb-3 line-clamp-3'>{excerpt}</p>
 
-        <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
-          <TimeIndicator type="readTime" value={readTime} />
+        <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
+          <TimeIndicator type='readTime' value={readTime} />
           <span>{date}</span>
         </div>
       </div>

@@ -1,7 +1,6 @@
-import React from "react";
 import { cn } from "@/lib/utils";
-import TimeIndicator from "./TimeIndicator";
-import ImageAttribution from "./ImageAttribution";
+import TimeIndicator from "./common/TimeIndicator";
+import ImageAttribution from "./common/ImageAttribution";
 
 const LongReadArticleCard = ({
   title = "The Future of Artificial Intelligence: How Machine Learning is Reshaping Industries Across the Globe",
@@ -20,33 +19,35 @@ const LongReadArticleCard = ({
       )}
     >
       {/* Content Section - 1/3 on desktop */}
-      <div className="flex flex-col order-2 md:order-1 md:w-1/3 md:flex-shrink-0">
-        <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 sm:mb-4 leading-tight text-gray-900">
-          {title}
-        </h2>
-        <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed flex-grow">
-          {excerpt}
-        </p>
-        <TimeIndicator
-          type="readTime"
-          value={readTime}
-          className="mt-auto text-xs sm:text-sm"
-        />
+      <div className='order-2 md:order-1 md:w-1/3 md:flex-shrink-0'>
+        <div className='flex flex-col'>
+          <h2 className='text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 sm:mb-4 leading-tight text-gray-900'>
+            {title}
+          </h2>
+          <p className='text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed flex-grow'>
+            {excerpt}
+          </p>
+          <TimeIndicator
+            type='readTime'
+            value={readTime}
+            className='text-xs sm:text-sm'
+          />
+        </div>
       </div>
 
       {/* Image Section - 2/3 on desktop */}
-      <div className="relative order-1 md:order-2 md:w-2/3">
-        <div className="relative overflow-hidden rounded-lg sm:rounded-none flex justify-end items-center">
+      <div className='relative order-1 md:order-2 md:w-2/3'>
+        <div className='relative overflow-hidden rounded-lg sm:rounded-none flex justify-end items-center'>
           <img
             src={image}
             alt={title}
-            className="w-full md:w-4/5 h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105"
-            loading="lazy"
+            className='w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105'
+            loading='lazy'
           />
         </div>
         <ImageAttribution
           attribution={imageAttribution}
-          className="text-right mt-2 sm:mt-3 text-xs sm:text-sm"
+          className='text-right mt-2 sm:mt-3 text-xs sm:text-sm'
         />
       </div>
     </article>

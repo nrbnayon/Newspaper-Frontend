@@ -57,6 +57,7 @@ export const featuredArticle = {
   readTime: 5,
   image: "/news1.png",
   imageAttribution: "Ruth Fremson/The New York Times",
+  isFeatured: true,
 };
 
 export const audioNews = {
@@ -68,19 +69,24 @@ export const audioNews = {
     "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 };
 
-export const liveUpdate = {
-  category: "Israel-Hamas War",
-  title: "Israel Releases Video It Says Shows Hamas Tunnel Under Hospital",
-  content:
-    "Proof of a Hamas Command Center under the Hospital has yet to be revealed. The Israeli military says it's moving slowly through the facility to avoid traps.",
-  timeAgo: "4m ago",
-  images: [
-    "https://images.pexels.com/photos/5915202/pexels-photo-5915202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/7519035/pexels-photo-7519035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/8370594/pexels-photo-8370594.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/13086022/pexels-photo-13086022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  ],
-};
+export const liveUpdate = [
+  {
+    category: "Israel-Hamas War",
+    title: "Israel Releases Video It Says Shows Hamas Tunnel Under Hospital",
+    content:
+      "Proof of a Hamas Command Center under the Hospital has yet to be revealed. The Israeli military says it's moving slowly through the facility to avoid traps.",
+    timeAgo: "4m ago",
+    image:
+      "https://images.pexels.com/photos/5915202/pexels-photo-5915202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  },
+  {
+    category: "Another Category",
+    title: "Another Update Title",
+    content: "Another update content here.",
+    timeAgo: "5m ago",
+    image: "/news1.png",
+  },
+];
 
 export const longReadArticle = {
   title: "Behind 94 Acts of Shocking Violence, Years of Glaring Mistakes",
