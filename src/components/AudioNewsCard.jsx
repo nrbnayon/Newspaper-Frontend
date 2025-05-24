@@ -2,6 +2,7 @@ import React from "react";
 import { Play } from "lucide-react";
 import SentimentBadge from "./SentimentBadge";
 import { cn } from "@/lib/utils";
+import { PlayCircle } from "lucide-react";
 
 const AudioNewsCard = ({
   title,
@@ -12,8 +13,8 @@ const AudioNewsCard = ({
   className,
 }) => {
   return (
-    <div className={cn("flex border-b border-gray-200 pb-4", className)}>
-      <div className="flex-shrink-0 w-[150px] h-[100px] relative overflow-hidden">
+    <div className={cn("flex border-y-1 border-primary py-6", className)}>
+      <div className="flex-shrink-0 w-[150px] h-28 relative overflow-hidden">
         <img src={image} alt={title} className="w-full h-full object-cover" />
       </div>
 
@@ -27,19 +28,18 @@ const AudioNewsCard = ({
 
         <h3 className="text-xl font-bold mb-2 line-clamp-2">{title}</h3>
 
-        <div className="flex items-center">
+        <div className="flex mb-2 items-center">
           <button className="flex items-center text-gray-700 mr-2">
-            <Play size={16} className="mr-1" />
+            <PlayCircle size={16} className="mr-1" />
             <span className="text-sm">{duration} MIN LISTEN</span>
-          </button>
-
-          <div className="ml-auto">
+          </button>   
+        </div>
+        <div className="ml-auto">
             <SentimentBadge
               sentiment={sentiment}
               className="text-xs py-0.5 px-2"
             />
           </div>
-        </div>
       </div>
     </div>
   );
