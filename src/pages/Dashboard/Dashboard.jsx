@@ -39,6 +39,21 @@ const Dashboard = () => {
                 Advertise
               </NavLink>
             </li>
+            
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `block py-3 px-4 font-medium transition-colors ${
+                    isActive
+                      ? "bg-[#00254a] text-white"
+                      : "text-[#505050] hover:bg-[#e2e2e2]"
+                  }`
+                }
+              >
+                Advertise List
+              </NavLink>
+            </li>
           </ul>
         </div>
 
