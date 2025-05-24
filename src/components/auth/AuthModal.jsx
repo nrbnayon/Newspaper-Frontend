@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
   const [isSignIn, setIsSignIn] = useState(initialMode === "signin");
   const [showPassword, setShowPassword] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const {
     register,
@@ -50,12 +51,46 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
     },
   });
 
+  const forgotPasswordMutation = useMutation({
+    mutationFn: (data) => {
+      // Replace with your actual forgot password API call
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({ success: true }), 1000);
+      });
+    },
+    onSuccess: () => {
+      toast.success("Password reset link sent to your email!");
+      setIsForgotPassword(false);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(
+        error.message || "Failed to send reset link. Please try again."
+      );
+    },
+  });
+
   const onSubmit = (data) => {
-    mutation.mutate(data);
+    if (isForgotPassword) {
+      forgotPasswordMutation.mutate({ email: data.email });
+    } else {
+      mutation.mutate(data);
+    }
   };
 
   const toggleMode = () => {
     setIsSignIn(!isSignIn);
+    setIsForgotPassword(false);
+    reset();
+  };
+
+  const showForgotPassword = () => {
+    setIsForgotPassword(true);
+    reset();
+  };
+
+  const backToSignIn = () => {
+    setIsForgotPassword(false);
     reset();
   };
 
@@ -63,6 +98,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
     onClose();
     reset();
     setShowPassword(false);
+    setIsForgotPassword(false);
   };
 
   return (
@@ -80,208 +116,287 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
           {/* Form */}
           <div className='bg-[#FCFCFF] rounded-lg p-6 text-black'>
             <h3 className='text-xl font-bold text-center mb-1'>
-              {isSignIn ? "Sign In Account" : "Sign Up Account"}
+              {isForgotPassword
+                ? "Forgot Password"
+                : isSignIn
+                ? "Sign In Account"
+                : "Sign Up Account"}
             </h3>
             <p className='text-center mb-6 text-sm text-gray-600'>
-              {isSignIn
-                ? "Don't have an Account? "
-                : "Already have an Account? "}
-              <button
-                type='button'
-                onClick={toggleMode}
-                className='text-[#00254a] cursor-pointer font-medium underline'
-              >
-                {isSignIn ? "Sign Up Free" : "Sign In"}
-              </button>
+              {isForgotPassword ? (
+                <>
+                  Remember your password?{" "}
+                  <button
+                    type='button'
+                    onClick={backToSignIn}
+                    className='text-[#00254a] cursor-pointer font-medium underline'
+                  >
+                    Back to Sign In
+                  </button>
+                </>
+              ) : (
+                <>
+                  {isSignIn
+                    ? "Don't have an Account? "
+                    : "Already have an Account? "}
+                  <button
+                    type='button'
+                    onClick={toggleMode}
+                    className='text-[#00254a] cursor-pointer font-medium underline'
+                  >
+                    {isSignIn ? "Sign Up Free" : "Sign In"}
+                  </button>
+                </>
+              )}
             </p>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {!isSignIn && (
-                <div className='grid grid-cols-2 gap-4 mb-4'>
-                  <div className='space-y-1'>
-                    <Label
-                      htmlFor='firstName'
-                      className='text-[#262626] text-sm'
-                    >
-                      First Name
-                    </Label>
-                    <div className='relative'>
-                      <Input
-                        id='firstName'
-                        placeholder='First name'
-                        className='pr-10 border-[#c7c7c7] bg-white'
-                        {...register("firstName", {
-                          required: !isSignIn
-                            ? "First name is required"
-                            : false,
-                        })}
-                      />
-                      <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
-                        <User size={16} />
-                      </div>
-                    </div>
-                    {errors.firstName && (
-                      <p className='text-red-500 text-xs'>
-                        {errors.firstName.message}
-                      </p>
-                    )}
-                  </div>
-                  <div className='space-y-1'>
-                    <Label
-                      htmlFor='lastName'
-                      className='text-[#262626] text-sm'
-                    >
-                      Last Name
-                    </Label>
-                    <div className='relative'>
-                      <Input
-                        id='lastName'
-                        placeholder='Last name'
-                        className='pr-10 border-[#c7c7c7] bg-white'
-                        {...register("lastName", {
-                          required: !isSignIn ? "Last name is required" : false,
-                        })}
-                      />
-                      <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
-                        <User size={16} />
-                      </div>
-                    </div>
-                    {errors.lastName && (
-                      <p className='text-red-500 text-xs'>
-                        {errors.lastName.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className='space-y-1 mb-4'>
-                <Label htmlFor='email' className='text-[#262626] text-sm'>
-                  E-mail or Phone
-                </Label>
-                <Input
-                  id='email'
-                  placeholder='Enter your mail or phone number'
-                  className='border-[#c7c7c7] bg-white'
-                  {...register("email", {
-                    required: "Email or phone is required",
-                    pattern: {
-                      value:
-                        /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\.([a-zA-Z]{2,5})$|^[0-9]{10}$/,
-                      message: "Please enter a valid email or phone number",
-                    },
-                  })}
-                />
-                {errors.email && (
-                  <p className='text-red-500 text-xs'>{errors.email.message}</p>
-                )}
-              </div>
-
-              <div className='space-y-1 mb-4'>
-                <Label htmlFor='password' className='text-[#262626] text-sm'>
-                  Password
-                </Label>
-                <div className='relative'>
+            {isForgotPassword ? (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className='space-y-1 mb-6'>
+                  <Label htmlFor='email' className='text-[#262626] text-sm'>
+                    E-mail
+                  </Label>
                   <Input
-                    id='password'
-                    type={showPassword ? "text" : "password"}
-                    placeholder='Enter your Password'
-                    className='pr-10 border-[#c7c7c7] bg-white'
-                    {...register("password", {
-                      required: "Password is required",
-                      minLength: {
-                        value: isSignIn ? 1 : 8,
-                        message: isSignIn
-                          ? "Password is required"
-                          : "Password must be at least 8 characters",
+                    id='email'
+                    placeholder='Enter your email address'
+                    className='border-[#c7c7c7] bg-white'
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value:
+                          /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\.([a-zA-Z]{2,5})$/,
+                        message: "Please enter a valid email address",
                       },
                     })}
                   />
-                  <button
-                    type='button'
-                    onClick={() => setShowPassword(!showPassword)}
-                    className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                  >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
+                  {errors.email && (
+                    <p className='text-red-500 text-xs'>
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
-                {errors.password && (
-                  <p className='text-red-500 text-xs'>
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
 
-              {!isSignIn && (
-                <div className='flex justify-start items-center mb-6'>
-                  <div className='flex justify-center items-center h-5'>
-                    <Checkbox
-                      id='terms'
-                      {...register("terms", {
-                        required: !isSignIn
-                          ? "You must agree to the terms and conditions"
-                          : false,
+                <Button
+                  type='submit'
+                  className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
+                  disabled={forgotPasswordMutation.isPending}
+                >
+                  {forgotPasswordMutation.isPending
+                    ? "Sending..."
+                    : "Send Reset Link"}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                {!isSignIn && (
+                  <div className='grid grid-cols-2 gap-4 mb-4'>
+                    <div className='space-y-1'>
+                      <Label
+                        htmlFor='firstName'
+                        className='text-[#262626] text-sm'
+                      >
+                        First Name
+                      </Label>
+                      <div className='relative'>
+                        <Input
+                          id='firstName'
+                          placeholder='First name'
+                          className='pr-10 border-[#c7c7c7] bg-white'
+                          {...register("firstName", {
+                            required: !isSignIn
+                              ? "First name is required"
+                              : false,
+                          })}
+                        />
+                        <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
+                          <User size={16} />
+                        </div>
+                      </div>
+                      {errors.firstName && (
+                        <p className='text-red-500 text-xs'>
+                          {errors.firstName.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className='space-y-1'>
+                      <Label
+                        htmlFor='lastName'
+                        className='text-[#262626] text-sm'
+                      >
+                        Last Name
+                      </Label>
+                      <div className='relative'>
+                        <Input
+                          id='lastName'
+                          placeholder='Last name'
+                          className='pr-10 border-[#c7c7c7] bg-white'
+                          {...register("lastName", {
+                            required: !isSignIn
+                              ? "Last name is required"
+                              : false,
+                          })}
+                        />
+                        <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
+                          <User size={16} />
+                        </div>
+                      </div>
+                      {errors.lastName && (
+                        <p className='text-red-500 text-xs'>
+                          {errors.lastName.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className='space-y-1 mb-4'>
+                  <Label htmlFor='email' className='text-[#262626] text-sm'>
+                    E-mail or Phone
+                  </Label>
+                  <Input
+                    id='email'
+                    placeholder='Enter your mail or phone number'
+                    className='border-[#c7c7c7] bg-white'
+                    {...register("email", {
+                      required: "Email or phone is required",
+                      pattern: {
+                        value:
+                          /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\.([a-zA-Z]{2,5})$|^[0-9]{10}$/,
+                        message: "Please enter a valid email or phone number",
+                      },
+                    })}
+                  />
+                  {errors.email && (
+                    <p className='text-red-500 text-xs'>
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className='space-y-1 mb-4'>
+                  <div className='flex justify-between items-center'>
+                    <Label
+                      htmlFor='password'
+                      className='text-[#262626] text-sm'
+                    >
+                      Password
+                    </Label>
+                    {isSignIn && (
+                      <button
+                        type='button'
+                        onClick={showForgotPassword}
+                        className='text-[#00254a] text-xs cursor-pointer font-medium underline'
+                      >
+                        Forgot Password?
+                      </button>
+                    )}
+                  </div>
+                  <div className='relative'>
+                    <Input
+                      id='password'
+                      type={showPassword ? "text" : "password"}
+                      placeholder='Enter your Password'
+                      className='pr-10 border-[#c7c7c7] bg-white'
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: isSignIn ? 1 : 8,
+                          message: isSignIn
+                            ? "Password is required"
+                            : "Password must be at least 8 characters",
+                        },
                       })}
                     />
+                    <button
+                      type='button'
+                      onClick={() => setShowPassword(!showPassword)}
+                      className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
                   </div>
-                  <Label
-                    htmlFor='terms'
-                    className='ml-2 text-xs text-[#262626]'
-                  >
-                    I agree to the{" "}
-                    <a href='/terms' className='text-[#00254a] underline'>
-                      Terms & Condition
-                    </a>
-                  </Label>
+                  {errors.password && (
+                    <p className='text-red-500 text-xs'>
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
-              )}
-              {errors.terms && (
-                <p className='text-red-500 text-xs mb-4'>
-                  {errors.terms.message}
-                </p>
-              )}
 
-              <Button
-                type='submit'
-                className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
-                disabled={mutation.isPending}
-              >
-                {mutation.isPending
-                  ? "Processing..."
-                  : isSignIn
-                  ? "Sign In"
-                  : "Sign Up"}
-              </Button>
-            </form>
+                {!isSignIn && (
+                  <div className='flex justify-start items-center mb-6'>
+                    <div className='flex justify-center items-center h-5'>
+                      <Checkbox
+                        id='terms'
+                        {...register("terms", {
+                          required: !isSignIn
+                            ? "You must agree to the terms and conditions"
+                            : false,
+                        })}
+                      />
+                    </div>
+                    <Label
+                      htmlFor='terms'
+                      className='ml-2 text-xs text-[#262626]'
+                    >
+                      I agree to the{" "}
+                      <a href='/terms' className='text-[#00254a] underline'>
+                        Terms & Condition
+                      </a>
+                    </Label>
+                  </div>
+                )}
+                {errors.terms && (
+                  <p className='text-red-500 text-xs mb-4'>
+                    {errors.terms.message}
+                  </p>
+                )}
 
-            <div className='text-center mb-4'>
-              <p className='text-[#5a5a5a] text-sm'>
-                Or {isSignIn ? "Sign In" : "Sign Up"} with
-              </p>
-            </div>
-
-            <div className='grid grid-cols-2 gap-4 mb-6'>
-              <SocialButton  provider='google' />
-              <SocialButton provider='facebook' />
-            </div>
-
-            <div className='text-center'>
-              <p className='text-[#5a5a5a] text-sm'>
-                {isSignIn
-                  ? "Don't have an account? "
-                  : "Already have an account? "}
-                <button
-                  type='button'
-                  onClick={toggleMode}
-                  className='text-[#00254a] cursor-pointer font-medium underline'
+                <Button
+                  type='submit'
+                  className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
+                  disabled={mutation.isPending}
                 >
-                  {isSignIn ? "Sign Up" : "Sign In"}
-                </button>
-              </p>
-            </div>
+                  {mutation.isPending
+                    ? "Processing..."
+                    : isSignIn
+                    ? "Sign In"
+                    : "Sign Up"}
+                </Button>
+              </form>
+            )}
+
+            {!isForgotPassword && (
+              <>
+                <div className='text-center mb-4'>
+                  <p className='text-[#5a5a5a] text-sm'>
+                    Or {isSignIn ? "Sign In" : "Sign Up"} with
+                  </p>
+                </div>
+
+                <div className='grid grid-cols-2 gap-4 mb-6'>
+                  <SocialButton provider='google' />
+                  <SocialButton provider='facebook' />
+                </div>
+
+                <div className='text-center'>
+                  <p className='text-[#5a5a5a] text-sm'>
+                    {isSignIn
+                      ? "Don't have an account? "
+                      : "Already have an account? "}
+                    <button
+                      type='button'
+                      onClick={toggleMode}
+                      className='text-[#00254a] cursor-pointer font-medium underline'
+                    >
+                      {isSignIn ? "Sign Up" : "Sign In"}
+                    </button>
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </ModalContent>
