@@ -112,6 +112,7 @@ export default function Navbar() {
             Make Advertise
           </a>
         </div>
+        <div className="py-0.5 border-t border-b border-primary"></div>
       </nav>
 
       <AuthModal
