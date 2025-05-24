@@ -66,7 +66,7 @@ export default function HomePage() {
               <NewsCard featured={true} />
             </div>
             <div className="w-1/5 flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold mb-2">Advertisements Area </h3>
+              <h3 className="text-lg font-bold mb-2">Advertisements Area</h3>
             </div>
           </div>
 
