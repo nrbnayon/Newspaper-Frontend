@@ -2,16 +2,21 @@
 
 @layer base {
   :root {
+    --primary: #142335;
+    --primary-foreground: #F2F2F2;
+
+    --secondary: #5A5A5A;
+    --secondary-foreground: #F2F2F2;
+
+    --tertiary: #A8A8A8;
+    --tertiary-foreground: #F2F2F2;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96%;
@@ -27,17 +32,29 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    --button-bg: #B32021;
+    --input-bg: #F2F2F2;
+    --placeholder-color: #ACACAC;
+    --custom-red: #B32021;
   }
 
   .dark {
+    --primary: #142335;
+    --primary-foreground: #F2F2F2;
+
+    --secondary: #5A5A5A;
+    --secondary-foreground: #F2F2F2;
+
+    --tertiary: #A8A8A8;
+    --tertiary-foreground: #F2F2F2;
+
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -54,6 +71,75 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    --button-bg: #B32021;
+    --input-bg: #F2F2F2;
+    --placeholder-color: #ACACAC;
+    --custom-red: #B32021;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    outline-color: hsl(var(--ring) / 0.5);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  /* Button styling */
+  button {
+    background-color: var(--button-bg);
+    color: var(--primary-foreground);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    opacity: 0.9;
+  }
+
+  /* Input box styling */
+  input {
+    background-color: var(--input-bg);
+    color: var(--primary);
+    padding: 0.5rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) - 2px);
+    transition: border-color 0.2s ease;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--custom-red);
+    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+  }
+
+  /* Placeholder color */
+  input::placeholder {
+    color: var(--placeholder-color);
+  }
+
+  /* Card styling */
+  .card {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+  }
+
+  /* Popover styling */
+  .popover {
+    background-color: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
   }
 }
 
@@ -71,8 +157,62 @@
   .text-transparent {
     color: transparent !important;
   }
+
   .text-red-primary {
     color: #b32021;
+  }
+
+  .text-textColor {
+    color: var(--custom-red);
+  }
+
+  /* Custom background utilities */
+  .bg-primary-custom {
+    background-color: var(--primary);
+  }
+
+  .bg-secondary-custom {
+    background-color: var(--secondary);
+  }
+
+  .bg-tertiary-custom {
+    background-color: var(--tertiary);
+  }
+
+  /* Custom text color utilities */
+  .text-primary-custom {
+    color: var(--primary);
+  }
+
+  .text-secondary-custom {
+    color: var(--secondary);
+  }
+
+  .text-tertiary-custom {
+    color: var(--tertiary);
+  }
+
+  /* Custom foreground utilities */
+  .text-primary-foreground-custom {
+    color: var(--primary-foreground);
+  }
+
+  .text-secondary-foreground-custom {
+    color: var(--secondary-foreground);
+  }
+
+  .text-tertiary-foreground-custom {
+    color: var(--tertiary-foreground);
+  }
+
+  /* Button background utility */
+  .bg-button-custom {
+    background-color: var(--button-bg);
+  }
+
+  /* Input background utility */
+  .bg-input-custom {
+    background-color: var(--input-bg);
   }
 }
 
@@ -86,10 +226,93 @@
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius);
   }
 
   .dark .glass-effect {
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Custom button component */
+  .btn-primary {
+    background-color: var(--button-bg);
+    color: var(--primary-foreground);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* Custom input component */
+  .input-custom {
+    background-color: var(--input-bg);
+    color: var(--primary);
+    padding: 0.75rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) - 2px);
+    transition: all 0.2s ease;
+    width: 100%;
+  }
+
+  .input-custom:focus {
+    outline: none;
+    border-color: var(--custom-red);
+    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+  }
+
+  .input-custom::placeholder {
+    color: var(--placeholder-color);
+  }
+
+  /* Custom card component */
+  .card-custom {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+
+  /* Primary colored elements */
+  .primary-accent {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  .secondary-accent {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+
+  .tertiary-accent {
+    background-color: var(--tertiary);
+    color: var(--tertiary-foreground);
+  }
+
+  /* Red accent using custom red */
+  .red-accent {
+    background-color: var(--custom-red);
+    color: white;
+  }
+
+  .red-text {
+    color: var(--custom-red);
+  }
+
+  .red-border {
+    border-color: var(--custom-red);
   }
 }
