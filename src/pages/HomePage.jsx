@@ -51,32 +51,30 @@ export default function HomePage() {
       <Helmet>
         <title>ALAMOCITYPULSE - Latest News and Updates</title>
         <meta
-          name='description'
-          content='Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE'
+          name="description"
+          content="Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"
         />
       </Helmet>
 
-      <div className='min-h-screen w-full'>
+      <div className="min-h-screen w-full">
         <Navbar />
 
         <main>
           {/* Featured Article */}
-          <div className='mb-12'>
-            <NewsCard featured={true} />
+          <div className="w-full flex items-center justify-between p-4">
+            <div className="w-4/5">
+              <NewsCard featured={true} />
+            </div>
+            <div className="w-1/5 flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold mb-2">Advertisements Area </h3>
+            </div>
           </div>
 
           {/* Other Articles Grid */}
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {sampleArticles.map((article) => (
               <NewsCard key={article.id} article={article} />
             ))}
-          </div>
-
-          {/* Load More Section */}
-          <div className='text-center mt-12'>
-            <button className='bg-[#00254a] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#001a38] transition-colors'>
-              Load More Articles
-            </button>
           </div>
         </main>
       </div>
