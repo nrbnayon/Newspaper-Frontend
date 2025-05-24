@@ -12,9 +12,7 @@ const CommonNewsCard = ({
   const isHorizontal = layout === "horizontal";
 
   return (
-    <article
-      className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}
-    >
+    <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
       <div
         className={cn(
           "flex flex-col gap-4 sm:gap-6",
@@ -24,8 +22,8 @@ const CommonNewsCard = ({
         {/* Content Section */}
         <div
           className={cn(
-            "flex flex-col",
-            isHorizontal ? "lg:w-2/5 xl:w-1/3" : "w-full"
+            "flex flex-col w-full",
+            isHorizontal && "lg:w-2/5 xl:w-1/3"
           )}
         >
           {article.isFeatured && (
@@ -55,8 +53,8 @@ const CommonNewsCard = ({
         </div>
 
         {/* Image Section */}
-        <div className='relative order-1 md:order-2 md:w-2/3 flex flex-col items-end'>
-          <div className='relative overflow-hidden rounded-lg sm:rounded-none flex justify-end items-center'>
+        <div className='relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end'>
+          <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
             <img
               src={article.image}
               alt={article.title}

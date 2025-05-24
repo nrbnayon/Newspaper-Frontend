@@ -80,6 +80,7 @@ export default function HomePage() {
             {/* Featured Article - Takes up most width */}
             <div className='flex-1'>
               <CommonNewsCard article={featuredArticle} />
+              
               {/* Audio News Section */}
               <div className='py-6'>
                 <AudioNewsCard {...audioNews} />
