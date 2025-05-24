@@ -54,14 +54,32 @@ export default function NewAdvertise() {
                 Category
               </label>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="bg-input-bg border border-placeholder-color w-full text-2xl p-8">
-                  <SelectValue placeholder="Select" />
+                <SelectTrigger 
+                  className={cn(
+                    "w-full h-auto bg-input-bg min-h-[60px] text-black px-4 py-4",
+                    "bg-input-bg border border-placeholder-color rounded",
+                    "text-2xl text-primary",
+                    "focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  )}
+                >
+                  <SelectValue 
+                    placeholder="Select" 
+                    className="text-2xl text-placeholder-color"
+                  />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="news" className="text-2xl">News</SelectItem>
-                  <SelectItem value="event" className="text-2xl">Event</SelectItem>
-                  <SelectItem value="promotion" className="text-2xl">Promotion</SelectItem>
-                  <SelectItem value="announcement" className="text-2xl">Announcement</SelectItem>
+                <SelectContent className="bg-white border border-gray-200 rounded shadow-lg">
+                  <SelectItem value="news" className="text-2xl px-4  hover:bg-gray-100">
+                    News
+                  </SelectItem>
+                  <SelectItem value="event" className="text-2xl px-4  hover:bg-gray-100">
+                    Event
+                  </SelectItem>
+                  <SelectItem value="promotion" className="text-2xl px-4  hover:bg-gray-100">
+                    Promotion
+                  </SelectItem>
+                  <SelectItem value="announcement" className="text-2xl px-4  hover:bg-gray-100">
+                    Announcement
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -84,8 +102,11 @@ export default function NewAdvertise() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className={cn(
-                  "w-full h-[200px] text-secondary",
-                  "text-4xl bg-input-bg border border-placeholder-color rounded"
+                  "w-full h-[200px] bg-input-bg p-4 resize-none",
+                  "text-2xl text-secondary placeholder:text-placeholder-color",
+                  "bg-input-bg border border-placeholder-color rounded",
+                  "focus:outline-none focus:ring-2 focus:ring-blue-500",
+                  "focus:border-transparent"
                 )}
               />
             </div>
