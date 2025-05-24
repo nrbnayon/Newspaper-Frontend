@@ -1,5 +1,4 @@
 import { Heart, MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function NewsCard({ article, featured = false }) {
   if (featured) {
@@ -7,7 +6,7 @@ export default function NewsCard({ article, featured = false }) {
       <div className="bg-white rounded-lg overflow-hidden">
         <div className="grid md:grid-cols-2 gap-0">
           {/* Content */}
-          <div className="p-8 flex flex-col justify-center">
+          <div className="flex flex-col justify-center">
             <div className="inline-block bg-[#d4b896] text-[#8b4513] px-3 py-1 rounded text-sm font-medium mb-4 w-fit">
               Positive
             </div>

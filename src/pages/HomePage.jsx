@@ -1,7 +1,20 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/layout/Navbar";
 import NewsCard from "@/components/news/NewsCard";
-import { Separator } from "@radix-ui/react-select";
+import FeaturedArticleCard from "@/components/FeaturedArticleCard";
+import StandardArticleCard from "@/components/StandardArticleCard";
+import AudioNewsCard from "@/components/AudioNewsCard";
+import LiveUpdateCard from "@/components/LiveUpdateCard";
+import LongReadArticleCard from "@/components/LongReadArticleCard";
+import AdvertisementBox from "@/components/AdvertisementBox";
+import NewsGrid from "@/components/NewsGrid";
+import NewsSection from "@/components/NewsSection";
+import {
+  audioNews,
+  featuredArticle,
+  liveUpdate,
+  longReadArticle,
+} from "@/data/sampleArticles";
 
 const sampleArticles = [
   {
@@ -57,15 +70,76 @@ export default function HomePage() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen">
         <Navbar />
 
-        <main className="py-8">
+        {/* <div className="w-full py-8">
+          <NewsSection>
+            <div className="flex flex-col md:flex-row gap-6 mb-12">
+              <div className="flex-1">
+                <FeaturedArticleCard article={featuredArticle} />
+              </div>
+
+              <div className="hidden md:block w-px bg-gray-300 min-h-full"></div>
+
+              <div className="md:w-80">
+                <AdvertisementBox />
+              </div>
+            </div>
+          </NewsSection>
+
+          <NewsSection>
+            <AudioNewsCard {...audioNews} />
+          </NewsSection>
+
+          <NewsSection>
+            <LongReadArticleCard {...longReadArticle} />
+          </NewsSection>
+
+          <NewsSection>
+            <LiveUpdateCard {...liveUpdate} />
+          </NewsSection>
+
+          <NewsSection title="Latest News">
+            <NewsGrid columns={4}>
+              {sampleArticles.map((article) => (
+                <StandardArticleCard key={article.id} article={article} />
+              ))}
+            </NewsGrid>
+          </NewsSection>
+        </div> */}
+
+        <main className="w-full py-8">
           {/* Featured Article Section */}
           <div className="flex gap-6 mb-12">
             {/* Featured Article - Takes up most width */}
             <div className="flex-1">
-              <NewsCard featured={true} />
+              <FeaturedArticleCard article={featuredArticle} />
+              {/* <NewsCard featured={true} /> */}
+              {/* Audio News Section */}
+              <NewsSection>
+                <AudioNewsCard {...audioNews} />
+              </NewsSection>
+
+              {/* Long Read Article */}
+              <NewsSection>
+                <LongReadArticleCard {...longReadArticle} />
+              </NewsSection>
+
+              {/* Live Updates Section */}
+              <NewsSection>
+                <LiveUpdateCard {...liveUpdate} />
+              </NewsSection>
+
+              {/* Latest News Grid */}
+              <NewsSection title="Latest News">
+                <NewsGrid columns={4}>
+                  {sampleArticles.map((article) => (
+                    <StandardArticleCard key={article.id} article={article} />
+                  ))}
+                </NewsGrid>
+              </NewsSection>
+              {/* <NewsCard featured={true} /> */}
             </div>
 
             {/* Vertical Separator */}
