@@ -68,13 +68,13 @@ export default function Navbar() {
               <Button
                 variant="outline"
                 onClick={openSignIn}
-                className="border-[#00254a] text-[#00254a] hover:bg-[#00254a] hover:text-white"
+                className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white"
               >
                 Sign In
               </Button>
               <Button
                 onClick={openSignUp}
-                className="bg-[#00254a] text-white hover:bg-[#001a38]"
+                className="text-[#00254a] hover:text-white hover:bg-[#001a38] bg-white border-[#00254a] border"
               >
                 Sign Up
               </Button>
@@ -94,7 +94,7 @@ export default function Navbar() {
             Home
           </a>
           <div className="relative group">
-            <button className="flex items-center text-gray-900 font-medium hover:text-[#00254a]">
+            <button className="flex items-center text-gray-900 font-medium hover:text-[#00254a] bg-white ">
               News
               <ChevronDown size={16} className="ml-1" />
             </button>

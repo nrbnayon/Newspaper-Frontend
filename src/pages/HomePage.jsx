@@ -60,7 +60,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-gray-50">
         <Navbar />
 
-        <main className="max-w-7xl mx-auto px-4 py-8">
+        <main className="py-8">
           {/* Featured Article Section */}
           <div className="flex gap-6 mb-12">
             {/* Featured Article - Takes up most width */}

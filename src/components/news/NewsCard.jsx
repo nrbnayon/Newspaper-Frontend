@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function NewsCard({ article, featured = false }) {
   if (featured) {
     return (
-      <div className="bg-white rounded-lg overflow-hidden shadow-sm">
+      <div className="bg-white rounded-lg overflow-hidden">
         <div className="grid md:grid-cols-2 gap-0">
           {/* Content */}
           <div className="p-8 flex flex-col justify-center">
