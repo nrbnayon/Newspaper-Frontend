@@ -1,93 +1,168 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --primary: #142335;
-    --primary-foreground: #F2F2F2;
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 
-    --secondary: #5A5A5A;
-    --secondary-foreground: #F2F2F2;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
 
-    --tertiary: #A8A8A8;
-    --tertiary-foreground: #F2F2F2;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
 
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
 
-    --button-bg: #B32021;
-    --input-bg: #F2F2F2;
-    --placeholder-color: #ACACAC;
-    --custom-red: #B32021;
-  }
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-  .dark {
-    --primary: #142335;
-    --primary-foreground: #F2F2F2;
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 
-    --secondary: #5A5A5A;
-    --secondary-foreground: #F2F2F2;
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 
-    --tertiary: #A8A8A8;
-    --tertiary-foreground: #F2F2F2;
-
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-
-    --button-bg: #B32021;
-    --input-bg: #F2F2F2;
-    --placeholder-color: #ACACAC;
-    --custom-red: #B32021;
-  }
+  /* Custom added */
+  --color-button-bg: var(--button-bg);
+  --color-input-bg: var(--input-bg);
+  --color-placeholder-color: var(--placeholder-color);
+  --color-custom-red: var(--custom-red);
 }
 
+:root {
+  --radius: 0.625rem;
+
+  /* Base color definitions (light mode) */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
+  --primary: #142335;
+  --primary-foreground: #F2F2F2;
+
+  --secondary: #5A5A5A;
+  --secondary-foreground: #F2F2F2;
+
+  --tertiary: #A8A8A8;
+  --tertiary-foreground: #F2F2F2;
+
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.922 0 0);
+  --input: var(--input-bg);
+  --ring: oklch(0.708 0 0);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--secondary-foreground);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Custom added colors */
+  --button-bg: #B32021;
+  --input-bg: #F2F2F2;
+  --placeholder-color: #ACACAC;
+  --custom-red: #B32021;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
+  --primary: #142335;
+  --primary-foreground: #F2F2F2;
+
+  --secondary: #5A5A5A;
+  --secondary-foreground: #F2F2F2;
+
+  --tertiary: #A8A8A8;
+  --tertiary-foreground: #F2F2F2;
+
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: var(--input-bg);
+  --ring: oklch(0.556 0 0);
+
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--secondary-foreground);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+
+  /* Custom added colors */
+  --button-bg: #B32021;
+  --input-bg: #F2F2F2;
+  --placeholder-color: #ACACAC;
+  --custom-red: #B32021;
+}
+
+/* Base styles using Tailwind utilities and CSS variables */
 @layer base {
   * {
-    border-color: hsl(var(--border));
-    outline-color: hsl(var(--ring) / 0.5);
+    @apply border-border outline-ring/50;
   }
 
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    @apply bg-background text-foreground;
   }
 
   /* Button styling */
@@ -95,224 +170,29 @@
     background-color: var(--button-bg);
     color: var(--primary-foreground);
     padding: 0.5rem 1rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
-  }
-
-  button:hover {
-    opacity: 0.9;
   }
 
   /* Input box styling */
   input {
     background-color: var(--input-bg);
-    color: var(--primary);
+    color: var(--foreground);
     padding: 0.5rem;
-    border: 1px solid hsl(var(--border));
-    border-radius: calc(var(--radius) - 2px);
-    transition: border-color 0.2s ease;
-  }
-
-  input:focus {
-    outline: none;
-    border-color: var(--custom-red);
-    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
   }
 
   /* Placeholder color */
   input::placeholder {
     color: var(--placeholder-color);
   }
-
-  /* Card styling */
-  .card {
-    background-color: hsl(var(--card));
-    color: hsl(var(--card-foreground));
-    border: 1px solid hsl(var(--border));
-    border-radius: var(--radius);
-  }
-
-  /* Popover styling */
-  .popover {
-    background-color: hsl(var(--popover));
-    color: hsl(var(--popover-foreground));
-    border: 1px solid hsl(var(--border));
-    border-radius: var(--radius);
-  }
 }
 
-/* Custom utilities layer for transparent backgrounds */
+/* Add custom utility classes */
 @layer utilities {
-  .bg-transparent {
-    background-color: transparent !important;
-  }
-
-  /* Additional transparent utilities */
-  .border-transparent {
-    border-color: transparent !important;
-  }
-
-  .text-transparent {
-    color: transparent !important;
-  }
-
-  .text-red-primary {
-    color: #b32021;
-  }
-
   .text-textColor {
     color: var(--custom-red);
   }
-
-  /* Custom background utilities */
-  .bg-primary-custom {
-    background-color: var(--primary);
-  }
-
-  .bg-secondary-custom {
-    background-color: var(--secondary);
-  }
-
-  .bg-tertiary-custom {
-    background-color: var(--tertiary);
-  }
-
-  /* Custom text color utilities */
-  .text-primary-custom {
-    color: var(--primary);
-  }
-
-  .text-secondary-custom {
-    color: var(--secondary);
-  }
-
-  .text-tertiary-custom {
-    color: var(--tertiary);
-  }
-
-  /* Custom foreground utilities */
-  .text-primary-foreground-custom {
-    color: var(--primary-foreground);
-  }
-
-  .text-secondary-foreground-custom {
-    color: var(--secondary-foreground);
-  }
-
-  .text-tertiary-foreground-custom {
-    color: var(--tertiary-foreground);
-  }
-
-  /* Button background utility */
-  .bg-button-custom {
-    background-color: var(--button-bg);
-  }
-
-  /* Input background utility */
-  .bg-input-custom {
-    background-color: var(--input-bg);
-  }
 }
 
-/* Alternative approach using components layer */
-@layer components {
-  .transparent-bg {
-    background-color: transparent;
-  }
-
-  .glass-effect {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius);
-  }
-
-  .dark .glass-effect {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Custom button component */
-  .btn-primary {
-    background-color: var(--button-bg);
-    color: var(--primary-foreground);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 500;
-  }
-
-  .btn-primary:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  .btn-primary:active {
-    transform: translateY(0);
-  }
-
-  /* Custom input component */
-  .input-custom {
-    background-color: var(--input-bg);
-    color: var(--primary);
-    padding: 0.75rem;
-    border: 1px solid hsl(var(--border));
-    border-radius: calc(var(--radius) - 2px);
-    transition: all 0.2s ease;
-    width: 100%;
-  }
-
-  .input-custom:focus {
-    outline: none;
-    border-color: var(--custom-red);
-    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
-  }
-
-  .input-custom::placeholder {
-    color: var(--placeholder-color);
-  }
-
-  /* Custom card component */
-  .card-custom {
-    background-color: hsl(var(--card));
-    color: hsl(var(--card-foreground));
-    border: 1px solid hsl(var(--border));
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  }
-
-  /* Primary colored elements */
-  .primary-accent {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-  }
-
-  .secondary-accent {
-    background-color: var(--secondary);
-    color: var(--secondary-foreground);
-  }
-
-  .tertiary-accent {
-    background-color: var(--tertiary);
-    color: var(--tertiary-foreground);
-  }
-
-  /* Red accent using custom red */
-  .red-accent {
-    background-color: var(--custom-red);
-    color: white;
-  }
-
-  .red-text {
-    color: var(--custom-red);
-  }
-
-  .red-border {
-    border-color: var(--custom-red);
-  }
-}
