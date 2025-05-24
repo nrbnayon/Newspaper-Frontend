@@ -11,8 +11,8 @@ const HomePage = lazy(() => import("../HomePage"));
 import Dashboard from "./../Dashboard/Dashboard";
 
 const Profile = lazy(() => import("./../Profile/Profile"));
-const Advertise = lazy(() => import("../Advertise/Advertise")); 
-const NewAdvertise = lazy(() => import("./../NewAdvertise")); 
+const Advertise = lazy(() => import("../Advertise/Advertise"));
+const NewAdvertise = lazy(() => import("./../Advertise/NewAdvertise"));
 // const VerifyOtp = lazy(() => import("../VerifyOtp")); // Uncomment and adjust path as needed
 
 const AppRoutes = () => {
@@ -29,6 +29,12 @@ const AppRoutes = () => {
         <Route element={<PublicRoute />}>
           <Route element={<AuthLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route index element={<Profile />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="advertise" element={<Advertise />} />
+              <Route path="newadvertise" element={<NewAdvertise />} />
+            </Route>
           </Route>
         </Route>
 
@@ -37,7 +43,7 @@ const AppRoutes = () => {
         </Route>
 
         {/* Protected Routes - Only accessible when logged in */}
-        <Route element={<ProtectedRoute />}>
+        {/* <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="profile" element={<Profile />} />
@@ -45,7 +51,7 @@ const AppRoutes = () => {
               <Route path="newadvertise" element={<NewAdvertise />} />
             </Route>
           </Route>
-        </Route>
+        </Route> */}
 
         {/* Public routes accessible to all users */}
         {/* <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}

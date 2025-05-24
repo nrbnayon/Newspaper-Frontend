@@ -1,5 +1,4 @@
-"use client"
-
+// src\pages\Advertise\NewAdvertise.jsx
 import { useState } from "react"
 import { FileUploader } from "../../components/ui/file-uploader"
 import { Button } from "../../components/ui/button"

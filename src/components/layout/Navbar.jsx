@@ -34,80 +34,80 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className='bg-white border-b border-gray-200'>
+      <nav className="bg-white border-b border-gray-200">
         {/* Top section */}
-        <div className='flex items-center justify-between py-4 px-4'>
+        <div className="flex items-center justify-between py-4 px-4">
           {/* Left side - Search and Date */}
-          <div className='flex flex-col items-start space-y-2'>
-            <div className='relative'>
+          <div className="flex flex-col items-start space-y-2">
+            <div className="relative">
               <Search
-                className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 size={20}
               />
               <Input
-                placeholder='Search'
-                className='pl-10 w-64 border-gray-300'
+                placeholder="Search"
+                className="pl-10 w-64 border-gray-300"
               />
             </div>
-            <div className='text-sm text-gray-600'>
-              <div className='font-medium'>{currentDate}</div>
-              <div className='text-xs'>Today's Paper</div>
+            <div className="text-sm text-gray-600">
+              <div className="font-medium">{currentDate}</div>
+              <div className="text-xs">Today's Paper</div>
             </div>
           </div>
 
           {/* Center - Logo */}
-          <div className='flex-1 text-center'>
-            <h1 className='text-4xl font-bold text-gray-900 tracking-wide'>
+          <div className="flex-1 text-center">
+            <h1 className="text-4xl font-bold text-gray-900 tracking-wide">
               ALAMOCITYPULSE
             </h1>
           </div>
 
           {/* Right side - Auth buttons and membership */}
-          <div className='flex flex-col items-center space-y-2'>
-            <div className='w-full flex justify-between items-center gap-2'>
+          <div className="flex flex-col items-center space-y-2">
+            <div className="w-full flex justify-between items-center gap-2">
               <Button
-                variant='outline'
+                variant="outline"
                 onClick={openSignIn}
-                className='border-[#00254a] text-[#00254a] hover:bg-[#00254a] hover:text-white'
+                className="border-[#00254a] text-[#00254a] hover:bg-[#00254a] hover:text-white"
               >
                 Sign In
               </Button>
               <Button
                 onClick={openSignUp}
-                className='bg-[#00254a] text-white hover:bg-[#001a38]'
+                className="bg-[#00254a] text-white hover:bg-[#001a38]"
               >
                 Sign Up
               </Button>
             </div>
-            <div className='text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl'>
+            <div className="text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl">
               SAVE 50% ON Membership
             </div>
           </div>
         </div>
 
         {/* Navigation Menu */}
-        <div className='flex items-center justify-center space-x-8 py-4 border-t border-gray-200'>
+        <div className="flex items-center justify-center space-x-8 py-4 border-t border-gray-200">
           <a
-            href='/'
-            className='text-gray-900 font-medium hover:text-[#00254a]'
+            href="/"
+            className="text-gray-900 font-medium hover:text-[#00254a]"
           >
             Home
           </a>
-          <div className='relative group'>
-            <button className='flex items-center text-gray-900 font-medium hover:text-[#00254a]'>
+          <div className="relative group">
+            <button className="flex items-center text-gray-900 font-medium hover:text-[#00254a]">
               News
-              <ChevronDown size={16} className='ml-1' />
+              <ChevronDown size={16} className="ml-1" />
             </button>
           </div>
           <a
-            href='/about'
-            className='text-gray-900 font-medium hover:text-[#00254a]'
+            href="/about"
+            className="text-gray-900 font-medium hover:text-[#00254a]"
           >
             About Us
           </a>
           <a
-            href='/advertise'
-            className='text-gray-900 font-medium hover:text-[#00254a]'
+            href="/dashboard/advertise"
+            className="text-gray-900 font-medium hover:text-[#00254a]"
           >
             Make Advertise
           </a>
