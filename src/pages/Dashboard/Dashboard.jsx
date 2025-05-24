@@ -42,7 +42,7 @@ const Dashboard = () => {
             
             <li>
               <NavLink
-                to="/dashboard"
+                to="/dashboard/advertiselist"
                 className={({ isActive }) =>
                   `block py-3 px-4 font-medium transition-colors ${
                     isActive

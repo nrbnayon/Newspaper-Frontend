@@ -1,5 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/ui/table"
+import { Button } from "../../../components/ui/button"
 import { Edit } from "lucide-react"
 
 const advertiseData = [
@@ -90,13 +90,12 @@ function getProgressColor(progress) {
       return "text-gray-900"
   }
 }
-
 export default function AdvertiseList() {
   return (
     <div className="w-full max-w-6xl mx-auto p-6">
       <h1 className="text-2xl font-semibold text-gray-700 mb-6">Advertise List</h1>
 
-      <div className="border rounded-lg overflow-hidden">
+      <div className="rounded-lg overflow-hidden">
         <Table>
           <TableHeader className="bg-blue-50">
             <TableRow>
@@ -110,7 +109,7 @@ export default function AdvertiseList() {
           </TableHeader>
           <TableBody>
             {advertiseData.map((item, index) => (
-              <TableRow key={`${item.id}-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+              <TableRow key={`${item.id}-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-input-bg"}>
                 <TableCell className="font-medium text-gray-700">{item.id}</TableCell>
                 <TableCell className="text-gray-600">{item.category}</TableCell>
                 <TableCell className="text-gray-600">{item.details}</TableCell>

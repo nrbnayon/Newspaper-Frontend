@@ -9,6 +9,7 @@ import NotFoundPage from "../NotFoundPage";
 // Lazy loaded components
 const HomePage = lazy(() => import("../HomePage"));
 import Dashboard from "./../Dashboard/Dashboard";
+import AdvertiseList from "../admin/Advertise/AdvertiseList";
 
 const Profile = lazy(() => import("./../Profile/Profile"));
 const Advertise = lazy(() => import("../Advertise/Advertise"));
@@ -34,6 +35,7 @@ const AppRoutes = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="advertise" element={<Advertise />} />
               <Route path="newadvertise" element={<NewAdvertise />} />
+              <Route path="advertiselist" element={<AdvertiseList/>} />
             </Route>
           </Route>
         </Route>
