@@ -89,7 +89,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
               <button
                 type='button'
                 onClick={toggleMode}
-                className='text-[#00254a] font-medium underline'
+                className='text-[#00254a] cursor-pointer font-medium underline'
               >
                 {isSignIn ? "Sign Up Free" : "Sign In"}
               </button>
@@ -246,7 +246,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
 
               <Button
                 type='submit'
-                className='w-full bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
+                className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
                 disabled={mutation.isPending}
               >
                 {mutation.isPending
@@ -264,7 +264,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
             </div>
 
             <div className='grid grid-cols-2 gap-4 mb-6'>
-              <SocialButton provider='google' />
+              <SocialButton  provider='google' />
               <SocialButton provider='facebook' />
             </div>
 
@@ -276,7 +276,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                 <button
                   type='button'
                   onClick={toggleMode}
-                  className='text-[#00254a] font-medium underline'
+                  className='text-[#00254a] cursor-pointer font-medium underline'
                 >
                   {isSignIn ? "Sign Up" : "Sign In"}
                 </button>

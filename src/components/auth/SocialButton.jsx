@@ -26,7 +26,7 @@ export default function SocialButton({ provider }) {
     <Button
       type="button"
       variant="outline"
-      className="flex items-center justify-center gap-2 py-2 px-4 border border-[#c7c7c7] rounded bg-white hover:bg-gray-50"
+      className="flex items-center cursor-pointer justify-center gap-2 py-2 px-4 border border-[#c7c7c7] rounded bg-white hover:bg-gray-50"
       onClick={handleClick}
       disabled={mutation.isPending}
     >

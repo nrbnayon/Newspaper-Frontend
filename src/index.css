@@ -166,13 +166,7 @@
   }
 
   /* Button styling */
-  button {
-    background-color: var(--button-bg);
-    color: var(--primary-foreground);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-  }
+  
 
   /* Input box styling */
   input {
