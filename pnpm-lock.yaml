@@ -20,6 +20,9 @@ importers:
       '@radix-ui/react-select':
         specifier: ^2.2.5
         version: 2.2.5(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-separator':
+        specifier: ^1.1.7
+        version: 1.1.7(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-slot':
         specifier: ^1.2.3
         version: 1.2.3(@types/react@19.1.5)(react@19.1.0)
@@ -62,9 +65,15 @@ importers:
       lightningcss:
         specifier: latest
         version: 1.30.1
+      localforage:
+        specifier: ^1.10.0
+        version: 1.10.0
       lucide-react:
         specifier: ^0.511.0
         version: 0.511.0(react@19.1.0)
+      match-sorter:
+        specifier: ^8.0.2
+        version: 8.0.2
       path:
         specifier: latest
         version: 0.12.7
@@ -90,7 +99,7 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-router-dom:
-        specifier: latest
+        specifier: ^7.6.0
         version: 7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       recharts:
         specifier: 2.15.3
@@ -98,6 +107,9 @@ importers:
       sonner:
         specifier: ^2.0.3
         version: 2.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      sort-by:
+        specifier: ^0.0.2
+        version: 0.0.2
       stylus:
         specifier: latest
         version: 0.64.0
@@ -724,6 +736,19 @@ packages:
 
   '@radix-ui/react-select@2.2.5':
     resolution: {integrity: sha512-HnMTdXEVuuyzx63ME0ut4+sEMYW6oouHWNGUZc7ddvUWIcfCva/AMoqEW/3wnEllriMWBa0RHspCYnfCWJQYmA==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
+  '@radix-ui/react-separator@1.1.7':
+    resolution: {integrity: sha512-0HEb8R9E8A+jZjvmFCy/J4xhbXy3TV+9XSnGJ3KvTtjlIUy/YQ/p6UYZvi7YbeoeXdyU9+Y3scizK6hkY37baA==}
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
@@ -1392,6 +1417,9 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
+  immediate@3.0.6:
+    resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+
   immutable@5.1.2:
     resolution: {integrity: sha512-qHKXW1q6liAk1Oys6umoaZbDRqjcjgSrbnrifHsfsttza7zcvRAsL7mMV6xWcyhwQy7Xj5v4hhbr6b+iDYwlmQ==}
 
@@ -1458,6 +1486,9 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  lie@3.1.1:
+    resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
+
   lightningcss-darwin-arm64@1.30.1:
     resolution: {integrity: sha512-c8JK7hyE65X1MHMN+Viq9n11RRC7hgin3HhYKhrMyaXflk5GVplZ60IxyoVtzILeKr+xAJwg6zK6sjTBJ0FKYQ==}
     engines: {node: '>= 12.0.0'}
@@ -1522,6 +1553,9 @@ packages:
     resolution: {integrity: sha512-xi6IyHML+c9+Q3W0S4fCQJOym42pyurFiJUHEcEyHS0CeKzia4yZDEsLlqOFykxOdHpNy0NmvVO31vcSqAxJCg==}
     engines: {node: '>= 12.0.0'}
 
+  localforage@1.10.0:
+    resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
+
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
@@ -1546,6 +1580,9 @@ packages:
   make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
     engines: {node: '>=6'}
+
+  match-sorter@8.0.2:
+    resolution: {integrity: sha512-5mXYiqA0QKXQDVaXtuMb4JfQFu5z4rzpgPUi3b+7+psOV+Q85RqVRrs8+kCorzR38LHv6ftkpSbbP5qhuPu3SQ==}
 
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
@@ -1775,6 +1812,9 @@ packages:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
+
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
@@ -1956,6 +1996,9 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
+  sort-by@0.0.2:
+    resolution: {integrity: sha512-iOX5oHA4a0eqTMFiWrHYqv924UeRKFBLhym7iwSVG37Egg2wApgZKAjyzM9WZjMwKv6+8Zi+nIaJ7FYsO9EkoA==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -2696,6 +2739,15 @@ snapshots:
       '@types/react': 19.1.5
       '@types/react-dom': 19.1.5(@types/react@19.1.5)
 
+  '@radix-ui/react-separator@1.1.7(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@radix-ui/react-primitive': 2.1.3(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+    optionalDependencies:
+      '@types/react': 19.1.5
+      '@types/react-dom': 19.1.5(@types/react@19.1.5)
+
   '@radix-ui/react-slot@1.2.3(@types/react@19.1.5)(react@19.1.0)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.1.5)(react@19.1.0)
@@ -3264,6 +3316,8 @@ snapshots:
   image-size@0.5.5:
     optional: true
 
+  immediate@3.0.6: {}
+
   immutable@5.1.2:
     optional: true
 
@@ -3325,6 +3379,10 @@ snapshots:
       needle: 3.3.1
       source-map: 0.6.1
 
+  lie@3.1.1:
+    dependencies:
+      immediate: 3.0.6
+
   lightningcss-darwin-arm64@1.30.1:
     optional: true
 
@@ -3370,6 +3428,10 @@ snapshots:
       lightningcss-win32-arm64-msvc: 1.30.1
       lightningcss-win32-x64-msvc: 1.30.1
 
+  localforage@1.10.0:
+    dependencies:
+      lie: 3.1.1
+
   lodash@4.17.21: {}
 
   loose-envify@1.4.0:
@@ -3395,6 +3457,11 @@ snapshots:
       pify: 4.0.1
       semver: 5.7.2
     optional: true
+
+  match-sorter@8.0.2:
+    dependencies:
+      '@babel/runtime': 7.27.1
+      remove-accents: 0.5.0
 
   micromatch@4.0.8:
     dependencies:
@@ -3604,6 +3671,8 @@ snapshots:
       tiny-invariant: 1.3.3
       victory-vendor: 36.9.2
 
+  remove-accents@0.5.0: {}
+
   resolve-pkg-maps@1.0.0:
     optional: true
 
@@ -3768,6 +3837,8 @@ snapshots:
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
+
+  sort-by@0.0.2: {}
 
   source-map-js@1.2.1: {}
 

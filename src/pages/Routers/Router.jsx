@@ -10,32 +10,30 @@ import NewAdvertise from "../Pages/Advertise/NewAdvertise";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
-    children:[
+    element: <HomePage/>,
+    children: [
       {
-        path:"/",
-        element: <NewsPage/>
+        path: "/",
+        element: <NewsPage />,
       },
       {
-        path:"/dashboard",
-        element:<Dashboard/>,
-        children:[
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
           {
-            path:"/dashboard",
-            element:<Profile/>
+            path: "/dashboard",
+            element: <Profile />,
           },
           {
-            path:"/dashboard/advertise",
-            element:<Advertise/>
+            path: "/dashboard/advertise",
+            element: <Advertise />,
           },
           {
-            path:"/dashboard/newadvertise",
-            element:<NewAdvertise/>
-          }
-
-        ]
-
-      }
-    ]
+            path: "/dashboard/newadvertise",
+            element: <NewAdvertise />,
+          },
+        ],
+      },
+    ],
   },
 ]);

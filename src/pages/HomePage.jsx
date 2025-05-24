@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/layout/Navbar";
 import NewsCard from "@/components/news/NewsCard";
+import { Separator } from "@radix-ui/react-select";
 
 const sampleArticles = [
   {
@@ -65,6 +66,10 @@ export default function HomePage() {
             <div className="w-4/5">
               <NewsCard featured={true} />
             </div>
+            <Separator
+              orientation="vertical"
+              className="min-h-full mx-4 bg-red-800"
+            />
             <div className="w-1/5 flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold mb-2">Advertisements Area</h3>
             </div>
