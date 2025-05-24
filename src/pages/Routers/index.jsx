@@ -1,4 +1,4 @@
-// src/routes/index.jsx
+// src\pages\Routers\index.jsx
 import { Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { ProtectedRoute, PublicRoute, VerificationRoute } from "./route-guards";
@@ -11,7 +11,7 @@ const HomePage = lazy(() => import("../HomePage"));
 import Dashboard from "./../Dashboard/Dashboard";
 
 const Profile = lazy(() => import("./../Profile/Profile"));
-const Advertise = lazy(() => import("./../Advertise/Avertise")); 
+const Advertise = lazy(() => import("../Advertise/Advertise")); 
 const NewAdvertise = lazy(() => import("./../NewAdvertise")); 
 // const VerifyOtp = lazy(() => import("../VerifyOtp")); // Uncomment and adjust path as needed
 
