@@ -14,6 +14,7 @@ import {
   longReadArticle,
 } from "@/data/sampleArticles";
 import CommonNewsCard from "@/components/news/CommonNewsCard";
+import { FooterSection } from "@/components/footer/FooterSection";
 
 const sampleArticles = [
   {
@@ -140,6 +141,7 @@ export default function HomePage() {
             </div>
           </div>
         </main>
+        <FooterSection/>
       </div>
     </>
   );
