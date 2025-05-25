@@ -15,11 +15,11 @@ const advertisementData = [
     description:
       "After hours of intense discussion, the national parliament passed a sweeping economic reform bill late Monday night. The legislation, aimed at reducing inflation and attracting foreign investment, sparked sharp division between ruling party members and the opposition, who claim it favors big corporations over working citizens.",
     images: [
-      "/https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "/placeholder.svg?height=120&width=160",
-      "/placeholder.svg?height=120&width=160",
-      "/placeholder.svg?height=120&width=160",
-      "/placeholder.svg?height=120&width=160",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       
     ],
   },
