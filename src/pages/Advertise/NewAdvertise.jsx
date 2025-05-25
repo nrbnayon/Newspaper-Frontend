@@ -70,7 +70,7 @@ export default function NewAdvertise() {
                 placeholder="Write your news title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-input-bg p-2 text-xl text-gray-700 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -126,7 +126,7 @@ export default function NewAdvertise() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className={cn(
-                  "w-full h-[200px] bg-white p-4 resize-none",
+                  "w-full h-[200px] p-4 resize-none",
                   "text-2xl text-gray-600 placeholder:text-gray-400",
                   "border border-gray-300 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-blue-500",
@@ -140,7 +140,7 @@ export default function NewAdvertise() {
             <button 
             
               type="submit" 
-              className="bg-[#002855] hover:bg-[#00396b] text-white px-6 py-3 rounded transition-colors duration-200"
+              className="bg-[#002855] cursor-pointer hover:bg-[#00396b] text-white px-6 py-3 rounded transition-colors duration-200"
             >
               Sent Request
             </button>
