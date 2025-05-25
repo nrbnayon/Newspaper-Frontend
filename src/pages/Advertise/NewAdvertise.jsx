@@ -22,11 +22,11 @@ export default function NewAdvertise() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // Handle form submission logic here
-    console.log({ serialNumber, title, category, description, file })
+    
     
     // Show toast message
+   
     setShowToast(true)
-    
     // Auto hide toast after 4 seconds
     setTimeout(() => {
       setShowToast(false)
@@ -50,7 +50,7 @@ export default function NewAdvertise() {
       
       <h1 className="text-3xl font-semibold text-gray-800 mb-6">New Advertise Information</h1>
       <Card className={cn("p-6 rounded-lg")}>
-        <div onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6">
             <div className="flex justify-between items-center">
               <label htmlFor="serialNumber" className="text-2xl font-medium text-gray-700">
@@ -137,14 +137,15 @@ export default function NewAdvertise() {
           </div>
 
           <div className="flex justify-end mt-6">
-            <Link 
+            <button 
+            
               type="submit" 
               className="bg-[#002855] hover:bg-[#00396b] text-white px-6 py-3 rounded transition-colors duration-200"
             >
               Sent Request
-            </Link>
+            </button>
           </div>
-        </div>
+        </form>
       </Card>
     </div>
   )
