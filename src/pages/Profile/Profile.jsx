@@ -64,7 +64,7 @@ const Profile = () => {
               isDelete= "true"
             />
       
-      <h2 className="text-4xl font-bold text-secondary mb-8">My Profile</h2>
+      <h2 className="text-2xl font-bold text-secondary mb-8">My Profile</h2>
       <div className="flex mb-12">
         <div className="relative mr-6">
           <div className="h-24 w-24 bg-gray-400 rounded-full overflow-hidden relative">
@@ -95,15 +95,15 @@ const Profile = () => {
           <span className="inline-block bg-[#d1e9ff] text-[#00254a] px-3 py-1 rounded-full text-sm mb-2">
             User
           </span>
-          <h3 className="text-3xl font-bold text-secondary">{name}</h3>
+          <h3 className="text-xl font-bold text-secondary">{name}</h3>
         </div>
 
         <div className="ml-auto mr-12 space-y-2">
           <div>
-            <p className="text-primary text-lg">E-mail <span className='text-tertiary ml-8'>{email}</span></p>
+            <p className="text-primary text-base">E-mail <span className='text-tertiary ml-8'>{email}</span></p>
           </div>
           <div>
-            <p className="text-primary text-lg">Phone <span className='text-tertiary ml-8'>+880 1636 828200</span></p>
+            <p className="text-primary text-base">Phone <span className='text-tertiary ml-8'>+880 1636 828200</span></p>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@ const Profile = () => {
               value={name}
               onChange={handleNameChange}
               readOnly={!isEditingName}
-              className={`w-full p-2 text-xl text-primary bg-input-bg border border-placeholder-color rounded ${
+              className={`w-full p-2 text-base text-primary bg-input-bg border border-placeholder-color rounded ${
                 isEditingName ? 'bg-white' : 'bg-input-bg'
               }`}
             />
@@ -138,7 +138,7 @@ const Profile = () => {
               value={email}
               onChange={handleEmailChange}
               readOnly={!isEditingEmail}
-              className={`w-full p-2 text-xl text-primary bg-input-bg border border-placeholder-color rounded ${
+              className={`w-full p-2 text-base text-primary bg-input-bg border border-placeholder-color rounded ${
                 isEditingEmail ? 'bg-white' : 'bg-input-bg'
               }`}
             />
@@ -153,10 +153,10 @@ const Profile = () => {
       </div>
 
       <div className="border bg-[#FAFDFF] border-red-500 rounded p-6">
-        <h4 className="text-3xl font-bold text-red-500 mb-4">Delete Account</h4>
+        <h4 className="text-xl font-bold text-red-500 mb-4">Delete Account</h4>
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-secondary text-2xl">
+            <p className="text-secondary text-base">
               Contact our  
               <a href="#" className="text-primary px-2 underline">
                 support team
@@ -167,7 +167,7 @@ const Profile = () => {
           <div>
             <button 
               onClick={handleDelete}
-              className="bg-red-500 cursor-pointer text-white px-6 py-3 mb-11 justify-center rounded hover:bg-opacity-90"
+              className="bg-red-500 cursor-pointer text-white px-4 py-2 mb-11 justify-center rounded hover:bg-opacity-90"
             >
               Apply Delete
             </button>

@@ -48,12 +48,12 @@ export default function NewAdvertise() {
         onClose={() => setShowToast(false)} 
       />
       
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">New Advertise Information</h1>
+      <h1 className="text-2xl font-semibold text-gray-800 mb-6">New Advertise Information</h1>
       <Card className={cn("p-6 rounded-lg")}>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6">
             <div className="flex justify-between items-center">
-              <label htmlFor="serialNumber" className="text-2xl font-medium text-gray-700">
+              <label htmlFor="serialNumber" className="text-base font-medium text-gray-700">
                 Serial Number
               </label>
               <span className="text-xl text-gray-600">{serialNumber}</span>
@@ -62,7 +62,7 @@ export default function NewAdvertise() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
             <div className="md:col-span-3">
-              <label htmlFor="title" className="text-2xl text-gray-700 font-medium block mb-2">
+              <label htmlFor="title" className="text-base text-gray-700 font-medium block mb-2">
                 Title
               </label>
               <input
@@ -70,11 +70,11 @@ export default function NewAdvertise() {
                 placeholder="Write your news title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full bg-input-bg p-2 text-xl text-gray-700 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-input-bg p-2 text-base text-gray-700 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label htmlFor="category" className="text-2xl text-primary font-medium block mb-2">
+              <label htmlFor="category" className="text-base text-primary font-medium block mb-2">
                 Category
               </label>
               <Select value={category} onValueChange={setCategory}>
@@ -82,26 +82,26 @@ export default function NewAdvertise() {
                   className={cn(
                     "w-full h-auto bg-input-bg min-h-[45px] text-black px-4 py-4",
                     "bg-input-bg border border-placeholder-color rounded",
-                    "text-2xl text-primary",
+                    "text-base text-primary",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500"
                   )}
                 >
                   <SelectValue 
                     placeholder="Select" 
-                    className="text-2xl text-placeholder-color"
+                    className="text-base text-placeholder-color"
                   />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-gray-200 rounded shadow-lg">
-                  <SelectItem value="news" className="text-2xl px-4  hover:bg-gray-100">
+                  <SelectItem value="news" className="text-base px-4  hover:bg-gray-100">
                     News
                   </SelectItem>
-                  <SelectItem value="event" className="text-2xl px-4  hover:bg-gray-100">
+                  <SelectItem value="event" className="text-base px-4  hover:bg-gray-100">
                     Event
                   </SelectItem>
-                  <SelectItem value="promotion" className="text-2xl px-4  hover:bg-gray-100">
+                  <SelectItem value="promotion" className="text-base px-4  hover:bg-gray-100">
                     Promotion
                   </SelectItem>
-                  <SelectItem value="announcement" className="text-2xl px-4  hover:bg-gray-100">
+                  <SelectItem value="announcement" className="text-base px-4  hover:bg-gray-100">
                     Announcement
                   </SelectItem>
                 </SelectContent>
@@ -111,13 +111,13 @@ export default function NewAdvertise() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
-              <label htmlFor="photo" className="text-2xl text-gray-700 font-medium block mb-2">
+              <label htmlFor="photo" className="text-base text-gray-700 font-medium block mb-2">
                 Upload Photo
               </label>
               <FileUploader onFileChange={setFile} selectedFile={file} />
             </div>
             <div className="md:col-span-2">
-              <label htmlFor="description" className="text-2xl text-gray-700 font-medium block mb-2">
+              <label htmlFor="description" className="text-base text-gray-700 font-medium block mb-2">
                 Description
               </label>
               <Textarea
@@ -127,7 +127,7 @@ export default function NewAdvertise() {
                 onChange={(e) => setDescription(e.target.value)}
                 className={cn(
                   "w-full h-[200px] p-4 resize-none",
-                  "text-2xl text-gray-600 placeholder:text-gray-400",
+                  "text-base text-gray-600 placeholder:text-gray-400",
                   "border border-gray-300 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-blue-500",
                   "focus:border-transparent"

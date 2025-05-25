@@ -116,7 +116,7 @@ export default function AdvertiseList() {
                 <TableCell className="text-secondary">{item.details}</TableCell>
                 <TableCell className="text-secondary">{item.image}</TableCell>
                 <TableCell>
-                  <span className={`font-medium ${getProgressColor(item.progress)}`}>{item.progress}</span>
+                  <span className={`font-medium text-base ${getProgressColor(item.progress)}`}>{item.progress}</span>
                 </TableCell>
                 <TableCell>
                   <Link 

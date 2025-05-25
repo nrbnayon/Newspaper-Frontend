@@ -10,17 +10,17 @@ const AdvertiseCard = ({ serialNumber, category, title, description }) => {
     <Card className="w-full  border rounded-md">
       <CardContent className="p-6">
         <div className="grid grid-cols-[1fr_2fr] gap-y-6">
-          <div className="font-medium text-xl text-primary">Serial Number</div>
-          <div className="text-xl text-secondary">{serialNumber}</div>
+          <div className="font-medium text-base text-primary">Serial Number</div>
+          <div className="text-base text-secondary">{serialNumber}</div>
 
-          <div className="font-medium text-xl text-primary">Category</div>
-          <div className="text-xl font-medium text-primary">{category}</div>
+          <div className="font-medium text-base text-primary">Category</div>
+          <div className="text-base font-medium text-primary">{category}</div>
 
-          <div className="font-medium text-xl text-primary">Title</div>
-          <div className="text-xl font-medium text-primary">{title}</div>
+          <div className="font-medium text-base text-primary">Title</div>
+          <div className="text-base font-medium text-primary">{title}</div>
 
-          <div className="font-medium text-xl text-primary">Description</div>
-          <div className="text-xl text-tertiary">{description}</div>
+          <div className="font-medium text-base text-primary">Description</div>
+          <div className="text-base text-tertiary">{description}</div>
         </div>
       </CardContent>
     </Card>
@@ -48,7 +48,7 @@ const Advertise = () => {
   return (
     <div className="flex-1 p-8 w-full">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-secondary">Advertise</h2>
+        <h2 className="text-2xl font-bold text-secondary">Advertise</h2>
         <Link to="/dashboard/newadvertise"  className="flex text-2xl font-bold bg-transparent items-center text-secondary px-4 py-2 rounded">
           <Plus className="h-6 w-6 border-2  border-secondary rounded-md mr-2" />
           New Advertise

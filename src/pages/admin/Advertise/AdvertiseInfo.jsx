@@ -32,13 +32,13 @@ export default function AdvertiseInfo() {
     <div className="min-h-screen  px-2">
       <div className="w-full mx-auto space-y-6">
         {/* Header */}
-        <div className="bg-white   px-6">
-          <h1 className="text-3xl font-semibold text-secondary">Advertise</h1>
+        <div className="bg-white   ">
+          <h1 className="text-2xl font-semibold text-secondary">Advertise</h1>
         </div>
 
 
         <div className="bg-white   ">
-          <h1 className="text-3xl font-semibold text-secondary">New Advertise Information</h1>
+          <h1 className="text-xl font-semibold text-secondary">New Advertise Information</h1>
         </div>
 
         {/* Main Content */}
@@ -52,23 +52,23 @@ export default function AdvertiseInfo() {
 
             <div className="space-x-0 border-2 px-4 py-6">
                 <div className="grid grid-cols-[1fr_3fr] gap-y-6">
-                    <div className="font-medium text-xl text-primary">Serial Number</div>
-                    <div className="text-xl text-secondary">{selectedAd.serialNumber}</div>
+                    <div className="font-medium text-base text-primary">Serial Number</div>
+                    <div className="text-base text-secondary">{selectedAd.serialNumber}</div>
 
-                    <div className="font-medium text-xl text-primary">Category</div>
-                    <div className="text-xl font-medium text-primary">{selectedAd.category}</div>
+                    <div className="font-medium text-base text-primary">Category</div>
+                    <div className="text-base font-medium text-primary">{selectedAd.category}</div>
 
-                    <div className="font-medium text-xl text-primary">Title</div>
-                    <div className="text-xl font-medium text-primary">{selectedAd.title}</div>
+                    <div className="font-medium text-base text-primary">Title</div>
+                    <div className="text-base font-medium text-primary">{selectedAd.title}</div>
 
-                    <div className="font-medium text-xl text-primary">Description</div>
-                    <div className="text-xl text-tertiary">{selectedAd.description}</div>
+                    <div className="font-medium text-base text-primary">Description</div>
+                    <div className="text-base text-tertiary">{selectedAd.description}</div>
 
                     
                 </div>
 
                 <div className="space-y-4 md:col-span-3">
-                    <label className="text-xl font-medium text-primary">Upload Photo</label>
+                    <label className="text-base font-medium text-primary">Upload Photo</label>
                     <div className="flex justify-between mt-3 p-2 border-2 flex-wrap gap-4">
                         {selectedAd.images.map((image, index) => (
                             <div
@@ -89,10 +89,10 @@ export default function AdvertiseInfo() {
 
             {/* Action Buttons */}
             <div className="flex justify-end gap-4 pt-6 ">
-              <Button variant="destructive" className="px-8 py-6">
+              <Button variant="destructive" className="px-8 py-5">
                 Cancel
               </Button>
-              <Button className="px-8 py-6 text-white bg-prtext-primary hover:bg-blue-800">Approve</Button>
+              <Button className="px-8 py-5 text-white bg-prtext-primary hover:bg-blue-800">Approve</Button>
             </div>
           </CardContent>
         </Card>
