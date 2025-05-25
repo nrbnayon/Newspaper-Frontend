@@ -55,7 +55,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex-1 md:px-30 px-1 relative">
+    <div className="flex-1 md:px-30 px-1 pt-4 relative">
       {/* Delete Success Message */}
       <Toast 
               message="Deleted successfully!" 

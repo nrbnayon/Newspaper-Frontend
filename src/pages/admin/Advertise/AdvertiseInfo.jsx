@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "../../../components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
 import { cn } from "../../../lib/utils"
+import Toast from "../../../components/ui/toast"
 
 // Array to store advertisement data and images
 const advertisementData = [
@@ -27,10 +28,39 @@ const advertisementData = [
 
 export default function AdvertiseInfo() {
   const [selectedAd] = useState(advertisementData[0])
+  const [showToast, setShowToast] = useState(false)
+  const [isDelete, setIsdelete]= useState(false)
+  const handleCancel = () => {
+
+     setShowToast(true)
+     setIsdelete(true)
+    // Auto hide toast after 4 seconds
+    setTimeout(() => {
+      setShowToast(false)
+    }, 3000)
+    
+  }
+
+  const handleApprove = () => {
+
+     setShowToast(true)
+     setIsdelete(false)
+    // Auto hide toast after 4 seconds
+    setTimeout(() => {
+      setShowToast(false)
+    }, 3000)
+    
+  }
 
   return (
-    <div className="min-h-screen  px-2">
+    <div className="min-h-screen pt-4 px-4">
       <div className="w-full mx-auto space-y-6">
+        <Toast 
+                      message="Deleted successfully!" 
+                      isVisible={showToast} 
+                      onClose={() => setShowToast(false)} 
+                      isDelete= {isDelete}
+                    />
         {/* Header */}
         <div className="bg-white   ">
           <h1 className="text-2xl font-semibold text-secondary">Advertise</h1>
@@ -89,10 +119,14 @@ export default function AdvertiseInfo() {
 
             {/* Action Buttons */}
             <div className="flex justify-end gap-4 pt-6 ">
-              <Button variant="destructive" className="px-8 py-5">
+              <Button 
+                onClick={handleCancel}
+                variant="destructive" className="px-8 py-5 cursor-pointer">
                 Cancel
               </Button>
-              <Button className="px-8 py-5 text-white bg-prtext-primary hover:bg-blue-800">Approve</Button>
+              <Button 
+                    onClick={handleApprove}
+                    className="px-8 py-5 cursor-pointer text-white bg-prtext-primary hover:bg-blue-800">Approve</Button>
             </div>
           </CardContent>
         </Card>

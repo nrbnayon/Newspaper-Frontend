@@ -41,14 +41,14 @@ export default function NewAdvertise() {
   const cn = (...classes) => classes.filter(Boolean).join(' ')
 
   return (
-    <div className="flex-1 p-8 w-full bg-gray-50 min-h-screen">
+    <div className="flex-1 p-4 w-full  min-h-screen">
       <Toast 
         message="Successfully sent!" 
         isVisible={showToast} 
         onClose={() => setShowToast(false)} 
       />
       
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">New Advertise Information</h1>
+      <h1 className="text-2xl font-semibold text-secondary mb-6">New Advertise Information</h1>
       <Card className={cn("p-6 rounded-lg")}>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6">

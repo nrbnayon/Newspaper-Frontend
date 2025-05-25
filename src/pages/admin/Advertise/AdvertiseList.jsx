@@ -93,7 +93,7 @@ function getProgressColor(progress) {
 }
 export default function AdvertiseList() {
   return (
-    <div className="w-full  mx-auto p-6">
+    <div className="w-full  mx-auto p-4 pt-4">
       <h1 className="text-2xl font-semibold text-secondary mb-6">Advertise List</h1>
 
       <div className="rounded-lg overflow-hidden">

@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-8 gap-8">
+      <div className="flex  gap-8">
         {/* Sidebar */}
         <div className="w-1/5 bg-[#f2f2f2] h-screen p-6">
           <h2 className="text-xl font-bold text-[#142335] mb-4">My Account</h2>
