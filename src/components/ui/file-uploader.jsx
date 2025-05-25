@@ -47,7 +47,7 @@ export function FileUploader({ onFileChange }) {
 
   return (
     <div
-      className={`border-2 border-dashed rounded-md p-6 flex flex-col items-center justify-center h-[200px] text-center cursor-pointer ${
+      className={`border-2 rounded-md  flex flex-col items-center justify-center h-48 w-full text-center cursor-pointer ${
         dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
       }`}
       onDragEnter={handleDrag}
@@ -59,9 +59,13 @@ export function FileUploader({ onFileChange }) {
       <input ref={inputRef} type="file" className="hidden" onChange={handleChange} accept="image/*" />
 
       {selectedFile ? (
-        <div className="space-y-2">
-          <div className="text-sm font-medium text-gray-700">{selectedFile.name}</div>
-          <div className="text-xs text-gray-500">{(selectedFile.size / (1024 * 1024)).toFixed(2)} MB</div>
+        <div className=" flex h-full w-full flex-col items-center">
+          <img
+            src={URL.createObjectURL(selectedFile)}
+            alt="Uploaded preview"
+            className="h-full w-full object-contain mb-2"
+          />
+          
         </div>
       ) : (
         <>
