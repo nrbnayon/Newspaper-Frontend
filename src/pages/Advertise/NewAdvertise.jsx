@@ -2,13 +2,13 @@
 
 import { useState } from "react"
 import { FileUploader } from "../../components/ui/file-uploader"
-import { Button } from "../../components/ui/button"
-import { Input } from "../../components/ui/input"
+
 import { Textarea } from "../../components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
 import { Card } from "../../components/ui/card"
 import { cn } from "../../lib/utils"
 import { Link } from "react-router-dom"
+import Toast from "../../components/ui/toast"
 
 export default function NewAdvertise() {
   const [serialNumber] = useState("1as84qw1")
@@ -16,33 +16,53 @@ export default function NewAdvertise() {
   const [category, setCategory] = useState("")
   const [description, setDescription] = useState("")
   const [file, setFile] = useState(null)
+  const [showToast, setShowToast] = useState(false)
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     // Handle form submission logic here
     console.log({ serialNumber, title, category, description, file })
+    
+    // Show toast message
+    setShowToast(true)
+    
+    // Auto hide toast after 4 seconds
+    setTimeout(() => {
+      setShowToast(false)
+    }, 4000)
   }
 
+  const handleCategorySelect = (value) => {
+    setCategory(value)
+    setIsSelectOpen(false)
+  }
+
+  const cn = (...classes) => classes.filter(Boolean).join(' ')
+
   return (
-    <div className="flex-1 p-8 w-full">
-      <h1 className="text-3xl font-semibold text-secondary mb-6">New Advertise Information</h1>
-      <Card className={cn(
-              "p-6 rounded-t-none rounded-b-none"
-              
-            )}>
-        <form onSubmit={handleSubmit}>
+    <div className="flex-1 p-8 w-full bg-gray-50 min-h-screen">
+      <Toast 
+        message="Successfully sent!" 
+        isVisible={showToast} 
+        onClose={() => setShowToast(false)} 
+      />
+      
+      <h1 className="text-3xl font-semibold text-gray-800 mb-6">New Advertise Information</h1>
+      <Card className={cn("p-6 rounded-lg")}>
+        <div onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6">
             <div className="flex justify-between items-center">
-              <label htmlFor="serialNumber" className="text-2xl font-medium text-primary">
+              <label htmlFor="serialNumber" className="text-2xl font-medium text-gray-700">
                 Serial Number
               </label>
-              <span className="text-xl text-secondary">{serialNumber}</span>
+              <span className="text-xl text-gray-600">{serialNumber}</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
             <div className="md:col-span-3">
-              <label htmlFor="title" className="text-2xl text-primary font-medium block mb-2">
+              <label htmlFor="title" className="text-2xl text-gray-700 font-medium block mb-2">
                 Title
               </label>
               <input
@@ -50,7 +70,7 @@ export default function NewAdvertise() {
                 placeholder="Write your news title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 text-xl text-primary bg-input-bg border border-placeholder-color rounded"
+                className="w-full p-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -91,13 +111,13 @@ export default function NewAdvertise() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
-              <label htmlFor="photo" className="text-2xl text-primary font-medium block mb-2">
+              <label htmlFor="photo" className="text-2xl text-gray-700 font-medium block mb-2">
                 Upload Photo
               </label>
-              <FileUploader onFileChange={setFile} />
+              <FileUploader onFileChange={setFile} selectedFile={file} />
             </div>
             <div className="md:col-span-2">
-              <label htmlFor="description" className="text-2xl text-primary font-medium block mb-2">
+              <label htmlFor="description" className="text-2xl text-gray-700 font-medium block mb-2">
                 Description
               </label>
               <Textarea
@@ -106,9 +126,9 @@ export default function NewAdvertise() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className={cn(
-                  "w-full h-[200px] bg-input-bg p-4 resize-none",
-                  "text-2xl text-secondary placeholder:text-placeholder-color",
-                  "bg-input-bg border border-placeholder-color rounded",
+                  "w-full h-[200px] bg-white p-4 resize-none",
+                  "text-2xl text-gray-600 placeholder:text-gray-400",
+                  "border border-gray-300 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-blue-500",
                   "focus:border-transparent"
                 )}
@@ -117,11 +137,14 @@ export default function NewAdvertise() {
           </div>
 
           <div className="flex justify-end mt-6">
-            <Link type="submit" className="bg-[#002855] hover:bg-[#00396b] text-white px-6 py-3">
+            <Link 
+              type="submit" 
+              className="bg-[#002855] hover:bg-[#00396b] text-white px-6 py-3 rounded transition-colors duration-200"
+            >
               Sent Request
             </Link>
           </div>
-        </form>
+        </div>
       </Card>
     </div>
   )
