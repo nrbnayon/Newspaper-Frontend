@@ -111,7 +111,7 @@ const Profile = () => {
               value={name}
               onChange={handleNameChange}
               readOnly={!isEditingName}
-              className={`w-full p-4 text-2xl text-primary bg-input-bg border border-placeholder-color rounded ${
+              className={`w-full p-2 text-xl text-primary bg-input-bg border border-placeholder-color rounded ${
                 isEditingName ? 'bg-white' : 'bg-input-bg'
               }`}
             />
@@ -132,7 +132,7 @@ const Profile = () => {
               value={email}
               onChange={handleEmailChange}
               readOnly={!isEditingEmail}
-              className={`w-full p-4 text-2xl text-primary bg-input-bg border border-placeholder-color rounded ${
+              className={`w-full p-2 text-xl text-primary bg-input-bg border border-placeholder-color rounded ${
                 isEditingEmail ? 'bg-white' : 'bg-input-bg'
               }`}
             />

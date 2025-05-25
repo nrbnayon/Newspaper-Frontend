@@ -8,6 +8,7 @@ import { Textarea } from "../../components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
 import { Card } from "../../components/ui/card"
 import { cn } from "../../lib/utils"
+import { Link } from "react-router-dom"
 
 export default function NewAdvertise() {
   const [serialNumber] = useState("1as84qw1")
@@ -25,7 +26,10 @@ export default function NewAdvertise() {
   return (
     <div className="flex-1 p-8 w-full">
       <h1 className="text-3xl font-semibold text-secondary mb-6">New Advertise Information</h1>
-      <Card className="p-6 border-t-0 rounded-t-none">
+      <Card className={cn(
+              "p-6 rounded-t-none rounded-b-none"
+              
+            )}>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6">
             <div className="flex justify-between items-center">
@@ -46,7 +50,7 @@ export default function NewAdvertise() {
                 placeholder="Write your news title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-4 text-2xl text-primary bg-input-bg border border-placeholder-color rounded"
+                className="w-full p-2 text-xl text-primary bg-input-bg border border-placeholder-color rounded"
               />
             </div>
             <div>
@@ -56,7 +60,7 @@ export default function NewAdvertise() {
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger 
                   className={cn(
-                    "w-full h-auto bg-input-bg min-h-[60px] text-black px-4 py-4",
+                    "w-full h-auto bg-input-bg min-h-[45px] text-black px-4 py-4",
                     "bg-input-bg border border-placeholder-color rounded",
                     "text-2xl text-primary",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -113,9 +117,9 @@ export default function NewAdvertise() {
           </div>
 
           <div className="flex justify-end mt-6">
-            <button type="submit" className="bg-[#002855] hover:bg-[#00396b] text-white px-8 py-4">
+            <Link type="submit" className="bg-[#002855] hover:bg-[#00396b] text-white px-6 py-3">
               Sent Request
-            </button>
+            </Link>
           </div>
         </form>
       </Card>

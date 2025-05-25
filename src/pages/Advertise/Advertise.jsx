@@ -49,8 +49,8 @@ const Advertise = () => {
     <div className="flex-1 p-8 w-full">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-secondary">Advertise</h2>
-        <Link to="/dashboard/newadvertise"  className="flex text-3xl font-bold bg-transparent items-center text-secondary px-4 py-2 rounded">
-          <Plus className="h-7 w-7 border-2  border-secondary rounded-md mr-2" />
+        <Link to="/dashboard/newadvertise"  className="flex text-2xl font-bold bg-transparent items-center text-secondary px-4 py-2 rounded">
+          <Plus className="h-6 w-6 border-2  border-secondary rounded-md mr-2" />
           New Advertise
         </Link>
       </div>
