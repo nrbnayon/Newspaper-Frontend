@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/ui/table"
 import { Button } from "../../../components/ui/button"
 import { Edit } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const advertiseData = [
   {
@@ -92,35 +93,37 @@ function getProgressColor(progress) {
 }
 export default function AdvertiseList() {
   return (
-    <div className="w-full max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold text-gray-700 mb-6">Advertise List</h1>
+    <div className="w-full  mx-auto p-6">
+      <h1 className="text-2xl font-semibold text-secondary mb-6">Advertise List</h1>
 
       <div className="rounded-lg overflow-hidden">
         <Table>
-          <TableHeader className="bg-blue-50">
+          <TableHeader className="bg-[#E7EFFE] text-base">
             <TableRow>
-              <TableHead className="font-medium text-gray-600">T-ID</TableHead>
-              <TableHead className="font-medium text-gray-600">Category</TableHead>
-              <TableHead className="font-medium text-gray-600">Details</TableHead>
-              <TableHead className="font-medium text-gray-600">Image</TableHead>
-              <TableHead className="font-medium text-gray-600">Progress</TableHead>
-              <TableHead className="font-medium text-gray-600">Edit</TableHead>
+              <TableHead className="font-medium text-secondary">T-ID</TableHead>
+              <TableHead className="font-medium text-secondary">Category</TableHead>
+              <TableHead className="font-medium  text-secondary">Details</TableHead>
+              <TableHead className="font-medium text-secondary">Image</TableHead>
+              <TableHead className="font-medium text-secondary">Progress</TableHead>
+              <TableHead className="font-medium text-secondary">Edit</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-base">
             {advertiseData.map((item, index) => (
-              <TableRow key={`${item.id}-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-input-bg"}>
-                <TableCell className="font-medium text-gray-700">{item.id}</TableCell>
-                <TableCell className="text-gray-600">{item.category}</TableCell>
-                <TableCell className="text-gray-600">{item.details}</TableCell>
-                <TableCell className="text-gray-600">{item.image}</TableCell>
+              <TableRow key={`${item.id}-${index}`} className={index % 2 === 0 ? "bg-white " : "bg-input-bg"}>
+                <TableCell className="font-medium py-3 text-secondary">{item.id}</TableCell>
+                <TableCell className="text-secondary">{item.category}</TableCell>
+                <TableCell className="text-secondary">{item.details}</TableCell>
+                <TableCell className="text-secondary">{item.image}</TableCell>
                 <TableCell>
                   <span className={`font-medium ${getProgressColor(item.progress)}`}>{item.progress}</span>
                 </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                    <Edit className="h-4 w-4 text-gray-400" />
-                  </Button>
+                  <Link 
+                      to="/dashboard/advertiseinfo"
+                      variant="ghost" size="sm" className="h-8 w-8 p-0">
+                      <Edit className="h-4 w-4 text-gray-400" />
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}
