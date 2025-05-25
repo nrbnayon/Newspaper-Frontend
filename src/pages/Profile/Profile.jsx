@@ -1,3 +1,4 @@
+import Toast from '../../components/ui/toast'
 import { Edit } from 'lucide-react'
 import { useState, useRef } from 'react'
 
@@ -7,7 +8,8 @@ const Profile = () => {
   const [email, setEmail] = useState("mahdeerashid@gmail.com")
   const [isEditingName, setIsEditingName] = useState(false)
   const [isEditingEmail, setIsEditingEmail] = useState(false)
-  const [showDeleteMessage, setShowDeleteMessage] = useState(false)
+
+  const [showToast, setShowToast] = useState(false)
   
   const fileInputRef = useRef(null)
 
@@ -43,21 +45,25 @@ const Profile = () => {
   }
 
   const handleDelete = () => {
-    setShowDeleteMessage(true)
+
+     setShowToast(true)
+    // Auto hide toast after 4 seconds
     setTimeout(() => {
-      setShowDeleteMessage(false)
-    }, 2000)
+      setShowToast(false)
+    }, 3000)
+    
   }
 
   return (
     <div className="flex-1 md:px-30 px-1 relative">
       {/* Delete Success Message */}
-      {showDeleteMessage && (
-        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50 transition-all duration-100">
-          Successfully deleted
-        </div>
-      )}
-
+      <Toast 
+              message="Deleted successfully!" 
+              isVisible={showToast} 
+              onClose={() => setShowToast(false)} 
+              isDelete= "true"
+            />
+      
       <h2 className="text-4xl font-bold text-secondary mb-8">My Profile</h2>
       <div className="flex mb-12">
         <div className="relative mr-6">
@@ -161,7 +167,7 @@ const Profile = () => {
           <div>
             <button 
               onClick={handleDelete}
-              className="bg-red-500 text-white px-6 py-3 mb-11 justify-center rounded hover:bg-opacity-90"
+              className="bg-red-500 cursor-pointer text-white px-6 py-3 mb-11 justify-center rounded hover:bg-opacity-90"
             >
               Apply Delete
             </button>
