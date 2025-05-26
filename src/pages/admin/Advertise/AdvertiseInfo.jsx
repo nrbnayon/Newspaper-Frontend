@@ -62,7 +62,7 @@ export default function AdvertiseInfo() {
               </div>
               <div className="space-y-4 mt-5 md:col-span-3">
                 <label className="text-base font-medium text-primary">Upload Photo</label>
-                <div className="flex justify-between mt-3 p-2 border-2 flex-wrap gap-4">
+                <div className="flex justify-around mt-3 p-2 border-2 flex-wrap gap-4">
                   {selectedAd.images.map((image, index) => (
                     <div
                       key={index}

@@ -49,7 +49,7 @@ export default function AdvertiseList() {
   return (
     <div className="w-full mx-auto p-4 pt-4">
       <h1 className="text-2xl font-semibold text-secondary mb-6">Advertise List</h1>
-      <div className="rounded-lg overflow-hidden">
+      <div className="rounded-lg overflow-x-auto">
         <Table>
           <TableHeader className="bg-[#E7EFFE] text-base">
             <TableRow>
