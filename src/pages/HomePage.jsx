@@ -58,6 +58,26 @@ const sampleArticles = [
     date: "8 hours ago",
     image: "/placeholder.svg?height=200&width=300",
   },
+  {
+    id: 5,
+    title: "Healthcare Breakthrough in Gene Therapy",
+    excerpt:
+      "Researchers announce significant progress in treating genetic disorders through innovative therapies...",
+    category: "Health",
+    readTime: 6,
+    date: "8 hours ago",
+    image: "/placeholder.svg?height=200&width=300",
+  },
+  {
+    id: 6,
+    title: "Healthcare Breakthrough in Gene Therapy",
+    excerpt:
+      "Researchers announce significant progress in treating genetic disorders through innovative therapies...",
+    category: "Health",
+    readTime: 6,
+    date: "8 hours ago",
+    image: "/placeholder.svg?height=200&width=300",
+  },
 ];
 
 export default function HomePage() {
@@ -74,79 +94,102 @@ export default function HomePage() {
       <div className="min-h-screen">
         <Navbar />
 
-        <main className="w-full py-8">
-          {/* Featured Article Section */}
-          <div className="flex gap-6 mb-12">
-            {/* Featured Article - Takes up most width */}
-            <div className="flex-1">
-              <CommonNewsCard article={featuredArticle} />
+        <main className="w-full py-4 sm:py-8">
+          <div className="">
+            {/* Main Layout - Responsive Grid */}
+            <div className="grid grid-cols-1 xl:grid-cols-[1fr_1px_320px] gap-6 xl:gap-8 mb-12">
+              {/* Main Content Area */}
+              <div className="w-full">
+                {/* Featured Article Section */}
+                <div className="mb-8">
+                  <CommonNewsCard article={featuredArticle} />
+                </div>
 
-              {/* Audio News Section */}
-              <div className="py-6">
-                <AudioNewsCard {...audioNews} />
+                {/* Audio News Section */}
+                <div className="mb-8">
+                  <AudioNewsCard {...audioNews} />
+                </div>
+
+                {/* Long Read Article */}
+                <NewsSection>
+                  <CommonNewsCard article={longReadArticle} />
+                </NewsSection>
+
+                {/* Live Updates Section */}
+                <NewsSection>
+                  <LiveUpdateCard updates={liveUpdate} />
+                </NewsSection>
+
+                {/* Tabbed News Section */}
+                <div className="mb-8">
+                  <TabbedNewsSection />
+                </div>
+
+                {/* Long Read Article */}
+                <NewsSection>
+                  <CommonNewsCard article={longReadArticle} />
+                </NewsSection>
+
+                {/* Live Updates Section */}
+                <NewsSection>
+                  <LiveUpdateCard updates={liveUpdate} />
+                </NewsSection>
+
+                {/* Listed News Section */}
+                <div className="mb-8">
+                  <ListedNewsSection />
+                </div>
+
+                {/* Mobile/Tablet Ad Space - Only show on smaller screens */}
+                <div className="xl:hidden w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mb-8">
+                  <span className="text-gray-600 text-sm">Ad Space</span>
+                </div>
+
+                {/* Bottom Ad Space */}
+                <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center">
+                  <span className="text-gray-600 text-sm">Ad Space</span>
+                </div>
               </div>
 
-              {/* Long Read Article */}
-              <NewsSection>
-                <CommonNewsCard article={longReadArticle} />
-              </NewsSection>
+              {/* Vertical Separator - Only visible on xl screens */}
+              <div className="hidden xl:block w-px bg-gray-300 min-h-full"></div>
 
-              {/* Live Updates Section */}
-              <NewsSection>
-                <LiveUpdateCard updates={liveUpdate} />
-              </NewsSection>
+              {/* Sidebar - Advertisement Area */}
+              <aside className="w-full xl:w-80">
+                <div className="bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
+                  <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
+                    Advertisement Area
+                  </h3>
 
-              {/* Tabbed News Section - Replaces the simple grid */}
-              <div className="mb-8">
-                <TabbedNewsSection />
-              </div>
+                  {/* Top Ad in Sidebar */}
+                  <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
+                    <span className="text-gray-600 text-sm">Ad Space</span>
+                  </div>
 
-              {/* Long Read Article */}
-              <NewsSection>
-                <CommonNewsCard article={longReadArticle} />
-              </NewsSection>
+                  {/* Sidebar News Articles */}
+                  <div className="w-full">
+                    <h4 className="text-md font-semibold text-gray-700 mb-4">
+                      Trending Now
+                    </h4>
+                    <div className="space-y-4">
+                      {sampleArticles.slice(0, 6).map((article) => (
+                        <div key={article.id} className="w-full">
+                          <StandardArticleCard article={article} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Live Updates Section */}
-              <NewsSection>
-                <LiveUpdateCard updates={liveUpdate} />
-              </NewsSection>
-
-              {/* Listed News Section */}
-              <div className="mb-8">
-                <ListedNewsSection />
-              </div>
-
-              {/* Keep original grid as fallback or additional content */}
-              {/* <div className='mb-8'>
-                <h2 className='text-2xl font-bold text-gray-900 mb-6'>
-                  Latest Updates
-                </h2>
-                <NewsGrid columns={4}>
-                  {sampleArticles.map((article) => (
-                    <StandardArticleCard key={article.id} article={article} />
-                  ))}
-                </NewsGrid>
-              </div> */}
-
-              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-                <span className="text-gray-600 text-sm">Ad Space</span>
-              </div>
-            </div>
-
-            {/* Vertical Separator */}
-            <div className="w-px bg-gray-300 min-h-full"></div>
-
-            {/* Advertisement Area */}
-            <div className="w-80 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
-              <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
-                Advertisement Area
-              </h3>
-              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-                <span className="text-gray-600 text-sm">Ad Space</span>
-              </div>
+                  {/* Bottom Ad in Sidebar */}
+                  <div className="w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mt-6">
+                    <span className="text-gray-600 text-sm">Ad Space</span>
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
         </main>
+
         <FooterSection />
       </div>
     </>
