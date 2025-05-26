@@ -50,6 +50,7 @@
   --color-input-bg: var(--input-bg);
   --color-placeholder-color: var(--placeholder-color);
   --color-custom-red: var(--custom-red);
+  --color-custom-gray: var(--custom-gray);
 }
 
 :root {
@@ -65,13 +66,13 @@
   --popover-foreground: oklch(0.145 0 0);
 
   --primary: #142335;
-  --primary-foreground: #F2F2F2;
+  --primary-foreground: #f2f2f2;
 
-  --secondary: #5A5A5A;
-  --secondary-foreground: #F2F2F2;
+  --secondary: #5a5a5a;
+  --secondary-foreground: #f2f2f2;
 
-  --tertiary: #A8A8A8;
-  --tertiary-foreground: #F2F2F2;
+  --tertiary: #a8a8a8;
+  --tertiary-foreground: #f2f2f2;
 
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -99,10 +100,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Custom added colors */
-  --button-bg: #B32021;
-  --input-bg: #F2F2F2;
-  --placeholder-color: #ACACAC;
-  --custom-red: #B32021;
+  --button-bg: #b32021;
+  --input-bg: #f2f2f2;
+  --placeholder-color: #acacac;
+  --custom-red: #b32021;
+  --custom-gray: #727272;
 }
 
 .dark {
@@ -115,13 +117,13 @@
   --popover-foreground: oklch(0.985 0 0);
 
   --primary: #142335;
-  --primary-foreground: #F2F2F2;
+  --primary-foreground: #f2f2f2;
 
-  --secondary: #5A5A5A;
-  --secondary-foreground: #F2F2F2;
+  --secondary: #5a5a5a;
+  --secondary-foreground: #f2f2f2;
 
-  --tertiary: #A8A8A8;
-  --tertiary-foreground: #F2F2F2;
+  --tertiary: #a8a8a8;
+  --tertiary-foreground: #f2f2f2;
 
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
@@ -149,10 +151,11 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   /* Custom added colors */
-  --button-bg: #B32021;
-  --input-bg: #F2F2F2;
-  --placeholder-color: #ACACAC;
-  --custom-red: #B32021;
+  --button-bg: #b32021;
+  --input-bg: #f2f2f2;
+  --placeholder-color: #acacac;
+  --custom-red: #b32021;
+  --custom-gray: #727272;
 }
 
 /* Base styles using Tailwind utilities and CSS variables */
@@ -166,7 +169,6 @@
   }
 
   /* Button styling */
-  
 
   /* Input box styling */
   input {
@@ -188,5 +190,10 @@
   .text-textColor {
     color: var(--custom-red);
   }
+  .text-custom-gray {
+    color: var(--custom-gray);
+  }
+  .bg-custom-gray {
+    background-color: var(--custom-gray);
+  }
 }
-

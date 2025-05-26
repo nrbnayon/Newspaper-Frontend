@@ -171,77 +171,77 @@ const tabsData = {
 const TabbedNewsSection = ({ className }) => {
   return (
     <div className={` ${className}`}>
-      <Tabs defaultValue='featured' className='w-full'>
-        <TabsList className='flex gap-2 items-center mb-8 p-1 bg-transparent mx-auto'>
+      <Tabs defaultValue="featured" className="w-full">
+        <TabsList className="flex gap-2 items-center mb-8 p-1 bg-transparent mx-auto">
           <TabsTrigger
-            value='featured'
-            className='data-[state=active]:w-24 data-[state=active]:h-11 rounded-none data-[state=active]:py-3 data-[state=active]:px-4 data-[state=active]:bg-[#F2F2F2] data-[state=active]:shadow-sm font-medium text-gray-700'
+            value="featured"
+            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
           >
             Featured
           </TabsTrigger>
           <TabsTrigger
-            value='bestSides'
-            className='data-[state=active]:w-24 data-[state=active]:h-11 rounded-none data-[state=active]:py-3 data-[state=active]:px-4 data-[state=active]:bg-[#F2F2F2] data-[state=active]:shadow-sm font-medium text-gray-700'
+            value="bestSides"
+            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
           >
             Best Sides
           </TabsTrigger>
           <TabsTrigger
-            value='makeAhead'
-            className='data-[state=active]:w-24 data-[state=active]:h-11 rounded-none data-[state=active]:py-3 data-[state=active]:px-4 data-[state=active]:bg-[#F2F2F2] data-[state=active]:shadow-sm font-medium text-gray-700'
+            value="makeAhead"
+            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
           >
             Make-Ahead
           </TabsTrigger>
           <TabsTrigger
-            value='stunningDesserts'
-            className='data-[state=active]:h-11 rounded-none data-[state=active]:py-3 data-[state=active]:px-4 data-[state=active]:bg-[#F2F2F2] data-[state=active]:shadow-sm font-medium text-gray-700'
+            value="stunningDesserts"
+            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
           >
             Stunning Desserts
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value='featured' className='mt-0'>
+        <TabsContent value="featured" className="mt-0">
           <NewsGrid columns={4} gap={4}>
             {tabsData.featured.map((article) => (
               <StandardArticleCard
                 key={article.id}
                 article={article}
-                className='bg-white border border-gray-200'
+                className="bg-white border border-gray-200"
               />
             ))}
           </NewsGrid>
         </TabsContent>
 
-        <TabsContent value='bestSides' className='mt-0'>
+        <TabsContent value="bestSides" className="mt-0">
           <NewsGrid columns={4} gap={4}>
             {tabsData.bestSides.map((article) => (
               <StandardArticleCard
                 key={article.id}
                 article={article}
-                className='bg-white border border-gray-200'
+                className="bg-white border border-gray-200"
               />
             ))}
           </NewsGrid>
         </TabsContent>
 
-        <TabsContent value='makeAhead' className='mt-0'>
+        <TabsContent value="makeAhead" className="mt-0">
           <NewsGrid columns={3} gap={6}>
             {tabsData.makeAhead.map((article) => (
               <StandardArticleCard
                 key={article.id}
                 article={article}
-                className='bg-white border border-gray-200'
+                className="bg-white border border-gray-200"
               />
             ))}
           </NewsGrid>
         </TabsContent>
 
-        <TabsContent value='stunningDesserts' className='mt-0'>
+        <TabsContent value="stunningDesserts" className="mt-0">
           <NewsGrid columns={4} gap={4}>
             {tabsData.stunningDesserts.map((article) => (
               <StandardArticleCard
                 key={article.id}
                 article={article}
-                className='bg-white border border-gray-200'
+                className="bg-white border border-gray-200"
               />
             ))}
           </NewsGrid>
