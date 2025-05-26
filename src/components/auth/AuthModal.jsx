@@ -1,6 +1,7 @@
+// src\components\auth\AuthModal.jsx
+
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Eye, EyeOff, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -8,21 +9,20 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Modal, ModalContent } from "@/components/ui/modal";
-import { registerUser, loginUser } from "@/lib/auth-service";
 import SocialButton from "@/components/auth/SocialButton";
+import { SuccessModal } from "@/components/auth/SuccessModal";
 import { cn } from "@/lib/utils";
 
 export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
   const [isSignIn, setIsSignIn] = useState(initialMode === "signin");
   const [showPassword, setShowPassword] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [viewMode, setViewMode] = useState("form");
+  const [afterOtpAction, setAfterOtpAction] = useState(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
+  // Main form for signup, signin, and forgot password
+  const form = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -32,232 +32,239 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
     },
   });
 
+  const { control } = form;
+
+  // OTP verification form
+  const otpForm = useForm({
+    defaultValues: {
+      otp: "",
+    },
+  });
+
+  // Set new password form
+  const setPasswordForm = useForm({
+    defaultValues: {
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
   // Update mode when initialMode prop changes
   useEffect(() => {
     setIsSignIn(initialMode === "signin");
   }, [initialMode]);
 
-  const mutation = useMutation({
-    mutationFn: (data) => (isSignIn ? loginUser(data) : registerUser(data)),
-    onSuccess: () => {
-      toast.success(
-        isSignIn ? "Successfully signed in!" : "Account created successfully!"
-      );
-      onClose();
-      reset();
-    },
-    onError: (error) => {
-      toast.error(error.message || "An error occurred. Please try again.");
-    },
-  });
-
-  const forgotPasswordMutation = useMutation({
-    mutationFn: (data) => {
-      // Replace with your actual forgot password API call
-      return new Promise((resolve) => {
-        setTimeout(() => resolve({ success: true }), 1000);
-      });
-    },
-    onSuccess: () => {
-      toast.success("Password reset link sent to your email!");
-      setIsForgotPassword(false);
-      reset();
-    },
-    onError: (error) => {
-      toast.error(
-        error.message || "Failed to send reset link. Please try again."
-      );
-    },
-  });
-
+  // Handle main form submission
   const onSubmit = (data) => {
     if (isForgotPassword) {
-      forgotPasswordMutation.mutate({ email: data.email });
+      console.log("Initiating forgot password for:", data.email);
+      setViewMode("otp");
+      setAfterOtpAction("setPassword");
+    } else if (!isSignIn) {
+      // Signup
+      console.log("Initiating signup with:", data);
+      setViewMode("otp");
+      setAfterOtpAction("showSuccess");
     } else {
-      mutation.mutate(data);
+      // Signin
+      console.log("Logging in user:", data);
+      toast.success("Successfully signed in!");
+      onClose();
+      form.reset();
     }
+  };
+
+  // Handle OTP form submission
+  const handleOtpSubmit = (data) => {
+    console.log("Verifying OTP:", data.otp);
+    if (afterOtpAction === "showSuccess") {
+      setShowSuccessModal(true);
+    } else if (afterOtpAction === "setPassword") {
+      setViewMode("setPassword");
+    }
+  };
+
+  // Handle set password form submission
+  const handleSetPasswordSubmit = (data) => {
+    console.log("Setting new password:", data.newPassword);
+    toast.success("Password reset successfully!");
+    onClose();
+    setPasswordForm.reset();
+  };
+
+  // Handle social login
+  const handleSocialLogin = (provider) => {
+    console.log(`Logging in with ${provider}`);
+    setShowSuccessModal(true);
   };
 
   const toggleMode = () => {
     setIsSignIn(!isSignIn);
     setIsForgotPassword(false);
-    reset();
+    form.reset();
   };
 
   const showForgotPassword = () => {
     setIsForgotPassword(true);
-    reset();
+    form.reset();
   };
 
   const backToSignIn = () => {
     setIsForgotPassword(false);
-    reset();
+    form.reset();
   };
 
   const handleClose = () => {
     onClose();
-    reset();
+    form.reset();
+    otpForm.reset();
+    setPasswordForm.reset();
     setShowPassword(false);
     setIsForgotPassword(false);
+    setViewMode("form");
+    setAfterOtpAction(null);
   };
+
+  const handleSuccessModalClose = () => {
+    setShowSuccessModal(false);
+    handleClose();
+  };
+
+  // Show SuccessModal if applicable
+  if (showSuccessModal) {
+    return <SuccessModal onClose={handleSuccessModalClose} />;
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalContent onClose={handleClose} className={cn("max-w-xl")}>
-        <div className='p-8'>
+        <div className="p-8">
           {/* Header */}
-          <div className='text-center mb-6'>
-            <h2 className='text-2xl font-bold'>
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold">
               You have to Sign Up or Sign In
             </h2>
-            <p className='mb-4 text-2xl font-bold'>for view more News</p>
+            <p className="mb-4 text-2xl font-bold">for view more News</p>
           </div>
 
-          {/* Form */}
-          <div className='bg-[#FCFCFF] rounded-lg p-6 text-black'>
-            <h3 className='text-xl font-bold text-center mb-1'>
-              {isForgotPassword
-                ? "Forgot Password"
-                : isSignIn
-                ? "Sign In Account"
-                : "Sign Up Account"}
+          {/* Form Container */}
+          <div className="bg-[#FCFCFF] rounded-lg p-6 text-black">
+            <h3 className="text-xl font-bold text-center mb-1">
+              {viewMode === "form"
+                ? isForgotPassword
+                  ? "Forgot Password"
+                  : isSignIn
+                  ? "Sign In Account"
+                  : "Sign Up Account"
+                : viewMode === "otp"
+                ? "Verify OTP"
+                : "Set New Password"}
             </h3>
-            <p className='text-center mb-6 text-sm text-gray-600'>
-              {isForgotPassword ? (
-                <>
-                  Remember your password?{" "}
-                  <button
-                    type='button'
-                    onClick={backToSignIn}
-                    className='text-[#00254a] cursor-pointer font-medium underline'
-                  >
-                    Back to Sign In
-                  </button>
-                </>
-              ) : (
-                <>
-                  {isSignIn
-                    ? "Don't have an Account? "
-                    : "Already have an Account? "}
-                  <button
-                    type='button'
-                    onClick={toggleMode}
-                    className='text-[#00254a] cursor-pointer font-medium underline'
-                  >
-                    {isSignIn ? "Sign Up Free" : "Sign In"}
-                  </button>
-                </>
-              )}
-            </p>
 
-            {isForgotPassword ? (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='space-y-1 mb-6'>
-                  <Label htmlFor='email' className='text-[#262626] text-sm'>
-                    E-mail
-                  </Label>
-                  <Input
-                    id='email'
-                    placeholder='Enter your email address'
-                    className='border-[#c7c7c7] bg-white'
-                    {...register("email", {
-                      required: "Email is required",
-                      pattern: {
-                        value:
-                          /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\.([a-zA-Z]{2,5})$/,
-                        message: "Please enter a valid email address",
-                      },
-                    })}
-                  />
-                  {errors.email && (
-                    <p className='text-red-500 text-xs'>
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
+            {/* Toggle text */}
+            {viewMode === "form" && (
+              <p className="text-center mb-6 text-sm text-gray-600">
+                {isForgotPassword ? (
+                  <>
+                    Remember your password?{" "}
+                    <button
+                      type="button"
+                      onClick={backToSignIn}
+                      className="text-[#00254a] cursor-pointer font-medium underline"
+                    >
+                      Back to Sign In
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {isSignIn
+                      ? "Don't have an Account? "
+                      : "Already have an Account? "}
+                    <button
+                      type="button"
+                      onClick={toggleMode}
+                      className="text-[#00254a] cursor-pointer font-medium underline"
+                    >
+                      {isSignIn ? "Sign Up Free" : "Sign In"}
+                    </button>
+                  </>
+                )}
+              </p>
+            )}
 
-                <Button
-                  type='submit'
-                  className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
-                  disabled={forgotPasswordMutation.isPending}
-                >
-                  {forgotPasswordMutation.isPending
-                    ? "Sending..."
-                    : "Send Reset Link"}
-                </Button>
-              </form>
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                {!isSignIn && (
-                  <div className='grid grid-cols-2 gap-4 mb-4'>
-                    <div className='space-y-1'>
+            {/* Main Form */}
+            {viewMode === "form" && (
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                {!isSignIn && !isForgotPassword && (
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="space-y-1">
                       <Label
-                        htmlFor='firstName'
-                        className='text-[#262626] text-sm'
+                        htmlFor="firstName"
+                        className="text-[#262626] text-sm"
                       >
                         First Name
                       </Label>
-                      <div className='relative'>
+                      <div className="relative">
                         <Input
-                          id='firstName'
-                          placeholder='First name'
-                          className='pr-10 border-[#c7c7c7] bg-white'
-                          {...register("firstName", {
+                          id="firstName"
+                          placeholder="First name"
+                          className="pr-10 border-[#c7c7c7] bg-white"
+                          {...form.register("firstName", {
                             required: !isSignIn
                               ? "First name is required"
                               : false,
                           })}
                         />
-                        <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]">
                           <User size={16} />
                         </div>
                       </div>
-                      {errors.firstName && (
-                        <p className='text-red-500 text-xs'>
-                          {errors.firstName.message}
+                      {form.formState.errors.firstName && (
+                        <p className="text-red-500 text-xs">
+                          {form.formState.errors.firstName.message}
                         </p>
                       )}
                     </div>
-                    <div className='space-y-1'>
+                    <div className="space-y-1">
                       <Label
-                        htmlFor='lastName'
-                        className='text-[#262626] text-sm'
+                        htmlFor="lastName"
+                        className="text-[#262626] text-sm"
                       >
                         Last Name
                       </Label>
-                      <div className='relative'>
+                      <div className="relative">
                         <Input
-                          id='lastName'
-                          placeholder='Last name'
-                          className='pr-10 border-[#c7c7c7] bg-white'
-                          {...register("lastName", {
+                          id="lastName"
+                          placeholder="Last name"
+                          className="pr-10 border-[#c7c7c7] bg-white"
+                          {...form.register("lastName", {
                             required: !isSignIn
                               ? "Last name is required"
                               : false,
                           })}
                         />
-                        <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]">
                           <User size={16} />
                         </div>
                       </div>
-                      {errors.lastName && (
-                        <p className='text-red-500 text-xs'>
-                          {errors.lastName.message}
+                      {form.formState.errors.lastName && (
+                        <p className="text-red-500 text-xs">
+                          {form.formState.errors.lastName.message}
                         </p>
                       )}
                     </div>
                   </div>
                 )}
 
-                <div className='space-y-1 mb-4'>
-                  <Label htmlFor='email' className='text-[#262626] text-sm'>
+                <div className="space-y-1 mb-4">
+                  <Label htmlFor="email" className="text-[#262626] text-sm">
                     E-mail or Phone
                   </Label>
                   <Input
-                    id='email'
-                    placeholder='Enter your mail or phone number'
-                    className='border-[#c7c7c7] bg-white'
-                    {...register("email", {
+                    id="email"
+                    placeholder="Enter your mail or phone number"
+                    className="border-[#c7c7c7] bg-white"
+                    {...form.register("email", {
                       required: "Email or phone is required",
                       pattern: {
                         value:
@@ -266,101 +273,113 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                       },
                     })}
                   />
-                  {errors.email && (
-                    <p className='text-red-500 text-xs'>
-                      {errors.email.message}
+                  {form.formState.errors.email && (
+                    <p className="text-red-500 text-xs">
+                      {form.formState.errors.email.message}
                     </p>
                   )}
                 </div>
 
-                <div className='space-y-1 mb-4'>
-                  <div className='flex justify-between items-center'>
-                    <Label
-                      htmlFor='password'
-                      className='text-[#262626] text-sm'
-                    >
-                      Password
-                    </Label>
-                    {isSignIn && (
-                      <button
-                        type='button'
-                        onClick={showForgotPassword}
-                        className='text-[#00254a] text-xs cursor-pointer font-medium underline'
+                {!isForgotPassword && (
+                  <div className="space-y-1 mb-4">
+                    <div className="flex justify-between items-center">
+                      <Label
+                        htmlFor="password"
+                        className="text-[#262626] text-sm"
                       >
-                        Forgot Password?
+                        Password
+                      </Label>
+                      {isSignIn && (
+                        <button
+                          type="button"
+                          onClick={showForgotPassword}
+                          className="text-[#00254a] text-xs cursor-pointer font-medium underline"
+                        >
+                          Forgot Password?
+                        </button>
+                      )}
+                    </div>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your Password"
+                        className="pr-10 border-[#c7c7c7] bg-white"
+                        {...form.register("password", {
+                          required: "Password is required",
+                          minLength: {
+                            value: isSignIn ? 1 : 8,
+                            message: isSignIn
+                              ? "Password is required"
+                              : "Password must be at least 8 characters",
+                          },
+                        })}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]"
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                      >
+                        {showPassword ? (
+                          <EyeOff size={16} />
+                        ) : (
+                          <Eye size={16} />
+                        )}
                       </button>
+                    </div>
+                    {form.formState.errors.password && (
+                      <p className="text-red-500 text-xs">
+                        {form.formState.errors.password.message}
+                      </p>
                     )}
                   </div>
-                  <div className='relative'>
-                    <Input
-                      id='password'
-                      type={showPassword ? "text" : "password"}
-                      placeholder='Enter your Password'
-                      className='pr-10 border-[#c7c7c7] bg-white'
-                      {...register("password", {
-                        required: "Password is required",
-                        minLength: {
-                          value: isSignIn ? 1 : 8,
-                          message: isSignIn
-                            ? "Password is required"
-                            : "Password must be at least 8 characters",
-                        },
-                      })}
-                    />
-                    <button
-                      type='button'
-                      onClick={() => setShowPassword(!showPassword)}
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  </div>
-                  {errors.password && (
-                    <p className='text-red-500 text-xs'>
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
+                )}
 
-                {!isSignIn && (
-                  <div className='flex justify-start items-center mb-6'>
-                    <div className='flex justify-center items-center h-5'>
-                      <Checkbox
-                        id='terms'
-                        {...register("terms", {
-                          required: !isSignIn
-                            ? "You must agree to the terms and conditions"
-                            : false,
-                        })}
+                {!isSignIn && !isForgotPassword && (
+                  <div className="flex justify-start items-center mb-6">
+                    <div className="flex justify-center items-center h-5">
+                      <Controller
+                        control={control}
+                        name="terms"
+                        rules={{
+                          required:
+                            "You must agree to the terms and conditions",
+                        }}
+                        render={({ field }) => (
+                          <Checkbox
+                            id="terms"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        )}
                       />
                     </div>
                     <Label
-                      htmlFor='terms'
-                      className='ml-2 text-xs text-[#262626]'
+                      htmlFor="terms"
+                      className="ml-2 text-xs text-[#262626]"
                     >
                       I agree to the{" "}
-                      <a href='/terms' className='text-[#00254a] underline'>
+                      <a href="/terms" className="text-[#00254a] underline">
                         Terms & Condition
                       </a>
                     </Label>
                   </div>
                 )}
-                {errors.terms && (
-                  <p className='text-red-500 text-xs mb-4'>
-                    {errors.terms.message}
+                {form.formState.errors.terms && (
+                  <p className="text-red-500 text-xs mb-4">
+                    {form.formState.errors.terms.message}
                   </p>
                 )}
 
                 <Button
-                  type='submit'
-                  className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]'
-                  disabled={mutation.isPending}
+                  type="submit"
+                  className="w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]"
                 >
-                  {mutation.isPending
-                    ? "Processing..."
+                  {isForgotPassword
+                    ? "Send Reset Link"
                     : isSignIn
                     ? "Sign In"
                     : "Sign Up"}
@@ -368,28 +387,132 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
               </form>
             )}
 
-            {!isForgotPassword && (
+            {/* OTP Verification Form */}
+            {viewMode === "otp" && (
+              <form onSubmit={otpForm.handleSubmit(handleOtpSubmit)}>
+                <div className="space-y-1 mb-6">
+                  <Label htmlFor="otp" className="text-[#262626] text-sm">
+                    Enter OTP
+                  </Label>
+                  <Input
+                    id="otp"
+                    placeholder="Enter 6-digit OTP"
+                    className="border-[#c7c7c7] bg-white"
+                    {...otpForm.register("otp", {
+                      required: "OTP is required",
+                      pattern: {
+                        value: /^\d{6}$/,
+                        message: "OTP must be 6 digits",
+                      },
+                    })}
+                  />
+                  {otpForm.formState.errors.otp && (
+                    <p className="text-red-500 text-xs">
+                      {otpForm.formState.errors.otp.message}
+                    </p>
+                  )}
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]"
+                >
+                  Verify OTP
+                </Button>
+              </form>
+            )}
+
+            {/* Set New Password Form */}
+            {viewMode === "setPassword" && (
+              <form
+                onSubmit={setPasswordForm.handleSubmit(handleSetPasswordSubmit)}
+              >
+                <div className="space-y-1 mb-4">
+                  <Label
+                    htmlFor="newPassword"
+                    className="text-[#262626] text-sm"
+                  >
+                    Create New Password
+                  </Label>
+                  <Input
+                    id="newPassword"
+                    type="password"
+                    placeholder="Enter new password"
+                    className="border-[#c7c7c7] bg-white"
+                    {...setPasswordForm.register("newPassword", {
+                      required: "New password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
+                    })}
+                  />
+                  {setPasswordForm.formState.errors.newPassword && (
+                    <p className="text-red-500 text-xs">
+                      {setPasswordForm.formState.errors.newPassword.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-1 mb-6">
+                  <Label
+                    htmlFor="confirmPassword"
+                    className="text-[#262626] text-sm"
+                  >
+                    Confirm Password
+                  </Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm new password"
+                    className="border-[#c7c7c7] bg-white"
+                    {...setPasswordForm.register("confirmPassword", {
+                      required: "Please confirm your password",
+                      validate: (value) =>
+                        value === setPasswordForm.getValues("newPassword") ||
+                        "Passwords do not match",
+                    })}
+                  />
+                  {setPasswordForm.formState.errors.confirmPassword && (
+                    <p className="text-red-500 text-xs">
+                      {setPasswordForm.formState.errors.confirmPassword.message}
+                    </p>
+                  )}
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]"
+                >
+                  Set New Password
+                </Button>
+              </form>
+            )}
+
+            {/* Social Buttons */}
+            {viewMode === "form" && !isForgotPassword && (
               <>
-                <div className='text-center mb-4'>
-                  <p className='text-[#5a5a5a] text-sm'>
+                <div className="text-center mb-4">
+                  <p className="text-[#5a5a5a] text-sm">
                     Or {isSignIn ? "Sign In" : "Sign Up"} with
                   </p>
                 </div>
-
-                <div className='grid grid-cols-2 gap-4 mb-6'>
-                  <SocialButton provider='google' />
-                  <SocialButton provider='facebook' />
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <SocialButton
+                    provider="google"
+                    onClick={() => handleSocialLogin("google")}
+                  />
+                  <SocialButton
+                    provider="facebook"
+                    onClick={() => handleSocialLogin("facebook")}
+                  />
                 </div>
-
-                <div className='text-center'>
-                  <p className='text-[#5a5a5a] text-sm'>
+                <div className="text-center">
+                  <p className="text-[#5a5a5a] text-sm">
                     {isSignIn
                       ? "Don't have an account? "
                       : "Already have an account? "}
                     <button
-                      type='button'
+                      type="button"
                       onClick={toggleMode}
-                      className='text-[#00254a] cursor-pointer font-medium underline'
+                      className="text-[#00254a] cursor-pointer font-medium underline"
                     >
                       {isSignIn ? "Sign Up" : "Sign In"}
                     </button>
@@ -403,3 +526,574 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
     </Modal>
   );
 }
+
+// src\components\auth\AuthModal.jsx
+// import { useState, useEffect } from "react";
+// import { useForm, Controller } from "react-hook-form";
+// import { useMutation } from "@tanstack/react-query";
+// import toast from "react-hot-toast";
+// import { Eye, EyeOff, User } from "lucide-react";
+// import { Input } from "@/components/ui/input";
+// import { Button } from "@/components/ui/button";
+// import { Label } from "@/components/ui/label";
+// import { Modal, ModalContent } from "@/components/ui/modal";
+// import { registerUser, loginUser, sendForgotPasswordOTP, socialLogin } from "@/lib/auth-service";
+// import SocialButton from "@/components/auth/SocialButton";
+// import { SuccessModal } from "@/components/auth/SuccessModal";
+// import { VerifyOTPModal } from "@/components/auth/VerifyOTPModal";
+// import { ChangePasswordModal } from "@/components/auth/ChangePasswordModal";
+// import { cn } from "@/lib/utils";
+
+// export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
+//   const [isSignIn, setIsSignIn] = useState(initialMode === "signin");
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [isForgotPassword, setIsForgotPassword] = useState(false);
+//   const [showSuccessModal, setShowSuccessModal] = useState(false);
+//   const [showOTPModal, setShowOTPModal] = useState(false);
+//   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+//   const [userEmail, setUserEmail] = useState("");
+//   const [otpType, setOtpType] = useState(""); // 'signup', 'forgot-password'
+
+//   const {
+//     register,
+//     control,
+//     handleSubmit,
+//     formState: { errors },
+//     reset,
+//     // getValues,
+//   } = useForm({
+//     defaultValues: {
+//       firstName: "",
+//       lastName: "",
+//       email: "",
+//       password: "",
+//       terms: false,
+//     },
+//   });
+
+//   // Update mode when initialMode prop changes
+//   useEffect(() => {
+//     setIsSignIn(initialMode === "signin");
+//   }, [initialMode]);
+
+//   const mutation = useMutation({
+//     mutationFn: (data) => (isSignIn ? loginUser(data) : registerUser(data)),
+//     onSuccess: (response, variables) => {
+//       if (isSignIn) {
+//         console.log("Sign In Success:", {
+//           action: "signin",
+//           email: variables.email,
+//           timestamp: new Date().toISOString(),
+//           response: response
+//         });
+//         toast.success("Successfully signed in!");
+//         onClose();
+//         reset();
+//       } else {
+//         console.log("Sign Up Initiated:", {
+//           action: "signup",
+//           email: variables.email,
+//           firstName: variables.firstName,
+//           lastName: variables.lastName,
+//           timestamp: new Date().toISOString(),
+//         });
+//         // Store email and show OTP modal for signup
+//         setUserEmail(variables.email);
+//         setOtpType("signup");
+//         setShowOTPModal(true);
+//         reset();
+//       }
+//     },
+//     onError: (error, variables) => {
+//       console.error("Authentication Error:", {
+//         action: isSignIn ? "signin" : "signup",
+//         email: variables.email,
+//         error: error.message,
+//         timestamp: new Date().toISOString(),
+//       });
+//       toast.error(error.message || "An error occurred. Please try again.");
+//     },
+//   });
+
+//   const forgotPasswordMutation = useMutation({
+//     mutationFn: (data) => sendForgotPasswordOTP(data),
+//     onSuccess: (response, variables) => {
+//       console.log("Forgot Password OTP Sent:", {
+//         action: "forgot-password-otp-sent",
+//         email: variables.email,
+//         timestamp: new Date().toISOString(),
+//       });
+//       toast.success("Password reset OTP sent to your email!");
+//       setUserEmail(variables.email);
+//       setOtpType("forgot-password");
+//       setShowOTPModal(true);
+//       setIsForgotPassword(false);
+//       reset();
+//     },
+//     onError: (error, variables) => {
+//       console.error("Forgot Password Error:", {
+//         action: "forgot-password",
+//         email: variables.email,
+//         error: error.message,
+//         timestamp: new Date().toISOString(),
+//       });
+//       toast.error(
+//         error.message || "Failed to send reset OTP. Please try again."
+//       );
+//     },
+//   });
+
+//   const socialLoginMutation = useMutation({
+//     mutationFn: (provider) => socialLogin(provider),
+//     onSuccess: (response, provider) => {
+//       console.log("Social Login Success:", {
+//         action: "social-login",
+//         provider: provider,
+//         timestamp: new Date().toISOString(),
+//         response: response
+//       });
+//       toast.success(`Successfully signed in with ${provider}!`);
+//       setShowSuccessModal(true);
+//     },
+//     onError: (error, provider) => {
+//       console.error("Social Login Error:", {
+//         action: "social-login",
+//         provider: provider,
+//         error: error.message,
+//         timestamp: new Date().toISOString(),
+//       });
+//       toast.error(error.message || `Failed to sign in with ${provider}. Please try again.`);
+//     },
+//   });
+
+//   const onSubmit = (data) => {
+//     if (isForgotPassword) {
+//       forgotPasswordMutation.mutate({ email: data.email });
+//     } else {
+//       mutation.mutate(data);
+//     }
+//   };
+
+//   const handleSocialLogin = (provider) => {
+//     console.log("Social Login Initiated:", {
+//       action: "social-login-initiated",
+//       provider: provider,
+//       timestamp: new Date().toISOString(),
+//     });
+//     socialLoginMutation.mutate(provider);
+//   };
+
+//   const handleOTPVerified = () => {
+//     console.log("OTP Verified:", {
+//       action: "otp-verified",
+//       email: userEmail,
+//       type: otpType,
+//       timestamp: new Date().toISOString(),
+//     });
+
+//     setShowOTPModal(false);
+
+//     if (otpType === "signup") {
+//       setShowSuccessModal(true);
+//     } else if (otpType === "forgot-password") {
+//       setShowChangePasswordModal(true);
+//     }
+//   };
+
+//   const handlePasswordChanged = () => {
+//     console.log("Password Changed Successfully:", {
+//       action: "password-changed",
+//       email: userEmail,
+//       timestamp: new Date().toISOString(),
+//     });
+
+//     setShowChangePasswordModal(false);
+//     toast.success("Password changed successfully!");
+//     onClose();
+//   };
+
+//   const toggleMode = () => {
+//     setIsSignIn(!isSignIn);
+//     setIsForgotPassword(false);
+//     reset();
+//   };
+
+//   const showForgotPassword = () => {
+//     setIsForgotPassword(true);
+//     reset();
+//   };
+
+//   const backToSignIn = () => {
+//     setIsForgotPassword(false);
+//     reset();
+//   };
+
+//   const handleClose = () => {
+//     onClose();
+//     reset();
+//     setShowPassword(false);
+//     setIsForgotPassword(false);
+//     setShowOTPModal(false);
+//     setShowChangePasswordModal(false);
+//     setShowSuccessModal(false);
+//   };
+
+//   const handleSuccessModalClose = () => {
+//     setShowSuccessModal(false);
+//     onClose();
+//   };
+
+//   const handleOTPModalClose = () => {
+//     setShowOTPModal(false);
+//     setOtpType("");
+//     setUserEmail("");
+//   };
+
+//   const handleChangePasswordModalClose = () => {
+//     setShowChangePasswordModal(false);
+//     setUserEmail("");
+//   };
+
+//   // Show modals in order of priority
+//   if (showSuccessModal) {
+//     return <SuccessModal onClose={handleSuccessModalClose} />;
+//   }
+
+//   if (showChangePasswordModal) {
+//     return (
+//       <ChangePasswordModal
+//         isOpen={showChangePasswordModal}
+//         onClose={handleChangePasswordModalClose}
+//         email={userEmail}
+//         onPasswordChanged={handlePasswordChanged}
+//       />
+//     );
+//   }
+
+//   if (showOTPModal) {
+//     return (
+//       <VerifyOTPModal
+//         isOpen={showOTPModal}
+//         onClose={handleOTPModalClose}
+//         email={userEmail}
+//         type={otpType}
+//         onVerified={handleOTPVerified}
+//       />
+//     );
+//   }
+
+//   return (
+//     <Modal isOpen={isOpen} onClose={handleClose}>
+//       <ModalContent onClose={handleClose} className={cn("max-w-xl")}>
+//         <div className="p-8">
+//           {/* Header */}
+//           <div className="text-center mb-6">
+//             <h2 className="text-2xl font-bold">
+//               You have to Sign Up or Sign In
+//             </h2>
+//             <p className="mb-4 text-2xl font-bold">for view more News</p>
+//           </div>
+
+//           {/* Form */}
+//           <div className="bg-[#FCFCFF] rounded-lg p-6 text-black">
+//             <h3 className="text-xl font-bold text-center mb-1">
+//               {isForgotPassword
+//                 ? "Forgot Password"
+//                 : isSignIn
+//                 ? "Sign In Account"
+//                 : "Sign Up Account"}
+//             </h3>
+//             <p className="text-center mb-6 text-sm text-gray-600">
+//               {isForgotPassword ? (
+//                 <>
+//                   Remember your password?{" "}
+//                   <button
+//                     type="button"
+//                     onClick={backToSignIn}
+//                     className="text-[#00254a] cursor-pointer font-medium underline"
+//                   >
+//                     Back to Sign In
+//                   </button>
+//                 </>
+//               ) : (
+//                 <>
+//                   {isSignIn
+//                     ? "Don't have an Account? "
+//                     : "Already have an Account? "}
+//                   <button
+//                     type="button"
+//                     onClick={toggleMode}
+//                     className="text-[#00254a] cursor-pointer font-medium underline"
+//                   >
+//                     {isSignIn ? "Sign Up Free" : "Sign In"}
+//                   </button>
+//                 </>
+//               )}
+//             </p>
+
+//             {isForgotPassword ? (
+//               <form onSubmit={handleSubmit(onSubmit)}>
+//                 <div className="space-y-1 mb-6">
+//                   <Label htmlFor="email" className="text-[#262626] text-sm">
+//                     E-mail
+//                   </Label>
+//                   <Input
+//                     id="email"
+//                     placeholder="Enter your email address"
+//                     className="border-[#c7c7c7] bg-white"
+//                     {...register("email", {
+//                       required: "Email is required",
+//                       pattern: {
+//                         value:
+//                           /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\.([a-zA-Z]{2,5})$/,
+//                         message: "Please enter a valid email address",
+//                       },
+//                     })}
+//                   />
+//                   {errors.email && (
+//                     <p className="text-red-500 text-xs">
+//                       {errors.email.message}
+//                     </p>
+//                   )}
+//                 </div>
+
+//                 <Button
+//                   type="submit"
+//                   className="w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]"
+//                   disabled={forgotPasswordMutation.isPending}
+//                 >
+//                   {forgotPasswordMutation.isPending ? "Sending..." : "Send OTP"}
+//                 </Button>
+//               </form>
+//             ) : (
+//               <form onSubmit={handleSubmit(onSubmit)}>
+//                 {!isSignIn && (
+//                   <div className="grid grid-cols-2 gap-4 mb-4">
+//                     <div className="space-y-1">
+//                       <Label
+//                         htmlFor="firstName"
+//                         className="text-[#262626] text-sm"
+//                       >
+//                         First Name
+//                       </Label>
+//                       <div className="relative">
+//                         <Input
+//                           id="firstName"
+//                           placeholder="First name"
+//                           className="pr-10 border-[#c7c7c7] bg-white"
+//                           {...register("firstName", {
+//                             required: !isSignIn
+//                               ? "First name is required"
+//                               : false,
+//                           })}
+//                         />
+//                         <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]">
+//                           <User size={16} />
+//                         </div>
+//                       </div>
+//                       {errors.firstName && (
+//                         <p className="text-red-500 text-xs">
+//                           {errors.firstName.message}
+//                         </p>
+//                       )}
+//                     </div>
+//                     <div className="space-y-1">
+//                       <Label
+//                         htmlFor="lastName"
+//                         className="text-[#262626] text-sm"
+//                       >
+//                         Last Name
+//                       </Label>
+//                       <div className="relative">
+//                         <Input
+//                           id="lastName"
+//                           placeholder="Last name"
+//                           className="pr-10 border-[#c7c7c7] bg-white"
+//                           {...register("lastName", {
+//                             required: !isSignIn
+//                               ? "Last name is required"
+//                               : false,
+//                           })}
+//                         />
+//                         <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]">
+//                           <User size={16} />
+//                         </div>
+//                       </div>
+//                       {errors.lastName && (
+//                         <p className="text-red-500 text-xs">
+//                           {errors.lastName.message}
+//                         </p>
+//                       )}
+//                     </div>
+//                   </div>
+//                 )}
+
+//                 <div className="space-y-1 mb-4">
+//                   <Label htmlFor="email" className="text-[#262626] text-sm">
+//                     E-mail or Phone
+//                   </Label>
+//                   <Input
+//                     id="email"
+//                     placeholder="Enter your mail or phone number"
+//                     className="border-[#c7c7c7] bg-white"
+//                     {...register("email", {
+//                       required: "Email or phone is required",
+//                       pattern: {
+//                         value:
+//                           /^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\.([a-zA-Z]{2,5})$|^[0-9]{10}$/,
+//                         message: "Please enter a valid email or phone number",
+//                       },
+//                     })}
+//                   />
+//                   {errors.email && (
+//                     <p className="text-red-500 text-xs">
+//                       {errors.email.message}
+//                     </p>
+//                   )}
+//                 </div>
+
+//                 <div className="space-y-1 mb-4">
+//                   <div className="flex justify-between items-center">
+//                     <Label
+//                       htmlFor="password"
+//                       className="text-[#262626] text-sm"
+//                     >
+//                       Password
+//                     </Label>
+//                     {isSignIn && (
+//                       <button
+//                         type="button"
+//                         onClick={showForgotPassword}
+//                         className="text-[#00254a] text-xs cursor-pointer font-medium underline"
+//                       >
+//                         Forgot Password?
+//                       </button>
+//                     )}
+//                   </div>
+//                   <div className="relative">
+//                     <Input
+//                       id="password"
+//                       type={showPassword ? "text" : "password"}
+//                       placeholder="Enter your Password"
+//                       className="pr-10 border-[#c7c7c7] bg-white"
+//                       {...register("password", {
+//                         required: "Password is required",
+//                         minLength: {
+//                           value: isSignIn ? 1 : 8,
+//                           message: isSignIn
+//                             ? "Password is required"
+//                             : "Password must be at least 8 characters",
+//                         },
+//                       })}
+//                     />
+//                     <button
+//                       type="button"
+//                       onClick={() => setShowPassword(!showPassword)}
+//                       className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]"
+//                       aria-label={
+//                         showPassword ? "Hide password" : "Show password"
+//                       }
+//                     >
+//                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+//                     </button>
+//                   </div>
+//                   {errors.password && (
+//                     <p className="text-red-500 text-xs">
+//                       {errors.password.message}
+//                     </p>
+//                   )}
+//                 </div>
+
+//                 {!isSignIn && (
+//                   <div className="flex justify-start items-center mb-6">
+//                     <div className="flex justify-center items-center h-5">
+//                       <Controller
+//                         control={control}
+//                         name="terms"
+//                         rules={{
+//                           required:
+//                             "You must agree to the terms and conditions",
+//                         }}
+//                         render={({ field }) => (
+//                           <Checkbox
+//                             id="terms"
+//                             checked={field.value}
+//                             onCheckedChange={field.onChange}
+//                           />
+//                         )}
+//                       />
+//                     </div>
+//                     <Label
+//                       htmlFor="terms"
+//                       className="ml-2 text-xs text-[#262626]"
+//                     >
+//                       I agree to the{" "}
+//                       <a href="/terms" className="text-[#00254a] underline">
+//                         Terms & Condition
+//                       </a>
+//                     </Label>
+//                   </div>
+//                 )}
+//                 {errors.terms && (
+//                   <p className="text-red-500 text-xs mb-4">
+//                     {errors.terms.message}
+//                   </p>
+//                 )}
+
+//                 <Button
+//                   type="submit"
+//                   className="w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38]"
+//                   disabled={mutation.isPending}
+//                 >
+//                   {mutation.isPending
+//                     ? "Processing..."
+//                     : isSignIn
+//                     ? "Sign In"
+//                     : "Sign Up"}
+//                 </Button>
+//               </form>
+//             )}
+
+//             {!isForgotPassword && (
+//               <>
+//                 <div className="text-center mb-4">
+//                   <p className="text-[#5a5a5a] text-sm">
+//                     Or {isSignIn ? "Sign In" : "Sign Up"} with
+//                   </p>
+//                 </div>
+
+//                 <div className="grid grid-cols-2 gap-4 mb-6">
+//                   <SocialButton
+//                     provider="google"
+//                     onLogin={handleSocialLogin}
+//                     isLoading={socialLoginMutation.isPending}
+//                   />
+//                   <SocialButton
+//                     provider="facebook"
+//                     onLogin={handleSocialLogin}
+//                     isLoading={socialLoginMutation.isPending}
+//                   />
+//                 </div>
+
+//                 <div className="text-center">
+//                   <p className="text-[#5a5a5a] text-sm">
+//                     {isSignIn
+//                       ? "Don't have an account? "
+//                       : "Already have an account? "}
+//                     <button
+//                       type="button"
+//                       onClick={toggleMode}
+//                       className="text-[#00254a] cursor-pointer font-medium underline"
+//                     >
+//                       {isSignIn ? "Sign Up" : "Sign In"}
+//                     </button>
+//                   </p>
+//                 </div>
+//               </>
+//             )}
+//           </div>
+//         </div>
+//       </ModalContent>
+//     </Modal>
+//   );
+// }

@@ -12,11 +12,11 @@ export async function registerUser(userData) {
     setTimeout(() => {
       // Simulate validation
       if (!userData.email || !userData.password) {
-        return reject(new Error("Email and password are required"))
+        return reject(new Error("Email and password are required"));
       }
 
       if (userData.email === "existing@example.com") {
-        return reject(new Error("Email already in use"))
+        return reject(new Error("Email already in use"));
       }
 
       // Simulate successful registration
@@ -26,9 +26,9 @@ export async function registerUser(userData) {
         firstName: userData.firstName,
         lastName: userData.lastName,
         createdAt: new Date().toISOString(),
-      })
-    }, 1000)
-  })
+      });
+    }, 1000);
+  });
 }
 
 /**
@@ -42,7 +42,7 @@ export async function loginUser(credentials) {
     setTimeout(() => {
       // Simulate validation
       if (!credentials.email || !credentials.password) {
-        return reject(new Error("Email and password are required"))
+        return reject(new Error("Email and password are required"));
       }
 
       // Simulate successful login
@@ -51,9 +51,9 @@ export async function loginUser(credentials) {
         email: credentials.email,
         token: "jwt_token_" + Math.random().toString(36).substr(2, 16),
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      })
-    }, 1000)
-  })
+      });
+    }, 1000);
+  });
 }
 
 /**
@@ -72,9 +72,57 @@ export async function socialLogin(provider) {
         provider,
         token: "jwt_token_" + Math.random().toString(36).substr(2, 16),
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      })
-    }, 1000)
-  })
+      });
+    }, 1000);
+  });
+}
+
+export async function changePassword({ email, password, type }) {
+  // Simulated change password API call
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (email && password) {
+        resolve({ success: true, message: "Password changed successfully" });
+      } else {
+        reject(new Error("Invalid input"));
+      }
+    }, 1000);
+  });
+}
+
+export async function sendForgotPasswordOTP(email) {
+  // Simulated OTP sending
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (email) {
+        resolve({ success: true, message: "OTP sent to email" });
+      } else {
+        reject(new Error("Email is required"));
+      }
+    }, 1000);
+  });
+}
+
+export async function verifyOTP({ email, otp, type }) {
+  // Simulated API call
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (otp === "123456") {
+        resolve({ success: true, message: "OTP verified" });
+      } else {
+        reject(new Error("Invalid OTP"));
+      }
+    }, 1000);
+  });
+}
+
+export async function resendOTP({ email, type }) {
+  // Simulated resend
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true, message: "OTP resent" });
+    }, 1000);
+  });
 }
 
 /**
@@ -86,7 +134,7 @@ export async function logoutUser() {
   return new Promise((resolve) => {
     setTimeout(() => {
       // Clear local storage or cookies in a real app
-      resolve()
-    }, 500)
-  })
+      resolve();
+    }, 500);
+  });
 }

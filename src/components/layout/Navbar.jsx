@@ -28,7 +28,7 @@ export default function Navbar() {
   useEffect(() => {
     // For now, you can manually set this or integrate with your auth system
     const checkAuthStatus = () => {
-      return true; // Change this based on your auth logic
+      return false; // Change this based on your auth logic
     };
 
     setIsAuthenticated(checkAuthStatus());
@@ -58,67 +58,67 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className='bg-white border-b border-gray-200'>
+      <nav className="bg-white border-b border-gray-200">
         {/* Top section */}
-        <div className=''>
+        <div className="">
           {/* Desktop Layout */}
-          <div className='hidden lg:grid lg:grid-cols-3 items-center justify-between py-4'>
+          <div className="hidden lg:grid lg:grid-cols-3 items-center justify-between py-4">
             {/* Left side - Search and Date */}
-            <div className='flex flex-col items-start space-y-2'>
-              <div className='relative'>
+            <div className="flex flex-col items-start space-y-2">
+              <div className="relative">
                 <Search
-                  className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                   size={20}
                 />
                 <Input
-                  placeholder='Search'
-                  className='pl-10 w-64 border-gray-300'
+                  placeholder="Search"
+                  className="pl-10 w-64 border-gray-300"
                 />
               </div>
-              <div className='text-sm text-gray-600'>
-                <div className='font-medium'>{currentDate}</div>
-                <div className='text-xs'>Today's Paper</div>
+              <div className="text-sm text-gray-600">
+                <div className="font-medium">{currentDate}</div>
+                <div className="text-xs">Today's Paper</div>
               </div>
             </div>
 
             {/* Center - Logo */}
-            <div className='flex-1 text-center'>
-              <h1 className='text-4xl font-bold text-gray-900 tracking-wide'>
+            <div className="flex-1 text-center">
+              <h1 className="text-4xl font-bold text-gray-900 tracking-wide">
                 ALAMOCITYPULSE
               </h1>
             </div>
 
             {/* Right side - Auth buttons and membership */}
-            <div className='flex flex-col justify-center items-end space-y-2'>
+            <div className="flex flex-col justify-center items-end space-y-2">
               {isAuthenticated ? (
-                <div className='flex flex-col items-center space-y-2'>
-                  <div className='flex items-center space-x-2'>
-                    <span className='text-sm text-gray-600'>Profile</span>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-600">Profile</span>
                     <Link
-                      to='/dashboard/profile'
-                      className='bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]'
+                      to="/dashboard/profile"
+                      className="bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]"
                     >
-                      <User2 size={24} className='text-white' />
+                      <User2 size={24} className="text-white" />
                     </Link>
                   </div>
                 </div>
               ) : (
                 <>
-                  <div className='w-full flex justify-end items-end gap-4 md:gap-9'>
+                  <div className="w-full flex justify-end items-end gap-4 md:gap-9">
                     <Button
                       onClick={openSignIn}
-                      className='border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white'
+                      className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white"
                     >
                       Sign In
                     </Button>
                     <Button
                       onClick={openSignUp}
-                      className='hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border'
+                      className="hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
                     >
                       Sign Up
                     </Button>
                   </div>
-                  <div className='text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl'>
+                  <div className="text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl">
                     SAVE 50% ON Membership
                   </div>
                 </>
@@ -127,37 +127,37 @@ export default function Navbar() {
           </div>
 
           {/* Tablet Layout */}
-          <div className='hidden md:flex lg:hidden items-center justify-between py-4'>
+          <div className="hidden md:flex lg:hidden items-center justify-between py-4">
             {/* Left side - Logo */}
-            <div className='flex-1'>
-              <h1 className='text-3xl font-bold text-gray-900 tracking-wide'>
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-gray-900 tracking-wide">
                 ALAMOCITYPULSE
               </h1>
             </div>
 
             {/* Right side - Auth buttons */}
-            <div className='flex items-center space-x-3'>
+            <div className="flex items-center space-x-3">
               {isAuthenticated ? (
-                <div className='flex items-center space-x-2'>
-                  <span className='text-sm text-gray-600'>Profile</span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-600">Profile</span>
                   <Link
-                    to='/dashboard/profile'
-                    className='bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]'
+                    to="/dashboard/profile"
+                    className="bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]"
                   >
-                    <User2 size={24} className='text-white' />
+                    <User2 size={24} className="text-white" />
                   </Link>
                 </div>
               ) : (
                 <>
                   <Button
                     onClick={openSignIn}
-                    className='border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-sm px-3 py-2'
+                    className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-sm px-3 py-2"
                   >
                     Sign In
                   </Button>
                   <Button
                     onClick={openSignUp}
-                    className='hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border text-sm px-3 py-2'
+                    className="hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border text-sm px-3 py-2"
                   >
                     Sign Up
                   </Button>
@@ -167,34 +167,34 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Layout */}
-          <div className='flex md:hidden items-center justify-between py-4'>
+          <div className="flex md:hidden items-center justify-between py-4">
             {/* Logo */}
-            <div className='flex-1'>
-              <h1 className='text-xl sm:text-2xl font-bold text-gray-900 tracking-wide'>
+            <div className="flex-1">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-wide">
                 ALAMOCITYPULSE
               </h1>
             </div>
 
             {/* Mobile menu button and auth */}
-            <div className='flex items-center space-x-2'>
+            <div className="flex items-center space-x-2">
               {isAuthenticated ? (
                 <Link
-                  to='/dashboard/profile'
-                  className='bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]'
+                  to="/dashboard/profile"
+                  className="bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]"
                 >
-                  <User2 size={20} className='text-white' />
+                  <User2 size={20} className="text-white" />
                 </Link>
               ) : (
                 <Button
                   onClick={openSignIn}
-                  className='border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-xs px-2 py-1'
+                  className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-xs px-2 py-1"
                 >
                   Sign In
                 </Button>
               )}
               <button
                 onClick={toggleMobileMenu}
-                className='p-2 text-gray-900 hover:bg-gray-100 rounded-md'
+                className="p-2 text-gray-900 hover:bg-gray-100 rounded-md"
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -202,25 +202,25 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Search and Date - Below header on tablet and mobile */}
-          <div className='flex lg:hidden flex-col space-y-3 pb-4'>
-            <div className='relative'>
+          <div className="flex lg:hidden flex-col space-y-3 pb-4">
+            <div className="relative">
               <Search
-                className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 size={20}
               />
               <Input
-                placeholder='Search'
-                className='pl-10 w-full border-gray-300'
+                placeholder="Search"
+                className="pl-10 w-full border-gray-300"
               />
             </div>
-            <div className='text-sm text-gray-600'>
-              <div className='font-medium'>{currentDate}</div>
-              <div className='text-xs'>Today's Paper</div>
+            <div className="text-sm text-gray-600">
+              <div className="font-medium">{currentDate}</div>
+              <div className="text-xs">Today's Paper</div>
             </div>
 
             {/* Membership offer for mobile/tablet when not authenticated */}
             {!isAuthenticated && (
-              <div className='md:hidden text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl text-center'>
+              <div className="md:hidden text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl text-center">
                 SAVE 50% ON Membership
               </div>
             )}
@@ -228,28 +228,28 @@ export default function Navbar() {
         </div>
 
         {/* Navigation Menu - Desktop */}
-        <div className='hidden md:flex items-center justify-center space-x-8 py-4 border-t border-gray-200 px-4 sm:px-6 lg:px-8'>
+        <div className="hidden md:flex items-center justify-center space-x-8 py-4 border-t border-gray-200 px-4 sm:px-6 lg:px-8">
           <Link
-            to='/'
-            className='text-gray-900 font-medium hover:text-[#00254a] transition-colors'
+            to="/"
+            className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
           >
             Home
           </Link>
-          <div className='relative group'>
-            <button className='flex items-center text-gray-900 font-medium hover:text-[#00254a] bg-white transition-colors'>
+          <div className="relative group">
+            <button className="flex items-center text-gray-900 font-medium hover:text-[#00254a] bg-white transition-colors">
               News
-              <ChevronDown size={16} className='ml-1' />
+              <ChevronDown size={16} className="ml-1" />
             </button>
           </div>
           <Link
-            to='/about'
-            className='text-gray-900 font-medium hover:text-[#00254a] transition-colors'
+            to="/about"
+            className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
           >
             About Us
           </Link>
           <Link
-            to='/dashboard/advertise'
-            className='text-gray-900 font-medium hover:text-[#00254a] transition-colors'
+            to="/dashboard/advertise"
+            className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
           >
             Make Advertise
           </Link>
@@ -257,31 +257,31 @@ export default function Navbar() {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className='md:hidden border-t border-gray-200 bg-white'>
-            <div className='px-4 py-2 space-y-1'>
+          <div className="md:hidden border-t border-gray-200 bg-white">
+            <div className="px-4 py-2 space-y-1">
               <Link
-                to='/'
-                className='block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors'
+                to="/"
+                className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
               </Link>
-              <div className='px-3 py-2'>
-                <button className='flex items-center w-full text-left text-gray-900 font-medium hover:text-[#00254a] transition-colors'>
+              <div className="px-3 py-2">
+                <button className="flex items-center w-full text-left text-gray-900 font-medium hover:text-[#00254a] transition-colors">
                   News
-                  <ChevronDown size={16} className='ml-1' />
+                  <ChevronDown size={16} className="ml-1" />
                 </button>
               </div>
               <Link
-                to='/about'
-                className='block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors'
+                to="/about"
+                className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 About Us
               </Link>
               <Link
-                to='/dashboard/advertise'
-                className='block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors'
+                to="/dashboard/advertise"
+                className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Make Advertise
@@ -289,18 +289,18 @@ export default function Navbar() {
 
               {/* Mobile auth buttons */}
               {!isAuthenticated && (
-                <div className='px-3 py-2 pt-4 border-t border-gray-200 mt-2'>
-                  <div className='flex flex-col space-y-2'>
+                <div className="px-3 py-2 pt-4 border-t border-gray-200 mt-2">
+                  <div className="flex flex-col space-y-2">
                     <Button
                       onClick={() => {
                         openSignUp();
                         setIsMobileMenuOpen(false);
                       }}
-                      className='w-full hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border'
+                      className="w-full hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
                     >
                       Sign Up
                     </Button>
-                    <div className='text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl text-center'>
+                    <div className="text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl text-center">
                       SAVE 50% ON Membership
                     </div>
                   </div>
@@ -310,7 +310,7 @@ export default function Navbar() {
           </div>
         )}
 
-        <div className='py-0.5 border-t border-b border-primary'></div>
+        <div className="py-0.5 border-t border-b border-primary"></div>
       </nav>
 
       <AuthModal
