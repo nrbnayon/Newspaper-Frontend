@@ -229,7 +229,7 @@ const TabbedNewsSection = ({
     <div className={`w-full ${className}`}>
       <Tabs defaultValue={defaultTab} className="w-full">
         {/* Tab Navigation - Maintaining original design */}
-        <TabsList className="flex gap-2 items-center mb-8 p-1 bg-transparent mx-auto">
+        <TabsList className="flex gap-2 items-center mb-8 p-1 bg-transparent md:mx-auto overflow-x-auto">
           {activeTabsConfig.map((tab) => (
             <TabsTrigger
               key={tab.key}

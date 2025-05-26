@@ -369,7 +369,7 @@ const ListedNewsSection = ({
       <Tabs defaultValue={defaultTab} className="w-full">
         {/* Tab Navigation - Clean design matching the image */}
         <div className="w-full mb-8">
-          <TabsList className="flex items-center justify-start gap-2 md:gap-8 p-0 bg-transparent border-none h-auto">
+          <TabsList className="flex items-center justify-start gap-2 md:gap-8 p-0 bg-transparent border-none h-auto overflow-x-auto">
             {activeTabsConfig.map((tab) => (
               <TabsTrigger
                 key={tab.key}
