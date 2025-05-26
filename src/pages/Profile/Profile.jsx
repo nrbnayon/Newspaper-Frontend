@@ -80,7 +80,7 @@ const Profile = () => {
             onClick={handleImageEdit}
             className="absolute bottom-0 right-0 bg-white p-1 rounded-full border border-[#e2e2e2]"
           >
-            <Edit className="h-4 w-4 text-[#505050]" />
+            <Edit className="h-4 w-4 cursor-pointer text-[#505050]" />
           </button>
           <input
             ref={fileInputRef}
@@ -125,7 +125,7 @@ const Profile = () => {
               onClick={handleNameEdit}
               className="absolute right-2 bg-transparent top-1/2 transform -translate-y-1/2"
             >
-              <Edit className="h-6 w-6 text-[#505050]" />
+              <Edit className="h-6 w-6 cursor-pointer text-secondary" />
             </button>
           </div>
         </div>
@@ -146,7 +146,7 @@ const Profile = () => {
               onClick={handleEmailEdit}
               className="absolute bg-transparent right-2 top-1/2 transform -translate-y-1/2"
             >
-              <Edit className="h-6 w-6 text-[#505050]" />
+              <Edit className="h-6 w-6 cursor-pointer text-secondary" />
             </button>
           </div>
         </div>

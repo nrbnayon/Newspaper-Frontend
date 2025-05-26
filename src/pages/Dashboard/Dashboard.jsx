@@ -1,6 +1,7 @@
 // src\pages\Dashboard\Dashboard.jsx - Alternative using NavLink
 import Navbar from "@/components/layout/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
+import { AdvertiseProvider } from "../admin/Advertise/AdvertiseContext";
 
 const Dashboard = () => {
   return (
@@ -59,7 +60,9 @@ const Dashboard = () => {
 
         {/* Main Content Area - This is where child routes will render */}
         <div className="flex-1">
-          <Outlet />
+          <AdvertiseProvider>
+            <Outlet />
+          </AdvertiseProvider>
         </div>
       </div>
     </div>
