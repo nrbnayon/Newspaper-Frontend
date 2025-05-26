@@ -83,7 +83,7 @@ export default function AdvertiseInfo() {
                 onClick={handleCancel}
                 variant="destructive"
                 className="px-8 py-5 cursor-pointer"
-                disabled={selectedAd.progress === "Approved" || selectedAd.progress === "Cancel"}
+                disabled={ selectedAd.progress === "Cancel"}
               >
                 Cancel
               </Button>

@@ -75,7 +75,7 @@ const advertiseData1 = [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
     ],
-    progress: "Read",
+    progress: "Approved",
   },
   {
     id: "2",
@@ -105,7 +105,7 @@ const advertiseData1 = [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
     ],
-    progress: "Read",
+    progress: "Cancel",
   },
   {
     id: "2",
@@ -135,7 +135,7 @@ const advertiseData1 = [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
     ],
-    progress: "Read",
+    progress: "Cancel",
   },
   {
     id: "2",
