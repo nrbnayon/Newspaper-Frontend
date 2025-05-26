@@ -23,6 +23,21 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
     }
   }, [countdown]);
 
+  // Reset OTP when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setOtp(["", "", "", "", "", ""]);
+      setCountdown(60);
+      setCanResend(false);
+      // Focus first input when modal opens
+      setTimeout(() => {
+        if (inputRefs.current[0]) {
+          inputRefs.current[0].focus();
+        }
+      }, 100);
+    }
+  }, [isOpen]);
+
   const verifyMutation = useMutation({
     mutationFn: (otpCode) => verifyOTP({ email, otp: otpCode, type }),
     onSuccess: (response) => {
@@ -168,45 +183,45 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent onClose={onClose} className={cn("max-w-md")}>
-        <div className="p-8">
+        <div className='p-8'>
           {/* Header */}
-          <div className="text-center mb-6">
+          <div className='text-center mb-6'>
             <button
               onClick={onClose}
-              className="absolute left-4 top-4 p-2 hover:bg-gray-100 rounded-full"
+              className='absolute left-4 top-4 p-2 hover:bg-gray-100 hover:text-black rounded-full'
             >
               <ArrowLeft size={20} />
             </button>
-            <h2 className="text-2xl font-bold mb-2">{getTitle()}</h2>
-            <p className="text-gray-600 text-sm">{getDescription()}</p>
-            <p className="text-sm text-gray-500 mt-2">
-              Code sent to: <span className="font-medium">{email}</span>
+            <h2 className='text-2xl font-bold mb-2'>{getTitle()}</h2>
+            <p className='text-gray-200 text-sm'>{getDescription()}</p>
+            <p className='text-sm text-gray-100 mt-2'>
+              Code sent to: <span className='font-medium'>{email}</span>
             </p>
           </div>
 
           {/* OTP Form */}
-          <div className="bg-[#FCFCFF] rounded-lg p-6">
+          <div className='bg-[#FCFCFF] rounded-lg p-6'>
             <form onSubmit={handleSubmit}>
-              <div className="flex justify-center gap-3 mb-6">
+              <div className='flex justify-center gap-3 mb-6'>
                 {otp.map((digit, index) => (
                   <input
                     key={index}
                     ref={(el) => (inputRefs.current[index] = el)}
-                    type="text"
-                    inputMode="numeric"
-                    maxLength="1"
+                    type='text'
+                    inputMode='numeric'
+                    maxLength='1'
                     value={digit}
                     onChange={(e) => handleInputChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-12 h-12 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg focus:border-[#00254a] focus:outline-none bg-white"
+                    className='w-12 h-12 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg focus:border-[#00254a] focus:outline-none bg-white'
                     disabled={verifyMutation.isPending}
                   />
                 ))}
               </div>
 
               <Button
-                type="submit"
-                className="w-full bg-[#00254a] text-white py-3 rounded font-medium mb-4 hover:bg-[#001a38]"
+                type='submit'
+                className='w-full bg-[#00254a] text-white py-3 rounded font-medium mb-4 hover:bg-[#001a38]'
                 disabled={verifyMutation.isPending || otp.join("").length !== 6}
               >
                 {verifyMutation.isPending ? "Verifying..." : "Verify OTP"}
@@ -214,20 +229,20 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
             </form>
 
             {/* Resend Section */}
-            <div className="text-center">
-              <p className="text-sm text-gray-600 mb-2">
+            <div className='text-center'>
+              <p className='text-sm text-gray-600 mb-2'>
                 Didn't receive the code?
               </p>
               {canResend ? (
                 <button
                   onClick={handleResendOTP}
                   disabled={resendMutation.isPending}
-                  className="text-[#00254a] font-medium underline hover:no-underline disabled:opacity-50"
+                  className='text-[#00254a] font-medium underline hover:no-underline disabled:opacity-50'
                 >
                   {resendMutation.isPending ? "Resending..." : "Resend OTP"}
                 </button>
               ) : (
-                <p className="text-sm text-gray-500">
+                <p className='text-sm text-gray-500'>
                   Resend available in {formatTime(countdown)}
                 </p>
               )}

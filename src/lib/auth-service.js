@@ -78,9 +78,11 @@ export async function socialLogin(provider) {
 }
 
 export async function changePassword({ email, password, type }) {
+  console.log("Changing password for:", email, password, type);
   // Simulated change password API call
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+
       if (email && password) {
         resolve({ success: true, message: "Password changed successfully" });
       } else {
