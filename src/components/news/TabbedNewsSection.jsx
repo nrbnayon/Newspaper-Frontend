@@ -1,10 +1,9 @@
 // src/components/news/TabbedNewsSection.jsx
-import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NewsGrid from "./NewsGrid";
 import StandardArticleCard from "./StandardArticleCard";
 
-// Sample data for different tabs
+// Sample data for different tabs - This will come from database/API in future
 const tabsData = {
   featured: [
     {
@@ -168,87 +167,164 @@ const tabsData = {
   ],
 };
 
-const TabbedNewsSection = ({ className }) => {
+// Dynamic tab configuration - This structure will come from your database/API
+const tabsConfig = [
+  {
+    key: "featured",
+    label: "Featured",
+    isDefault: true,
+    columns: 4,
+    gap: 4,
+  },
+  {
+    key: "bestSides",
+    label: "Best Sides",
+    columns: 4,
+    gap: 4,
+  },
+  {
+    key: "makeAhead",
+    label: "Make-Ahead",
+    columns: 3,
+    gap: 6,
+  },
+  {
+    key: "stunningDesserts",
+    label: "Stunning Desserts",
+    columns: 4,
+    gap: 4,
+  },
+];
+
+// Responsive grid configuration based on columns
+const getResponsiveClasses = (columns) => {
+  const baseClasses = "grid gap-4 md:gap-6";
+
+  switch (columns) {
+    case 2:
+      return `${baseClasses} grid-cols-1 sm:grid-cols-2`;
+    case 3:
+      return `${baseClasses} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
+    case 4:
+    default:
+      return `${baseClasses} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`;
+  }
+};
+
+const TabbedNewsSection = ({
+  className,
+  dynamicTabsData,
+  dynamicTabsConfig,
+}) => {
+  // Use dynamic data if provided, otherwise fall back to sample data
+  const activeTabsData = dynamicTabsData || tabsData;
+  const activeTabsConfig = dynamicTabsConfig || tabsConfig;
+
+  // Find default tab or use first tab
+  const defaultTab =
+    activeTabsConfig.find((tab) => tab.isDefault)?.key ||
+    activeTabsConfig[0]?.key;
+
   return (
-    <div className={` ${className}`}>
-      <Tabs defaultValue="featured" className="w-full">
+    <div className={`w-full ${className}`}>
+      <Tabs defaultValue={defaultTab} className="w-full">
+        {/* Tab Navigation - Maintaining original design */}
         <TabsList className="flex gap-2 items-center mb-8 p-1 bg-transparent mx-auto">
-          <TabsTrigger
-            value="featured"
-            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
-          >
-            Featured
-          </TabsTrigger>
-          <TabsTrigger
-            value="bestSides"
-            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
-          >
-            Best Sides
-          </TabsTrigger>
-          <TabsTrigger
-            value="makeAhead"
-            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
-          >
-            Make-Ahead
-          </TabsTrigger>
-          <TabsTrigger
-            value="stunningDesserts"
-            className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black"
-          >
-            Stunning Desserts
-          </TabsTrigger>
+          {activeTabsConfig.map((tab) => (
+            <TabsTrigger
+              key={tab.key}
+              value={tab.key}
+              className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap"
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
 
-        <TabsContent value="featured" className="mt-0">
-          <NewsGrid columns={4} gap={4}>
-            {tabsData.featured.map((article) => (
-              <StandardArticleCard
-                key={article.id}
-                article={article}
-                className="bg-white border border-gray-200"
-              />
-            ))}
-          </NewsGrid>
-        </TabsContent>
+        {/* Dynamic Tab Content */}
+        {activeTabsConfig.map((tab) => {
+          const articles = activeTabsData[tab.key] || [];
+          const gridClasses = getResponsiveClasses(tab.columns || 4);
 
-        <TabsContent value="bestSides" className="mt-0">
-          <NewsGrid columns={4} gap={4}>
-            {tabsData.bestSides.map((article) => (
-              <StandardArticleCard
-                key={article.id}
-                article={article}
-                className="bg-white border border-gray-200"
-              />
-            ))}
-          </NewsGrid>
-        </TabsContent>
+          return (
+            <TabsContent key={tab.key} value={tab.key} className="mt-0">
+              <NewsGrid
+                columns={tab.columns || 4}
+                gap={tab.gap || 4}
+                className={gridClasses}
+              >
+                {articles.map((article) => (
+                  <StandardArticleCard
+                    key={article.id}
+                    article={article}
+                    className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200"
+                  />
+                ))}
+              </NewsGrid>
 
-        <TabsContent value="makeAhead" className="mt-0">
-          <NewsGrid columns={3} gap={6}>
-            {tabsData.makeAhead.map((article) => (
-              <StandardArticleCard
-                key={article.id}
-                article={article}
-                className="bg-white border border-gray-200"
-              />
-            ))}
-          </NewsGrid>
-        </TabsContent>
-
-        <TabsContent value="stunningDesserts" className="mt-0">
-          <NewsGrid columns={4} gap={4}>
-            {tabsData.stunningDesserts.map((article) => (
-              <StandardArticleCard
-                key={article.id}
-                article={article}
-                className="bg-white border border-gray-200"
-              />
-            ))}
-          </NewsGrid>
-        </TabsContent>
+              {/* Show message if no articles */}
+              {articles.length === 0 && (
+                <div className="text-center py-12 text-gray-500">
+                  <p className="text-lg">
+                    No articles available for this section.
+                  </p>
+                  <p className="text-sm mt-2">
+                    Please check back later for updates.
+                  </p>
+                </div>
+              )}
+            </TabsContent>
+          );
+        })}
       </Tabs>
     </div>
   );
 };
 
 export default TabbedNewsSection;
+
+// Example usage with dynamic data:
+/*
+// In your parent component, you can pass dynamic data like this:
+
+const dynamicTabsFromAPI = [
+  {
+    key: "appetizers",
+    label: "Appetizers",
+    isDefault: true,
+    columns: 4,
+    gap: 4,
+  },
+  {
+    key: "mainCourses", 
+    label: "Main Courses",
+    columns: 3,
+    gap: 6,
+  },
+  {
+    key: "desserts",
+    label: "Desserts", 
+    columns: 4,
+    gap: 4,
+  },
+  // ... more tabs from your API
+];
+
+const dynamicArticlesFromAPI = {
+  appetizers: [
+    // articles from your database
+  ],
+  mainCourses: [
+    // articles from your database  
+  ],
+  desserts: [
+    // articles from your database
+  ],
+};
+
+<TabbedNewsSection 
+  dynamicTabsData={dynamicArticlesFromAPI}
+  dynamicTabsConfig={dynamicTabsFromAPI}
+  className="container mx-auto px-4"
+/>
+*/

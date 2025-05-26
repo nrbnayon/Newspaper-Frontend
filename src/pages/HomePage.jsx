@@ -15,6 +15,7 @@ import {
 } from "@/data/sampleArticles";
 import CommonNewsCard from "@/components/news/CommonNewsCard";
 import { FooterSection } from "@/components/footer/FooterSection";
+import ListedNewsSection from "@/components/news/ListedNewsSection";
 
 const sampleArticles = [
   {
@@ -65,23 +66,23 @@ export default function HomePage() {
       <Helmet>
         <title>ALAMOCITYPULSE - Latest News and Updates</title>
         <meta
-          name='description'
-          content='Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE'
+          name="description"
+          content="Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"
         />
       </Helmet>
 
-      <div className='min-h-screen'>
+      <div className="min-h-screen">
         <Navbar />
 
-        <main className='w-full py-8'>
+        <main className="w-full py-8">
           {/* Featured Article Section */}
-          <div className='flex gap-6 mb-12'>
+          <div className="flex gap-6 mb-12">
             {/* Featured Article - Takes up most width */}
-            <div className='flex-1'>
+            <div className="flex-1">
               <CommonNewsCard article={featuredArticle} />
 
               {/* Audio News Section */}
-              <div className='py-6'>
+              <div className="py-6">
                 <AudioNewsCard {...audioNews} />
               </div>
 
@@ -96,7 +97,7 @@ export default function HomePage() {
               </NewsSection>
 
               {/* Tabbed News Section - Replaces the simple grid */}
-              <div className='mb-8'>
+              <div className="mb-8">
                 <TabbedNewsSection />
               </div>
 
@@ -110,6 +111,11 @@ export default function HomePage() {
                 <LiveUpdateCard updates={liveUpdate} />
               </NewsSection>
 
+              {/* Listed News Section */}
+              <div className="mb-8">
+                <ListedNewsSection />
+              </div>
+
               {/* Keep original grid as fallback or additional content */}
               {/* <div className='mb-8'>
                 <h2 className='text-2xl font-bold text-gray-900 mb-6'>
@@ -122,26 +128,26 @@ export default function HomePage() {
                 </NewsGrid>
               </div> */}
 
-              <div className='w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center'>
-                <span className='text-gray-600 text-sm'>Ad Space</span>
+              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
+                <span className="text-gray-600 text-sm">Ad Space</span>
               </div>
             </div>
 
             {/* Vertical Separator */}
-            <div className='w-px bg-gray-300 min-h-full'></div>
+            <div className="w-px bg-gray-300 min-h-full"></div>
 
             {/* Advertisement Area */}
-            <div className='w-80 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]'>
-              <h3 className='text-lg font-bold text-gray-700 mb-4 text-center'>
+            <div className="w-80 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
+              <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
                 Advertisement Area
               </h3>
-              <div className='w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center'>
-                <span className='text-gray-600 text-sm'>Ad Space</span>
+              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
+                <span className="text-gray-600 text-sm">Ad Space</span>
               </div>
             </div>
           </div>
         </main>
-        <FooterSection/>
+        <FooterSection />
       </div>
     </>
   );
