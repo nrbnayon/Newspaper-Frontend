@@ -1,4 +1,5 @@
 import { Instagram, Linkedin, MessageSquareIcon, Twitter, Youtube } from "lucide-react";
+import { FaPinterestP } from "react-icons/fa";
 import React from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -81,7 +82,7 @@ export const FooterSection = () => {
                     <a
                       key={index}
                       href="#"
-                      className="font-normal text-white text-sm  tracking-[0] leading-normal font-sans hover:text-gray-300 transition-colors"
+                      className="font-normal text-white text-sm lg:text-base tracking-[0] leading-normal font-sans hover:text-gray-300 transition-colors"
                     >
                       {link.title}
                     </a>
@@ -100,7 +101,7 @@ export const FooterSection = () => {
                     <a
                       key={index}
                       href="#"
-                      className="font-normal text-white text-sm tracking-[0] leading-[21px] font-sans hover:text-gray-300 transition-colors"
+                      className="font-normal text-white text-sm lg:text-base racking-[0] leading-[21px] font-sans hover:text-gray-300 transition-colors"
                     >
                       {link.title}
                     </a>
@@ -114,7 +115,7 @@ export const FooterSection = () => {
                   Category
                 </h3>
 
-                <div className="font-normal text-white text-sm  tracking-[0] leading-[20px] sm:leading-[27.2px] font-sans">
+                <div className="font-normal text-white text-sm lg:text-base tracking-[0] leading-[20px] sm:leading-[27.2px] font-sans">
                   {categoryLinks.map((category, index) => (
                     <React.Fragment key={index}>
                       <a href="#" className="hover:text-gray-300 transition-colors">
@@ -142,7 +143,7 @@ export const FooterSection = () => {
                 <Instagram size={14} className="sm:w-4 sm:h-4" color="#fdfdfd" strokeWidth={3} />
               </button>
               <button className="flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors">
-                <Twitter size={14} className="sm:w-4 sm:h-4" />
+                <FaPinterestP  size={14} className="sm:w-4 sm:h-4" />
               </button>
             </div>
           </CardContent>
