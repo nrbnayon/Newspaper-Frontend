@@ -4,6 +4,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { AdvertiseProvider } from "../admin/Advertise/AdvertiseContext";
 import { useState, useEffect } from "react";
 import { PanelLeftOpen } from "lucide-react";
+import { logoutUser } from "../../lib/auth-service";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -30,6 +31,10 @@ const Dashboard = () => {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
+  const handleLogout = () => {
+    // Implement your logout logic here
+    logoutUser()
+  }
 
   return (
     <div>
@@ -144,13 +149,16 @@ const Dashboard = () => {
                   onClick={isMobile ? closeSidebar : undefined}
                 >
                   Advertise List
+
                 </NavLink>
               </li>
             </ul>
           </div>
 
           <div className="bottom-1">
-            <button className="w-30 py-2 text-white px-2 cursor-pointer bg-button-bg rounded-md">
+            <button
+              onClick={handleLogout}
+              className="w-30 py-2 text-white px-2 cursor-pointer bg-button-bg rounded-md">
               Log out
             </button>
           </div>

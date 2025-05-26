@@ -40,6 +40,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await logoutUser()
+      console.log("User logged out");
       setUser(null)
       localStorage.removeItem("user")
       navigate("/")

@@ -131,6 +131,7 @@ export async function resendOTP({ email, type }) {
  */
 export async function logoutUser() {
   // Simulate API call
+  console.log("Logging out user...");
   return new Promise((resolve) => {
     setTimeout(() => {
       // Clear local storage or cookies in a real app
