@@ -16,6 +16,7 @@ import {
 import CommonNewsCard from "@/components/news/CommonNewsCard";
 import { FooterSection } from "@/components/footer/FooterSection";
 import ListedNewsSection from "@/components/news/ListedNewsSection";
+import Advertise from "./Advertise/Advertise";
 
 const sampleArticles = [
   {
@@ -140,14 +141,10 @@ export default function HomePage() {
                   <ListedNewsSection />
                 </div>
 
-                {/* Mobile/Tablet Ad Space - Only show on smaller screens */}
-                <div className="xl:hidden w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mb-8">
-                  <span className="text-gray-600 text-sm">Ad Space</span>
-                </div>
-
-                {/* Bottom Ad Space */}
-                <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-                  <span className="text-gray-600 text-sm">Ad Space</span>
+                <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
+                  <span className="text-gray-600 text-sm">
+                    Bottom Advertise Space
+                  </span>
                 </div>
               </div>
 
@@ -156,14 +153,57 @@ export default function HomePage() {
 
               {/* Sidebar - Advertisement Area */}
               <aside className="w-full xl:w-80">
-                <div className="bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
+                {/* First Ad Block - Mobile/Tablet */}
+                <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
+                  <span className="text-gray-600 text-sm">Top Ad Space</span>
+                </div>
+
+                {/* Trending Articles - First Set */}
+                <div className="xl:hidden w-full mb-6">
+                  <h4 className="text-md font-semibold text-gray-700 mb-4">
+                    Trending Now
+                  </h4>
+                  <div className="space-y-4">
+                    {sampleArticles.slice(0, 3).map((article) => (
+                      <div key={article.id} className="w-full">
+                        <StandardArticleCard article={article} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Second Ad Block - Mobile/Tablet */}
+                <div className="xl:hidden w-full h-28 sm:h-36 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
+                  <span className="text-gray-600 text-sm">Mid Ad Space</span>
+                </div>
+
+                {/* Trending Articles - Second Set */}
+                <div className="xl:hidden w-full mb-6">
+                  <div className="space-y-4">
+                    {sampleArticles.slice(3, 6).map((article) => (
+                      <div key={article.id} className="w-full">
+                        <StandardArticleCard article={article} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Third Ad Block - Mobile/Tablet */}
+                <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-8">
+                  <span className="text-gray-600 text-sm">Bottom Ad Space</span>
+                </div>
+
+                {/* Desktop Sidebar Layout */}
+                <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
                   <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
                     Advertisement Area
                   </h3>
 
                   {/* Top Ad in Sidebar */}
                   <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-                    <span className="text-gray-600 text-sm">Ad Space</span>
+                    <span className="text-gray-600 text-sm">
+                      Sidebar Top Ad
+                    </span>
                   </div>
 
                   {/* Sidebar News Articles */}
@@ -172,7 +212,25 @@ export default function HomePage() {
                       Trending Now
                     </h4>
                     <div className="space-y-4">
-                      {sampleArticles.slice(0, 6).map((article) => (
+                      {sampleArticles.slice(0, 3).map((article) => (
+                        <div key={article.id} className="w-full">
+                          <StandardArticleCard article={article} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Middle Ad in Sidebar */}
+                  <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center my-6">
+                    <span className="text-gray-600 text-sm">
+                      Sidebar Mid Ad
+                    </span>
+                  </div>
+
+                  {/* More Sidebar News Articles */}
+                  <div className="w-full">
+                    <div className="space-y-4">
+                      {sampleArticles.slice(3, 6).map((article) => (
                         <div key={article.id} className="w-full">
                           <StandardArticleCard article={article} />
                         </div>
@@ -182,7 +240,9 @@ export default function HomePage() {
 
                   {/* Bottom Ad in Sidebar */}
                   <div className="w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mt-6">
-                    <span className="text-gray-600 text-sm">Ad Space</span>
+                    <span className="text-gray-600 text-sm">
+                      Sidebar Bottom Ad
+                    </span>
                   </div>
                 </div>
               </aside>
