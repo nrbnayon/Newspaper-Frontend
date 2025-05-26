@@ -10,7 +10,11 @@ const advertiseData1 = [
     description: "Description for national news",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://example.com/image1.jpg"],
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
     progress: "Unread",
   },
   {
@@ -21,12 +25,13 @@ const advertiseData1 = [
     description: "Prime location office space",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://example.com/image2.jpg"],
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
     progress: "Approved",
   },
-];
-
-const advertiseData2 = [
   {
     id: "2",
     serialNumber: "2",
@@ -35,17 +40,142 @@ const advertiseData2 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"],
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
+    progress: "Read",
+  },
+  {
+    id: "2",
+    serialNumber: "2",
+    category: "Politics",
+    title: "Parliament Approves New Economic Reform Bill",
+    description: "After hours of intense discussion...",
+    details: "Dhanmondi Branc...",
+    image: "Image",
+    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+    ],
     progress: "Read",
   },
 ];
+
 
 export const AdvertiseContext = createContext();
 
 export const AdvertiseProvider = ({ children }) => {
   const [advertiseData, setAdvertiseData] = useState([
     ...advertiseData1,
-    ...advertiseData2,
+    
   ]);
 
   const updateProgress = (id, newProgress) => {

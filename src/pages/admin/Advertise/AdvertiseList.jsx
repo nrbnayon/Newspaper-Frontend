@@ -75,7 +75,7 @@ export default function AdvertiseList() {
                 </TableCell>
                 <TableCell>
                   <Button variant="ghost" size="sm" onClick={() => handleEdit(item)}>
-                    <Edit className="h-4 w-4 text-gray-400" />
+                    <Edit className="h-4 w-4 cursor-pointer text-gray-400" />
                   </Button>
                 </TableCell>
               </TableRow>
