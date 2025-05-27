@@ -11,6 +11,10 @@ export default function Navbar() {
   const [currentDate, setCurrentDate] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Sticky navbar state
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   // Set current date on component mount
   useEffect(() => {
@@ -33,6 +37,46 @@ export default function Navbar() {
 
     setIsAuthenticated(checkAuthStatus());
   }, []);
+
+  // Sticky navbar scroll logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show navbar when at top of page
+      if (currentScrollY === 0) {
+        setIsVisible(true);
+      } 
+      // Hide when scrolling down, show when scrolling up
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    // Throttle scroll events for better performance
+    let timeoutId = null;
+    const throttledHandleScroll = () => {
+      if (timeoutId === null) {
+        timeoutId = setTimeout(() => {
+          handleScroll();
+          timeoutId = null;
+        }, 10);
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [lastScrollY]);
 
   const openSignUp = () => {
     setAuthMode("signup");
@@ -58,7 +102,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-white border-b border-gray-200">
+      <nav className={`
+        fixed top-0 px-2 md:px-10 left-0 right-0 z-50 bg-white   
+        transition-transform duration-300 ease-in-out
+        ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+      `}>
         {/* Top section */}
         <div className="">
           {/* Desktop Layout */}
