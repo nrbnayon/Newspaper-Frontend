@@ -1,9 +1,18 @@
 import { cn } from "@/lib/utils";
+import AuthModal from "../auth/AuthModal";
+import { useState } from "react";
 
 const TimeIndicator = ({ type, value, className }) => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signup");
   const isLive = type === "live";
   const isReadTime = type === "readTime";
   const isTimeAgo = type === "timeAgo";
+
+  const openSignIn = () => {
+    setAuthMode("signup");
+    setAuthModalOpen(true);
+  };
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -15,14 +24,25 @@ const TimeIndicator = ({ type, value, className }) => {
       )}
 
       {isReadTime && (
-        <span className="text-gray-500 text-sm flex items-center">
+        <span
+          onClick={() => openSignIn()}
+          className="text-gray-500 cursor-pointer text-sm flex items-center"
+        >
           {value} MIN READ
         </span>
       )}
 
       {isTimeAgo && (
-        <span className="text-gray-500 text-sm flex items-center">{value}</span>
+        <span className="text-gray-500 text-sm flex items-center">
+          {value}
+        </span>
       )}
+
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authMode}
+      />
     </div>
   );
 };
