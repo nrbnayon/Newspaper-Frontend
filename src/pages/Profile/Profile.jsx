@@ -199,11 +199,11 @@ const Profile = () => {
       <h2 className="text-2xl font-bold text-gray-800 mb-8">My Profile</h2>
 
       {/* Profile Section - Responsive Layout */}
-      <div className="flex flex-col lg:flex-row mb-12 gap-6">
+      <div className="flex flex-col lg:flex-row mb-4 lg:mb-12 gap-6">
         {/* Profile Image and Basic Info */}
         <div className="flex flex-row justify-baseline items-start sm:items-center gap-4">
           <div className="relative">
-            <div className="rounded-full overflow-hidden relative h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 bg-gray-400">
+            <div className="rounded-full overflow-hidden relative h-14 w-14 md:h-16 md:w-16 lg:h-20 lg:w-20 bg-gray-400">
               <img
                 src={profileImage}
                 alt="Profile"
@@ -227,11 +227,12 @@ const Profile = () => {
             />
           </div>
 
-          <div className="mt-0 sm:mt-4">
+          <div className="">
+            
+            <h3 className="text-lg lg:text-2xl  font-bold text-gray-800">{name}</h3>
             <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mb-2">
               User
             </span>
-            <h3 className="text-xl font-bold text-gray-800">{name}</h3>
           </div>
         </div>
 
@@ -253,16 +254,16 @@ const Profile = () => {
       </div>
 
       {/* Form Fields - Responsive Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-4 md:mb-12">
         <div>
-          <h4 className="text-xl text-gray-800 mb-4">Name</h4>
+          <h4 className="text-base md:text-xl text-gray-800 mb-4">Name</h4>
           <div className="relative">
             <input
               type="text"
               value={name}
               onChange={handleNameChange}
               readOnly={!isEditingName}
-              className={`w-full p-2 pr-10 text-base text-gray-700 border border-gray-300 rounded ${
+              className={`w-full p-2 pr-10 text-sm md:text-base text-gray-700 border border-gray-300 rounded ${
                 isEditingName ? "bg-white" : "bg-gray-50"
               }`}
             />
@@ -276,14 +277,14 @@ const Profile = () => {
         </div>
 
         <div>
-          <h4 className="text-xl text-gray-800 mb-4">E-mail</h4>
+          <h4 className="text-base md:text-xl text-gray-800 mb-4">E-mail</h4>
           <div className="relative">
             <input
               type="email"
               value={email}
               onChange={handleEmailChange}
               readOnly={!isEditingEmail}
-              className={`w-full p-2 pr-10 text-base text-gray-700 border border-gray-300 rounded ${
+              className={`w-full p-2 pr-10 text-sm md:text-base text-gray-700 border border-gray-300 rounded ${
                 isEditingEmail ? "bg-white" : "bg-gray-50"
               }`}
             />
@@ -299,10 +300,10 @@ const Profile = () => {
 
       {/* Delete Account Section - Responsive */}
       <div className="border bg-red-50 border-red-500 rounded p-4 sm:p-6">
-        <h4 className="text-xl font-bold text-red-500 mb-4">Delete Account</h4>
+        <h4 className="text-base md:text-xl font-bold text-red-500 mb-4">Delete Account</h4>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div className="flex-1">
-            <p className="text-gray-800 text-base">
+            <p className="text-gray-800 text-sm md:text-base ">
               Contact our
               <a href="#" className="text-blue-600 px-2 underline">
                 support team
