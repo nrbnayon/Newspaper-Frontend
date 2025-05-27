@@ -95,7 +95,8 @@ export default function HomePage() {
       <div className="min-h-screen">
         <Navbar />
 
-        <main className="w-full py-4 sm:py-8">
+        {/* Add top padding to account for fixed navbar */}
+        <main className="w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
           <div className="">
             {/* Main Layout - Responsive Grid */}
             <div className="grid grid-cols-1 xl:grid-cols-[1fr_1px_320px] gap-6 xl:gap-8 mb-12">
