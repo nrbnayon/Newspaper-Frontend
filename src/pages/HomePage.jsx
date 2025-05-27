@@ -1,5 +1,6 @@
 // src\pages\HomePage.jsx
 import { Helmet } from "react-helmet-async";
+import { useRef, useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import StandardArticleCard from "@/components/news/StandardArticleCard";
 import AudioNewsCard from "@/components/news/AudioNewsCard";
@@ -82,6 +83,31 @@ const sampleArticles = [
 ];
 
 export default function HomePage() {
+  const footerRef = useRef(null);
+
+  // Function to scroll to footer
+  const scrollToFooter = () => {
+    if (footerRef.current) {
+      footerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  // Listen for custom event from Navbar
+  useEffect(() => {
+    const handleScrollToAbout = () => {
+      scrollToFooter();
+    };
+
+    window.addEventListener('scrollToAbout', handleScrollToAbout);
+
+    return () => {
+      window.removeEventListener('scrollToAbout', handleScrollToAbout);
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -93,7 +119,7 @@ export default function HomePage() {
       </Helmet>
 
       <div className="min-h-screen">
-        <Navbar />
+        <Navbar onScrollToAbout={scrollToFooter} />
 
         {/* Add top padding to account for fixed navbar */}
         <main className="w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
@@ -251,7 +277,10 @@ export default function HomePage() {
           </div>
         </main>
 
-        <FooterSection />
+        {/* Footer with ref */}
+        <div ref={footerRef}>
+          <FooterSection />
+        </div>
       </div>
     </>
   );

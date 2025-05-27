@@ -54,7 +54,7 @@ const Dashboard = () => {
         {isMobile && (
           <button
             onClick={toggleSidebar}
-            className="fixed top-48 left-0 z-50 bg-white border border-gray-300 shadow-lg text-gray-800 p-2 rounded-md lg:hidden hover:bg-gray-50 transition-colors"
+            className="fixed top-48 left-0 z-50 cursor-pointer bg-white border border-gray-300 shadow-lg text-gray-800 p-2 rounded-md lg:hidden hover:bg-gray-50 transition-colors"
             aria-label="Toggle Sidebar"
           >
             {isSidebarOpen ? (
@@ -92,7 +92,7 @@ const Dashboard = () => {
               <div className="flex justify-end">
                 <button
                   onClick={closeSidebar}
-                  className="text-[#505050] hover:text-[#00254a] p-1 border rounded-full"
+                  className="text-[#505050] hover:text-[#00254a] p-1 border cursor-pointer rounded-full"
                   aria-label="Close Sidebar"
                 >
                   <X size={28} />

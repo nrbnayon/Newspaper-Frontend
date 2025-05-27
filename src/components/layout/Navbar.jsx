@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import AuthModal from "@/components/auth/AuthModal";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({ onScrollToAbout }) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signup");
   const [currentDate, setCurrentDate] = useState("");
@@ -98,6 +98,15 @@ export default function Navbar() {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Handle About Us click
+  const handleAboutUsClick = (e) => {
+    e.preventDefault();
+    if (onScrollToAbout) {
+      onScrollToAbout();
+    }
+    setIsMobileMenuOpen(false); // Close mobile menu if open
   };
 
   return (
@@ -242,7 +251,7 @@ export default function Navbar() {
               )}
               <button
                 onClick={toggleMobileMenu}
-                className="p-2 text-gray-900 hover:bg-gray-100 rounded-md"
+                className="p-2 text-gray-900 cursor-pointer hover:bg-gray-100 rounded-md"
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -284,17 +293,17 @@ export default function Navbar() {
             Home
           </Link>
           <div className="relative group">
-            <button className="flex items-center text-gray-900 font-medium hover:text-[#00254a] bg-white transition-colors">
+            <button className="flex items-center text-gray-900 cursor-pointer font-medium hover:text-[#00254a] bg-white transition-colors">
               News
               <ChevronDown size={16} className="ml-1" />
             </button>
           </div>
-          <Link
-            to="/about"
-            className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
+          <button
+            onClick={handleAboutUsClick}
+            className="text-gray-900 cursor-pointer font-medium hover:text-[#00254a] transition-colors"
           >
             About Us
-          </Link>
+          </button>
           <Link
             to="/dashboard/advertise"
             className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
@@ -314,19 +323,21 @@ export default function Navbar() {
               >
                 Home
               </Link>
-              <div className="px-3 py-2">
-                <button className="flex items-center w-full text-left text-gray-900 font-medium hover:text-[#00254a] transition-colors">
+              <div className="px-3 py-2 ">
+                <button className="flex items-center cursor-pointer w-full text-left text-gray-900 font-medium hover:text-[#00254a] transition-colors">
                   News
                   <ChevronDown size={16} className="ml-1" />
                 </button>
               </div>
-              <Link
-                to="/about"
-                className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                About Us
-              </Link>
+              
+             
+              <button
+                    onClick={handleAboutUsClick}
+                    className="block px-3 py-2 text-gray-900 cursor-pointer font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors w-full text-left"
+                  >
+                    About Us
+              </button>
+             
               <Link
                 to="/dashboard/advertise"
                 className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
@@ -368,4 +379,4 @@ export default function Navbar() {
       />
     </>
   );
-}
+};
