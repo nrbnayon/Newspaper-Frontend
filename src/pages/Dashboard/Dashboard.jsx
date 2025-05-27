@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import { AdvertiseProvider } from "../admin/Advertise/AdvertiseContext";
 import { useState, useEffect } from "react";
-import { PanelLeftOpen, PanelLeftOpenIcon } from "lucide-react";
+import { PanelLeftOpen } from "lucide-react";
 import { logoutUser } from "../../lib/auth-service";
 
 const Dashboard = () => {
@@ -65,7 +65,7 @@ const Dashboard = () => {
           className={`
             ${isMobile ? 'fixed' : 'relative'} 
             ${isMobile ? 'w-50' : 'w-1/6'} 
-            flex flex-col justify-between bg-[#f2f2f2] h-screen p-6 z-40
+            flex flex-col justify-between bg-[#f2f2f2] h-screen p-6 z-50
             transition-transform duration-300 ease-in-out
             ${
               isMobile
@@ -79,19 +79,32 @@ const Dashboard = () => {
         >
           {/* Close button for mobile */}
           {isMobile && (
-            <div className="flex mt-44 mb-4">
+            <div className="flex justify-end mb-4">
               <button
                 onClick={closeSidebar}
-                className="text-[#505050] z-50 hover:text-[#00254a] p-1"
+                className="text-[#505050] hover:text-[#00254a] p-1"
                 aria-label="Close Sidebar"
               >
-                <PanelLeftOpenIcon size={28} color="black" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
           )}
 
           <div>
-            <h2 className="text-xl font-bold text-[#142335] mt-44 mb-4">My Account</h2>
+            <h2 className="text-xl font-bold text-[#142335] mb-4">My Account</h2>
             <ul className="space-y-2">
               <li>
                 <NavLink
@@ -152,7 +165,7 @@ const Dashboard = () => {
         </div>
 
         {/* Main Content Area - This is where child routes will render */}
-        <div className={`flex-1 ${isMobile ? 'w-full' : ''} transition-all mt-44 duration-300`}>
+        <div className={`flex-1 ${isMobile ? 'w-full' : ''} transition-all duration-300`}>
           <AdvertiseProvider>
             <Outlet />
           </AdvertiseProvider>
