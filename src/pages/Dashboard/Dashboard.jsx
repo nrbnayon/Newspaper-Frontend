@@ -1,9 +1,14 @@
-// src\pages\Dashboard\Dashboard.jsx - Responsive Dashboard with Mobile Sidebar
+// src\pages\Dashboard\Dashboard.jsx - Fixed Responsive Dashboard with Mobile Sidebar
 import Navbar from "@/components/layout/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import { AdvertiseProvider } from "../admin/Advertise/AdvertiseContext";
 import { useState, useEffect } from "react";
-import { PanelLeftOpen, PanelLeftOpenIcon } from "lucide-react";
+import {
+  PanelLeftOpen,
+  PanelLeftOpenIcon,
+  PanelRightOpen,
+  X,
+} from "lucide-react";
 import { logoutUser } from "../../lib/auth-service";
 
 const Dashboard = () => {
@@ -20,8 +25,8 @@ const Dashboard = () => {
     };
 
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
   const toggleSidebar = () => {
@@ -31,135 +36,147 @@ const Dashboard = () => {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
+
   const handleLogout = () => {
     // Implement your logout logic here
-    logoutUser()
-  }
+    logoutUser();
+  };
 
   return (
     <div>
       <Navbar />
-      <div className="flex-row lg:flex gap-8 ">
-        {/* Mobile Sidebar Toggle Button */}
+
+      {/* Container with proper top margin to account for sticky navbar */}
+      <div className="pt-32 lg:pt-44 relative">
+        {" "}
+        {/* Added relative positioning */}
+        {/* Mobile Sidebar Toggle Button - Fixed positioning */}
         {isMobile && (
           <button
             onClick={toggleSidebar}
-            className=" bg-transparent text-white mt-3 p-2 rounded-md shadow-lg lg:hidden"
+            className="fixed top-48 left-0 z-50 bg-white border border-gray-300 shadow-lg text-gray-800 p-2 rounded-md lg:hidden hover:bg-gray-50 transition-colors"
             aria-label="Toggle Sidebar"
           >
-            <PanelLeftOpen size={28} color="#000000" />
-             
+            {isSidebarOpen ? (
+              <PanelRightOpen size={24} />
+            ) : (
+              <PanelLeftOpen size={24} />
+            )}
           </button>
         )}
-
-        {/* Overlay for mobile */}
-        {isMobile && isSidebarOpen && (
-          <div
-            className="fixed inset-0  bg-opacity-50 z-40"
-            onClick={closeSidebar}
-          ></div>
-        )}
-
-        {/* Sidebar */}
-        <div
-          className={`
-            ${isMobile ? 'fixed' : 'relative'} 
-            ${isMobile ? 'w-50' : 'w-1/6'} 
-            flex flex-col justify-between bg-[#f2f2f2] h-screen p-6 z-40
-            transition-transform duration-300 ease-in-out
-            ${
-              isMobile
-                ? isSidebarOpen
-                  ? 'transform translate-x-0'
-                  : 'transform -translate-x-full'
-                : 'transform translate-x-0'
-            }
-            ${isMobile ? 'top-0 left-0' : ''}
-          `}
-        >
-          {/* Close button for mobile */}
-          {isMobile && (
-            <div className="flex mt-44 mb-4">
-              <button
-                onClick={closeSidebar}
-                className="text-[#505050] z-50 hover:text-[#00254a] p-1"
-                aria-label="Close Sidebar"
-              >
-                <PanelLeftOpenIcon size={28} color="black" />
-              </button>
-            </div>
+        <div className="flex-row lg:flex gap-8">
+          {/* Overlay for mobile - Fixed to only cover content area */}
+          {isMobile && isSidebarOpen && (
+            <div className="absolute inset-0 z-40" onClick={closeSidebar}></div>
           )}
 
-          <div>
-            <h2 className="text-xl font-bold text-[#142335] mt-44 mb-4">My Account</h2>
-            <ul className="space-y-2">
-              <li>
-                <NavLink
-                  to="/dashboard/profile"
-                  className={({ isActive }) =>
-                    `block py-3 px-4 font-medium transition-colors rounded-md ${
-                      isActive
-                        ? "bg-[#00254a] text-white"
-                        : "text-[#505050] hover:bg-[#e2e2e2]"
-                    }`
-                  }
-                  onClick={isMobile ? closeSidebar : undefined}
+          {/* Sidebar */}
+          <div
+            className={`
+              ${isMobile ? "fixed" : "relative"} 
+              ${isMobile ? "w-64" : "w-1/6"} 
+              flex flex-col justify-between bg-[#f2f2f2] h-screen p-6 z-40
+              transition-transform duration-300 ease-in-out
+              ${
+                isMobile
+                  ? isSidebarOpen
+                    ? "transform translate-x-0"
+                    : "transform -translate-x-full"
+                  : "transform translate-x-0"
+              }
+              ${isMobile ? "top-0 left-0 pt-10" : ""}
+            `}
+          >
+            {/* Close button for mobile */}
+            {isMobile && (
+              <div className="flex justify-end">
+                <button
+                  onClick={closeSidebar}
+                  className="text-[#505050] hover:text-[#00254a] p-1 border rounded-full"
+                  aria-label="Close Sidebar"
                 >
-                  My Profile
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/advertise"
-                  className={({ isActive }) =>
-                    `block py-3 px-4 font-medium transition-colors rounded-md ${
-                      isActive
-                        ? "bg-[#00254a] text-white"
-                        : "text-[#505050] hover:bg-[#e2e2e2]"
-                    }`
-                  }
-                  onClick={isMobile ? closeSidebar : undefined}
-                >
-                  Advertise
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/advertiselist"
-                  className={({ isActive }) =>
-                    `block py-3 px-4 font-medium transition-colors rounded-md ${
-                      isActive
-                        ? "bg-[#00254a] text-white"
-                        : "text-[#505050] hover:bg-[#e2e2e2]"
-                    }`
-                  }
-                  onClick={isMobile ? closeSidebar : undefined}
-                >
-                  Advertise List
+                  <X size={28} />
+                </button>
+              </div>
+            )}
 
-                </NavLink>
-              </li>
-            </ul>
+            <div>
+              <h2 className="text-xl font-bold text-[#142335] mb-4">
+                My Account
+              </h2>
+              <ul className="space-y-2">
+                <li>
+                  <NavLink
+                    to="/dashboard/profile"
+                    className={({ isActive }) =>
+                      `block py-3 px-4 font-medium transition-colors rounded-md ${
+                        isActive
+                          ? "bg-[#00254a] text-white"
+                          : "text-[#505050] hover:bg-[#e2e2e2]"
+                      }`
+                    }
+                    onClick={isMobile ? closeSidebar : undefined}
+                  >
+                    My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/advertise"
+                    className={({ isActive }) =>
+                      `block py-3 px-4 font-medium transition-colors rounded-md ${
+                        isActive
+                          ? "bg-[#00254a] text-white"
+                          : "text-[#505050] hover:bg-[#e2e2e2]"
+                      }`
+                    }
+                    onClick={isMobile ? closeSidebar : undefined}
+                  >
+                    Advertise
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/advertiselist"
+                    className={({ isActive }) =>
+                      `block py-3 px-4 font-medium transition-colors rounded-md ${
+                        isActive
+                          ? "bg-[#00254a] text-white"
+                          : "text-[#505050] hover:bg-[#e2e2e2]"
+                      }`
+                    }
+                    onClick={isMobile ? closeSidebar : undefined}
+                  >
+                    Advertise List
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bottom-1">
+              <button
+                onClick={handleLogout}
+                className="w-30 py-2 text-white px-2 cursor-pointer bg-button-bg rounded-md"
+              >
+                Log out
+              </button>
+            </div>
           </div>
 
-          <div className="bottom-1">
-            <button
-              onClick={handleLogout}
-              className="w-30 py-2 text-white px-2 cursor-pointer bg-button-bg rounded-md">
-              Log out
-            </button>
+          {/* Main Content Area - This is where child routes will render */}
+          <div
+            className={`flex-1 ${
+              isMobile ? "w-full mt-24" : ""
+            } transition-all duration-300`}
+          >
+            <AdvertiseProvider>
+              <Outlet />
+            </AdvertiseProvider>
           </div>
-        </div>
-
-        {/* Main Content Area - This is where child routes will render */}
-        <div className={`flex-1 ${isMobile ? 'w-full' : ''} transition-all mt-44 duration-300`}>
-          <AdvertiseProvider>
-            <Outlet />
-          </AdvertiseProvider>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;
