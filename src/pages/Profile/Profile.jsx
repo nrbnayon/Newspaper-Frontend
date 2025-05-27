@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
-import { Edit, X } from "lucide-react";
+import { Badge, Edit, X } from "lucide-react";
 import { createPortal } from "react-dom";
+import { Button } from "@/components/ui/button";
 
 // Toast notification function (simplified version)
 const toast = {
@@ -320,6 +321,52 @@ const Profile = () => {
             </button>
           </div>
         </div>
+      </div>
+
+
+                  {/* Pricing Section */}
+      <div>
+            <h3 className="text-lg font-semibold text-[#252525] mb-6">Pricing</h3>
+            <div className="bg-[#f2f2f2] rounded-lg p-6 max-w-md">
+                <div className="text-center mb-6">
+                  <div className="flex items-center justify-center space-x-2 mb-4">
+                    <div className="w-4 h-4 rounded-full border-2 border-[#666666] flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-[#666666]"></div>
+                    </div>
+                    <span className="text-[#666666] font-medium">Monthly</span>
+                  </div>
+                  <div className="text-4xl font-bold text-[#252525] mb-2">
+                    $4.99<span className="text-lg font-normal">/mn</span>
+                  </div>
+                  <div className="flex items-center justify-center space-x-2">
+                    <span className="text-[#a8a8a8] line-through">$295</span>
+                    <Badge className="bg-[#141440] text-[#ffffff] hover:bg-[#141440]">Save $140</Badge>
+                  </div>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full bg-[#1b6bf3] mt-2"></div>
+                    <span className="text-sm text-[#666666]">Create your own automated bot effortlessly!</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full bg-[#1b6bf3] mt-2"></div>
+                    <span className="text-sm text-[#666666]">Join our community for seamless team collaboration!</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full bg-[#1b6bf3] mt-2"></div>
+                    <span className="text-sm text-[#666666]">Unlock the secrets of AI model training with us!</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full bg-[#1b6bf3] mt-2"></div>
+                    <span className="text-sm text-[#666666]">
+                      Subscribe for insights on multilingual AI advancements!
+                    </span>
+                  </div>
+                </div>
+
+                <Button className="w-full bg-[#1b6bf3] hover:bg-[#1b6bf3]/90 text-[#ffffff]">Buy Now</Button>
+            </div>
       </div>
     </div>
   );

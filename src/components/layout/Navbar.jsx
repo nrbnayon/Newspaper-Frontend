@@ -3,7 +3,7 @@ import { Search, ChevronDown, User2, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AuthModal from "@/components/auth/AuthModal";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar({ onScrollToAbout }) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -15,6 +15,10 @@ export default function Navbar({ onScrollToAbout }) {
   // Sticky navbar state
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  // Get current location to check if we're in dashboard
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith('/dashboard');
 
   // Set current date on component mount
   useEffect(() => {
@@ -164,13 +168,13 @@ export default function Navbar({ onScrollToAbout }) {
                   <div className="w-full flex justify-end items-end gap-4 md:gap-9">
                     <Button
                       onClick={openSignIn}
-                      className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white"
+                      className="border-[#00254a] bg-[#00254A] cursor-pointer text-white hover:bg-[#00254a] hover:text-white"
                     >
                       Sign In
                     </Button>
                     <Button
                       onClick={openSignUp}
-                      className="hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
+                      className="hover:text-white cursor-pointer text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
                     >
                       Sign Up
                     </Button>
@@ -208,13 +212,13 @@ export default function Navbar({ onScrollToAbout }) {
                 <>
                   <Button
                     onClick={openSignIn}
-                    className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-sm px-3 py-2"
+                    className="border-[#00254a] cursor-pointer bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-sm px-3 py-2"
                   >
                     Sign In
                   </Button>
                   <Button
                     onClick={openSignUp}
-                    className="hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border text-sm px-3 py-2"
+                    className="hover:text-white cursor-pointer text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border text-sm px-3 py-2"
                   >
                     Sign Up
                   </Button>
@@ -237,14 +241,14 @@ export default function Navbar({ onScrollToAbout }) {
               {isAuthenticated ? (
                 <Link
                   to="/dashboard/profile"
-                  className="bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]"
+                  className="bg-[#00254A] cursor-pointer rounded-full p-1 text-white hover:bg-[#001a38]"
                 >
                   <User2 size={20} className="text-white" />
                 </Link>
               ) : (
                 <Button
                   onClick={openSignIn}
-                  className="border-[#00254a] bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-xs px-2 py-1"
+                  className="border-[#00254a] cursor-pointer bg-[#00254A] text-white hover:bg-[#00254a] hover:text-white text-xs px-2 py-1"
                 >
                   Sign In
                 </Button>
@@ -298,12 +302,15 @@ export default function Navbar({ onScrollToAbout }) {
               <ChevronDown size={16} className="ml-1" />
             </button>
           </div>
-          <button
-            onClick={handleAboutUsClick}
-            className="text-gray-900 cursor-pointer font-medium hover:text-[#00254a] transition-colors"
-          >
-            About Us
-          </button>
+          {/* Conditionally render About Us button - hide when in dashboard */}
+          {!isDashboard && (
+            <button
+              onClick={handleAboutUsClick}
+              className="text-gray-900 cursor-pointer font-medium hover:text-[#00254a] transition-colors"
+            >
+              About Us
+            </button>
+          )}
           <Link
             to="/dashboard/advertise"
             className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
@@ -330,13 +337,15 @@ export default function Navbar({ onScrollToAbout }) {
                 </button>
               </div>
               
-             
-              <button
-                    onClick={handleAboutUsClick}
-                    className="block px-3 py-2 text-gray-900 cursor-pointer font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors w-full text-left"
-                  >
-                    About Us
-              </button>
+              {/* Conditionally render About Us button in mobile menu - hide when in dashboard */}
+              {!isDashboard && (
+                <button
+                  onClick={handleAboutUsClick}
+                  className="block px-3 py-2 text-gray-900 cursor-pointer font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors w-full text-left"
+                >
+                  About Us
+                </button>
+              )}
              
               <Link
                 to="/dashboard/advertise"
@@ -355,7 +364,7 @@ export default function Navbar({ onScrollToAbout }) {
                         openSignUp();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
+                      className="w-full cursor-pointer hover:text-white text-[#001a38] hover:bg-[#001a38] bg-white border-[#00254a] border"
                     >
                       Sign Up
                     </Button>
