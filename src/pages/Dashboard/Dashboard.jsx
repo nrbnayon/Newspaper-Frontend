@@ -62,7 +62,7 @@ const Dashboard = () => {
       <Navbar />
 
       {/* Container with proper top margin to account for sticky navbar */}
-      <div className="pt-32 lg:pt-44 relative">
+      <div className=" relative">
         {" "}
         {/* Added relative positioning */}
         {/* Mobile Sidebar Toggle Button - Fixed positioning */}
@@ -115,7 +115,7 @@ const Dashboard = () => {
               </div>
             )}
 
-            <div>
+            <div className="pt-0  lg:pt-44">
               <h2 className="text-xl font-bold text-[#142335] mb-4">
                 My Account
               </h2>
@@ -168,7 +168,7 @@ const Dashboard = () => {
               </ul>
             </div>
 
-            <div className="bottom-1">
+            <div className="bottom-1  ">
               <button
                 onClick={handleLogout}
                 className="w-30 py-2 text-white px-2 cursor-pointer bg-button-bg rounded-md"
@@ -180,7 +180,7 @@ const Dashboard = () => {
 
           {/* Main Content Area - This is where child routes will render */}
           <div
-            className={`flex-1 ${
+            className={`flex-1 pt-32 md:pt-40 lg:pt-44 ${
               isMobile ? "w-full mt-24" : ""
             } transition-all duration-300`}
           >
