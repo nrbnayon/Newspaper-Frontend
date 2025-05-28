@@ -7,6 +7,7 @@ import NotFoundPage from "../NotFoundPage";
 import Dashboard from "./../Dashboard/Dashboard";
 import AdvertiseList from "../admin/Advertise/AdvertiseList";
 import AdvertiseInfo from "../admin/Advertise/AdvertiseInfo";
+import Pricing from "../Pricing/Pricing";
 
 const HomePage = lazy(() => import("../HomePage"));
 const Profile = lazy(() => import("./../Profile/Profile"));
@@ -34,6 +35,7 @@ const AppRoutes = () => {
               <Route path="advertiselist" element={<AdvertiseList />} />
               <Route path="advertiseinfo/:id" element={<AdvertiseInfo />} />
             </Route>
+            <Route path="/pricing" element={<Pricing/>} />
           </Route>
         </Route>
         <Route element={<VerificationRoute />}>

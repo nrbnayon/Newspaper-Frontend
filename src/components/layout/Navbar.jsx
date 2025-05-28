@@ -19,6 +19,7 @@ export default function Navbar({ onScrollToAbout }) {
   // Get current location to check if we're in dashboard
   const location = useLocation();
   const isDashboard = location.pathname.startsWith('/dashboard');
+  const isPricing = location.pathname.startsWith('/pricing')
 
   // Set current date on component mount
   useEffect(() => {
@@ -303,7 +304,7 @@ export default function Navbar({ onScrollToAbout }) {
             </button>
           </div>
           {/* Conditionally render About Us button - hide when in dashboard */}
-          {!isDashboard && (
+          {!(isDashboard || isPricing) && (
             <button
               onClick={handleAboutUsClick}
               className="text-gray-900 cursor-pointer font-medium hover:text-[#00254a] transition-colors"
@@ -316,6 +317,13 @@ export default function Navbar({ onScrollToAbout }) {
             className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
           >
             Make Advertise
+          </Link>
+
+          <Link
+            to="/pricing"
+            className="text-gray-900 font-medium hover:text-[#00254a] transition-colors"
+          >
+            Pricing
           </Link>
         </div>
 
