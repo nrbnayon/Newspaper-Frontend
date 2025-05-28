@@ -49,8 +49,7 @@ export const featuredArticle = {
   id: 0,
   title:
     "Microsoft Hires Sam Altman Hours After OpenAI Rejects His Return As C.E.O.",
-  excerpt:
-    "The tech giant said it was hiring Mr. Altman and Greg Brockman, OpenAI's former president, to lead an advanced research lab.",
+
   content:
     "A board member who was part of Sam Altman's ouster as chief executive joined a majority of the company's staff in calling for the decision's reversal.",
   sentiment: "Positive",
@@ -90,7 +89,7 @@ export const liveUpdate = [
 
 export const longReadArticle = {
   title: "Behind 94 Acts of Shocking Violence, Years of Glaring Mistakes",
-  excerpt:
+  content:
     "New York officials have escaped scrutiny for repeated failures to help homeless mentally ill people, a Times investigation has found.",
   readTime: 22,
   image:

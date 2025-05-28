@@ -7,11 +7,11 @@ const InteractionButtons = ({ className, size = "default" }) => {
 
   return (
     <div className={cn("flex items-center space-x-4", className)}>
-      <button className="flex items-center text-gray-600 hover:text-red-500 transition-colors">
+      <button className="flex cursor-pointer items-center text-gray-600 hover:text-red-500 transition-colors">
         <Heart size={iconSize} className="mr-2" />
         <span className={fontSize}>Love</span>
       </button>
-      <button className="flex items-center text-gray-600 hover:text-blue-500 transition-colors">
+      <button className="flex cursor-pointer items-center text-gray-600 hover:text-blue-500 transition-colors">
         <MessageCircle size={iconSize} className="mr-2" />
         <span className={fontSize}>Comment</span>
       </button>

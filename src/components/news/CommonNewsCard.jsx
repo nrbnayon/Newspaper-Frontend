@@ -59,20 +59,21 @@ const CommonNewsCard = ({
           <div className='mb-3 sm:mb-4'>
             <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
               {isExpanded ? article.content : truncatedContent}
-              {!isExpanded && shouldShowReadMore && "..."}
-            </p>
-            
-            {shouldShowReadMore && (
+              {!isExpanded && shouldShowReadMore && "... "}
+              {shouldShowReadMore && (
               <button
                 onClick={handleReadMore}
-                className='text-blue-600 hover:text-blue-800 text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
+                className='text-blue-600 hover:text-blue-800  cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
               >
-                {isExpanded ? "Read less" : "Read more"}
+                {isExpanded ? "Read less" : "Read more >"}
               </button>
             )}
+            </p>
+            
+            
           </div>
 
-          
+           
 
           <TimeIndicator
             type='readTime'
@@ -102,7 +103,7 @@ const CommonNewsCard = ({
             />
           </div>
 
-          <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+          <div className='w-full  flex justify-between items-center mt-2 sm:mt-3'>
             {article.isFeatured && (
               <div>
                 <InteractionButtons />
