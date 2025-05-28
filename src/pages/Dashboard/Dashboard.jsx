@@ -1,6 +1,6 @@
 // src\pages\Dashboard\Dashboard.jsx - Fixed Responsive Dashboard with Mobile Sidebar
 import Navbar from "@/components/layout/Navbar";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AdvertiseProvider } from "../admin/Advertise/AdvertiseContext";
 import { useState, useEffect } from "react";
 import {
@@ -14,6 +14,7 @@ import { logoutUser } from "../../lib/auth-service";
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation();
 
   // Check if screen is mobile/tablet size
   useEffect(() => {
@@ -40,6 +41,20 @@ const Dashboard = () => {
   const handleLogout = () => {
     // Implement your logout logic here
     logoutUser();
+  };
+
+  // Helper function to check if advertise routes are active (excluding advertise list routes)
+  const isAdvertiseActive = () => {
+    return (location.pathname.includes('/dashboard/advertise') || 
+           location.pathname.includes('/dashboard/newadvertise')) &&
+           !location.pathname.includes('/dashboard/advertiselist') &&
+           !location.pathname.includes('/dashboard/advertiseinfo');
+  };
+
+  // Helper function to check if advertise list routes are active
+  const isAdvertiseListActive = () => {
+    return location.pathname.includes('/dashboard/advertiselist') || 
+           location.pathname.includes('/dashboard/advertiseinfo');
   };
 
   return (
@@ -123,9 +138,9 @@ const Dashboard = () => {
                 <li>
                   <NavLink
                     to="/dashboard/advertise"
-                    className={({ isActive }) =>
+                    className={() =>
                       `block py-3 px-4 font-medium transition-colors rounded-md ${
-                        isActive
+                        isAdvertiseActive()
                           ? "bg-[#00254a] text-white"
                           : "text-[#505050] hover:bg-[#e2e2e2]"
                       }`
@@ -138,9 +153,9 @@ const Dashboard = () => {
                 <li>
                   <NavLink
                     to="/dashboard/advertiselist"
-                    className={({ isActive }) =>
+                    className={() =>
                       `block py-3 px-4 font-medium transition-colors rounded-md ${
-                        isActive
+                        isAdvertiseListActive()
                           ? "bg-[#00254a] text-white"
                           : "text-[#505050] hover:bg-[#e2e2e2]"
                       }`
