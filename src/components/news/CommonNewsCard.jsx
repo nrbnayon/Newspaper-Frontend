@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import ImageAttribution from "../common/ImageAttribution";
 import InteractionButtons from "../common/InteractionButtons";
@@ -9,21 +10,39 @@ const CommonNewsCard = ({
   className,
   layout = "horizontal", // horizontal or vertical
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
+
+  // Function to truncate text to 50% of words
+  const getTruncatedText = (text) => {
+    if (!text) return "";
+    const words = text.split(" ");
+    const halfLength = Math.ceil(words.length / 2);
+    return words.slice(0, halfLength).join(" ");
+  };
+
+  const truncatedContent = getTruncatedText(article.content);
+  const shouldShowReadMore = article.content && article.content.split(" ").length > 2;
+
+  const handleReadMore = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
       <div
         className={cn(
-          "flex flex-col gap-4 sm:gap-6",
-          isHorizontal && "lg:flex-row lg:items-start lg:gap-8 xl:gap-10"
+          "flex flex-col-reverse gap-4 sm:gap-6",
+          isHorizontal && !isExpanded && "lg:flex-row lg:items-start lg:gap-8 xl:gap-10",
+          isExpanded && "flex-col-reverse gap-4 sm:gap-6"
         )}
       >
         {/* Content Section */}
         <div
           className={cn(
             "flex flex-col w-full",
-            isHorizontal && "lg:w-2/5 xl:w-1/3"
+            isHorizontal && !isExpanded && "lg:w-2/5 xl:w-1/3",
+            isExpanded && "w-full"
           )}
         >
           {article.isFeatured && (
@@ -37,13 +56,23 @@ const CommonNewsCard = ({
             {article.title}
           </h1>
 
-          <p className='text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed'>
-            {article.excerpt}
-          </p>
+          <div className='mb-3 sm:mb-4'>
+            <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
+              {isExpanded ? article.content : truncatedContent}
+              {!isExpanded && shouldShowReadMore && "..."}
+            </p>
+            
+            {shouldShowReadMore && (
+              <button
+                onClick={handleReadMore}
+                className='text-blue-600 hover:text-blue-800 text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
+              >
+                {isExpanded ? "Read less" : "Read more"}
+              </button>
+            )}
+          </div>
 
-          <p className='text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed'>
-            {article.content}
-          </p>
+          
 
           <TimeIndicator
             type='readTime'
@@ -53,12 +82,22 @@ const CommonNewsCard = ({
         </div>
 
         {/* Image Section */}
-        <div className='relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end'>
+        <div 
+          className={cn(
+            'relative w-full order-1 md:order-2 flex flex-col items-end',
+            isHorizontal && !isExpanded && "lg:w-2/3",
+            isExpanded && "w-full"
+          )}
+        >
           <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
             <img
               src={article.image}
               alt={article.title}
-              className='w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105'
+              className={cn(
+                'w-full object-fit transition-transform duration-300 hover:scale-105',
+                !isExpanded && 'h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]',
+                isExpanded && 'h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]'
+              )}
               loading='lazy'
             />
           </div>
@@ -82,4 +121,5 @@ const CommonNewsCard = ({
     </article>
   );
 };
+
 export default CommonNewsCard;
