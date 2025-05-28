@@ -10,14 +10,14 @@ const AdvertiseCard = ({ serialNumber, category, title, description }) => {
     <Card className="w-full  border rounded-md">
       <CardContent className="p-6">
         <div className="grid grid-cols-[1fr_2fr] gap-y-6">
-          <div className="font-medium text-base text-primary">Serial Number</div>
-          <div className="text-base text-secondary">{serialNumber}</div>
+          <div className="font-medium text-sm md:text-base text-primary">Serial Number</div>
+          <div className="text-sm md:text-base text-secondary">{serialNumber}</div>
 
-          <div className="font-medium text-base text-primary">Category</div>
-          <div className="text-base font-medium text-primary">{category}</div>
+          <div className="font-medium text-sm md:text-base text-primary">Category</div>
+          <div className="text-sm md:text-base font-medium text-primary">{category}</div>
 
-          <div className="font-medium text-base text-primary">Title</div>
-          <div className="text-base font-medium text-primary">{title}</div>
+          <div className="font-medium text-sm md:text-base text-primary">Title</div>
+          <div className="text-sm md:text-base font-medium text-primary">{title}</div>
 
           <div className="font-medium text-sm md:text-base lg:text-base text-primary">Description</div>
           <div className="text-sm md:text-base lg:text-base text-tertiary">{description}</div>
@@ -48,10 +48,10 @@ const Advertise = () => {
   return (
     <div className="flex-1 p-3 w-full">
       <div className="flex-col md:flex-row lg:flex justify-between items-center mb-6">
-        <div><h2 className="text-2xl font-medium text-secondary">Advertise</h2></div>
+        <div><h2 className="text-base md:text-2xl font-medium text-secondary">Advertise</h2></div>
         <div>
-          <Link to="/dashboard/newadvertise"  className="flex text-2xl font-medium bg-transparent items-center text-secondary px-4 py-2 rounded">
-          <Plus className="h-6 w-6 border-2  border-secondary rounded-md mr-2" />
+          <Link to="/dashboard/newadvertise"  className="flex text-base md:text-2xl font-medium bg-transparent items-center text-secondary px-4 py-2 rounded">
+          <Plus className="h-5 w-5 md:h-6 md:w-6 border-2  border-secondary rounded-md mr-2" />
           New Advertise
           </Link>
         </div>

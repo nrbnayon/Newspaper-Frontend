@@ -48,10 +48,10 @@ export default function AdvertiseList() {
 
   return (
     <div className="w-full mx-auto p-4 pt-4">
-      <h1 className="text-2xl font-semibold text-secondary mb-6">Advertise List</h1>
+      <h1 className="text-base md:text-2xl font-medium text-secondary mb-6">Advertise List</h1>
       <div className="rounded-lg overflow-x-auto">
         <Table>
-          <TableHeader className="bg-[#E7EFFE] text-base">
+          <TableHeader className="bg-[#E7EFFE] text-sm md:text-base">
             <TableRow>
               <TableHead className="font-medium text-secondary">T-ID</TableHead>
               <TableHead className="font-medium text-secondary">Category</TableHead>
@@ -61,7 +61,7 @@ export default function AdvertiseList() {
               <TableHead className="font-medium text-secondary">Edit</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="text-base">
+          <TableBody className="text-sm md:text-base">
             {advertiseData.map((item, index) => (
               <TableRow key={`${item.id}-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-input-bg"}>
                 <TableCell className="font-medium py-3 text-secondary">{item.id}</TableCell>

@@ -197,7 +197,7 @@ const Profile = () => {
         </ModalContent>
       </Modal>
 
-      <h2 className="text-2xl font-bold text-gray-800 mb-8">My Profile</h2>
+      <h2 className="text-base md:text-2xl font-bold text-gray-800 mb-8">My Profile</h2>
 
       {/* Profile Section - Responsive Layout */}
       <div className="flex flex-col lg:flex-row mb-4 lg:mb-12 gap-6">
@@ -230,7 +230,7 @@ const Profile = () => {
 
           <div className="">
             
-            <h3 className="text-lg lg:text-2xl  font-bold text-gray-800">{name}</h3>
+            <h3 className="text-base md:text-lg lg:text-2xl  font-bold text-gray-800">{name}</h3>
             <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mb-2">
               User
             </span>

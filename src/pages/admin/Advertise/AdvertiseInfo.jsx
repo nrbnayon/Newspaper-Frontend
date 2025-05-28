@@ -34,7 +34,7 @@ export default function AdvertiseInfo() {
 
   return (
     <div className="min-h-screen pt-4 px-4">
-      <div className="w-full mx-auto space-y-6">
+      <div className="w-full mx-auto space-y-3 md:space-y-6">
         <Toast
           message={isDelete ? "Canceled successfully!" : "Approved successfully!"}
           isVisible={showToast}
@@ -42,26 +42,26 @@ export default function AdvertiseInfo() {
           isDelete={isDelete}
         />
         <div className="bg-white">
-          <h1 className="text-2xl font-semibold text-secondary">Advertise</h1>
+          <h1 className="text-base md:text-2xl font-semibold text-secondary">Advertise</h1>
         </div>
         <div className="bg-white">
-          <h1 className="text-xl font-semibold text-secondary">New Advertise Information</h1>
+          <h1 className="text-sm md:text-xl font-semibold text-secondary">New Advertise Information</h1>
         </div>
         <Card className={cn("rounded-b-none rounded-t-none w-full")}>
           <CardContent className="space-y-6 border-none">
             <div className="space-x-0 border-2 px-4 py-6">
               <div className="grid grid-cols-[1fr_3fr] gap-y-6">
-                <div className="font-medium text-base text-primary">Serial Number</div>
-                <div className="text-base text-secondary">{selectedAd.serialNumber}</div>
-                <div className="font-medium text-base text-primary">Category</div>
-                <div className="text-base font-medium text-primary">{selectedAd.category}</div>
-                <div className="font-medium text-base text-primary">Title</div>
-                <div className="text-base font-medium text-primary">{selectedAd.title}</div>
-                <div className="font-medium text-base text-primary">Description</div>
-                <div className="text-base text-tertiary">{selectedAd.description}</div>
+                <div className="font-medium text-sm md:text-base text-primary">Serial Number</div>
+                <div className="text-sm md:text-base text-secondary">{selectedAd.serialNumber}</div>
+                <div className="font-medium text-sm md:text-base text-primary">Category</div>
+                <div className="text-sm md:text-base font-medium text-primary">{selectedAd.category}</div>
+                <div className="font-medium text-sm md:text-base text-primary">Title</div>
+                <div className="text-sm md:text-base font-medium text-primary">{selectedAd.title}</div>
+                <div className="font-medium text-sm md:text-base text-primary">Description</div>
+                <div className="text-sm md:text-base text-tertiary">{selectedAd.description}</div>
               </div>
               <div className="space-y-4 mt-5 md:col-span-3">
-                <label className="text-base font-medium text-primary">Upload Photo</label>
+                <label className="text-sm md:text-base font-medium text-primary">Upload Photo</label>
                 <div className="flex justify-around mt-3 p-2 border-2 flex-wrap gap-4">
                   {selectedAd.images.map((image, index) => (
                     <div
