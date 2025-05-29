@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import TimeIndicator from "../common/TimeIndicator";
 import InteractionButtons from "../common/InteractionButtons";
+import AuthModal from "../auth/AuthModal";
 
 const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
   const {
@@ -28,6 +29,10 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
 
   const truncatedContent = getTruncatedContent(content);
   const shouldShowReadMore = content && content.split(" ").length > 1;
+
+
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signup");
 
   // Badge color mapping
   const getBadgeColor = (badgeText) => {
@@ -61,6 +66,13 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
         return "bg-custom-red";
     }
   };
+
+ const handleReadMore = () => {
+    setIsExpanded(!isExpanded)
+    setAuthMode("signup");
+    setAuthModalOpen(true);
+  };
+
 
   return (
     <div
@@ -105,19 +117,18 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
         
         {content && (
           <div className='text-gray-600 text-sm mb-3'>
-            <p className={cn(!isExpanded && "line-clamp-2")}>
-              {isExpanded ? content : truncatedContent}
-              {!isExpanded && shouldShowReadMore && "..."}
+            <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
+              {isExpanded ? article.content : truncatedContent}
+              {!isExpanded && shouldShowReadMore && "... "}
               {shouldShowReadMore && (
               <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className='text-custom-red cursor-pointer hover:text-red-700 font-medium mt-1 text-sm transition-colors duration-200'
+                onClick={handleReadMore}
+                className='text-blue-600 hover:text-blue-800  cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
               >
                 {isExpanded ? "Read less" : "Read more >"}
               </button>
             )}
             </p>
-            
           </div>
         )}
         <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
@@ -129,6 +140,11 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
         </div>
         </div>
       </div>
+      <AuthModal
+                    isOpen={authModalOpen}
+                    onClose={() => setAuthModalOpen(false)}
+                    initialMode={authMode}
+                  />
     </div>
   );
 };

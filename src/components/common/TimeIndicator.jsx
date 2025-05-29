@@ -1,18 +1,14 @@
 import { cn } from "@/lib/utils";
-import AuthModal from "../auth/AuthModal";
-import { useState } from "react";
+
+
 
 const TimeIndicator = ({ type, value, className }) => {
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signup");
+
   const isLive = type === "live";
   const isReadTime = type === "readTime";
   const isTimeAgo = type === "timeAgo";
 
-  const openSignIn = () => {
-    setAuthMode("signup");
-    setAuthModalOpen(true);
-  };
+ 
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -38,11 +34,7 @@ const TimeIndicator = ({ type, value, className }) => {
         </span>
       )}
 
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authMode}
-      />
+     
     </div>
   );
 };

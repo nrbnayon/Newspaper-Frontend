@@ -4,6 +4,7 @@ import ImageAttribution from "../common/ImageAttribution";
 import InteractionButtons from "../common/InteractionButtons";
 import SentimentBadge from "../common/SentimentBadge";
 import TimeIndicator from "../common/TimeIndicator";
+import AuthModal from "../auth/AuthModal";
 
 const CommonNewsCard = ({
   article,
@@ -12,6 +13,9 @@ const CommonNewsCard = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
+
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signup");
 
   // Function to truncate text to 50% of words
   const getTruncatedText = (text) => {
@@ -26,6 +30,8 @@ const CommonNewsCard = ({
 
   const handleReadMore = () => {
     setIsExpanded(!isExpanded);
+    setAuthMode("signup");
+    setAuthModalOpen(true);
   };
 
   return (
@@ -119,6 +125,11 @@ const CommonNewsCard = ({
           </div>
         </div>
       </div>
+      <AuthModal
+              isOpen={authModalOpen}
+              onClose={() => setAuthModalOpen(false)}
+              initialMode={authMode}
+            />
     </article>
   );
 };
