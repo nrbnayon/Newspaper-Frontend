@@ -3,6 +3,7 @@ import { useState } from "react";
 import TimeIndicator from "../common/TimeIndicator";
 import InteractionButtons from "../common/InteractionButtons";
 import AuthModal from "../auth/AuthModal";
+import CommentsSection from "../common/CommentSection";
 
 const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
   const {
@@ -19,6 +20,51 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
 
   const isHorizontal = imagePosition === "left" || imagePosition === "right";
 
+   // Comment section states
+  const [showComments, setShowComments] = useState(false);
+
+  // Sample comments data - you can replace this with your actual data source
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      author: "John Doe",
+      content: "Great article! Really informative and well-written.",
+      time: "2 hours ago",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 2,
+      author: "Sarah Wilson",
+      content: "I completely agree with the points made here. Thanks for sharing this perspective.",
+      time: "4 hours ago",
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b332c92a?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 3,
+      author: "Mike Johnson",
+      content: "Interesting read, though I have some different thoughts on this topic.",
+      time: "6 hours ago",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 4,
+      author: "Emily Chen",
+      content: "This really opened my eyes to a new way of thinking about the subject.",
+      time: "8 hours ago",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 5,
+      author: "David Brown",
+      content: "Well researched and presented. Looking forward to more content like this.",
+      time: "10 hours ago",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face"
+    }
+  ]);
+
+  const handleCommentClick = () => {
+    setShowComments(!showComments);
+  };
   // Function to get truncated content (50% of words)
   const getTruncatedContent = (text) => {
     if (!text) return "";
@@ -136,9 +182,20 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
             <TimeIndicator type='readTime' value={readTime} />
           </div>
           <div className=''>
-          <InteractionButtons />
+          <InteractionButtons 
+                    onCommentClick={handleCommentClick}
+                    showCommentsCount={comments.length}
+                  />
+          </div>
+           
         </div>
-        </div>
+        {/* Comment Section */}
+              {showComments && (
+                <CommentsSection 
+                  comments={comments}
+                  setComments={setComments}
+                />
+              )}
       </div>
       <AuthModal
                     isOpen={authModalOpen}
