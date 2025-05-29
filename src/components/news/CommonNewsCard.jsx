@@ -142,30 +142,10 @@ const CommonNewsCard = ({
             value={mockArticle.readTime}
             className='text-xs sm:text-sm'
           />
-        </div>
 
-        {/* Image Section */}
-        <div 
-          className={cn(
-            'relative w-full order-1 md:order-2 flex flex-col items-end',
-            isHorizontal && !isExpanded && "lg:w-2/3",
-            isExpanded && "w-full"
-          )}
-        >
-          <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
-            <img
-              src={mockArticle.image}
-              alt={mockArticle.title}
-              className={cn(
-                'w-full object-cover transition-transform duration-300 hover:scale-105',
-                !isExpanded && 'h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]',
-                isExpanded && 'h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]'
-              )}
-              loading='lazy'
-            />
-          </div>
-
-         <div className="flex flex-col justify-between w-full">
+          {/* Comment section in content area when expanded */}
+          {isHorizontal && (
+            <div className="flex flex-col justify-between w-full">
            <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
               {mockArticle.isFeatured && (
                 <div>
@@ -192,6 +172,70 @@ const CommonNewsCard = ({
                 />
               )}
          </div>
+          )}
+        </div>
+
+        {/* Image Section */}
+        <div 
+          className={cn(
+            'relative w-full order-1 md:order-2 flex flex-col items-end',
+            isHorizontal && !isExpanded && "lg:w-2/3",
+            isExpanded && "w-full"
+          )}
+        >
+          <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
+            <img
+              src={mockArticle.image}
+              alt={mockArticle.title}
+              className={cn(
+                'w-full object-cover transition-transform duration-300 hover:scale-105',
+                !isExpanded && 'h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]',
+                isExpanded && 'h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]'
+              )}
+              loading='lazy'
+            />
+          </div>
+          
+          {/* Comment section in image area when not expanded */}
+          {!isHorizontal && (
+            <div className="flex flex-col justify-between w-full">
+              <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+                {mockArticle.isFeatured && (
+                  <div>
+                    <InteractionButtons 
+                      onCommentClick={handleCommentClick}
+                      showCommentsCount={comments.length}
+                    />
+                  </div>
+                )}
+                {!mockArticle.isFeatured && <div className=''></div>}
+                <div className='flex items-center justify-end'>
+                  <ImageAttribution
+                    attribution={mockArticle?.imageAttribution}
+                    className=' mb-1 text-xs sm:text-sm'
+                  />
+                </div>
+              </div>
+
+              {/* Comment Section */}
+              {showComments && (
+                <CommentsSection 
+                  comments={comments}
+                  setComments={setComments}
+                />
+              )}
+            </div>
+          )}
+
+          {/* Image attribution when expanded (separate from comment section) */}
+          {isExpanded && (
+            <div className='w-full flex justify-end items-center mt-2 sm:mt-3'>
+              <ImageAttribution
+                attribution={mockArticle?.imageAttribution}
+                className=' mb-1 text-xs sm:text-sm'
+              />
+            </div>
+          )}
         </div>
       </div>
 

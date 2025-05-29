@@ -59,7 +59,7 @@ const CommentsSection = ({ comments, setComments }) => {
       </div>
 
       {/* Comments List */}
-      <div className='space-y-3'>
+      <div className='max-h-24 overflow-y-auto space-y-3'>
         {displayedComments.map((comment) => (
           <div key={comment.id} className='flex gap-3'>
             <img
@@ -78,20 +78,20 @@ const CommentsSection = ({ comments, setComments }) => {
             </div>
           </div>
         ))}
-
-        {/* See All Comments Button */}
-        {comments.length > 2 && (
-          <button
-            onClick={() => setShowAllComments(!showAllComments)}
-            className='text-blue-600 cursor-pointer hover:text-blue-800 text-sm font-medium transition-colors duration-200 ml-11'
-          >
-            {showAllComments 
-              ? 'Show fewer comments' 
-              : `See all ${comments.length} comments`
-            }
-          </button>
-        )}
       </div>
+
+      {/* See All Comments Button */}
+      {comments.length > 2 && (
+        <button
+          onClick={() => setShowAllComments(!showAllComments)}
+          className='text-blue-600 cursor-pointer hover:text-blue-800 text-sm font-medium transition-colors duration-200 ml-11 mt-3'
+        >
+          {showAllComments 
+            ? 'Show fewer comments' 
+            : `See all ${comments.length} comments`
+          }
+        </button>
+      )}
     </div>
   );
 };

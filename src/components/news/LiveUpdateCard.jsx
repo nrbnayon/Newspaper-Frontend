@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TimeIndicator from "../common/TimeIndicator";
 import InteractionButtons from "../common/InteractionButtons";
+import CommentsSection from "../common/CommentSection";
 
 // Carousel Dots Component
 const CarouselDots = ({ currentIndex, setCurrentIndex, totalItems }) => {
@@ -107,6 +108,51 @@ const ReadMoreContent = ({ content }) => {
 const LiveUpdateCard = ({ updates, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentUpdate = updates[currentIndex];
+  // Comment section states
+  const [showComments, setShowComments] = useState(false);
+
+  // Sample comments data - you can replace this with your actual data source
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      author: "John Doe",
+      content: "Great article! Really informative and well-written.",
+      time: "2 hours ago",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 2,
+      author: "Sarah Wilson",
+      content: "I completely agree with the points made here. Thanks for sharing this perspective.",
+      time: "4 hours ago",
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b332c92a?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 3,
+      author: "Mike Johnson",
+      content: "Interesting read, though I have some different thoughts on this topic.",
+      time: "6 hours ago",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 4,
+      author: "Emily Chen",
+      content: "This really opened my eyes to a new way of thinking about the subject.",
+      time: "8 hours ago",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      id: 5,
+      author: "David Brown",
+      content: "Well researched and presented. Looking forward to more content like this.",
+      time: "10 hours ago",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face"
+    }
+  ]);
+
+  const handleCommentClick = () => {
+    setShowComments(!showComments);
+  };
 
   return (
     <div className={cn("pb-6", className)}>
@@ -130,8 +176,18 @@ const LiveUpdateCard = ({ updates, className }) => {
             </span>
           </div>
           <div>
-            <InteractionButtons />
+           <InteractionButtons 
+                    onCommentClick={handleCommentClick}
+                    showCommentsCount={comments.length}
+                  />
           </div>
+          {/* Comment Section */}
+              {showComments && (
+                <CommentsSection 
+                  comments={comments}
+                  setComments={setComments}
+                />
+              )}
         </div>
 
         {/* Image Section - Right side on desktop */}
