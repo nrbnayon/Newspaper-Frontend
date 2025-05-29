@@ -30,7 +30,7 @@ const CommonNewsCard = ({
 
   const handleReadMore = () => {
     setIsExpanded(!isExpanded);
-    setAuthMode("signup");
+    setAuthMode("signin");
     setAuthModalOpen(true);
   };
 

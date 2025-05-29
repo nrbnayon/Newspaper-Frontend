@@ -125,7 +125,7 @@ export default function HomePage() {
         <main className="w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
           <div className="">
             {/* Main Layout - Responsive Grid */}
-            <div className="grid grid-cols-1 xl:grid-cols-[1fr_1px_320px] gap-6 xl:gap-8 mb-12">
+            <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
               {/* Main Content Area */}
               <div className="w-full">
                 {/* Featured Article Section */}
@@ -176,10 +176,10 @@ export default function HomePage() {
               </div>
 
               {/* Vertical Separator - Only visible on xl screens */}
-              <div className="hidden xl:block w-px bg-gray-300 min-h-full"></div>
+              <div className="hidden  w-px bg-gray-300 min-h-full"></div>
 
               {/* Sidebar - Advertisement Area */}
-              <aside className="w-full xl:w-80">
+              <aside className="w-full xl:w-full">
                 {/* First Ad Block - Mobile/Tablet */}
                 <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
                   <span className="text-gray-600 text-sm">Top Ad Space</span>

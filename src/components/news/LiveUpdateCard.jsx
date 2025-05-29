@@ -72,6 +72,38 @@ const NavigationArrows = ({ currentIndex, setCurrentIndex, totalItems }) => {
   );
 };
 
+// Read More Component
+const ReadMoreContent = ({ content }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Split content into words and calculate 50%
+  const words = content.split(' ');
+  const halfLength = Math.floor(words.length / 2);
+  const truncatedContent = words.slice(0, halfLength).join(' ');
+  
+  // Only show read more/less if content is long enough to truncate
+  const shouldTruncate = words.length > 10; // Only truncate if more than 10 words
+  
+  if (!shouldTruncate) {
+    return <p className='text-gray-600 mb-4'>{content}</p>;
+  }
+  
+  return (
+    <div className='mb-4'>
+      <p className='text-gray-600'>
+        {isExpanded ? content : `${truncatedContent}...`}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className='text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors'
+        >
+        {isExpanded ? 'Read less' : 'Read more'}
+      </button>
+      </p>
+      
+    </div>
+  );
+};
+
 const LiveUpdateCard = ({ updates, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentUpdate = updates[currentIndex];
@@ -87,7 +119,7 @@ const LiveUpdateCard = ({ updates, className }) => {
             <span className='text-sm'>{currentUpdate.timeAgo}</span>
           </div>
           <h2 className='text-2xl font-bold mb-3'>{currentUpdate.title}</h2>
-          <p className='text-gray-600 mb-4'>{currentUpdate.content}</p>
+          <ReadMoreContent content={currentUpdate.content} />
           {/* See more updates button */}
           <div className='flex items-center mb-4'>
             <button className='text-gray-700 font-medium mr-2'>

@@ -69,7 +69,7 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
 
  const handleReadMore = () => {
     setIsExpanded(!isExpanded)
-    setAuthMode("signup");
+    setAuthMode("signin");
     setAuthModalOpen(true);
   };
 
