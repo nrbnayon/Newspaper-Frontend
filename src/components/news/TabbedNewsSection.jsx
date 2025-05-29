@@ -234,7 +234,7 @@ const TabbedNewsSection = ({
             <TabsTrigger
               key={tab.key}
               value={tab.key}
-              className="data-[state=active]:h-11 rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap"
+              className="data-[state=active]:h-11 cursor-pointer rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap"
             >
               {tab.label}
             </TabsTrigger>

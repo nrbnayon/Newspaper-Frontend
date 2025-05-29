@@ -1,12 +1,12 @@
-// src\components\news\StandardArticleCard.jsx
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 import TimeIndicator from "../common/TimeIndicator";
 import InteractionButtons from "../common/InteractionButtons";
 
 const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
   const {
     title,
-    excerpt,
+    content,
     category,
     readTime,
     date,
@@ -14,7 +14,20 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
     badge,
   } = article;
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const isHorizontal = imagePosition === "left" || imagePosition === "right";
+
+  // Function to get truncated content (50% of words)
+  const getTruncatedContent = (text) => {
+    if (!text) return "";
+    const words = text.split(" ");
+    const halfLength = Math.ceil(words.length / 2);
+    return words.slice(0, halfLength).join(" ");
+  };
+
+  const truncatedContent = getTruncatedContent(content);
+  const shouldShowReadMore = content && content.split(" ").length > 1;
 
   // Badge color mapping
   const getBadgeColor = (badgeText) => {
@@ -64,7 +77,7 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
           "relative"
         )}
       >
-        <img src={image} alt={title} className='w-full h-48 object-cover' />
+        <img src={image} alt={title} className='w-full h-72 xl:h-48 object-cover' />
         {badge && (
           <div
             className={cn(
@@ -89,15 +102,31 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
         <h3 className='font-bold text-gray-900 mb-2 line-clamp-2 leading-tight'>
           {title}
         </h3>
-        <div className='mb-3'>
-          <InteractionButtons />
-        </div>
-        {excerpt && (
-          <p className='text-gray-600 text-sm mb-3 line-clamp-2'>{excerpt}</p>
+        
+        {content && (
+          <div className='text-gray-600 text-sm mb-3'>
+            <p className={cn(!isExpanded && "line-clamp-2")}>
+              {isExpanded ? content : truncatedContent}
+              {!isExpanded && shouldShowReadMore && "..."}
+              {shouldShowReadMore && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className='text-custom-red cursor-pointer hover:text-red-700 font-medium mt-1 text-sm transition-colors duration-200'
+              >
+                {isExpanded ? "Read less" : "Read more >"}
+              </button>
+            )}
+            </p>
+            
+          </div>
         )}
         <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
-          <TimeIndicator type='readTime' value={readTime} />
-          <span>{date}</span>
+          <div>
+            <TimeIndicator type='readTime' value={readTime} />
+          </div>
+          <div className=''>
+          <InteractionButtons />
+        </div>
         </div>
       </div>
     </div>

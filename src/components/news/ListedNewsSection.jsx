@@ -374,7 +374,7 @@ const ListedNewsSection = ({
               <TabsTrigger
                 key={tab.key}
                 value={tab.key}
-                className="px-2 py-1 text-base font-normal focus-visible:border-none focus-visible:outline-0 !shadow-none data-[state=active]:!shadow-none text-gray-600 bg-transparent border-none hover:text-black data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:font-bold transition-all duration-200 whitespace-nowrap"
+                className="px-2 py-1 cursor-pointer text-base font-normal focus-visible:border-none focus-visible:outline-0 !shadow-none data-[state=active]:!shadow-none text-gray-600 bg-transparent border-none hover:text-black data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:font-bold transition-all duration-200 whitespace-nowrap"
               >
                 {tab.label}
               </TabsTrigger>

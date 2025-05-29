@@ -23,7 +23,7 @@ const sampleArticles = [
   {
     id: 1,
     title: "Tech Innovation Drives Market Growth",
-    excerpt:
+    content:
       "Latest developments in artificial intelligence and machine learning are reshaping the technology landscape...",
     category: "Technology",
     readTime: 3,
@@ -33,7 +33,7 @@ const sampleArticles = [
   {
     id: 2,
     title: "Climate Change Summit Reaches Agreement",
-    excerpt:
+    content:
       "World leaders gather to discuss sustainable solutions and environmental policies for the future...",
     category: "Environment",
     readTime: 5,
@@ -43,7 +43,7 @@ const sampleArticles = [
   {
     id: 3,
     title: "Economic Outlook Shows Positive Trends",
-    excerpt:
+    content:
       "Financial experts predict steady growth in the coming quarters based on recent market indicators...",
     category: "Business",
     readTime: 4,
@@ -53,7 +53,7 @@ const sampleArticles = [
   {
     id: 4,
     title: "Healthcare Breakthrough in Gene Therapy",
-    excerpt:
+    content:
       "Researchers announce significant progress in treating genetic disorders through innovative therapies...",
     category: "Health",
     readTime: 6,
@@ -63,7 +63,7 @@ const sampleArticles = [
   {
     id: 5,
     title: "Healthcare Breakthrough in Gene Therapy",
-    excerpt:
+    content:
       "Researchers announce significant progress in treating genetic disorders through innovative therapies...",
     category: "Health",
     readTime: 6,
@@ -73,7 +73,7 @@ const sampleArticles = [
   {
     id: 6,
     title: "Healthcare Breakthrough in Gene Therapy",
-    excerpt:
+    content:
       "Researchers announce significant progress in treating genetic disorders through innovative therapies...",
     category: "Health",
     readTime: 6,
