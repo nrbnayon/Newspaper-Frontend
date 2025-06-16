@@ -1,4 +1,5 @@
 // src\components\auth\AuthModal.jsx
+import apiClient from "./../../lib/axios-service";
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -57,6 +58,29 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
 
   // Handle main form submission
   const onSubmit = async (data) => {
+    if (isSignIn) {
+      const resLogin = await apiClient.post("/auth/login/", data);
+
+      if (resLogin.success) {
+        console.log("Login data res::", resLogin.data);
+        toast.success("Login Ok");
+      }
+    } else {
+      // const res = await apiClient.post("/auth/register/", {
+      //   email: "nrbnayon@gmail.com",
+      //   password: "Test@123",
+      //   role: "user",
+      //   first_name: "Test",
+      //   last_name: "User",
+      // });
+
+      const resOtp = await apiClient.post("/auth/otp/create/", {
+        email: data.email,
+      });
+    }
+
+    console.log("Login response data:::", res, resOtp);
+
     console.log("Form submitted with data:", data);
     console.log(
       "Current mode - isSignIn:",
@@ -169,18 +193,18 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
     <>
       <Modal isOpen={isOpen} onClose={handleClose}>
         <ModalContent onClose={handleClose} className={cn("max-w-xl")}>
-          <div className='p-8'>
+          <div className="p-8">
             {/* Header */}
-            <div className='text-center mb-6'>
-              <h2 className='text-2xl font-bold'>
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold">
                 You have to Sign Up or Sign In
               </h2>
-              <p className='mb-4 text-2xl font-bold'>for view more News</p>
+              <p className="mb-4 text-2xl font-bold">for view more News</p>
             </div>
 
             {/* Form Container */}
-            <div className='bg-[#FCFCFF] rounded-lg p-6 text-black'>
-              <h3 className='text-xl font-bold text-center mb-1'>
+            <div className="bg-[#FCFCFF] rounded-lg p-6 text-black">
+              <h3 className="text-xl font-bold text-center mb-1">
                 {isForgotPassword
                   ? "Forgot Password"
                   : isSignIn
@@ -189,14 +213,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
               </h3>
 
               {/* Toggle text */}
-              <p className='text-center mb-6 text-sm text-gray-600'>
+              <p className="text-center mb-6 text-sm text-gray-600">
                 {isForgotPassword ? (
                   <>
                     Remember your password?{" "}
                     <button
-                      type='button'
+                      type="button"
                       onClick={backToSignIn}
-                      className='text-[#00254a] cursor-pointer font-medium underline'
+                      className="text-[#00254a] cursor-pointer font-medium underline"
                     >
                       Back to Sign In
                     </button>
@@ -207,9 +231,9 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                       ? "Don't have an Account? "
                       : "Already have an Account? "}
                     <button
-                      type='button'
+                      type="button"
                       onClick={toggleMode}
-                      className='text-[#00254a] cursor-pointer font-medium underline'
+                      className="text-[#00254a] cursor-pointer font-medium underline"
                     >
                       {isSignIn ? "Sign Up Free" : "Sign In"}
                     </button>
@@ -220,19 +244,19 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
               {/* Main Form */}
               <form onSubmit={handleSubmit(onSubmit, onError)}>
                 {!isSignIn && !isForgotPassword && (
-                  <div className='grid grid-cols-2 gap-4 mb-4'>
-                    <div className='space-y-1'>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="space-y-1">
                       <Label
-                        htmlFor='firstName'
-                        className='text-[#262626] text-sm'
+                        htmlFor="firstName"
+                        className="text-[#262626] text-sm"
                       >
                         First Name
                       </Label>
-                      <div className='relative'>
+                      <div className="relative">
                         <Input
-                          id='firstName'
-                          placeholder='First name'
-                          className='pr-10 border-[#c7c7c7] bg-white'
+                          id="firstName"
+                          placeholder="First name"
+                          className="pr-10 border-[#c7c7c7] bg-white"
                           {...form.register("firstName", {
                             required:
                               !isSignIn && !isForgotPassword
@@ -240,28 +264,28 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                                 : false,
                           })}
                         />
-                        <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]">
                           <User size={16} />
                         </div>
                       </div>
                       {errors.firstName && (
-                        <p className='text-red-500 text-xs'>
+                        <p className="text-red-500 text-xs">
                           {errors.firstName.message}
                         </p>
                       )}
                     </div>
-                    <div className='space-y-1'>
+                    <div className="space-y-1">
                       <Label
-                        htmlFor='lastName'
-                        className='text-[#262626] text-sm'
+                        htmlFor="lastName"
+                        className="text-[#262626] text-sm"
                       >
                         Last Name
                       </Label>
-                      <div className='relative'>
+                      <div className="relative">
                         <Input
-                          id='lastName'
-                          placeholder='Last name'
-                          className='pr-10 border-[#c7c7c7] bg-white'
+                          id="lastName"
+                          placeholder="Last name"
+                          className="pr-10 border-[#c7c7c7] bg-white"
                           {...form.register("lastName", {
                             required:
                               !isSignIn && !isForgotPassword
@@ -269,12 +293,12 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                                 : false,
                           })}
                         />
-                        <div className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]">
                           <User size={16} />
                         </div>
                       </div>
                       {errors.lastName && (
-                        <p className='text-red-500 text-xs'>
+                        <p className="text-red-500 text-xs">
                           {errors.lastName.message}
                         </p>
                       )}
@@ -282,14 +306,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                   </div>
                 )}
 
-                <div className='space-y-1 mb-4'>
-                  <Label htmlFor='email' className='text-[#262626] text-sm'>
+                <div className="space-y-1 mb-4">
+                  <Label htmlFor="email" className="text-[#262626] text-sm">
                     E-mail or Phone
                   </Label>
                   <Input
-                    id='email'
-                    placeholder='Enter your mail or phone number'
-                    className='border-[#c7c7c7] bg-white'
+                    id="email"
+                    placeholder="Enter your mail or phone number"
+                    className="border-[#c7c7c7] bg-white"
                     {...form.register("email", {
                       required: "Email or phone is required",
                       pattern: {
@@ -300,28 +324,28 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                     })}
                   />
                   {errors.email && (
-                    <p className='text-red-500 text-xs'>
+                    <p className="text-red-500 text-xs">
                       {errors.email.message}
                     </p>
                   )}
                 </div>
 
                 {!isForgotPassword && (
-                  <div className='space-y-1 mb-4'>
-                    <div className='flex justify-between items-center'>
+                  <div className="space-y-1 mb-4">
+                    <div className="flex justify-between items-center">
                       <Label
-                        htmlFor='password'
-                        className='text-[#262626] text-sm'
+                        htmlFor="password"
+                        className="text-[#262626] text-sm"
                       >
                         Password
                       </Label>
                     </div>
-                    <div className='relative'>
+                    <div className="relative">
                       <Input
-                        id='password'
+                        id="password"
                         type={showPassword ? "text" : "password"}
-                        placeholder='Enter your Password'
-                        className='pr-10 border-[#c7c7c7] bg-white'
+                        placeholder="Enter your Password"
+                        className="pr-10 border-[#c7c7c7] bg-white"
                         {...form.register("password", {
                           required: "Password is required",
                           minLength: {
@@ -333,9 +357,9 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                         })}
                       />
                       <button
-                        type='button'
+                        type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]"
                         aria-label={
                           showPassword ? "Hide password" : "Show password"
                         }
@@ -348,37 +372,37 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                       </button>
                     </div>
                     {errors.password && (
-                      <p className='text-red-500 text-xs'>
+                      <p className="text-red-500 text-xs">
                         {errors.password.message}
                       </p>
                     )}
                     {isSignIn && (
-                      <div className='flex justify-between items-center mt-4 mb-6'>
-                        <div className='flex items-center space-x-2'>
+                      <div className="flex justify-between items-center mt-4 mb-6">
+                        <div className="flex items-center space-x-2">
                           <Controller
                             control={control}
-                            name='rememberMe'
+                            name="rememberMe"
                             render={({ field }) => (
                               <Checkbox
-                                id='rememberMe'
+                                id="rememberMe"
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
-                                className='h-4 w-4 border-2 border-gray-400 data-[state=checked]:bg-[#00254a] data-[state=checked]:border-[#00254a]'
+                                className="h-4 w-4 border-2 border-gray-400 data-[state=checked]:bg-[#00254a] data-[state=checked]:border-[#00254a]"
                               />
                             )}
                           />
                           <Label
-                            htmlFor='rememberMe'
-                            className='text-sm text-gray-600 cursor-pointer'
+                            htmlFor="rememberMe"
+                            className="text-sm text-gray-600 cursor-pointer"
                           >
                             Remember for 30 Days
                           </Label>
                         </div>
 
                         <button
-                          type='button'
+                          type="button"
                           onClick={showForgotPassword}
-                          className='text-[#00254a] text-sm cursor-pointer font-medium underline hover:text-[#001a38]'
+                          className="text-[#00254a] text-sm cursor-pointer font-medium underline hover:text-[#001a38]"
                         >
                           Forgot Password?
                         </button>
@@ -388,39 +412,39 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                 )}
 
                 {!isSignIn && !isForgotPassword && (
-                  <div className='mb-6'>
-                    <div className='flex items-center space-x-2'>
+                  <div className="mb-6">
+                    <div className="flex items-center space-x-2">
                       <Controller
                         control={control}
-                        name='terms'
+                        name="terms"
                         rules={{
                           required:
                             "You must agree to the terms and conditions",
                         }}
                         render={({ field }) => (
                           <Checkbox
-                            id='terms'
+                            id="terms"
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            className='h-4 w-4 border-2 border-gray-400 data-[state=checked]:bg-[#00254a] data-[state=checked]:border-[#00254a]'
+                            className="h-4 w-4 border-2 border-gray-400 data-[state=checked]:bg-[#00254a] data-[state=checked]:border-[#00254a]"
                           />
                         )}
                       />
                       <Label
-                        htmlFor='terms'
-                        className='text-sm text-[#262626] cursor-pointer leading-relaxed'
+                        htmlFor="terms"
+                        className="text-sm text-[#262626] cursor-pointer leading-relaxed"
                       >
                         I agree to the{" "}
                         <a
-                          href='/terms'
-                          className='text-[#00254a] underline hover:text-[#001a38]'
+                          href="/terms"
+                          className="text-[#00254a] underline hover:text-[#001a38]"
                         >
                           Terms & Condition
                         </a>
                       </Label>
                     </div>
                     {errors.terms && (
-                      <p className='text-red-500 text-xs mt-2'>
+                      <p className="text-red-500 text-xs mt-2">
                         {errors.terms.message}
                       </p>
                     )}
@@ -428,13 +452,13 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                 )}
 
                 <Button
-                  type='submit'
+                  type="submit"
                   disabled={isLoading}
-                  className='w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38] disabled:opacity-50 disabled:cursor-not-allowed'
+                  className="w-full cursor-pointer bg-[#00254a] text-white py-3 rounded font-medium mb-6 hover:bg-[#001a38] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
-                    <span className='flex items-center gap-2'>
-                      <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
+                    <span className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       Loading...
                     </span>
                   ) : (
@@ -452,30 +476,30 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
               {/* Social Buttons */}
               {!isForgotPassword && (
                 <>
-                  <div className='text-center mb-4'>
-                    <p className='text-[#5a5a5a] text-sm'>
+                  <div className="text-center mb-4">
+                    <p className="text-[#5a5a5a] text-sm">
                       Or {isSignIn ? "Sign In" : "Sign Up"} with
                     </p>
                   </div>
-                  <div className='grid grid-cols-2 gap-4 mb-6'>
+                  <div className="grid grid-cols-2 gap-4 mb-6">
                     <SocialButton
-                      provider='google'
+                      provider="google"
                       onClick={() => handleSocialLogin("google")}
                     />
                     <SocialButton
-                      provider='facebook'
+                      provider="facebook"
                       onClick={() => handleSocialLogin("facebook")}
                     />
                   </div>
-                  <div className='text-center'>
-                    <p className='text-[#5a5a5a] text-sm'>
+                  <div className="text-center">
+                    <p className="text-[#5a5a5a] text-sm">
                       {isSignIn
                         ? "Don't have an account? "
                         : "Already have an account? "}
                       <button
-                        type='button'
+                        type="button"
                         onClick={toggleMode}
-                        className='text-[#00254a] cursor-pointer font-medium underline'
+                        className="text-[#00254a] cursor-pointer font-medium underline"
                       >
                         {isSignIn ? "Sign Up" : "Sign In"}
                       </button>
