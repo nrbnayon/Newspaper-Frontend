@@ -1,11 +1,10 @@
 // src\pages\HomePage.jsx
 import { Helmet } from "react-helmet-async";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import StandardArticleCard from "@/components/news/StandardArticleCard";
 import AudioNewsCard from "@/components/news/AudioNewsCard";
 import LiveUpdateCard from "@/components/news/LiveUpdateCard";
-import NewsGrid from "@/components/news/NewsGrid";
 import NewsSection from "@/components/news/NewsSection";
 import TabbedNewsSection from "@/components/news/TabbedNewsSection";
 import {
@@ -15,9 +14,10 @@ import {
   longReadArticle,
 } from "@/data/sampleArticles";
 import CommonNewsCard from "@/components/news/CommonNewsCard";
-import { FooterSection } from "@/components/footer/FooterSection";
 import ListedNewsSection from "@/components/news/ListedNewsSection";
-import Advertise from "./Advertise/Advertise";
+import { FooterSection } from "@/components/footer/FooterSection";
+import { useAuth } from "@/contexts/AuthContext";
+import { formatNewsItem, getAllNews } from "@/lib/news-service";
 
 const sampleArticles = [
   {
@@ -85,12 +85,83 @@ const sampleArticles = [
 export default function HomePage() {
   const footerRef = useRef(null);
 
+  const { isLoggedIn } = useAuth();
+
+  // API-related states
+  const [newsArticles, setNewsArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [featuredArticle, setFeaturedArticle] = useState(null);
+  const [regularArticles, setRegularArticles] = useState([]);
+
+  useEffect(() => {
+    loadNewsArticles();
+  }, []);
+
+  const loadNewsArticles = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const newsData = await getAllNews();
+
+      if (newsData && newsData.length > 0) {
+        // Format news items for component consumption
+        const formattedNews = newsData.map(formatNewsItem);
+
+        setNewsArticles(formattedNews);
+
+        // Set featured article (first one) and regular articles (rest)
+        setFeaturedArticle(formattedNews[0]);
+        setRegularArticles(formattedNews.slice(1));
+      }
+    } catch (err) {
+      console.error("Failed to load news articles:", err);
+      setError(err.message);
+
+      // Fallback to sample data if API fails
+      const fallbackFeatured = {
+        id: "featured",
+        title: "Welcome to ALAMOCITYPULSE",
+        content:
+          "Stay informed with the latest news and updates. Our comprehensive coverage keeps you connected to what matters most in your community and beyond.",
+        image:
+          "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=600&fit=crop",
+        imageAttribution: "Photo by Author Name",
+        readTime: 5,
+        sentiment: "positive",
+        isFeatured: true,
+        category: "News",
+        publishedTime: "Just now",
+      };
+
+      setFeaturedArticle(fallbackFeatured);
+      setRegularArticles(
+        sampleArticles.slice(0, 3).map((article) =>
+          formatNewsItem({
+            id: article.id,
+            title: article.title,
+            description: article.content,
+            category: article.category,
+            published_relative_time: article.date,
+            published_datetime: new Date().toISOString(),
+            image:
+              "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=600&fit=crop",
+            badge_status: "neutral",
+          })
+        )
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Function to scroll to footer
   const scrollToFooter = () => {
     if (footerRef.current) {
       footerRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -101,10 +172,10 @@ export default function HomePage() {
       scrollToFooter();
     };
 
-    window.addEventListener('scrollToAbout', handleScrollToAbout);
+    window.addEventListener("scrollToAbout", handleScrollToAbout);
 
     return () => {
-      window.removeEventListener('scrollToAbout', handleScrollToAbout);
+      window.removeEventListener("scrollToAbout", handleScrollToAbout);
     };
   }, []);
 
@@ -124,6 +195,13 @@ export default function HomePage() {
         {/* Add top padding to account for fixed navbar */}
         <main className="w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
           <div className="">
+            {loading && (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading latest news...</p>
+              </div>
+            )}
+
             {/* Main Layout - Responsive Grid */}
             <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
               {/* Main Content Area */}
@@ -153,6 +231,10 @@ export default function HomePage() {
                   <TabbedNewsSection />
                 </div>
 
+                {/* Long Read Article */}
+                <NewsSection>
+                  <CommonNewsCard article={regularArticles} />
+                </NewsSection>
                 {/* Long Read Article */}
                 <NewsSection>
                   <CommonNewsCard article={longReadArticle} />

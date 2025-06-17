@@ -1,20 +1,21 @@
-// src\pages\Dashboard\Dashboard.jsx - Fixed Responsive Dashboard with Mobile Sidebar
+// src\pages\Dashboard\Dashboard.jsx - Updated Dashboard with Admin Check
 import Navbar from "@/components/layout/Navbar";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AdvertiseProvider } from "../admin/Advertise/AdvertiseContext";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   PanelLeftOpen,
   PanelLeftOpenIcon,
   PanelRightOpen,
   X,
 } from "lucide-react";
-// import { logoutUser } from "../../lib/auth-service";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
+  const { logout, user, isAdmin } = useAuth();
 
   // Check if screen is mobile/tablet size
   useEffect(() => {
@@ -39,9 +40,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    // Implement your logout logic here
-    // logoutUser();
-    console.log("Logout");
+    logout();
   };
 
   // Helper function to check if advertise routes are active (excluding advertise list routes)
@@ -155,25 +154,29 @@ const Dashboard = () => {
                     Advertise
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/advertiselist"
-                    className={() =>
-                      `block py-3 px-4 font-medium transition-colors rounded-md ${
-                        isAdvertiseListActive()
-                          ? "bg-[#00254a] text-white"
-                          : "text-[#505050] hover:bg-[#e2e2e2]"
-                      }`
-                    }
-                    onClick={isMobile ? closeSidebar : undefined}
-                  >
-                    Advertise List
-                  </NavLink>
-                </li>
+
+                {/* Admin Only Navigation Items */}
+                {(isAdmin() || user?.role === "admin") && (
+                  <li>
+                    <NavLink
+                      to="/dashboard/advertiselist"
+                      className={() =>
+                        `block py-3 px-4 font-medium transition-colors rounded-md ${
+                          isAdvertiseListActive()
+                            ? "bg-[#00254a] text-white"
+                            : "text-[#505050] hover:bg-[#e2e2e2]"
+                        }`
+                      }
+                      onClick={isMobile ? closeSidebar : undefined}
+                    >
+                      Advertise List
+                    </NavLink>
+                  </li>
+                )}
               </ul>
             </div>
 
-            <div className="bottom-1  ">
+            <div className="bottom-1">
               <button
                 onClick={handleLogout}
                 className="w-30 py-2 text-white px-2 cursor-pointer bg-button-bg rounded-md"

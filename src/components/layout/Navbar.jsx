@@ -4,22 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AuthModal from "@/components/auth/AuthModal";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar({ onScrollToAbout }) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signup");
   const [currentDate, setCurrentDate] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   // Sticky navbar state
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  // Get authentication state from context
+  const { isLoggedIn, user, logout } = useAuth();
+
   // Get current location to check if we're in dashboard
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith('/dashboard');
-  const isPricing = location.pathname.startsWith('/pricing')
+  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isPricing = location.pathname.startsWith("/pricing");
 
   // Set current date on component mount
   useEffect(() => {
@@ -34,31 +37,22 @@ export default function Navbar({ onScrollToAbout }) {
     setCurrentDate(formattedDate);
   }, []);
 
-  useEffect(() => {
-    // For now, you can manually set this or integrate with your auth system
-    const checkAuthStatus = () => {
-      return false; // Change this based on your auth logic
-    };
-
-    setIsAuthenticated(checkAuthStatus());
-  }, []);
-
   // Sticky navbar scroll logic
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Show navbar when at top of page
       if (currentScrollY === 0) {
         setIsVisible(true);
-      } 
+      }
       // Hide when scrolling down, show when scrolling up
       else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else if (currentScrollY < lastScrollY) {
         setIsVisible(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
@@ -73,10 +67,10 @@ export default function Navbar({ onScrollToAbout }) {
       }
     };
 
-    window.addEventListener('scroll', throttledHandleScroll);
-    
+    window.addEventListener("scroll", throttledHandleScroll);
+
     return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener("scroll", throttledHandleScroll);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
@@ -94,11 +88,7 @@ export default function Navbar({ onScrollToAbout }) {
   };
 
   const handleSignOut = () => {
-    // Add your sign out logic here
-    // For example:
-    // localStorage.removeItem('authToken');
-    // authService.signOut();
-    setIsAuthenticated(false);
+    logout();
   };
 
   const toggleMobileMenu = () => {
@@ -116,11 +106,13 @@ export default function Navbar({ onScrollToAbout }) {
 
   return (
     <>
-      <nav className={`
+      <nav
+        className={`
         fixed top-0 px-2 md:px-10 left-0 right-0 z-50 bg-white   
         transition-transform duration-300 ease-in-out
-        ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-      `}>
+        ${isVisible ? "translate-y-0" : "-translate-y-full"}
+      `}
+      >
         {/* Top section */}
         <div className="">
           {/* Desktop Layout */}
@@ -152,10 +144,12 @@ export default function Navbar({ onScrollToAbout }) {
 
             {/* Right side - Auth buttons and membership */}
             <div className="flex flex-col justify-center items-end space-y-2">
-              {isAuthenticated ? (
+              {isLoggedIn ? (
                 <div className="flex flex-col items-center space-y-2">
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600">Profile</span>
+                    <span className="text-sm text-gray-600">
+                      {user?.firstName || "Profile"}
+                    </span>
                     <Link
                       to="/dashboard/profile"
                       className="bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]"
@@ -163,6 +157,12 @@ export default function Navbar({ onScrollToAbout }) {
                       <User2 size={24} className="text-white" />
                     </Link>
                   </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm text-gray-600 hover:text-[#00254a] cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
                 </div>
               ) : (
                 <>
@@ -199,15 +199,23 @@ export default function Navbar({ onScrollToAbout }) {
 
             {/* Right side - Auth buttons */}
             <div className="flex items-center space-x-3">
-              {isAuthenticated ? (
+              {isLoggedIn ? (
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Profile</span>
+                  <span className="text-sm text-gray-600">
+                    {user?.firstName || "Profile"}
+                  </span>
                   <Link
                     to="/dashboard/profile"
                     className="bg-[#00254A] rounded-full p-1 text-white hover:bg-[#001a38]"
                   >
                     <User2 size={24} className="text-white" />
                   </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm text-gray-600 hover:text-[#00254a] cursor-pointer ml-2"
+                  >
+                    Sign Out
+                  </button>
                 </div>
               ) : (
                 <>
@@ -239,7 +247,7 @@ export default function Navbar({ onScrollToAbout }) {
 
             {/* Mobile menu button and auth */}
             <div className="flex items-center space-x-2">
-              {isAuthenticated ? (
+              {isLoggedIn ? (
                 <Link
                   to="/dashboard/profile"
                   className="bg-[#00254A] cursor-pointer rounded-full p-1 text-white hover:bg-[#001a38]"
@@ -281,7 +289,7 @@ export default function Navbar({ onScrollToAbout }) {
             </div>
 
             {/* Membership offer for mobile/tablet when not authenticated */}
-            {!isAuthenticated && (
+            {!isLoggedIn && (
               <div className="md:hidden text-sm text-[#b32021] font-medium border border-[#F6D5D5] px-3 py-2 rounded-xl text-center">
                 SAVE 50% ON Membership
               </div>
@@ -344,7 +352,7 @@ export default function Navbar({ onScrollToAbout }) {
                   <ChevronDown size={16} className="ml-1" />
                 </button>
               </div>
-              
+
               {/* Conditionally render About Us button in mobile menu - hide when in dashboard */}
               {!isDashboard && (
                 <button
@@ -354,7 +362,7 @@ export default function Navbar({ onScrollToAbout }) {
                   About Us
                 </button>
               )}
-             
+
               <Link
                 to="/dashboard/advertise"
                 className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
@@ -363,8 +371,33 @@ export default function Navbar({ onScrollToAbout }) {
                 Make Advertise
               </Link>
 
-              {/* Mobile auth buttons */}
-              {!isAuthenticated && (
+              <Link
+                to="/pricing"
+                className="block px-3 py-2 text-gray-900 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-md transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Pricing
+              </Link>
+
+              {/* Mobile auth buttons and sign out */}
+              {isLoggedIn ? (
+                <div className="px-3 py-2 pt-4 border-t border-gray-200 mt-2">
+                  <div className="flex flex-col space-y-2">
+                    <div className="text-sm text-gray-600 text-center">
+                      Welcome, {user?.firstName || "User"}!
+                    </div>
+                    <Button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full cursor-pointer bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
+                    >
+                      Sign Out
+                    </Button>
+                  </div>
+                </div>
+              ) : (
                 <div className="px-3 py-2 pt-4 border-t border-gray-200 mt-2">
                   <div className="flex flex-col space-y-2">
                     <Button
@@ -396,4 +429,4 @@ export default function Navbar({ onScrollToAbout }) {
       />
     </>
   );
-};
+}

@@ -158,7 +158,10 @@ const handleAuthFailure = async () => {
   }
 };
 
-// Cookie management functions
+// =============================
+// COOKIE MANAGEMENT FUNCTIONS
+// =============================
+
 export const setCookie = (name, value, options = {}) => {
   const defaultOptions = {
     path: "/",
@@ -212,7 +215,10 @@ export const hasCookie = (name) => {
   return value !== null && value !== "";
 };
 
-// JWT utility functions
+// ========================
+// JWT UTILITY FUNCTIONS
+// ========================
+
 export const parseJwt = (token) => {
   try {
     if (!token) return null;
@@ -242,7 +248,10 @@ export const isTokenExpired = (token) => {
   return payload.exp * 1000 < Date.now() + 30000;
 };
 
-// Auth token management
+// ============================
+// AUTH TOKEN MANAGEMENT
+// ============================
+
 export const setAuthTokens = (accessToken, refreshToken) => {
   if (!accessToken || !refreshToken) {
     console.error("Missing tokens when setting auth tokens");
@@ -307,6 +316,13 @@ export const getCurrentUser = () => {
   const payload = parseJwt(accessToken);
   return payload?.user || payload;
 };
+
+export default apiClient;
+
+
+// ============================
+// AUTH API FUNCTIONS
+// ============================
 
 // Send OTP for email verification
 export const sendOTP = async ({ email }) => {
@@ -419,15 +435,38 @@ export const resendOTP = async ({ email, type }) => {
   }
 };
 
-// Logout user
+// Logout user - PURE SERVICE FUNCTION
 export const logoutUser = () => {
   // Clear all auth tokens from cookies
   removeAuthTokens();
   console.log("User logged out successfully");
-  // Redirect to login page
+  // Redirect to home page
   if (typeof window !== "undefined") {
     window.location.href = "/";
   }
 };
 
-export default apiClient;
+// Get user profile - NEW FUNCTION
+export const getUserProfile = async () => {
+  try {
+    const response = await apiClient.get("/auth/profile/");
+    console.log("getUserProfile response::", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Get Profile Error:", error);
+    throw new Error(error.response?.data?.error || "Failed to get profile");
+  }
+};
+
+// Update user profile - NEW FUNCTION
+export const updateUserProfile = async (profileData) => {
+  try {
+    const response = await apiClient.put("/auth/profile/", profileData);
+    console.log("updateUserProfile response::", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Update Profile Error:", error);
+    throw new Error(error.response?.data?.error || "Failed to update profile");
+  }
+};
+
