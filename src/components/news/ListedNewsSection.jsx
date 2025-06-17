@@ -423,36 +423,3 @@ const ListedNewsSection = ({
 };
 
 export default ListedNewsSection;
-
-// Example usage with dynamic data:
-/*
-// In your parent component, you can pass dynamic data like this:
-
-const dynamicTabsFromAPI = [
-  {
-    key: "breaking",
-    label: "Breaking News",
-    isDefault: true,
-  },
-  {
-    key: "analysis", 
-    label: "Analysis",
-  },
-  // ... more tabs from your API
-];
-
-const dynamicArticlesFromAPI = {
-  breaking: [
-    // articles from your database
-  ],
-  analysis: [
-    // articles from your database  
-  ],
-};
-
-<ListedNewsSection 
-  dynamicTabsData={dynamicArticlesFromAPI}
-  dynamicTabsConfig={dynamicTabsFromAPI}
-  className="container mx-auto px-4"
-/>
-*/

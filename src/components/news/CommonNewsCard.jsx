@@ -1,29 +1,29 @@
+// src\components\news\CommonNewsCard.jsx
 import { useState } from "react";
 import InteractionButtons from "../common/InteractionButtons";
 import AuthModal from "../auth/AuthModal";
-import { cn } from "@/lib/utils";
+import { cn, getTruncatedText } from "@/lib/utils";
 import ImageAttribution from "../common/ImageAttribution";
 import SentimentBadge from "../common/SentimentBadge";
 import TimeIndicator from "../common/TimeIndicator";
+
 import CommentsSection from "../common/CommentSection";
-import { useAuth } from "@/contexts/AuthContext"; // Import the auth hook
+import { useAuth } from "@/contexts/AuthContext";
 
 const CommonNewsCard = ({
   article,
   className,
-  layout = "horizontal", // horizontal or vertical
+  layout = "horizontal", 
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
+  const { isLoggedIn, user } = useAuth();
 
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signup");
 
   // Comment section states
   const [showComments, setShowComments] = useState(false);
-
-  // Get auth state from context
-  const { isLoggedIn } = useAuth();
 
   // Sample comments data - you can replace this with your actual data source
   const [comments, setComments] = useState([
@@ -73,55 +73,22 @@ const CommonNewsCard = ({
     },
   ]);
 
-  // Function to truncate text to 50% of words
-  const getTruncatedText = (text) => {
-    if (!text) return "";
-    const words = text.split(" ");
-    const halfLength = Math.ceil(words.length / 2);
-    return words.slice(0, halfLength).join(" ");
-  };
-
-  const truncatedContent = getTruncatedText(article?.description);
+  const truncatedContent = getTruncatedText(article.content);
   const shouldShowReadMore =
-    article?.description && article?.description.split(" ").length > 2;
+    article.content && article.content.split(" ").length > 2;
 
   const handleReadMore = () => {
-    // Check if user is logged in
-    if (!isLoggedIn) {
-      // If not logged in, show auth modal with signin mode
-      setAuthMode("signin");
-      setAuthModalOpen(true);
-      return;
-    }
-
-    // If logged in, toggle expanded state
     setIsExpanded(!isExpanded);
+    setAuthMode("signin");
+    setAuthModalOpen(true);
   };
 
   const handleCommentClick = () => {
-    // Check if user is logged in before showing comments
-    if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
-      return;
-    }
-
     setShowComments(!showComments);
   };
 
-  // Mock article data if not provided
-  const mockArticle = {
-    title: "Sample News Article Title",
-    content:
-      "This is a sample news article content. It contains multiple sentences to demonstrate the read more functionality. The content can be quite long and detailed, covering various aspects of the topic at hand. This helps users get a preview before deciding to read the full article.",
-    image:
-      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=600&fit=crop",
-    imageAttribution: "Photo by Author Name",
-    readTime: 5,
-    sentiment: "positive",
-    isFeatured: true,
-    ...article,
-  };
+  // Use article prop data
+  const articleData = article || {};
 
   return (
     <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
@@ -142,46 +109,37 @@ const CommonNewsCard = ({
             isExpanded && "w-full"
           )}
         >
-          {mockArticle.isFeatured && (
+          {articleData.isFeatured && (
             <SentimentBadge
-              sentiment={mockArticle.sentiment}
-              className="mb-3 sm:mb-4 w-full"
+              sentiment={articleData.sentiment}
+              className='mb-3 sm:mb-4 w-full'
             />
           )}
 
-          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
-            {mockArticle.title}
+          <h1 className='text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight'>
+            {articleData.title}
           </h1>
 
-          <div className="mb-3 sm:mb-4">
-            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              {/* Show full content only if user is logged in and expanded, otherwise show truncated */}
-              {isLoggedIn && isExpanded
-                ? mockArticle.description
-                : truncatedContent}
+          <div className='mb-3 sm:mb-4'>
+            <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
+              {isExpanded ? articleData.content : truncatedContent}
               {!isExpanded && shouldShowReadMore && "... "}
               {shouldShowReadMore && (
                 <button
                   onClick={handleReadMore}
-                  className="text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline"
+                  className='text-blue-600 hover:text-blue-800  cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
                 >
-                  {isLoggedIn && isExpanded ? "Read less" : "Read more >"}
+                  {isExpanded ? "Read less" : "Read more >"}
                 </button>
               )}
             </p>
           </div>
 
-          <TimeIndicator
-            type="readTime"
-            value={mockArticle.readTime}
-            className="text-xs sm:text-sm"
-          />
-
           {/* Comment section in content area when expanded */}
           {isHorizontal && (
-            <div className="flex flex-col justify-between w-full">
-              <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
-                {mockArticle.isFeatured && (
+            <div className='flex flex-col justify-between w-full'>
+              <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+                {articleData.isFeatured && (
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
@@ -189,17 +147,11 @@ const CommonNewsCard = ({
                     />
                   </div>
                 )}
-                {!mockArticle.isFeatured && <div className=""></div>}
-                <div className="flex items-center justify-end">
-                  <ImageAttribution
-                    attribution={mockArticle?.imageAttribution}
-                    className=" mb-1 text-xs sm:text-sm"
-                  />
-                </div>
+                {!articleData.isFeatured && <div className=''></div>}
               </div>
 
-              {/* Comment Section - only show if logged in */}
-              {showComments && isLoggedIn && (
+              {/* Comment Section */}
+              {showComments && (
                 <CommentsSection
                   comments={comments}
                   setComments={setComments}
@@ -217,24 +169,41 @@ const CommonNewsCard = ({
             isExpanded && "w-full"
           )}
         >
-          <div className="relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center">
+          <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
             <img
-              src={mockArticle.image}
-              alt={mockArticle.title}
+              src={articleData.image}
+              alt={articleData.title}
               className={cn(
                 "w-full object-cover transition-transform duration-300 hover:scale-105",
                 !isExpanded && "h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]",
                 isExpanded && "h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"
               )}
-              loading="lazy"
+              loading='lazy'
             />
+
+            {/* TimeIndicator - Bottom Left */}
+            <div className='absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+              <TimeIndicator
+                type='readTime'
+                value={articleData.readTime}
+                className='text-xs sm:text-sm text-white'
+              />
+            </div>
+
+            {/* ImageAttribution - Bottom Right */}
+            <div className='absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+              <ImageAttribution
+                attribution={articleData?.imageAttribution}
+                className='text-xs sm:text-sm text-white'
+              />
+            </div>
           </div>
 
           {/* Comment section in image area when not expanded */}
           {!isHorizontal && (
-            <div className="flex flex-col justify-between w-full">
-              <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
-                {mockArticle.isFeatured && (
+            <div className='flex flex-col justify-between w-full'>
+              <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+                {articleData.isFeatured && (
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
@@ -242,32 +211,16 @@ const CommonNewsCard = ({
                     />
                   </div>
                 )}
-                {!mockArticle.isFeatured && <div className=""></div>}
-                <div className="flex items-center justify-end">
-                  <ImageAttribution
-                    attribution={mockArticle?.imageAttribution}
-                    className=" mb-1 text-xs sm:text-sm"
-                  />
-                </div>
+                {!articleData.isFeatured && <div className=''></div>}
               </div>
 
-              {/* Comment Section - only show if logged in */}
-              {showComments && isLoggedIn && (
+              {/* Comment Section */}
+              {showComments && (
                 <CommentsSection
                   comments={comments}
                   setComments={setComments}
                 />
               )}
-            </div>
-          )}
-
-          {/* Image attribution when expanded (separate from comment section) */}
-          {isExpanded && (
-            <div className="w-full flex justify-end items-center mt-2 sm:mt-3">
-              <ImageAttribution
-                attribution={mockArticle?.imageAttribution}
-                className=" mb-1 text-xs sm:text-sm"
-              />
             </div>
           )}
         </div>

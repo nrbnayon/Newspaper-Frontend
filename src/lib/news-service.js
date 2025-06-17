@@ -89,9 +89,9 @@ export const formatNewsItem = (newsItem) => {
     publishedDateTime: newsItem.published_datetime,
     image: newsItem.image,
     sentiment: newsItem.badge_status,
-    isFeatured: true, // You can modify this based on your logic
-    imageAttribution: "News Source", // Add attribution logic if available
-    readTime: Math.ceil(newsItem.description?.split(" ").length / 200) || 3, // Estimate read time
+    isFeatured: true, 
+    imageAttribution: "News Source",
+    readTime: Math.ceil(newsItem.description?.split(" ").length / 200) || 3,
   };
 };
 
@@ -126,7 +126,7 @@ export const transformReactionsToComments = (reactions) => {
       time: formatTimeAgo(reaction.created_at),
       avatar: `https://images.unsplash.com/photo-${
         1472099645785 + index
-      }?w=32&h=32&fit=crop&crop=face`, // Default avatar
+      }?w=32&h=32&fit=crop&crop=face`,
       loved: reaction.love,
     }));
 };

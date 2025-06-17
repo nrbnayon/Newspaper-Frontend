@@ -198,7 +198,7 @@ const tabsConfig = [
 
 // Responsive grid configuration based on columns
 const getResponsiveClasses = (columns) => {
-  const baseClasses = "grid gap-4 md:gap-6";
+  const baseClasses = "grid gap-2 md:gap-4";
 
   switch (columns) {
     case 2:
@@ -282,49 +282,3 @@ const TabbedNewsSection = ({
 };
 
 export default TabbedNewsSection;
-
-// Example usage with dynamic data:
-/*
-// In your parent component, you can pass dynamic data like this:
-
-const dynamicTabsFromAPI = [
-  {
-    key: "appetizers",
-    label: "Appetizers",
-    isDefault: true,
-    columns: 4,
-    gap: 4,
-  },
-  {
-    key: "mainCourses", 
-    label: "Main Courses",
-    columns: 3,
-    gap: 6,
-  },
-  {
-    key: "desserts",
-    label: "Desserts", 
-    columns: 4,
-    gap: 4,
-  },
-  // ... more tabs from your API
-];
-
-const dynamicArticlesFromAPI = {
-  appetizers: [
-    // articles from your database
-  ],
-  mainCourses: [
-    // articles from your database  
-  ],
-  desserts: [
-    // articles from your database
-  ],
-};
-
-<TabbedNewsSection 
-  dynamicTabsData={dynamicArticlesFromAPI}
-  dynamicTabsConfig={dynamicTabsFromAPI}
-  className="container mx-auto px-4"
-/>
-*/

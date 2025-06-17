@@ -1,3 +1,4 @@
+// src\components\news\LiveUpdateCard.jsx
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";

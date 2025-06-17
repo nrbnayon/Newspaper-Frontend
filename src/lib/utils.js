@@ -40,3 +40,11 @@ export function isValidEmail(email) {
 export function isValidPhone(phone) {
   return /^\d{10}$/.test(phone)
 }
+
+  // Function to truncate text to 20% of words
+ export const getTruncatedText = (text) => {
+    if (!text) return "";
+    const words = text.split(" ");
+    const twentyPercentLength = Math.max(Math.ceil(words.length * 0.2), 200);
+    return words.slice(0, twentyPercentLength).join(" ");
+  };

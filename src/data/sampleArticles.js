@@ -61,8 +61,8 @@ export const featuredArticle = {
 
 export const audioNews = {
   title: "Microsoft hires Open AI's ousted C.E.O., and more.",
+  description: "Microsoft hires Open AI's ousted C.E.O., and more.",
   category: "THE HEADLINES",
-  duration: "4",
   sentiment: "Negative",
   image:
     "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
