@@ -1,3 +1,4 @@
+// src\pages\Routers\index.jsx
 import { Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { ProtectedRoute, PublicRoute, VerificationRoute } from "./route-guards";

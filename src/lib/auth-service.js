@@ -1,143 +1,310 @@
-// This is a mock service for authentication
-// In a real application, you would connect to your backend API
+// src/lib/auth-service.js
+import axios from "axios";
 
-/**
- * Register a new user
- * @param {Object} userData - User registration data
- * @returns {Promise<Object>} - Registered user data
- */
-export async function registerUser(userData) {
-  // Simulate API call
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Simulate validation
-      if (!userData.email || !userData.password) {
-        return reject(new Error("Email and password are required"));
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://192.168.10.145:8000/api";
+
+// Token expiration times (in seconds)
+const TOKEN_EXPIRY = {
+  ACCESS_TOKEN: 30 * 24 * 60 * 60, // 30 days
+  REFRESH_TOKEN: 365 * 24 * 60 * 60, // 365 days
+  AUTH_STATE: 30 * 24 * 60 * 60, // 30 days
+};
+
+const apiClient = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// Request interceptor
+apiClient.interceptors.request.use(
+  (config) => {
+    const accessToken = getCookie("accessToken");
+    if (accessToken && !isTokenExpired(accessToken)) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error("API Request Error:", error);
+    return Promise.reject(error);
+  }
+);
+
+// Token refresh queue management
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+// Response interceptor with improved error handling
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    console.error("API Response Error:", error.response?.data || error.message);
+
+    // Handle unauthorized responses
+    if (error?.response?.status === 401) {
+      // Check for specific unauthorized messages
+      const errorMessage = error?.response?.data?.message;
+      if (
+        errorMessage?.includes("You are not authorized") ||
+        errorMessage?.includes("Invalid token") ||
+        errorMessage?.includes("Token expired")
+      ) {
+        // Don't retry refresh token requests
+        if (originalRequest.url?.includes("/auth/refresh-token")) {
+          console.error("Refresh token invalid, clearing auth state");
+          await handleAuthFailure();
+          return Promise.reject(error);
+        }
+
+        // Don't retry if already attempted
+        if (originalRequest._retry) {
+          await handleAuthFailure();
+          return Promise.reject(error);
+        }
+
+        // Handle token refresh
+        if (isRefreshing) {
+          try {
+            const token = await new Promise((resolve, reject) => {
+              failedQueue.push({ resolve, reject });
+            });
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return apiClient(originalRequest);
+          } catch (err) {
+            return Promise.reject(err);
+          }
+        }
+
+        return refreshTokenAndRetry(originalRequest);
       }
+    }
 
-      if (userData.email === "existing@example.com") {
-        return reject(new Error("Email already in use"));
+    return Promise.reject(error);
+  }
+);
+
+// Refresh token and retry original request
+const refreshTokenAndRetry = async (originalRequest) => {
+  originalRequest._retry = true;
+  isRefreshing = true;
+
+  const refreshToken = getCookie("refreshToken");
+  if (!refreshToken) {
+    await handleAuthFailure();
+    return Promise.reject(new Error("No refresh token available"));
+  }
+
+  try {
+    // Use POST request for security (not GET with query params)
+    const response = await axios.post(
+      `${API_URL}/auth/refresh-token`,
+      {
+        refreshToken: refreshToken,
+      },
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
       }
+    );
 
-      // Simulate successful registration
-      resolve({
-        id: "user_" + Math.random().toString(36).substr(2, 9),
-        email: userData.email,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        createdAt: new Date().toISOString(),
-      });
-    }, 1000);
+    const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+
+    // Update tokens
+    setAuthTokens(accessToken, newRefreshToken || refreshToken);
+
+    // Update original request
+    originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+    // Process queued requests
+    processQueue(null, accessToken);
+
+    // Retry original request
+    return apiClient(originalRequest);
+  } catch (refreshError) {
+    console.error("Token refresh failed:", refreshError);
+    processQueue(refreshError, null);
+    await handleAuthFailure();
+    return Promise.reject(refreshError);
+  } finally {
+    isRefreshing = false;
+  }
+};
+
+// Handle authentication failure
+const handleAuthFailure = async () => {
+  removeAuthTokens();
+
+  // Redirect to login page (adjust path as needed)
+  if (typeof window !== "undefined") {
+    window.location.href = "/login";
+  }
+};
+
+// Cookie management functions
+export const setCookie = (name, value, options = {}) => {
+  const defaultOptions = {
+    path: "/",
+    secure: import.meta.env.VITE_NODE_ENV === "production",
+    sameSite: "strict",
+  };
+
+  const cookieOptions = { ...defaultOptions, ...options };
+  let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+
+  for (const optionKey in cookieOptions) {
+    if (cookieOptions[optionKey] === false) continue;
+
+    if (optionKey === "maxAge") {
+      cookieString += `; max-age=${cookieOptions[optionKey]}`;
+    } else if (optionKey === "expires") {
+      cookieString += `; expires=${cookieOptions[optionKey].toUTCString()}`;
+    } else {
+      cookieString += `; ${optionKey}=${cookieOptions[optionKey]}`;
+    }
+  }
+
+  document.cookie = cookieString;
+  console.log(`Cookie set: ${name} with maxAge: ${cookieOptions.maxAge}`);
+};
+
+export const getCookie = (name) => {
+  const nameEQ = `${encodeURIComponent(name)}=`;
+  const cookies = document.cookie.split(";");
+
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.indexOf(nameEQ) === 0) {
+      return decodeURIComponent(cookie.substring(nameEQ.length));
+    }
+  }
+  return null;
+};
+
+export const removeCookie = (name, options = {}) => {
+  setCookie(name, "", {
+    ...options,
+    maxAge: -1,
+    expires: new Date(0),
   });
-}
+  console.log(`Cookie removed: ${name}`);
+};
 
-/**
- * Login a user
- * @param {Object} credentials - User login credentials
- * @returns {Promise<Object>} - User data with token
- */
-export async function loginUser(credentials) {
-  // Simulate API call
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Simulate validation
-      if (!credentials.email || !credentials.password) {
-        return reject(new Error("Email and password are required"));
-      }
+export const hasCookie = (name) => {
+  const value = getCookie(name);
+  return value !== null && value !== "";
+};
 
-      // Simulate successful login
-      resolve({
-        id: "user_" + Math.random().toString(36).substr(2, 9),
-        email: credentials.email,
-        token: "jwt_token_" + Math.random().toString(36).substr(2, 16),
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      });
-    }, 1000);
+// JWT utility functions
+export const parseJwt = (token) => {
+  try {
+    if (!token) return null;
+
+    const base64Url = token.split(".")[1];
+    if (!base64Url) return null;
+
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error("JWT Parse Error:", error);
+    return null;
+  }
+};
+
+export const isTokenExpired = (token) => {
+  const payload = parseJwt(token);
+  if (!payload || !payload.exp) return true;
+
+  // Add 30 second buffer to account for clock skew
+  return payload.exp * 1000 < Date.now() + 30000;
+};
+
+// Auth token management
+export const setAuthTokens = (accessToken, refreshToken) => {
+  if (!accessToken || !refreshToken) {
+    console.error("Missing tokens when setting auth tokens");
+    return;
+  }
+
+  setCookie("accessToken", accessToken, {
+    maxAge: TOKEN_EXPIRY.ACCESS_TOKEN,
+    secure: import.meta.env.VITE_NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
   });
-}
 
-/**
- * Login with a social provider
- * @param {string} provider - The social provider (google, facebook)
- * @returns {Promise<Object>} - User data with token
- */
-export async function socialLogin(provider) {
-  // Simulate API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Simulate successful social login
-      resolve({
-        id: "user_" + Math.random().toString(36).substr(2, 9),
-        email: `user_${Math.random().toString(36).substr(2, 5)}@example.com`,
-        provider,
-        token: "jwt_token_" + Math.random().toString(36).substr(2, 16),
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      });
-    }, 1000);
+  setCookie("refreshToken", refreshToken, {
+    maxAge: TOKEN_EXPIRY.REFRESH_TOKEN,
+    secure: import.meta.env.VITE_NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
   });
-}
 
-export async function changePassword({ email, password, type }) {
-  console.log("Changing password for:", email, password, type);
-  // Simulated change password API call
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-
-      if (email && password) {
-        resolve({ success: true, message: "Password changed successfully" });
-      } else {
-        reject(new Error("Invalid input"));
-      }
-    }, 1000);
+  setCookie("isAuthenticated", "true", {
+    maxAge: TOKEN_EXPIRY.AUTH_STATE,
+    secure: import.meta.env.VITE_NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
   });
-}
 
-export async function sendForgotPasswordOTP(email) {
-  // Simulated OTP sending
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (email) {
-        resolve({ success: true, message: "OTP sent to email" });
-      } else {
-        reject(new Error("Email is required"));
-      }
-    }, 1000);
-  });
-}
+  console.log("Auth tokens set with expiration:");
+  console.log(`- accessToken: ${TOKEN_EXPIRY.ACCESS_TOKEN} seconds`);
+  console.log(`- refreshToken: ${TOKEN_EXPIRY.REFRESH_TOKEN} seconds`);
+};
 
-export async function verifyOTP({ email, otp, type }) {
-  // Simulated API call
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (otp === "123456") {
-        resolve({ success: true, message: "OTP verified" });
-      } else {
-        reject(new Error("Invalid OTP"));
-      }
-    }, 1000);
-  });
-}
+export const removeAuthTokens = () => {
+  const cookieOptions = { path: "/" };
+  removeCookie("accessToken", cookieOptions);
+  removeCookie("refreshToken", cookieOptions);
+  removeCookie("isAuthenticated", cookieOptions);
+  console.log("All auth tokens removed");
+};
 
-export async function resendOTP({ email, type }) {
-  // Simulated resend
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ success: true, message: "OTP resent" });
-    }, 1000);
-  });
-}
+// Check if user is authenticated
+export const isAuthenticated = () => {
+  const accessToken = getCookie("accessToken");
+  const refreshToken = getCookie("refreshToken");
+  const authFlag = getCookie("isAuthenticated");
 
-/**
- * Logout the current user
- * @returns {Promise<void>}
- */
-export async function logoutUser() {
-  // Simulate API call
-  console.log("Logging out user...");
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Clear local storage or cookies in a real app
-      resolve();
-    }, 500);
-  });
-}
+  return (
+    authFlag === "true" &&
+    accessToken &&
+    refreshToken &&
+    !isTokenExpired(accessToken)
+  );
+};
+
+// Get current user from token
+export const getCurrentUser = () => {
+  const accessToken = getCookie("accessToken");
+  if (!accessToken || isTokenExpired(accessToken)) {
+    return null;
+  }
+
+  const payload = parseJwt(accessToken);
+  return payload?.user || payload;
+};
+
+export default apiClient;
