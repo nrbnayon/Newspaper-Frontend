@@ -1,5 +1,4 @@
 // src\components\auth\AuthModal.jsx
-import apiClient from "./../../lib/axios-service";
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -9,11 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Modal, ModalContent } from "@/components/ui/modal";
-import SocialButton from "@/components/auth/SocialButton";
+// import SocialButton from "@/components/auth/SocialButton";
 import { VerifyOTPModal } from "@/components/auth/VerifyOTPModal";
 import { ResetPasswordModal } from "@/components/auth/ResetPasswordModal";
 import { SuccessModal } from "@/components/auth/SuccessModal";
 import { cn } from "@/lib/utils";
+import {
+  loginUser,
+  registerUser,
+  sendForgotPasswordOTP,
+  sendOTP,
+} from "@/lib/auth-service";
 
 export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
   const [isSignIn, setIsSignIn] = useState(initialMode === "signin");
@@ -24,6 +29,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [otpType, setOtpType] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [signupFormData, setSignupFormData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Main form for signup, signin, and forgot password
@@ -70,28 +76,37 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
 
     try {
       if (isForgotPassword) {
-        console.log("Initiating forgot password for:", data.email);
+        await sendForgotPasswordOTP({ email: data.email });
         setUserEmail(data.email);
         setOtpType("forgot-password");
-        setShowOTPModal(true);
+        // setShowOTPModal(true);
+        toast.success("Reset code sent to your email!");
+        setShowResetPasswordModal(true);
       } else if (!isSignIn) {
         // Signup
-        console.log("Initiating signup with:", data);
+        await sendOTP({ email: data.email });
         setUserEmail(data.email);
+        setSignupFormData(data);
         setOtpType("signup");
         setShowOTPModal(true);
+        toast.success("Verification code sent to your email!");
       } else {
         // Signin
-        console.log("Logging in user:", data);
-        const loginUser = await apiClient.post("/auth/login/", data);
-        console.log("Login response data:::", loginUser);
+        const result = await loginUser({
+          email: data.email,
+          password: data.password,
+        });
+
         toast.success("Successfully signed in!");
         onClose();
         form.reset();
+
+        // Trigger page refresh or context update
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error in form submission:", error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error(error.message || "Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -104,11 +119,30 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
   };
 
   // Handle OTP verification success
-  const handleOTPVerified = () => {
+  const handleOTPVerified = async () => {
     setShowOTPModal(false);
 
     if (otpType === "signup") {
-      setShowSuccessModal(true);
+      // Now register the user after OTP verification
+      try {
+        setIsLoading(true);
+        const registerData = {
+          first_name: signupFormData.firstName,
+          last_name: signupFormData.lastName,
+          email: signupFormData.email,
+          password: signupFormData.password,
+          role: "user",
+        };
+
+        await registerUser(registerData);
+        setShowSuccessModal(true);
+        setSignupFormData(null); // Clear stored data
+      } catch (error) {
+        console.error("Registration error:", error);
+        toast.error(error.message || "Registration failed. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
     } else if (otpType === "forgot-password") {
       setShowResetPasswordModal(true);
     }
@@ -193,7 +227,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
 
               {/* Toggle text */}
               <p className="text-center mb-6 text-sm text-gray-600">
-                {isForgotPassword ? (
+                {isForgotPassword && (
                   <>
                     Remember your password?{" "}
                     <button
@@ -202,19 +236,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                       className="text-[#00254a] cursor-pointer font-medium underline"
                     >
                       Back to Sign In
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    {isSignIn
-                      ? "Don't have an Account? "
-                      : "Already have an Account? "}
-                    <button
-                      type="button"
-                      onClick={toggleMode}
-                      className="text-[#00254a] cursor-pointer font-medium underline"
-                    >
-                      {isSignIn ? "Sign Up Free" : "Sign In"}
                     </button>
                   </>
                 )}
@@ -443,7 +464,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                   ) : (
                     <>
                       {isForgotPassword
-                        ? "Send Reset Link"
+                        ? "Reset"
                         : isSignIn
                         ? "Sign In"
                         : "Sign Up"}
@@ -455,12 +476,12 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
               {/* Social Buttons */}
               {!isForgotPassword && (
                 <>
-                  <div className="text-center mb-4">
+                  {/* <div className="text-center mb-4">
                     <p className="text-[#5a5a5a] text-sm">
                       Or {isSignIn ? "Sign In" : "Sign Up"} with
                     </p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
+                  </div> */}
+                  {/* <div className="grid grid-cols-2 gap-4 mb-6">
                     <SocialButton
                       provider="google"
                       onClick={() => handleSocialLogin("google")}
@@ -469,7 +490,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                       provider="facebook"
                       onClick={() => handleSocialLogin("facebook")}
                     />
-                  </div>
+                  </div> */}
                   <div className="text-center">
                     <p className="text-[#5a5a5a] text-sm">
                       {isSignIn

@@ -55,12 +55,13 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    console.error("API Response Error:", error.response?.data || error.message);
+    console.error("API Response Error:", error.response?.data?.error);
 
     // Handle unauthorized responses
     if (error?.response?.status === 401) {
       // Check for specific unauthorized messages
-      const errorMessage = error?.response?.data?.message;
+      const errorMessage =
+        error.response?.data?.error || error?.response?.data?.message;
       if (
         errorMessage?.includes("You are not authorized") ||
         errorMessage?.includes("Invalid token") ||
@@ -305,6 +306,128 @@ export const getCurrentUser = () => {
 
   const payload = parseJwt(accessToken);
   return payload?.user || payload;
+};
+
+// Send OTP for email verification
+export const sendOTP = async ({ email }) => {
+  try {
+    const response = await apiClient.post("/auth/otp/create/", { email });
+    console.log("sendOTP response::", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Send OTP Error:", error);
+    throw new Error(error.response?.data?.error || "Failed to send OTP");
+  }
+};
+
+// Verify OTP
+export const verifyOTP = async ({ email, otp, type }) => {
+  try {
+    const response = await apiClient.post("/auth/otp/verify/", {
+      email,
+      otp,
+    });
+    console.log("verifyOTP response::", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Verify OTP Error:", error);
+    throw new Error(error.response?.data?.error || "Invalid OTP");
+  }
+};
+
+// Register user (called after OTP verification)
+export const registerUser = async (userData) => {
+  try {
+    const response = await apiClient.post("/auth/register/", userData);
+    console.log("registerUser response::", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Register User Error:", error);
+    throw new Error(error.response?.data?.error || "Registration failed");
+  }
+};
+
+// Login user
+export const loginUser = async ({ email, password }) => {
+  try {
+    const response = await apiClient.post("/auth/login/", { email, password });
+    console.log("Login response::", response.data);
+
+    const { access_token, refresh_token, profile } = response.data;
+
+    // Set tokens in cookies
+    setAuthTokens(access_token, refresh_token);
+
+    return { access_token, refresh_token, profile };
+  } catch (error) {
+    console.error("Login Error:", error);
+    throw new Error(error.response?.data?.error || "Login failed");
+  }
+};
+
+// Send forgot password OTP
+export const sendForgotPasswordOTP = async ({ email }) => {
+  try {
+    const response = await apiClient.post("/auth/password-reset/request/", {
+      email,
+    });
+
+    console.log("sendForgotPasswordOTP response::", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Forgot Password OTP Error:", error);
+    throw new Error(error.response?.data?.error || "Failed to send reset code");
+  }
+};
+
+// Reset password with OTP
+export const resetPassword = async ({ email, otp, new_password }) => {
+  try {
+    const response = await apiClient.post("/auth/password-reset/confirm/", {
+      email,
+      otp,
+      new_password,
+    });
+
+    console.log("resetPassword response::", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Reset Password Error:", error);
+    throw new Error(error.response?.data?.error || "Password reset failed");
+  }
+};
+
+// Resend OTP
+export const resendOTP = async ({ email, type }) => {
+  try {
+    let endpoint = "/auth/otp/create/";
+    if (type === "forgot-password") {
+      endpoint = "/auth/password-reset/request/";
+    }
+
+    const response = await apiClient.post(endpoint, { email });
+
+    console.log("resendOTP response::", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Resend OTP Error:", error);
+    throw new Error(error.response?.data?.error || "Failed to resend OTP");
+  }
+};
+
+// Logout user
+export const logoutUser = () => {
+  // Clear all auth tokens from cookies
+  removeAuthTokens();
+  console.log("User logged out successfully");
+  // Redirect to login page
+  if (typeof window !== "undefined") {
+    window.location.href = "/";
+  }
 };
 
 export default apiClient;

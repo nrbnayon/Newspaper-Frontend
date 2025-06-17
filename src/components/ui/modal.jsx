@@ -23,10 +23,10 @@ export function ModalContent({ children, onClose, className = "" }) {
     <div className={`rounded-lg text-white max-w-md w-full mx-4 ${className}`}>
       <button
         onClick={onClose}
-        className='absolute top-2 right-0 z-20 p-1 rounded-full hover:bg-gray-100'
-        aria-label='Close modal'
+        className="absolute top-4 right-4 z-20 p-1  rounded-full hover:bg-gray-100"
+        aria-label="Close modal"
       >
-        <X size={20} className='text-red-500' />
+        <X size={20} className="text-red-500 " />
       </button>
       {children}
     </div>

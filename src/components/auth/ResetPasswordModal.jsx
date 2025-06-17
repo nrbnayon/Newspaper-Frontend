@@ -1,5 +1,5 @@
-// src\components\auth\ResetPasswordModal.jsx
-import { useState } from "react";
+// src/components/auth/ResetPasswordModal.jsx
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Modal, ModalContent } from "@/components/ui/modal";
-import { changePassword } from "@/lib/auth-service";
+import { resetPassword, sendForgotPasswordOTP } from "@/lib/auth-service";
 import { cn } from "@/lib/utils";
 
 export function ResetPasswordModal({
@@ -19,6 +19,10 @@ export function ResetPasswordModal({
 }) {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [countdown, setCountdown] = useState(120);
+  const [canResend, setCanResend] = useState(false);
+  const inputRefs = useRef([]);
 
   const {
     register,
@@ -35,66 +39,231 @@ export function ResetPasswordModal({
 
   const newPassword = watch("newPassword");
 
-  const changePasswordMutation = useMutation({
-    mutationFn: (data) => changePassword({ email, password: data.newPassword }),
-    onSuccess: () => {
-      toast.success("Password changed successfully!");
+  // Countdown timer effect
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setCanResend(true);
+    }
+  }, [countdown]);
+
+  // Reset state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setOtp(["", "", "", "", "", ""]);
+      setCountdown(120);
+      setCanResend(false);
       reset();
+      // Focus first OTP input when modal opens
+      setTimeout(() => {
+        if (inputRefs.current[0]) {
+          inputRefs.current[0].focus();
+        }
+      }, 100);
+    }
+  }, [isOpen, reset]);
+
+  const resetPasswordMutation = useMutation({
+    mutationFn: (data) =>
+      resetPassword({
+        email,
+        otp: data.otp,
+        new_password: data.confirmPassword,
+      }),
+    onSuccess: () => {
+      toast.success("Password reset successfully!");
+      reset();
+      setOtp(["", "", "", "", "", ""]);
       onPasswordChanged();
-      onClose();
     },
     onError: (error) => {
+      console.error("Reset Password Error:", error);
       toast.error(
-        error.message || "Failed to change password. Please try again."
+        error.message || "Failed to reset password. Please try again."
+      );
+      // Reset OTP inputs on error
+      setOtp(["", "", "", "", "", ""]);
+      if (inputRefs.current[0]) {
+        inputRefs.current[0].focus();
+      }
+    },
+  });
+
+  const resendMutation = useMutation({
+    mutationFn: () => sendForgotPasswordOTP({ email }),
+    onSuccess: () => {
+      toast.success("Reset code sent successfully!");
+      setCountdown(120);
+      setCanResend(false);
+      setOtp(["", "", "", "", "", ""]);
+      if (inputRefs.current[0]) {
+        inputRefs.current[0].focus();
+      }
+    },
+    onError: (error) => {
+      console.error("OTP Resend Error:", {
+        action: "password-reset-otp-resend-failed",
+        email: email,
+        error: error.message,
+        timestamp: new Date().toISOString(),
+      });
+      toast.error(
+        error.message || "Failed to resend reset code. Please try again."
       );
     },
   });
 
+  const handleInputChange = (index, value) => {
+    if (value.length > 1) return;
+    if (!/^\d*$/.test(value)) return; // Only allow digits
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text/plain");
+
+    // Check if pasted data is exactly 6 digits
+    if (!/^\d{6}$/.test(pastedData)) {
+      toast.error("Please paste a valid 6-digit code");
+      return;
+    }
+
+    // Split the pasted data into individual digits
+    const digits = pastedData.split("");
+    setOtp(digits);
+
+    // Focus the last input
+    setTimeout(() => {
+      if (inputRefs.current[5]) {
+        inputRefs.current[5].focus();
+      }
+    }, 0);
+
+    console.log("OTP Pasted:", {
+      action: "otp-pasted",
+      email: email,
+      otp: pastedData,
+      timestamp: new Date().toISOString(),
+    });
+  };
+
   const onSubmit = (data) => {
-    changePasswordMutation.mutate(data);
+    const otpCode = otp.join("");
+    if (otpCode.length !== 6) {
+      toast.error("Please enter complete verification code");
+      return;
+    }
+
+    console.log("Password Reset Submit:", {
+      action: "password-reset-submit",
+      email: email,
+      otp: otpCode,
+      timestamp: new Date().toISOString(),
+    });
+
+    resetPasswordMutation.mutate({ ...data, otp: otpCode });
+  };
+
+  const handleResendOTP = () => {
+    console.log("Resend Reset Code Initiated:", {
+      action: "password-reset-otp-resend-initiated",
+      email: email,
+      timestamp: new Date().toISOString(),
+    });
+    resendMutation.mutate();
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent onClose={onClose} className={cn("max-w-md")}>
-        <div className='p-8'>
+        <div className="p-8">
           {/* Header */}
-          <div className='text-center mb-6'>
+          <div className="text-center mb-6">
             <button
               onClick={onClose}
-              className='absolute left-4 top-4 p-2 hover:text-black hover:bg-gray-100 rounded-full'
+              className="absolute left-4 top-4 p-2 hover:bg-gray-100 hover:text-black rounded-full"
             >
               <ArrowLeft size={20} />
             </button>
-            <h2 className='text-2xl font-bold mb-2'>Change Password</h2>
-            <p className='text-gray-200 text-sm'>
-              Please enter your new password below to complete the password
-              reset process.
+            <h2 className="text-2xl font-bold mb-2">Reset Your Password</h2>
+            <p className="text-gray-200 text-sm">
+              We've sent a reset code to your email address. Please enter the
+              code below along with your new password.
             </p>
-            <p className='text-sm text-gray-100 mt-2'>
-              Account: <span className='font-medium'>{email}</span>
+            <p className="text-sm text-gray-100 mt-2">
+              Code sent to: <span className="font-medium">{email}</span>
             </p>
           </div>
 
           {/* Form Container */}
-          <div className='bg-[#FCFCFF] rounded-lg p-6'>
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-              <div className='space-y-4'>
-                <div className='space-y-1'>
+          <div className="bg-[#FCFCFF] rounded-lg p-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* OTP Input Section */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-gray-700">
+                  Verification Code
+                </Label>
+                <div className="flex justify-center gap-3 mb-4">
+                  {otp.map((digit, index) => (
+                    <input
+                      key={index}
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength="1"
+                      value={digit}
+                      onChange={(e) => handleInputChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                      onPaste={handlePaste}
+                      className="w-12 h-12 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg focus:border-[#00254a] focus:outline-none bg-white"
+                      disabled={resetPasswordMutation.isPending}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Password Fields */}
+              <div className="space-y-4">
+                {/* New Password */}
+                <div className="space-y-2">
                   <Label
-                    htmlFor='newPassword'
-                    className='text-[#262626] text-sm'
+                    htmlFor="newPassword"
+                    className="text-sm font-medium text-gray-700"
                   >
                     New Password
                   </Label>
-                  <div className='relative'>
+                  <div className="relative">
                     <Input
-                      id='newPassword'
+                      id="newPassword"
                       type={showNewPassword ? "text" : "password"}
-                      placeholder='Enter new password'
+                      placeholder="Enter your new password"
                       className={cn(
-                        "pr-10 border-[#c7c7c7] bg-white",
-                        errors.newPassword && "border-red-500"
+                        "pr-12 h-12 border-2 border-gray-300 rounded-lg focus:border-[#00254a] focus:outline-none bg-white",
+                        errors.newPassword &&
+                          "border-red-400 focus:border-red-500"
                       )}
                       {...register("newPassword", {
                         required: "New password is required",
@@ -102,45 +271,53 @@ export function ResetPasswordModal({
                           value: 8,
                           message: "Password must be at least 8 characters",
                         },
+                        pattern: {
+                          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+                          message:
+                            "Password must contain uppercase, lowercase, and number",
+                        },
                       })}
                     />
                     <button
-                      type='button'
+                      type="button"
                       onClick={() => setShowNewPassword(!showNewPassword)}
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700 transition-colors"
                       aria-label={
                         showNewPassword ? "Hide password" : "Show password"
                       }
                     >
                       {showNewPassword ? (
-                        <EyeOff size={16} />
+                        <EyeOff size={18} />
                       ) : (
-                        <Eye size={16} />
+                        <Eye size={18} />
                       )}
                     </button>
                   </div>
                   {errors.newPassword && (
-                    <p className='text-red-500 text-xs'>
+                    <p className="text-red-500 text-xs flex items-center gap-1">
+                      <span className="w-1 h-1 bg-red-500 rounded-full"></span>
                       {errors.newPassword.message}
                     </p>
                   )}
                 </div>
 
-                <div className='space-y-1'>
+                {/* Confirm Password */}
+                <div className="space-y-2">
                   <Label
-                    htmlFor='confirmPassword'
-                    className='text-[#262626] text-sm'
+                    htmlFor="confirmPassword"
+                    className="text-sm font-medium text-gray-700"
                   >
-                    Confirm Password
+                    Confirm New Password
                   </Label>
-                  <div className='relative'>
+                  <div className="relative">
                     <Input
-                      id='confirmPassword'
+                      id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
-                      placeholder='Confirm new password'
+                      placeholder="Confirm your new password"
                       className={cn(
-                        "pr-10 border-[#c7c7c7] bg-white",
-                        errors.confirmPassword && "border-red-500"
+                        "pr-12 h-12 border-2 border-gray-300 rounded-lg focus:border-[#00254a] focus:outline-none bg-white",
+                        errors.confirmPassword &&
+                          "border-red-400 focus:border-red-500"
                       )}
                       {...register("confirmPassword", {
                         required: "Please confirm your password",
@@ -149,24 +326,25 @@ export function ResetPasswordModal({
                       })}
                     />
                     <button
-                      type='button'
+                      type="button"
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-[#727272]'
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700 transition-colors"
                       aria-label={
                         showConfirmPassword ? "Hide password" : "Show password"
                       }
                     >
                       {showConfirmPassword ? (
-                        <EyeOff size={16} />
+                        <EyeOff size={18} />
                       ) : (
-                        <Eye size={16} />
+                        <Eye size={18} />
                       )}
                     </button>
                   </div>
                   {errors.confirmPassword && (
-                    <p className='text-red-500 text-xs'>
+                    <p className="text-red-500 text-xs flex items-center gap-1">
+                      <span className="w-1 h-1 bg-red-500 rounded-full"></span>
                       {errors.confirmPassword.message}
                     </p>
                   )}
@@ -175,15 +353,44 @@ export function ResetPasswordModal({
 
               {/* Submit Button */}
               <Button
-                type='submit'
-                disabled={changePasswordMutation.isPending}
-                className='w-full bg-[#4338ca] hover:bg-[#3730a3] text-white py-2.5 rounded-lg font-medium transition-colors'
+                type="submit"
+                className="w-full bg-[#00254a] text-white py-3 rounded font-medium mb-4 hover:bg-[#001a38]"
+                disabled={
+                  resetPasswordMutation.isPending ||
+                  otp.join("").length !== 6 ||
+                  Object.keys(errors).length > 0
+                }
               >
-                {changePasswordMutation.isPending
-                  ? "Changing Password..."
-                  : "Change Password"}
+                {resetPasswordMutation.isPending ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Resetting Password...
+                  </div>
+                ) : (
+                  "Reset Password"
+                )}
               </Button>
             </form>
+
+            {/* Resend Section */}
+            <div className="text-center">
+              <p className="text-sm text-gray-600 mb-2">
+                Didn't receive the code?
+              </p>
+              {canResend ? (
+                <button
+                  onClick={handleResendOTP}
+                  disabled={resendMutation.isPending}
+                  className="text-[#00254a] font-medium underline hover:no-underline disabled:opacity-50"
+                >
+                  {resendMutation.isPending ? "Resending..." : "Resend Code"}
+                </button>
+              ) : (
+                <p className="text-sm text-gray-500">
+                  Resend available in {formatTime(countdown)}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </ModalContent>

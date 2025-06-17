@@ -9,7 +9,7 @@ import {
   PanelRightOpen,
   X,
 } from "lucide-react";
-import { logoutUser } from "../../lib/auth-service";
+// import { logoutUser } from "../../lib/auth-service";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,21 +40,26 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     // Implement your logout logic here
-    logoutUser();
+    // logoutUser();
+    console.log("Logout");
   };
 
   // Helper function to check if advertise routes are active (excluding advertise list routes)
   const isAdvertiseActive = () => {
-    return (location.pathname.includes('/dashboard/advertise') || 
-           location.pathname.includes('/dashboard/newadvertise')) &&
-           !location.pathname.includes('/dashboard/advertiselist') &&
-           !location.pathname.includes('/dashboard/advertiseinfo');
+    return (
+      (location.pathname.includes("/dashboard/advertise") ||
+        location.pathname.includes("/dashboard/newadvertise")) &&
+      !location.pathname.includes("/dashboard/advertiselist") &&
+      !location.pathname.includes("/dashboard/advertiseinfo")
+    );
   };
 
   // Helper function to check if advertise list routes are active
   const isAdvertiseListActive = () => {
-    return location.pathname.includes('/dashboard/advertiselist') || 
-           location.pathname.includes('/dashboard/advertiseinfo');
+    return (
+      location.pathname.includes("/dashboard/advertiselist") ||
+      location.pathname.includes("/dashboard/advertiseinfo")
+    );
   };
 
   return (

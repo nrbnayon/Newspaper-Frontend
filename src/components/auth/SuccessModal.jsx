@@ -3,8 +3,17 @@ import { ArrowRightIcon, CheckCircleIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { Modal, ModalContent } from "@/components/ui/modal";
+import { useState } from "react";
+import AuthModal from "./AuthModal";
 
 export const SuccessModal = ({ onClose }) => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signin");
+
+  const openSignIn = () => {
+    setAuthMode("signin");
+    setAuthModalOpen(true);
+  };
   return (
     <Modal isOpen={true} onClose={onClose}>
       <ModalContent onClose={onClose} className="min-w-3xl  ">
@@ -44,6 +53,11 @@ export const SuccessModal = ({ onClose }) => {
           </Card>
         </div>
       </ModalContent>
+      <AuthModal
+              isOpen={authModalOpen}
+              onClose={() => setAuthModalOpen(false)}
+              initialMode={authMode}
+            />
     </Modal>
   );
 };
