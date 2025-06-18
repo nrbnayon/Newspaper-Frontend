@@ -12,7 +12,8 @@ import {
   transformReactionsToComments, 
   countLoves, 
   countComments, 
-  hasUserLoved 
+  hasUserLoved, 
+  
 } from "@/lib/news-service";
 
 const CommonNewsCard = ({
@@ -57,6 +58,8 @@ const CommonNewsCard = ({
     imageAttribution,
     readTime,
   } = article || {};
+
+
 
   const truncatedContent = getTruncatedText(description);
   const shouldShowReadMore = description && description.length > 200;
@@ -249,6 +252,7 @@ const CommonNewsCard = ({
                   comments={comments}
                   onPostComment={handleCommentSubmit}
                   disabled={!isLoggedIn}
+                  allComments={reactions}
                 />
               )}
             </div>

@@ -4,13 +4,14 @@ import { Send } from "lucide-react";
 const CommentsSection = ({ 
   comments = [], 
   onPostComment,
-  disabled = false 
+  disabled = false ,
+  allComments=[]
 }) => {
   const [showAllComments, setShowAllComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-
+console.log("comments    data", comments)
   const handleSubmitComment = async () => {
     if (!newComment.trim() || disabled || isSubmitting) return;
     
