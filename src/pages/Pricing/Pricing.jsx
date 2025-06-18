@@ -1,42 +1,62 @@
+// src\pages\Pricing\Pricing.jsx
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
-import apiClient from "@/lib/auth-service";
+import { createCheckoutSession } from "@/lib/payment-service";
 import { useAuth } from "@/contexts/AuthContext";
+import AuthModal from "@/components/auth/AuthModal";
 
 const Pricing = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signin");
   const { isLoggedIn, user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handlePayment = async () => {
+    // Check if user is logged in first
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await apiClient.post(
-        "/payment/create-checkout-session/",
-        {
-          plan_name: "Monthly",
-          price_id: "price_1RVkSlALRymUd61pFbGdKDDL",
-          duration_type: "monthly",
-        }
-      );
+      const paymentData = {
+        plan_name: "Monthly",
+        price_id: "price_1RVkSlALRymUd61pFbGdKDDL",
+        duration_type: "monthly",
+        // Add success and cancel URLs
+        success_url: `${window.location.origin}/payment/success`,
+        cancel_url: `${window.location.origin}/payment/cancel`,
+      };
+
+      const response = await createCheckoutSession(paymentData);
 
       // Redirect to Stripe checkout
-      if (response.data?.checkout_url) {
-        window.location.href = response.data.checkout_url;
+      if (response?.checkout_url) {
+        window.location.href = response.checkout_url;
       } else {
         throw new Error("No checkout URL received");
       }
     } catch (err) {
       console.error("Payment error:", err);
-      setError(
-        err.response?.data?.error || "Failed to create checkout session"
-      );
+      setError(err.message || "Failed to create checkout session");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Handle successful login - automatically trigger payment
+  const handleAuthSuccess = () => {
+    setAuthModalOpen(false);
+    // Small delay to ensure auth state is updated
+    setTimeout(() => {
+      handlePayment();
+    }, 100);
   };
 
   return (
@@ -101,18 +121,30 @@ const Pricing = () => {
                 {error}
               </div>
             )}
+
+            <Button
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50"
+              onClick={handlePayment}
+              disabled={isLoading}
+            >
+              {isLoading ? "Processing..." : "Buy Now"}
+            </Button>
+
             {!isLoggedIn && (
-              <Button
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50"
-                onClick={handlePayment}
-                disabled={isLoading}
-              >
-                {isLoading ? "Processing..." : "Buy Now"}
-              </Button>
+              <p className="text-xs text-gray-500 mt-2">
+                You'll need to sign in to complete your purchase
+              </p>
             )}
           </div>
         </div>
       </div>
+
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authMode}
+        onAuthSuccess={handleAuthSuccess} // Add this prop if your AuthModal supports it
+      />
     </div>
   );
 };
