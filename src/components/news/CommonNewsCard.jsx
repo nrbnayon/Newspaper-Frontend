@@ -6,21 +6,16 @@ import { cn, getTruncatedText } from "@/lib/utils";
 import ImageAttribution from "../common/ImageAttribution";
 import SentimentBadge from "../common/SentimentBadge";
 import TimeIndicator from "../common/TimeIndicator";
-
 import CommentsSection from "../common/CommentSection";
 import { useAuth } from "@/contexts/AuthContext";
 
-const CommonNewsCard = ({
-  article,
-  className,
-  layout = "horizontal", 
-}) => {
+const CommonNewsCard = ({ article, className, layout = "horizontal" }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
   const { isLoggedIn, user } = useAuth();
 
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signup");
+  const [authMode, setAuthMode] = useState("signin");
 
   // Comment section states
   const [showComments, setShowComments] = useState(false);
@@ -73,22 +68,41 @@ const CommonNewsCard = ({
     },
   ]);
 
-  const truncatedContent = getTruncatedText(article.content);
-  const shouldShowReadMore =
-    article.content && article.content.split(" ").length > 2;
+  // Destructure article with consistent naming
+  const {
+    id,
+    title,
+    description,
+    category,
+    publishedTime,
+    publishedDateTime,
+    image,
+    sentiment,
+    isFeatured,
+    imageAttribution,
+    readTime,
+  } = article || {};
+
+  const truncatedContent = getTruncatedText(description);
+  const shouldShowReadMore = description && description.length > 200;
 
   const handleReadMore = () => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
     setIsExpanded(!isExpanded);
-    setAuthMode("signin");
-    setAuthModalOpen(true);
   };
 
   const handleCommentClick = () => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
     setShowComments(!showComments);
   };
-
-  // Use article prop data
-  const articleData = article || {};
 
   return (
     <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
@@ -109,25 +123,25 @@ const CommonNewsCard = ({
             isExpanded && "w-full"
           )}
         >
-          {articleData.isFeatured && (
+          {isFeatured && (
             <SentimentBadge
-              sentiment={articleData.sentiment}
-              className='mb-3 sm:mb-4 w-full'
+              sentiment={sentiment}
+              className="mb-3 sm:mb-4 w-full"
             />
           )}
 
-          <h1 className='text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight'>
-            {articleData.title}
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
+            {title}
           </h1>
 
-          <div className='mb-3 sm:mb-4'>
-            <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
-              {isExpanded ? articleData.content : truncatedContent}
+          <div className="mb-3 sm:mb-4">
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              {isExpanded ? description : truncatedContent}
               {!isExpanded && shouldShowReadMore && "... "}
               {shouldShowReadMore && (
                 <button
                   onClick={handleReadMore}
-                  className='text-blue-600 hover:text-blue-800  cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
+                  className="text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline"
                 >
                   {isExpanded ? "Read less" : "Read more >"}
                 </button>
@@ -137,9 +151,9 @@ const CommonNewsCard = ({
 
           {/* Comment section in content area when expanded */}
           {isHorizontal && (
-            <div className='flex flex-col justify-between w-full'>
-              <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
-                {articleData.isFeatured && (
+            <div className="flex flex-col justify-between w-full">
+              <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
+                {isFeatured && (
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
@@ -147,7 +161,7 @@ const CommonNewsCard = ({
                     />
                   </div>
                 )}
-                {!articleData.isFeatured && <div className=''></div>}
+                {!isFeatured && <div className=""></div>}
               </div>
 
               {/* Comment Section */}
@@ -169,41 +183,41 @@ const CommonNewsCard = ({
             isExpanded && "w-full"
           )}
         >
-          <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
+          <div className="relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center">
             <img
-              src={articleData.image}
-              alt={articleData.title}
+              src={image}
+              alt={title}
               className={cn(
                 "w-full object-cover transition-transform duration-300 hover:scale-105",
                 !isExpanded && "h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]",
                 isExpanded && "h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"
               )}
-              loading='lazy'
+              loading="lazy"
             />
 
             {/* TimeIndicator - Bottom Left */}
-            <div className='absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+            <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
               <TimeIndicator
-                type='readTime'
-                value={articleData.readTime}
-                className='text-xs sm:text-sm text-white'
+                type="readTime"
+                value={readTime}
+                className="text-xs sm:text-sm text-white"
               />
             </div>
 
             {/* ImageAttribution - Bottom Right */}
-            <div className='absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+            <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
               <ImageAttribution
-                attribution={articleData?.imageAttribution}
-                className='text-xs sm:text-sm text-white'
+                attribution={imageAttribution}
+                className="text-xs sm:text-sm text-white"
               />
             </div>
           </div>
 
           {/* Comment section in image area when not expanded */}
           {!isHorizontal && (
-            <div className='flex flex-col justify-between w-full'>
-              <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
-                {articleData.isFeatured && (
+            <div className="flex flex-col justify-between w-full">
+              <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
+                {isFeatured && (
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
@@ -211,7 +225,7 @@ const CommonNewsCard = ({
                     />
                   </div>
                 )}
-                {!articleData.isFeatured && <div className=''></div>}
+                {!isFeatured && <div className=""></div>}
               </div>
 
               {/* Comment Section */}

@@ -1,31 +1,35 @@
 // src\components\news\StandardArticleCard.jsx
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import TimeIndicator from "../common/TimeIndicator";
 import InteractionButtons from "../common/InteractionButtons";
 import AuthModal from "../auth/AuthModal";
 import CommentsSection from "../common/CommentSection";
 import SentimentBadge from "../common/SentimentBadge";
+import { useAuth } from "@/contexts/AuthContext";
 
-const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
-  const {
+const StandardArticleCard = ({
+  article: {
+    id,
     title,
-    content,
+    description,
     category,
-    readTime,
-    date,
+    publishedTime,
+    publishedDateTime,
     image = "/placeholder.svg?height=200&width=300",
-    badge,
-  } = article;
-
+    sentiment,
+    isFeatured,
+    imageAttribution,
+    readTime,
+  },
+  className,
+  imagePosition = "top",
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { isLoggedIn } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signin");
 
-  const isHorizontal = imagePosition === "left" || imagePosition === "right";
-
-  // Comment section states
   const [showComments, setShowComments] = useState(false);
-
-  // Sample comments data - you can replace this with your actual data source
   const [comments, setComments] = useState([
     {
       id: 1,
@@ -73,27 +77,35 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
     },
   ]);
 
-  const handleCommentClick = () => {
-    setShowComments(!showComments);
-  };
-  // Function to get truncated content (50% of words)
-  const getTruncatedContent = (text) => {
+  const getTruncatedText = (text) => {
     if (!text) return "";
-    const words = text.split(" ");
-    const halfLength = Math.ceil(words.length / 2);
-    return words.slice(0, halfLength).join(" ");
+    const words = text.split(" ").filter((word) => word.length > 0);
+    if (words.length <= 10) return text;
+    return words.slice(0, 10).join(" ");
   };
 
-  const truncatedContent = getTruncatedContent(content);
-  const shouldShowReadMore = content && content.split(" ").length > 1;
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signup");
+  const truncatedContent = getTruncatedText(description);
+  const shouldShowReadMore = description && description.length > 200;
 
   const handleReadMore = () => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
     setIsExpanded(!isExpanded);
-    setAuthMode("signin");
-    setAuthModalOpen(true);
   };
+
+  const handleCommentClick = () => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+    setShowComments(!showComments);
+  };
+
+  const isHorizontal = imagePosition === "left" || imagePosition === "right";
 
   return (
     <div
@@ -113,15 +125,14 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
         <img
           src={image}
           alt={title}
-          className='w-full h-72 xl:h-48 object-cover'
+          className="w-full h-72 xl:h-48 object-cover"
         />
-        {badge && (
-          <div
-            className={cn(
-              "absolute top-1 left-1 text-white px-3 py-1 text-xs font-medium rounded-md"
-            )}
-          >
-            <SentimentBadge sentiment={badge} className='mb-3 sm:mb-4 w-full' />
+        {sentiment && (
+          <div className="absolute top-1 left-1">
+            <SentimentBadge
+              sentiment={sentiment}
+              className="text-xs py-0.5 px-2"
+            />
           </div>
         )}
       </div>
@@ -132,41 +143,38 @@ const StandardArticleCard = ({ article, className, imagePosition = "top" }) => {
           imagePosition === "right" ? "order-1" : "order-2"
         )}
       >
-        <div className='w-full bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2 self-start'>
+        <div className="w-full bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2 self-start">
           {category}
         </div>
-        <h3 className='font-bold text-gray-900 mb-2 line-clamp-2 leading-tight'>
+        <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 leading-tight">
           {title}
         </h3>
 
-        {content && (
-          <div className='text-gray-600 text-sm mb-3'>
-            <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
-              {isExpanded ? article.content : truncatedContent}
+        {description && (
+          <div className="text-gray-600 text-sm mb-3">
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              {isExpanded ? description : truncatedContent}
               {!isExpanded && shouldShowReadMore && "... "}
               {shouldShowReadMore && (
                 <button
                   onClick={handleReadMore}
-                  className='text-blue-600 hover:text-blue-800  cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline'
+                  className="text-blue-400 hover:text-blue-500 cursor-pointer text-sm sm:text-base font-medium transition-colors duration-200 focus:outline-none focus:underline"
                 >
-                  {isExpanded ? "Read less" : "Read more >"}
+                  {isExpanded ? "Read less" : "Read more"}
                 </button>
               )}
             </p>
           </div>
         )}
-        <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
+        <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
+          <div>{publishedTime && <span>{publishedTime}</span>}</div>
           <div>
-            <button>Read more</button>
-          </div>
-          <div className=''>
             <InteractionButtons
               onCommentClick={handleCommentClick}
               showCommentsCount={comments.length}
             />
           </div>
         </div>
-        {/* Comment Section */}
         {showComments && (
           <CommentsSection comments={comments} setComments={setComments} />
         )}
