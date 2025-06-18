@@ -1,3 +1,9 @@
+import { getAllNews } from "@/lib/news-service";
+
+const allNews = await getAllNews();
+
+console.log("Get All News in data::: ", allNews);
+
 export const sampleArticles = [
   {
     id: 1,

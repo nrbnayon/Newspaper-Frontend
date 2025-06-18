@@ -19,20 +19,7 @@ export const getAllNews = async () => {
   }
 };
 
-/**
- * Get single news article details
- * @param {number} newsId - ID of the news article
- * @returns {Promise} News article details
- */
-export const getNewsDetail = async (newsId) => {
-  try {
-    const response = await apiClient.get(`/news/get/news-detail/${newsId}/`);
-    return response.data;
-  } catch (error) {
-    console.error(`Failed to fetch news detail for ID ${newsId}:`, error);
-    throw error;
-  }
-};
+
 
 /**
  * Get all reactions (comments and likes) for a news article
@@ -193,3 +180,21 @@ export const getUserComment = (reactions, currentUserId) => {
   );
   return userReaction ? userReaction.comment : null;
 };
+
+
+// not need now
+
+// /**
+//  * Get single news article details
+//  * @param {number} newsId - ID of the news article
+//  * @returns {Promise} News article details
+//  */
+// export const getNewsDetail = async (newsId) => {
+//   try {
+//     const response = await apiClient.get(`/news/get/news-detail/${newsId}/`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(`Failed to fetch news detail for ID ${newsId}:`, error);
+//     throw error;
+//   }
+// };
