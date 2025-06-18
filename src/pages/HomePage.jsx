@@ -1,5 +1,3 @@
-
-
 // src/pages/HomePage.jsx
 import { Helmet } from "react-helmet-async";
 import { useRef, useEffect, useState } from "react";
@@ -12,8 +10,13 @@ import TabbedNewsSection from "@/components/news/TabbedNewsSection";
 import CommonNewsCard from "@/components/news/CommonNewsCard";
 import ListedNewsSection from "@/components/news/ListedNewsSection";
 import { FooterSection } from "@/components/footer/FooterSection";
-import { getAllNews, formatNewsItem } from "@/lib/news-service";
-import { getNewsReactions, postNewsReaction } from "@/lib/news-service";
+import { 
+  getAllNews, 
+  formatNewsItem, 
+  getNewsReactions, 
+  postNewsLove, 
+  postNewsComment 
+} from "@/lib/news-service";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function HomePage() {
@@ -53,10 +56,10 @@ export default function HomePage() {
     }
   };
 
-  // Handle posting new reactions
-  const handlePostReaction = async (newsId, reactionData) => {
+  // Handle posting love reaction
+  const handlePostLove = async (newsId, loveStatus) => {
     try {
-      const newReaction = await postNewsReaction(newsId, reactionData);
+      const newReaction = await postNewsLove(newsId, loveStatus);
 
       // Update reactions in state
       setNewsReactions((prev) => ({
@@ -64,7 +67,60 @@ export default function HomePage() {
         [newsId]: prev[newsId] ? [...prev[newsId], newReaction] : [newReaction],
       }));
 
+      // Refresh reactions to get the latest state
+      await fetchNewsReactions(newsId);
+
       return newReaction;
+    } catch (error) {
+      console.error(`Failed to post love reaction for news ${newsId}:`, error);
+      throw error;
+    }
+  };
+
+  // Handle posting comment
+  const handlePostComment = async (newsId, commentText) => {
+    try {
+      if (!commentText || commentText.trim() === '') {
+        throw new Error('Comment cannot be empty');
+      }
+
+      const newReaction = await postNewsComment(newsId, commentText.trim());
+
+      // Update reactions in state
+      setNewsReactions((prev) => ({
+        ...prev,
+        [newsId]: prev[newsId] ? [...prev[newsId], newReaction] : [newReaction],
+      }));
+
+      // Refresh reactions to get the latest state
+      await fetchNewsReactions(newsId);
+
+      return newReaction;
+    } catch (error) {
+      console.error(`Failed to post comment for news ${newsId}:`, error);
+      throw error;
+    }
+  };
+
+  // Combined reaction handler for backward compatibility with existing components
+  const handlePostReaction = async (newsId, reactionData) => {
+    try {
+      const promises = [];
+      
+      // Handle love reaction
+      if (reactionData.hasOwnProperty('love')) {
+        promises.push(handlePostLove(newsId, reactionData.love));
+      }
+      
+      // Handle comment
+      if (reactionData.comment && reactionData.comment.trim() !== '') {
+        promises.push(handlePostComment(newsId, reactionData.comment));
+      }
+      
+      // Execute all reactions
+      const results = await Promise.all(promises);
+      
+      return results.length > 0 ? results[results.length - 1] : null;
     } catch (error) {
       console.error(`Failed to post reaction for news ${newsId}:`, error);
       throw error;
@@ -325,6 +381,12 @@ export default function HomePage() {
                           reactionData
                         )
                       }
+                      onPostLove={(loveStatus) =>
+                        handlePostLove(newsData.featuredArticle.id, loveStatus)
+                      }
+                      onPostComment={(commentText) =>
+                        handlePostComment(newsData.featuredArticle.id, commentText)
+                      }
                     />
                   </div>
                 )}
@@ -350,6 +412,12 @@ export default function HomePage() {
                           reactionData
                         )
                       }
+                      onPostLove={(loveStatus) =>
+                        handlePostLove(newsData.longReadArticle.id, loveStatus)
+                      }
+                      onPostComment={(commentText) =>
+                        handlePostComment(newsData.longReadArticle.id, commentText)
+                      }
                     />
                   </NewsSection>
                 )}
@@ -370,6 +438,8 @@ export default function HomePage() {
                         dynamicTabsConfig={tabsConfig}
                         newsReactions={newsReactions}
                         onPostReaction={handlePostReaction}
+                        onPostLove={handlePostLove}
+                        onPostComment={handlePostComment}
                       />
                     </div>
                   )}
@@ -389,6 +459,8 @@ export default function HomePage() {
                         dynamicTabsConfig={tabsConfig}
                         newsReactions={newsReactions}
                         onPostReaction={handlePostReaction}
+                        onPostLove={handlePostLove}
+                        onPostComment={handlePostComment}
                       />
                     </div>
                   )}
@@ -422,6 +494,12 @@ export default function HomePage() {
                             onPostReaction={(reactionData) =>
                               handlePostReaction(article.id, reactionData)
                             }
+                            onPostLove={(loveStatus) =>
+                              handlePostLove(article.id, loveStatus)
+                            }
+                            onPostComment={(commentText) =>
+                              handlePostComment(article.id, commentText)
+                            }
                           />
                         </div>
                       ))}
@@ -445,6 +523,12 @@ export default function HomePage() {
                             reactions={newsReactions[article.id] || []}
                             onPostReaction={(reactionData) =>
                               handlePostReaction(article.id, reactionData)
+                            }
+                            onPostLove={(loveStatus) =>
+                              handlePostLove(article.id, loveStatus)
+                            }
+                            onPostComment={(commentText) =>
+                              handlePostComment(article.id, commentText)
                             }
                           />
                         </div>
@@ -486,6 +570,12 @@ export default function HomePage() {
                               onPostReaction={(reactionData) =>
                                 handlePostReaction(article.id, reactionData)
                               }
+                              onPostLove={(loveStatus) =>
+                                handlePostLove(article.id, loveStatus)
+                              }
+                              onPostComment={(commentText) =>
+                                handlePostComment(article.id, commentText)
+                              }
                             />
                           </div>
                         ))}
@@ -511,6 +601,12 @@ export default function HomePage() {
                               reactions={newsReactions[article.id] || []}
                               onPostReaction={(reactionData) =>
                                 handlePostReaction(article.id, reactionData)
+                              }
+                              onPostLove={(loveStatus) =>
+                                handlePostLove(article.id, loveStatus)
+                              }
+                              onPostComment={(commentText) =>
+                                handlePostComment(article.id, commentText)
                               }
                             />
                           </div>
@@ -539,468 +635,3 @@ export default function HomePage() {
     </>
   );
 }
-
-
-// // src/pages/HomePage.jsx
-// import { Helmet } from "react-helmet-async";
-// import { useRef, useEffect, useState } from "react";
-// import Navbar from "@/components/layout/Navbar";
-// import StandardArticleCard from "@/components/news/StandardArticleCard";
-// import AudioNewsCard from "@/components/news/AudioNewsCard";
-// import LiveUpdateCard from "@/components/news/LiveUpdateCard";
-// import NewsSection from "@/components/news/NewsSection";
-// import TabbedNewsSection from "@/components/news/TabbedNewsSection";
-// import CommonNewsCard from "@/components/news/CommonNewsCard";
-// import ListedNewsSection from "@/components/news/ListedNewsSection";
-// import { FooterSection } from "@/components/footer/FooterSection";
-// import { getAllNews, formatNewsItem } from "@/lib/news-service";
-
-// export default function HomePage() {
-//   const footerRef = useRef(null);
-//   const [newsData, setNewsData] = useState({
-//     allNews: [],
-//     featuredArticle: null,
-//     audioNews: null,
-//     liveUpdates: [],
-//     longReadArticle: null,
-//     sidebarArticles: [],
-//     tabsData: {},
-//     loading: true,
-//     error: null,
-//   });
-
-//   // Fetch and format news data
-//   useEffect(() => {
-//     const fetchNewsData = async () => {
-//       try {
-//         setNewsData((prev) => ({ ...prev, loading: true }));
-
-//         const allNews = await getAllNews();
-//         console.log("Get All News in data::: ", allNews);
-
-//         if (!allNews || allNews.length === 0) {
-//           throw new Error("No news data received");
-//         }
-
-//         // Format all news items
-//         const formattedNews = allNews.map(formatNewsItem);
-
-//         // Organize news data for different sections
-//         const organizedData = organizeNewsData(formattedNews);
-
-//         setNewsData({
-//           allNews: formattedNews,
-//           featuredArticle: organizedData.featuredArticle,
-//           audioNews: organizedData.audioNews,
-//           liveUpdates: organizedData.liveUpdates,
-//           longReadArticle: organizedData.longReadArticle,
-//           sidebarArticles: organizedData.sidebarArticles,
-//           tabsData: organizedData.tabsData,
-//           loading: false,
-//           error: null,
-//         });
-//       } catch (error) {
-//         console.error("Failed to fetch news data:", error);
-//         setNewsData((prev) => ({
-//           ...prev,
-//           loading: false,
-//           error: error.message,
-//         }));
-//       }
-//     };
-
-//     fetchNewsData();
-//   }, []);
-
-//   // Function to organize news data for different sections
-//   const organizeNewsData = (allNews) => {
-//     // Sort news by published time (most recent first)
-//     const sortedNews = [...allNews].sort(
-//       (a, b) =>
-//         new Date(b.publishedDateTime || 0) - new Date(a.publishedDateTime || 0)
-//     );
-
-//     // Get featured article (first article with isFeatured true or first article)
-//     const featuredArticle =
-//       sortedNews.find((article) => article.isFeatured) || sortedNews[0];
-
-//     // Get audio news (could be any article, or specific category)
-//     const audioNews = {
-//       title: featuredArticle?.title || "Latest News Update",
-//       description:
-//         featuredArticle?.content || "Stay updated with the latest news",
-//       category: "THE HEADLINES",
-//       sentiment: featuredArticle?.sentiment || "Neutral",
-//       image:
-//         featuredArticle?.image ||
-//         "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-//     };
-
-//     // Get live updates (latest 3-4 articles)
-//     const liveUpdates = sortedNews.slice(0, 4).map((article) => ({
-//       title: article.title,
-//       description: article.content,
-//       timeAgo: article.publishedTime,
-//       category: article.category,
-//       image: article.image,
-//     }));
-
-//     // Get long read article (article with highest read time or random selection)
-//     const longReadArticle =
-//       sortedNews.find((article) => article.readTime >= 10) ||
-//       sortedNews[Math.floor(Math.random() * Math.min(5, sortedNews.length))];
-
-//     // Get sidebar articles (next set of articles)
-//     const sidebarArticles = sortedNews.slice(1, 7);
-
-//     // Organize articles by category for tabs
-//     const tabsData = organizeNewsByCategory(sortedNews);
-
-//     return {
-//       featuredArticle,
-//       audioNews,
-//       liveUpdates,
-//       longReadArticle,
-//       sidebarArticles,
-//       tabsData,
-//     };
-//   };
-
-//   // Function to organize news by category for tabbed sections
-//   const organizeNewsByCategory = (allNews) => {
-//     const categories = {};
-
-//     // Group news by category
-//     allNews.forEach((article) => {
-//       const category = article.category || "General";
-//       if (!categories[category]) {
-//         categories[category] = [];
-//       }
-//       categories[category].push(article);
-//     });
-
-//     // Create tabs data structure similar to your dummy data
-//     const tabsData = {};
-//     const categoryKeys = Object.keys(categories);
-
-//     // If you have specific categories you want to map to specific tabs
-//     const tabMappings = {
-//       "War Coverage": "israelHamasWar",
-//       International: "updates",
-//       Analysis: "whatWeKnow",
-//       Geographic: "maps",
-//       Photography: "photos",
-//       Investigation: "tunnels",
-//       "Photo Story": "oneImage",
-//     };
-
-//     // Create default tabs with available data
-//     const defaultTabs = [
-//       "israelHamasWar",
-//       "updates",
-//       "whatWeKnow",
-//       "maps",
-//       "photos",
-//       "tunnels",
-//       "oneImage",
-//     ];
-
-//     defaultTabs.forEach((tabKey, index) => {
-//       // Distribute articles across tabs
-//       const startIndex = index * Math.ceil(allNews.length / defaultTabs.length);
-//       const endIndex = Math.min(
-//         startIndex + Math.ceil(allNews.length / defaultTabs.length),
-//         allNews.length
-//       );
-//       tabsData[tabKey] = allNews.slice(startIndex, endIndex);
-//     });
-
-//     return tabsData;
-//   };
-
-//   // Generate tabs configuration based on available categories
-//   const generateTabsConfig = (tabsData) => {
-//     const defaultConfig = [
-//       { key: "israelHamasWar", label: "Latest News", isDefault: true },
-//       { key: "updates", label: "Updates" },
-//       { key: "whatWeKnow", label: "Analysis" },
-//       { key: "maps", label: "Regional" },
-//       { key: "photos", label: "Photos" },
-//       { key: "tunnels", label: "Investigations" },
-//       { key: "oneImage", label: "Featured Stories" },
-//     ];
-
-//     return defaultConfig.filter(
-//       (config) => tabsData[config.key] && tabsData[config.key].length > 0
-//     );
-//   };
-
-//   // Function to scroll to footer
-//   const scrollToFooter = () => {
-//     if (footerRef.current) {
-//       footerRef.current.scrollIntoView({
-//         behavior: "smooth",
-//         block: "start",
-//       });
-//     }
-//   };
-
-//   // Listen for custom event from Navbar
-//   useEffect(() => {
-//     const handleScrollToAbout = () => {
-//       scrollToFooter();
-//     };
-
-//     window.addEventListener("scrollToAbout", handleScrollToAbout);
-
-//     return () => {
-//       window.removeEventListener("scrollToAbout", handleScrollToAbout);
-//     };
-//   }, []);
-
-//   // Loading component
-//   const LoadingComponent = () => (
-//     <div className="flex items-center justify-center min-h-screen">
-//       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-//     </div>
-//   );
-
-//   // Error component
-//   const ErrorComponent = ({ error }) => (
-//     <div className="flex items-center justify-center min-h-screen">
-//       <div className="text-center">
-//         <h2 className="text-2xl font-bold text-red-600 mb-4">
-//           Error Loading News
-//         </h2>
-//         <p className="text-gray-600">{error}</p>
-//         <button
-//           onClick={() => window.location.reload()}
-//           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-//         >
-//           Retry
-//         </button>
-//       </div>
-//     </div>
-//   );
-
-//   // Show loading or error states
-//   if (newsData.loading) return <LoadingComponent />;
-//   if (newsData.error) return <ErrorComponent error={newsData.error} />;
-
-//   const tabsConfig = generateTabsConfig(newsData.tabsData);
-
-//   return (
-//     <>
-//       <Helmet>
-//         <title>ALAMOCITYPULSE - Latest News and Updates</title>
-//         <meta
-//           name="description"
-//           content="Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"
-//         />
-//       </Helmet>
-
-//       <div className="min-h-screen">
-//         <Navbar onScrollToAbout={scrollToFooter} />
-
-//         {/* Add top padding to account for fixed navbar */}
-//         <main className="w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
-//           <div className="">
-//             {/* Main Layout - Responsive Grid */}
-//             <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
-//               {/* Main Content Area */}
-//               <div className="w-full">
-//                 {/* Featured Article Section */}
-//                 {newsData.featuredArticle && (
-//                   <div className="mb-8">
-//                     <CommonNewsCard article={newsData.featuredArticle} />
-//                   </div>
-//                 )}
-
-//                 {/* Audio News Section */}
-//                 {newsData.audioNews && (
-//                   <div className="mb-8">
-//                     <AudioNewsCard {...newsData.audioNews} />
-//                   </div>
-//                 )}
-
-//                 {/* Long Read Article */}
-//                 {newsData.longReadArticle && (
-//                   <NewsSection>
-//                     <CommonNewsCard article={newsData.longReadArticle} />
-//                   </NewsSection>
-//                 )}
-
-//                 {/* Live Updates Section */}
-//                 {newsData.liveUpdates.length > 0 && (
-//                   <NewsSection>
-//                     <LiveUpdateCard updates={newsData.liveUpdates} />
-//                   </NewsSection>
-//                 )}
-
-//                 {/* Tabbed News Section */}
-//                 {Object.keys(newsData.tabsData).length > 0 &&
-//                   tabsConfig.length > 0 && (
-//                     <div className="mb-8">
-//                       <TabbedNewsSection
-//                         dynamicTabsData={newsData.tabsData}
-//                         dynamicTabsConfig={tabsConfig}
-//                       />
-//                     </div>
-//                   )}
-
-//                 <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
-//                   <span className="text-gray-600 text-sm">
-//                     Center Advertise Space
-//                   </span>
-//                 </div>
-
-//                 {/* Repeat Long Read Article */}
-//                 {newsData.longReadArticle && (
-//                   <NewsSection>
-//                     <CommonNewsCard article={newsData.longReadArticle} />
-//                   </NewsSection>
-//                 )}
-
-//                 {/* Repeat Live Updates Section */}
-//                 {newsData.liveUpdates.length > 0 && (
-//                   <NewsSection>
-//                     <LiveUpdateCard updates={newsData.liveUpdates} />
-//                   </NewsSection>
-//                 )}
-
-//                 {/* Listed News Section */}
-//                 {Object.keys(newsData.tabsData).length > 0 &&
-//                   tabsConfig.length > 0 && (
-//                     <div className="mb-8">
-//                       <ListedNewsSection
-//                         dynamicTabsData={newsData.tabsData}
-//                         dynamicTabsConfig={tabsConfig}
-//                       />
-//                     </div>
-//                   )}
-
-//                 <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
-//                   <span className="text-gray-600 text-sm">
-//                     Bottom Advertise Space
-//                   </span>
-//                 </div>
-//               </div>
-
-//               {/* Vertical Separator - Only visible on xl screens */}
-//               <div className="hidden w-px bg-gray-300 min-h-full"></div>
-
-//               {/* Sidebar - Advertisement Area */}
-//               <aside className="w-full xl:w-full">
-//                 {/* First Ad Block - Mobile/Tablet */}
-//                 <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-//                   <span className="text-gray-600 text-sm">Top Ad Space</span>
-//                 </div>
-
-//                 {/* Trending Articles - First Set */}
-//                 {newsData.sidebarArticles.length > 0 && (
-//                   <div className="xl:hidden w-full mb-6">
-//                     <h4 className="text-md font-semibold text-gray-700 mb-4">
-//                       Trending Now
-//                     </h4>
-//                     <div className="space-y-4">
-//                       {newsData.sidebarArticles.slice(0, 3).map((article) => (
-//                         <div key={article.id} className="w-full">
-//                           <StandardArticleCard article={article} />
-//                         </div>
-//                       ))}
-//                     </div>
-//                   </div>
-//                 )}
-
-//                 {/* Second Ad Block - Mobile/Tablet */}
-//                 <div className="xl:hidden w-full h-28 sm:h-36 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-//                   <span className="text-gray-600 text-sm">Mid Ad Space</span>
-//                 </div>
-
-//                 {/* Trending Articles - Second Set */}
-//                 {newsData.sidebarArticles.length > 3 && (
-//                   <div className="xl:hidden w-full mb-6">
-//                     <div className="space-y-4">
-//                       {newsData.sidebarArticles.slice(3, 6).map((article) => (
-//                         <div key={article.id} className="w-full">
-//                           <StandardArticleCard article={article} />
-//                         </div>
-//                       ))}
-//                     </div>
-//                   </div>
-//                 )}
-
-//                 {/* Third Ad Block - Mobile/Tablet */}
-//                 <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-8">
-//                   <span className="text-gray-600 text-sm">Bottom Ad Space</span>
-//                 </div>
-
-//                 {/* Desktop Sidebar Layout */}
-//                 <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
-//                   <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
-//                     Advertisement Area
-//                   </h3>
-
-//                   {/* Top Ad in Sidebar */}
-//                   <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-//                     <span className="text-gray-600 text-sm">
-//                       Sidebar Top Ad
-//                     </span>
-//                   </div>
-
-//                   {/* Sidebar News Articles */}
-//                   {newsData.sidebarArticles.length > 0 && (
-//                     <div className="w-full">
-//                       <h4 className="text-md font-semibold text-gray-700 mb-4">
-//                         Trending Now
-//                       </h4>
-//                       <div className="space-y-4">
-//                         {newsData.sidebarArticles.slice(0, 3).map((article) => (
-//                           <div key={article.id} className="w-full">
-//                             <StandardArticleCard article={article} />
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </div>
-//                   )}
-
-//                   {/* Middle Ad in Sidebar */}
-//                   <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center my-6">
-//                     <span className="text-gray-600 text-sm">
-//                       Sidebar Mid Ad
-//                     </span>
-//                   </div>
-
-//                   {/* More Sidebar News Articles */}
-//                   {newsData.sidebarArticles.length > 3 && (
-//                     <div className="w-full">
-//                       <div className="space-y-4">
-//                         {newsData.sidebarArticles.slice(3, 6).map((article) => (
-//                           <div key={article.id} className="w-full">
-//                             <StandardArticleCard article={article} />
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </div>
-//                   )}
-
-//                   {/* Bottom Ad in Sidebar */}
-//                   <div className="w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mt-6">
-//                     <span className="text-gray-600 text-sm">
-//                       Sidebar Bottom Ad
-//                     </span>
-//                   </div>
-//                 </div>
-//               </aside>
-//             </div>
-//           </div>
-//         </main>
-
-//         {/* Footer with ref */}
-//         <div ref={footerRef}>
-//           <FooterSection />
-//         </div>
-//       </div>
-//     </>
-//   );
-// }

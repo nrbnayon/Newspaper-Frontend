@@ -8,21 +8,28 @@ import SentimentBadge from "../common/SentimentBadge";
 import TimeIndicator from "../common/TimeIndicator";
 import CommentsSection from "../common/CommentSection";
 import { useAuth } from "@/contexts/AuthContext";
+import { 
+  transformReactionsToComments, 
+  countLoves, 
+  countComments, 
+  hasUserLoved 
+} from "@/lib/news-service";
 
 const CommonNewsCard = ({
   article,
   className,
   layout = "horizontal",
-  newsReactions = {},
-  // reactions,
-  // onPostReaction,
+  reactions = [],
+  onPostReaction,
+  onPostLove,
+  onPostComment,
 }) => {
   console.log("Get feature news::", article);
   const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
   const { isLoggedIn, user } = useAuth();
 
-  console.log("News reaction::", newsReactions);
+  console.log("News reactions::", reactions);
 
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signin");
@@ -30,53 +37,11 @@ const CommonNewsCard = ({
   // Comment section states
   const [showComments, setShowComments] = useState(false);
 
-  // Sample comments data - you can replace this with your actual data source
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      author: "John Doe",
-      content: "Great article! Really informative and well-written.",
-      time: "2 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      author: "Sarah Wilson",
-      content:
-        "I completely agree with the points made here. Thanks for sharing this perspective.",
-      time: "4 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c92a?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 3,
-      author: "Mike Johnson",
-      content:
-        "Interesting read, though I have some different thoughts on this topic.",
-      time: "6 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 4,
-      author: "Emily Chen",
-      content:
-        "This really opened my eyes to a new way of thinking about the subject.",
-      time: "8 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 5,
-      author: "David Brown",
-      content:
-        "Well researched and presented. Looking forward to more content like this.",
-      time: "10 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face",
-    },
-  ]);
+  // Transform reactions to comments and get interaction counts
+  const comments = transformReactionsToComments(reactions);
+  const loveCount = countLoves(reactions);
+  const commentCount = countComments(reactions);
+  const isLoved = hasUserLoved(reactions, user?.id);
 
   // Destructure article with consistent naming
   const {
@@ -114,6 +79,37 @@ const CommonNewsCard = ({
     setShowComments(!showComments);
   };
 
+  const handleLoveClick = async (loveStatus) => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+
+    try {
+      await onPostLove?.(loveStatus);
+    } catch (error) {
+      console.error('Failed to post love reaction:', error);
+      // You might want to show an error toast here
+    }
+  };
+
+  const handleCommentSubmit = async (commentText) => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+
+    try {
+      await onPostComment?.(commentText);
+    } catch (error) {
+      console.error('Failed to post comment:', error);
+      // You might want to show an error toast here
+      throw error; // Re-throw to let CommentsSection handle the error state
+    }
+  };
+
   return (
     <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
       <div
@@ -133,12 +129,12 @@ const CommonNewsCard = ({
             isExpanded && "w-full"
           )}
         >
-          {isFeatured && (
+          
             <SentimentBadge
               sentiment={sentiment}
               className="mb-3 sm:mb-4 w-full"
             />
-          )}
+         
 
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
             {title}
@@ -163,14 +159,18 @@ const CommonNewsCard = ({
           {isHorizontal && (
             <div className="flex flex-col justify-between w-full">
               <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
-                {isFeatured && (
+                
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
-                      showCommentsCount={comments.length}
+                      onLoveClick={handleLoveClick}
+                      showCommentsCount={commentCount}
+                      isLoved={isLoved}
+                      loveCount={loveCount}
+                      disabled={!isLoggedIn}
                     />
                   </div>
-                )}
+               
                 {!isFeatured && <div className=""></div>}
               </div>
 
@@ -178,7 +178,8 @@ const CommonNewsCard = ({
               {showComments && (
                 <CommentsSection
                   comments={comments}
-                  setComments={setComments}
+                  onPostComment={handleCommentSubmit}
+                  disabled={!isLoggedIn}
                 />
               )}
             </div>
@@ -209,7 +210,7 @@ const CommonNewsCard = ({
             <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
               <TimeIndicator
                 type="readTime"
-                value={readTime}
+                value={publishedDateTime}
                 className="text-xs sm:text-sm text-white"
               />
             </div>
@@ -231,7 +232,11 @@ const CommonNewsCard = ({
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
-                      showCommentsCount={comments.length}
+                      onLoveClick={handleLoveClick}
+                      showCommentsCount={commentCount}
+                      isLoved={isLoved}
+                      loveCount={loveCount}
+                      disabled={!isLoggedIn}
                     />
                   </div>
                 )}
@@ -242,7 +247,8 @@ const CommonNewsCard = ({
               {showComments && (
                 <CommentsSection
                   comments={comments}
-                  setComments={setComments}
+                  onPostComment={handleCommentSubmit}
+                  disabled={!isLoggedIn}
                 />
               )}
             </div>

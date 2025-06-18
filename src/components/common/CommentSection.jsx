@@ -1,21 +1,30 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 
-const CommentsSection = ({ comments, setComments }) => {
+const CommentsSection = ({ 
+  comments = [], 
+  onPostComment,
+  disabled = false 
+}) => {
   const [showAllComments, setShowAllComments] = useState(false);
   const [newComment, setNewComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const handleSubmitComment = () => {
-    if (newComment.trim()) {
-      const comment = {
-        id: comments.length + 1,
-        author: "You",
-        content: newComment.trim(),
-        time: "Just now",
-        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=32&h=32&fit=crop&crop=face"
-      };
-      setComments([comment, ...comments]);
+  const handleSubmitComment = async () => {
+    if (!newComment.trim() || disabled || isSubmitting) return;
+    
+    setIsSubmitting(true);
+    setSubmitError("");
+    
+    try {
+      await onPostComment?.(newComment.trim());
       setNewComment("");
+    } catch (error) {
+      console.error('Failed to submit comment:', error);
+      setSubmitError("Failed to post comment. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -44,41 +53,58 @@ const CommentsSection = ({ comments, setComments }) => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Write a comment..."
-              className='flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm'
+              placeholder={disabled ? "Please login to comment" : "Write a comment..."}
+              disabled={disabled || isSubmitting}
+              className='flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm disabled:bg-gray-100 disabled:cursor-not-allowed'
             />
             <button
               onClick={handleSubmitComment}
-              disabled={!newComment.trim()}
+              disabled={!newComment.trim() || disabled || isSubmitting}
               className='px-3 py-2 cursor-pointer bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors'
             >
-              <Send size={16} />
+              {isSubmitting ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <Send size={16} />
+              )}
             </button>
           </div>
         </div>
+        
+        {/* Error Message */}
+        {submitError && (
+          <div className="mt-2 text-sm text-red-600 ml-11">
+            {submitError}
+          </div>
+        )}
       </div>
 
       {/* Comments List */}
-      <div className='max-h-24 overflow-y-auto space-y-3'>
-        {displayedComments.map((comment) => (
-          <div key={comment.id} className='flex gap-3'>
-            <img
-              src={comment.avatar}
-              alt={`${comment.author}'s avatar`}
-              className='w-8 h-8 rounded-full object-cover flex-shrink-0'
-            />
-            <div className='flex-1 min-w-0'>
-              <div className='bg-gray-50 rounded-lg px-3 py-2'>
-                <div className='flex items-center gap-2 mb-1'>
-                  <span className='font-medium text-sm text-gray-900'>{comment.author}</span>
-                  <span className='text-xs text-gray-500'>{comment.time}</span>
+      {comments.length > 0 && (
+        <div className='max-h-96 overflow-y-auto space-y-3'>
+          {displayedComments.map((comment, index) => (
+            <div key={`comment-${comment.id || index}-${comment.time}`} className='flex gap-3'>
+              <img
+                src={comment.avatar}
+                alt={`${comment.author}'s avatar`}
+                className='w-8 h-8 rounded-full object-cover flex-shrink-0'
+              />
+              <div className='flex-1 min-w-0'>
+                <div className='bg-gray-50 rounded-lg px-3 py-2'>
+                  <div className='flex items-center gap-2 mb-1'>
+                    <span className='font-medium text-sm text-gray-900'>{comment.author}</span>
+                    <span className='text-xs text-gray-500'>{comment.time}</span>
+                    {comment.loved && (
+                      <span className='text-xs text-red-500'>❤️ Loved this article</span>
+                    )}
+                  </div>
+                  <p className='text-sm text-gray-700 leading-relaxed break-words'>{comment.content}</p>
                 </div>
-                <p className='text-sm text-gray-700 leading-relaxed'>{comment.content}</p>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* See All Comments Button */}
       {comments.length > 2 && (
@@ -91,6 +117,13 @@ const CommentsSection = ({ comments, setComments }) => {
             : `See all ${comments.length} comments`
           }
         </button>
+      )}
+      
+      {/* No Comments Message */}
+      {comments.length === 0 && (
+        <div className="text-center py-4 text-gray-500 text-sm">
+          No comments yet. Be the first to comment!
+        </div>
       )}
     </div>
   );
