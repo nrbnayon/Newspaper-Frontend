@@ -1,7 +1,6 @@
 // src\components\common\PaymentResult.jsx
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import { verifyPayment } from "@/lib/payment-service"; // Use payment-service instead of auth-service
 import Navbar from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 
@@ -11,47 +10,27 @@ const PaymentResult = () => {
   const [searchParams] = useSearchParams();
 
   // Get URL parameters
-  const session_id = searchParams.get("session_id");
   const success = searchParams.get("success");
   const canceled = searchParams.get("canceled");
 
-  const [status, setStatus] = useState("loading"); // loading, success, error, canceled
+  const [status, setStatus] = useState("loading");
   const [paymentData, setPaymentData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Check URL path to determine if it's success or cancel
     const currentPath = location.pathname;
-
     if (currentPath.includes("/payment/cancel") || canceled === "true") {
       setStatus("canceled");
       return;
     }
-
     if (currentPath.includes("/payment/success") || success === "true") {
-      if (session_id) {
-        verifyPaymentStatus(session_id);
-      } else {
-        setError("No session ID found");
-        setStatus("error");
-      }
-    }
-  }, [session_id, success, canceled, location.pathname]);
-
-  const verifyPaymentStatus = async (sessionId) => {
-    try {
-      const response = await verifyPayment(sessionId);
-      setPaymentData(response);
       setStatus("success");
-    } catch (err) {
-      console.error("Payment verification error:", err);
-      setError(err.message);
-      setStatus("error");
     }
-  };
+  }, [success, canceled, location.pathname]);
 
   const handleReturnHome = () => {
-    navigate("/dashboard"); // Redirect to dashboard after successful payment
+    navigate("/dashboard");
   };
 
   const handleRetryPayment = () => {
