@@ -19,6 +19,8 @@ const ListedNewsSection = ({
   className,
   dynamicTabsData,
   dynamicTabsConfig,
+  reactions,
+  onPostReaction,
 }) => {
   // Use dynamic data if provided, otherwise fall back to sample data
   const activeTabsData = dynamicTabsData || tabsData;

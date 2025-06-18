@@ -21,6 +21,8 @@ const StandardArticleCard = ({
     imageAttribution,
     readTime,
   },
+  reactions,
+  onPostReaction,
   className,
   imagePosition = "top",
 }) => {

@@ -4,7 +4,7 @@
  * @returns {string} - Combined class names
  */
 export function cn(...inputs) {
-  return inputs.filter(Boolean).join(" ")
+  return inputs.filter(Boolean).join(" ");
 }
 
 /**
@@ -18,9 +18,12 @@ export function formatDate(date, options = {}) {
     year: "numeric",
     month: "long",
     day: "numeric",
-  }
+  };
 
-  return new Intl.DateTimeFormat("en-US", { ...defaultOptions, ...options }).format(new Date(date))
+  return new Intl.DateTimeFormat("en-US", {
+    ...defaultOptions,
+    ...options,
+  }).format(new Date(date));
 }
 
 /**
@@ -29,7 +32,7 @@ export function formatDate(date, options = {}) {
  * @returns {boolean} - Whether the email is valid
  */
 export function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 /**
@@ -38,13 +41,16 @@ export function isValidEmail(email) {
  * @returns {boolean} - Whether the phone is valid
  */
 export function isValidPhone(phone) {
-  return /^\d{10}$/.test(phone)
+  return /^\d{10}$/.test(phone);
 }
 
-  // Function to truncate text to 20% of words
- export const getTruncatedText = (text) => {
-    if (!text) return "";
-    const words = text.split(" ");
-    const twentyPercentLength = Math.max(Math.ceil(words.length * 0.2), 200);
-    return words.slice(0, twentyPercentLength).join(" ");
-  };
+// Function to truncate text to 20% of words
+export const getTruncatedText = (text) => {
+  if (!text) return "";
+  //   const words = text.split(" ");
+  //  const twentyPercentLength = Math.max(Math.ceil(words.length * 0.1), 200);
+  const words = text.split(" ").filter((word) => word.length > 0);
+  if (words.length <= 10) return text;
+  if (words.twentyPercentLength <= 120) return text;
+  return words.slice(0, 120).join(" ");
+};

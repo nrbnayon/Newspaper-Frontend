@@ -20,6 +20,8 @@ const TabbedNewsSection = ({
   className,
   dynamicTabsData,
   dynamicTabsConfig,
+  reactions,
+  onPostReaction,
 }) => {
   const activeTabsData = dynamicTabsData || tabsData;
   const activeTabsConfig = dynamicTabsConfig || tabsConfig;

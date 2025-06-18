@@ -4,6 +4,8 @@ const allNews = await getAllNews();
 
 console.log("Get All News in data::: ", allNews);
 
+
+// my data structure this way i need  format from get all data 
 export const sampleArticles = [
   {
     id: 1,
@@ -491,6 +493,7 @@ export const tabsData = {
   ],
 };
 
+// tabs keys label will be then category of all news
 export const tabsConfig = [
   {
     key: "israelHamasWar",

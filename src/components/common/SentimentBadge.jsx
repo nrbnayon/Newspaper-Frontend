@@ -2,12 +2,16 @@ import { cn } from "@/lib/utils";
 
 const SentimentBadge = ({ sentiment, className }) => {
   const badgeStyles = {
-    positive: "bg-[#EADBC5] text-[#142337]",
+    positive: "bg-green-600 text-white",
     negative: "bg-custom-red text-white",
     neutral: "bg-gray-100 text-gray-700",
   };
 
-  const style = badgeStyles[sentiment.toLowerCase()] || badgeStyles.neutral;
+  const normalizedSentiment =
+    sentiment.charAt(0).toUpperCase() + sentiment.slice(1).toLowerCase();
+
+  const style =
+    badgeStyles[normalizedSentiment.toLowerCase()] || badgeStyles.neutral;
 
   return (
     <div
@@ -17,7 +21,7 @@ const SentimentBadge = ({ sentiment, className }) => {
         className
       )}
     >
-      {sentiment}
+      {normalizedSentiment}
     </div>
   );
 };

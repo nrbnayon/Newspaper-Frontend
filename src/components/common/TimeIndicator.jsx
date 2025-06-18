@@ -1,14 +1,9 @@
 import { cn } from "@/lib/utils";
 
-
-
 const TimeIndicator = ({ type, value, className }) => {
-
   const isLive = type === "live";
   const isReadTime = type === "readTime";
   const isTimeAgo = type === "timeAgo";
-
- 
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -19,22 +14,11 @@ const TimeIndicator = ({ type, value, className }) => {
         </span>
       )}
 
-      {isReadTime && (
-        <span
-          onClick={() => openSignIn()}
-          className="text-gray-500 cursor-pointer text-sm flex items-center"
-        >
-          {value} MIN READ
-        </span>
-      )}
+      {isReadTime && <span>{value}</span>}
 
       {isTimeAgo && (
-        <span className="text-gray-500 text-sm flex items-center">
-          {value}
-        </span>
+        <span className="text-gray-500 text-sm flex items-center">{value}</span>
       )}
-
-     
     </div>
   );
 };

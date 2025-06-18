@@ -9,10 +9,20 @@ import TimeIndicator from "../common/TimeIndicator";
 import CommentsSection from "../common/CommentSection";
 import { useAuth } from "@/contexts/AuthContext";
 
-const CommonNewsCard = ({ article, className, layout = "horizontal" }) => {
+const CommonNewsCard = ({
+  article,
+  className,
+  layout = "horizontal",
+  newsReactions = {},
+  // reactions,
+  // onPostReaction,
+}) => {
+  console.log("Get feature news::", article);
   const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
   const { isLoggedIn, user } = useAuth();
+
+  console.log("News reaction::", newsReactions);
 
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signin");

@@ -1,6 +1,6 @@
 // src\components\news\AudioNewsCard.jsx
 import SentimentBadge from "../common/SentimentBadge";
-import { cn, getTruncatedText } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { BookOpenText } from "lucide-react";
 import { useState } from "react";
@@ -25,6 +25,12 @@ const AudioNewsCard = ({
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signin");
 
+  const getTruncatedText = (text) => {
+    if (!text) return "";
+    const words = text.split(" ").filter((word) => word.length > 0);
+    if (words.length <= 15) return text;
+    return words.slice(0, 15).join(" ");
+  };
   const truncatedContent = getTruncatedText(description);
   const shouldShowReadMore = description && description.length > 200;
 
