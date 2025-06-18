@@ -210,7 +210,7 @@ const CommonNewsCard = ({
             <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
               <TimeIndicator
                 type="readTime"
-                value={publishedDateTime}
+                value={publishedTime}
                 className="text-xs sm:text-sm text-white"
               />
             </div>
