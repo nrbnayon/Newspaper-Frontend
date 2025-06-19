@@ -51,6 +51,6 @@ export const getTruncatedText = (text) => {
   //  const twentyPercentLength = Math.max(Math.ceil(words.length * 0.1), 200);
   const words = text.split(" ").filter((word) => word.length > 0);
   if (words.length <= 10) return text;
-  if (words.twentyPercentLength <= 120) return text;
-  return words.slice(0, 120).join(" ");
+  if (words.twentyPercentLength <= 90) return text;
+  return words.slice(0, 90).join(" ");
 };

@@ -14,10 +14,13 @@ const TimeIndicator = ({ type, value, className }) => {
         </span>
       )} */}
 
-      {isReadTime && <span>{value}</span>}
+      {isReadTime && <span>Read Time {value} Min</span>}
 
       {isTimeAgo && (
-        <span className="text-gray-500 text-sm flex items-center">{value}</span>
+        <span className="text-gray-500 text-sm flex items-center">
+          {" "}
+          Read Time{value} Min
+        </span>
       )}
     </div>
   );

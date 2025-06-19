@@ -1,4 +1,3 @@
-// src\components\news\LiveUpdateCard.jsx
 import { useState } from "react";
 import { cn, getTruncatedText } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -7,10 +6,15 @@ import InteractionButtons from "../common/InteractionButtons";
 import CommentsSection from "../common/CommentSection";
 import AuthModal from "../auth/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
+import {
+  transformReactionsToComments,
+  countLoves,
+  countComments,
+  hasUserLoved,
+} from "@/lib/news-service";
 
 // Carousel Dots Component
 const CarouselDots = ({ currentIndex, setCurrentIndex, totalItems }) => {
-  // Function to get dot size based on distance from active dot
   const getDotSize = (index) => {
     const distance = Math.abs(index - currentIndex);
     if (distance === 0) return "w-3 h-3"; // Active dot - largest
@@ -110,64 +114,25 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
   );
 };
 
-const LiveUpdateCard = ({ updates, className }) => {
+const LiveUpdateCard = ({
+  updates,
+  className,
+  newsReactions,
+  onPostLove,
+  onPostComment,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isLoggedIn, user } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signin");
-
-  // Comment section states
   const [showComments, setShowComments] = useState(false);
 
-  // Sample comments data - you can replace this with your actual data source
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      author: "John Doe",
-      content: "Great article! Really informative and well-written.",
-      time: "2 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      author: "Sarah Wilson",
-      content:
-        "I completely agree with the points made here. Thanks for sharing this perspective.",
-      time: "4 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c92a?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 3,
-      author: "Mike Johnson",
-      content:
-        "Interesting read, though I have some different thoughts on this topic.",
-      time: "6 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 4,
-      author: "Emily Chen",
-      content:
-        "This really opened my eyes to a new way of thinking about the subject.",
-      time: "8 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 5,
-      author: "David Brown",
-      content:
-        "Well researched and presented. Looking forward to more content like this.",
-      time: "10 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face",
-    },
-  ]);
-
   const currentUpdate = updates[currentIndex];
+  const currentReactions = newsReactions[currentUpdate.id] || [];
+  const comments = transformReactionsToComments(currentReactions);
+  const loveCount = countLoves(currentReactions);
+  const commentCount = countComments(currentReactions);
+  const isLoved = hasUserLoved(currentReactions, user?.id);
 
   const handleCommentClick = () => {
     if (!isLoggedIn) {
@@ -176,6 +141,33 @@ const LiveUpdateCard = ({ updates, className }) => {
       return;
     }
     setShowComments(!showComments);
+  };
+
+  const handleLoveClick = async (loveStatus) => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+    try {
+      await onPostLove(currentUpdate.id, loveStatus);
+    } catch (error) {
+      console.error("Failed to post love reaction:", error);
+    }
+  };
+
+  const handleCommentSubmit = async (commentText) => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+    try {
+      await onPostComment(currentUpdate.id, commentText);
+    } catch (error) {
+      console.error("Failed to post comment:", error);
+      throw error;
+    }
   };
 
   const handleAuthRequired = () => {
@@ -187,14 +179,14 @@ const LiveUpdateCard = ({ updates, className }) => {
     <>
       <div className={cn("pb-6", className)}>
         <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10">
-          {/* Content Section - Left side on desktop */}
+          {/* Content Section */}
           <div className="flex flex-col w-full lg:w-2/5 xl:w-1/3">
             <div className="font-bold text-xl mb-1">
               {currentUpdate.category}
             </div>
             <div className="flex justify-start items-center gap-3 mt-2 text-custom-red">
               <TimeIndicator type="live" value={null} />
-              <span className="text-sm">{currentUpdate.publishedTime}</span>
+              <span className="text-sm">{currentUpdate.timeAgo}</span>
             </div>
             <h2 className="text-2xl font-bold mb-3">{currentUpdate.title}</h2>
             <ReadMoreContent
@@ -202,7 +194,6 @@ const LiveUpdateCard = ({ updates, className }) => {
               isLoggedIn={isLoggedIn}
               onAuthRequired={handleAuthRequired}
             />
-            {/* See more updates button */}
             <div className="flex items-center mb-4">
               <button className="text-gray-700 font-medium mr-2">
                 See more updates
@@ -214,16 +205,16 @@ const LiveUpdateCard = ({ updates, className }) => {
             <div>
               <InteractionButtons
                 onCommentClick={handleCommentClick}
-                showCommentsCount={comments.length}
+                onLoveClick={handleLoveClick}
+                showCommentsCount={commentCount}
+                isLoved={isLoved}
+                loveCount={loveCount}
+                disabled={!isLoggedIn}
               />
             </div>
-            {/* Comment Section */}
-            {showComments && (
-              <CommentsSection comments={comments} setComments={setComments} />
-            )}
           </div>
 
-          {/* Image Section - Right side on desktop */}
+          {/* Image Section */}
           <div className="relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end">
             <div className="relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center">
               <img
@@ -233,10 +224,8 @@ const LiveUpdateCard = ({ updates, className }) => {
                 loading="lazy"
               />
             </div>
-
             <div className="w-full py-2">
               <div className="flex justify-between items-center">
-                {/* Carousel Dots - Centered */}
                 <div className="flex-1 flex justify-center">
                   {updates.length > 1 && (
                     <CarouselDots
@@ -246,8 +235,6 @@ const LiveUpdateCard = ({ updates, className }) => {
                     />
                   )}
                 </div>
-
-                {/* Navigation Arrows - Right side */}
                 <div className="flex items-center md:mt-6">
                   {updates.length > 1 && (
                     <NavigationArrows
@@ -262,7 +249,14 @@ const LiveUpdateCard = ({ updates, className }) => {
           </div>
         </div>
       </div>
-
+      {showComments && (
+        <CommentsSection
+          comments={comments}
+          onPostComment={handleCommentSubmit}
+          disabled={!isLoggedIn}
+          allComments={currentReactions}
+        />
+      )}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}

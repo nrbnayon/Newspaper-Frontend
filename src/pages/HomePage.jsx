@@ -18,6 +18,17 @@ import {
   getDefaultImage,
 } from "@/lib/news-service";
 
+const isValidArticle = (article) => {
+  return (
+    article &&
+    typeof article === "object" &&
+    article.id &&
+    article.title &&
+    typeof article.title === "string" &&
+    article.title.trim() !== ""
+  );
+};
+
 const shuffleWithLatest = (
   array,
   keepLatestCount = 1,
@@ -193,11 +204,8 @@ export default function HomePage() {
       return sections;
     }
 
-    // Filter out any invalid articles upfront
-    availableNews = availableNews.filter(
-      (article) =>
-        article && typeof article === "object" && article.id && article.title
-    );
+    // Filter out any invalid articles upfront - IMPROVED VALIDATION
+    availableNews = availableNews.filter(isValidArticle);
 
     if (availableNews.length === 0) {
       console.warn("No valid news articles after filtering");
@@ -230,13 +238,8 @@ export default function HomePage() {
           const randomIndex = Math.floor(Math.random() * sectionNews.length);
           const article = sectionNews[randomIndex];
 
-          // Validate article before processing
-          if (
-            article &&
-            typeof article === "object" &&
-            article.id &&
-            !assignedIds.has(article.id)
-          ) {
+          // Use the helper function for validation
+          if (isValidArticle(article) && !assignedIds.has(article.id)) {
             articles.push(article);
             assignedIds.add(article.id);
 
@@ -245,7 +248,7 @@ export default function HomePage() {
 
             // Remove from availableNews array safely
             const originalIndex = availableNews.findIndex(
-              (a) => a && a.id === article.id
+              (a) => isValidArticle(a) && a.id === article.id
             );
             if (originalIndex > -1) {
               availableNews.splice(originalIndex, 1);
@@ -297,7 +300,7 @@ export default function HomePage() {
 
       const liveUpdateArticles = assignUniqueArticles(4);
       section.liveUpdates = liveUpdateArticles
-        .filter((article) => article && article.id)
+        .filter(isValidArticle) // Use helper function
         .map((article) => ({
           id: article.id,
           title: article.title || "Untitled",
@@ -309,18 +312,16 @@ export default function HomePage() {
 
       // Ensure sidebarArticles is always an array of valid articles
       const sidebarArticlesRaw = assignUniqueArticles(6);
-      section.sidebarArticles = sidebarArticlesRaw.filter(
-        (article) => article && article.id
-      );
+      section.sidebarArticles = sidebarArticlesRaw.filter(isValidArticle); // Use helper function
 
       section.tabsData = {};
       const remainingArticles = availableNews.filter(
-        (article) => article && article.id && !assignedIds.has(article.id)
+        (article) => isValidArticle(article) && !assignedIds.has(article.id)
       );
 
       const articlesByCategory = {};
       remainingArticles.forEach((article) => {
-        if (!article || !article.category) return;
+        if (!isValidArticle(article)) return; // Additional safety check
 
         const category = article.category.toLowerCase();
         if (!articlesByCategory[category]) {
@@ -390,10 +391,10 @@ export default function HomePage() {
             const otherArticles = shuffleWithLatest(
               remainingArticles.filter(
                 (article) =>
-                  article &&
-                  article.id &&
+                  isValidArticle(article) &&
                   !tabArticles.find(
-                    (existing) => existing && existing.id === article.id
+                    (existing) =>
+                      isValidArticle(existing) && existing.id === article.id
                   ) &&
                   !assignedIds.has(article.id)
               ),
@@ -405,7 +406,7 @@ export default function HomePage() {
           }
         } else {
           const validRemainingArticles = remainingArticles.filter(
-            (article) => article && article.id && !assignedIds.has(article.id)
+            (article) => isValidArticle(article) && !assignedIds.has(article.id)
           );
 
           const sortedByDate = validRemainingArticles.sort((a, b) => {
@@ -420,7 +421,7 @@ export default function HomePage() {
 
         // Filter out invalid articles and mark as assigned
         tabArticles = tabArticles.filter((article) => {
-          if (article && article.id) {
+          if (isValidArticle(article)) {
             assignedIds.add(article.id);
             return true;
           }
@@ -435,7 +436,7 @@ export default function HomePage() {
 
     if (sections.length === 1 && availableNews.length > 0) {
       const validRemainingNews = availableNews.filter(
-        (article) => article && article.id && !assignedIds.has(article.id)
+        (article) => isValidArticle(article) && !assignedIds.has(article.id)
       );
 
       if (validRemainingNews.length > 0) {
@@ -449,7 +450,7 @@ export default function HomePage() {
           additionalSection.featuredArticle = remainingShuffled[0];
           additionalSection.sidebarArticles = remainingShuffled
             .slice(1, 7)
-            .filter((article) => article && article.id); // Filter out invalid articles
+            .filter(isValidArticle);
           sections.push(additionalSection);
         }
       }
@@ -594,7 +595,12 @@ export default function HomePage() {
 
                   {section.liveUpdates && section.liveUpdates.length > 0 && (
                     <NewsSection>
-                      <LiveUpdateCard updates={section.liveUpdates} />
+                      <LiveUpdateCard
+                        updates={section.liveUpdates}
+                        newsReactions={newsReactions}
+                        onPostLove={handlePostLove}
+                        onPostComment={handlePostComment}
+                      />
                     </NewsSection>
                   )}
 
@@ -604,7 +610,6 @@ export default function HomePage() {
                         dynamicTabsData={section.tabsData}
                         dynamicTabsConfig={generateTabsConfig(section.tabsData)}
                         newsReactions={newsReactions}
-                        onPostReaction={handlePostReaction}
                         onPostLove={handlePostLove}
                         onPostComment={handlePostComment}
                       />
@@ -623,7 +628,6 @@ export default function HomePage() {
                         dynamicTabsData={section.tabsData}
                         dynamicTabsConfig={generateTabsConfig(section.tabsData)}
                         newsReactions={newsReactions}
-                        onPostReaction={handlePostReaction}
                         onPostLove={handlePostLove}
                         onPostComment={handlePostComment}
                       />
@@ -643,8 +647,8 @@ export default function HomePage() {
                     <span className="text-gray-600 text-sm">Top Ad Space</span>
                   </div>
 
-                  {/* Mobile sidebar articles with proper validation */}
                   {section.sidebarArticles &&
+                    Array.isArray(section.sidebarArticles) &&
                     section.sidebarArticles.length > 0 && (
                       <div className="xl:hidden w-full mb-6">
                         <h4 className="text-md font-semibold text-gray-700 mb-4">
@@ -652,7 +656,7 @@ export default function HomePage() {
                         </h4>
                         <div className="space-y-4">
                           {section.sidebarArticles
-                            .filter((article) => article && article.id) // Filter out invalid articles
+                            .filter(isValidArticle)
                             .slice(0, 3)
                             .map((article) => (
                               <div key={article.id} className="w-full">
@@ -679,13 +683,13 @@ export default function HomePage() {
                     <span className="text-gray-600 text-sm">Mid Ad Space</span>
                   </div>
 
-                  {/* Mobile sidebar articles (second batch) with proper validation */}
                   {section.sidebarArticles &&
+                    Array.isArray(section.sidebarArticles) &&
                     section.sidebarArticles.length > 3 && (
                       <div className="xl:hidden w-full mb-6">
                         <div className="space-y-4">
                           {section.sidebarArticles
-                            .filter((article) => article && article.id) // Filter out invalid articles
+                            .filter(isValidArticle)
                             .slice(3, 6)
                             .map((article) => (
                               <div key={article.id} className="w-full">
@@ -714,7 +718,6 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  {/* Desktop sidebar */}
                   <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
                     <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
                       Advertisement Area
@@ -725,8 +728,8 @@ export default function HomePage() {
                       </span>
                     </div>
 
-                    {/* Desktop sidebar articles with proper validation */}
                     {section.sidebarArticles &&
+                      Array.isArray(section.sidebarArticles) &&
                       section.sidebarArticles.length > 0 && (
                         <div className="w-full">
                           <h4 className="text-md font-semibold text-gray-700 mb-4">
@@ -734,7 +737,7 @@ export default function HomePage() {
                           </h4>
                           <div className="space-y-4">
                             {section.sidebarArticles
-                              .filter((article) => article && article.id) // Filter out invalid articles
+                              .filter(isValidArticle)
                               .slice(0, 3)
                               .map((article) => (
                                 <div key={article.id} className="w-full">
@@ -767,11 +770,12 @@ export default function HomePage() {
                     </div>
 
                     {section.sidebarArticles &&
+                      Array.isArray(section.sidebarArticles) &&
                       section.sidebarArticles.length > 3 && (
                         <div className="w-full">
                           <div className="space-y-4">
                             {section.sidebarArticles
-                              .filter((article) => article && article.id) 
+                              .filter(isValidArticle)
                               .slice(3, 6)
                               .map((article) => (
                                 <div key={article.id} className="w-full">

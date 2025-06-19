@@ -6,6 +6,12 @@ import AuthModal from "../auth/AuthModal";
 import CommentsSection from "../common/CommentSection";
 import SentimentBadge from "../common/SentimentBadge";
 import { useAuth } from "@/contexts/AuthContext";
+import {
+  transformReactionsToComments,
+  countLoves,
+  countComments,
+  hasUserLoved,
+} from "@/lib/news-service";
 
 const StandardArticleCard = ({
   article: {
@@ -21,63 +27,23 @@ const StandardArticleCard = ({
     imageAttribution,
     readTime,
   },
-  reactions,
-  onPostReaction,
   className,
   imagePosition = "top",
+  reactions = [],
+  onPostLove,
+  onPostComment,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signin");
-
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      author: "John Doe",
-      content: "Great article! Really informative and well-written.",
-      time: "2 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      author: "Sarah Wilson",
-      content:
-        "I completely agree with the points made here. Thanks for sharing this perspective.",
-      time: "4 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c92a?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 3,
-      author: "Mike Johnson",
-      content:
-        "Interesting read, though I have some different thoughts on this topic.",
-      time: "6 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 4,
-      author: "Emily Chen",
-      content:
-        "This really opened my eyes to a new way of thinking about the subject.",
-      time: "8 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face",
-    },
-    {
-      id: 5,
-      author: "David Brown",
-      content:
-        "Well researched and presented. Looking forward to more content like this.",
-      time: "10 hours ago",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face",
-    },
-  ]);
+
+  // Process reactions data
+  const comments = transformReactionsToComments(reactions);
+  const loveCount = countLoves(reactions);
+  const commentCount = countComments(reactions);
+  const isLoved = hasUserLoved(reactions, user?.id);
 
   const getTruncatedText = (text) => {
     if (!text) return "";
@@ -105,6 +71,35 @@ const StandardArticleCard = ({
       return;
     }
     setShowComments(!showComments);
+  };
+
+  const handleLoveClick = async (loveStatus) => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+
+    try {
+      await onPostLove?.(loveStatus);
+    } catch (error) {
+      console.error("Failed to post love reaction:", error);
+    }
+  };
+
+  const handleCommentSubmit = async (commentText) => {
+    if (!isLoggedIn) {
+      setAuthMode("signin");
+      setAuthModalOpen(true);
+      return;
+    }
+
+    try {
+      await onPostComment?.(commentText);
+    } catch (error) {
+      console.error("Failed to post comment:", error);
+      throw error;
+    }
   };
 
   const isHorizontal = imagePosition === "left" || imagePosition === "right";
@@ -173,12 +168,21 @@ const StandardArticleCard = ({
           <div>
             <InteractionButtons
               onCommentClick={handleCommentClick}
-              showCommentsCount={comments.length}
+              onLoveClick={handleLoveClick}
+              showCommentsCount={commentCount}
+              isLoved={isLoved}
+              loveCount={loveCount}
+              disabled={!isLoggedIn}
             />
           </div>
         </div>
         {showComments && (
-          <CommentsSection comments={comments} setComments={setComments} />
+          <CommentsSection
+            comments={comments}
+            onPostComment={handleCommentSubmit}
+            disabled={!isLoggedIn}
+            allComments={reactions}
+          />
         )}
       </div>
       <AuthModal

@@ -197,7 +197,9 @@ const Profile = () => {
         </ModalContent>
       </Modal>
 
-      <h2 className="text-base md:text-2xl font-bold text-gray-800 mb-8">My Profile</h2>
+      <h2 className="text-base md:text-2xl font-bold text-gray-800 mb-8">
+        My Profile
+      </h2>
 
       {/* Profile Section - Responsive Layout */}
       <div className="flex flex-col lg:flex-row mb-4 lg:mb-12 gap-6">
@@ -229,8 +231,9 @@ const Profile = () => {
           </div>
 
           <div className="">
-            
-            <h3 className="text-base md:text-lg lg:text-2xl  font-bold text-gray-800">{name}</h3>
+            <h3 className="text-base md:text-lg lg:text-2xl  font-bold text-gray-800">
+              {name}
+            </h3>
             <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mb-2">
               User
             </span>
@@ -244,12 +247,6 @@ const Profile = () => {
               E-mail
             </p>
             <span className="text-gray-600 sm:ml-8 break-all">{email}</span>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <p className="text-gray-700 text-base min-w-0 sm:min-w-[80px]">
-              Phone
-            </p>
-            <span className="text-gray-600 sm:ml-8">+880 1636 828200</span>
           </div>
         </div>
       </div>
@@ -301,7 +298,9 @@ const Profile = () => {
 
       {/* Delete Account Section - Responsive */}
       <div className="border bg-red-50 border-red-500 rounded p-4 sm:p-6">
-        <h4 className="text-base md:text-xl font-bold text-red-500 mb-4">Delete Account</h4>
+        <h4 className="text-base md:text-xl font-bold text-red-500 mb-4">
+          Delete Account
+        </h4>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div className="flex-1">
             <p className="text-gray-800 text-sm md:text-base ">
@@ -322,9 +321,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
-
-      
     </div>
   );
 };

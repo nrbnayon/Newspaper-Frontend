@@ -1,3 +1,4 @@
+// Updated TabbedNewsSection with reactions support
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NewsGrid from "./NewsGrid";
 import StandardArticleCard from "./StandardArticleCard";
@@ -20,8 +21,9 @@ const TabbedNewsSection = ({
   className,
   dynamicTabsData,
   dynamicTabsConfig,
-  reactions,
-  onPostReaction,
+  newsReactions = {}, // Rename to newsReactions, default to empty object
+  onPostLove,
+  onPostComment,
 }) => {
   const activeTabsData = dynamicTabsData || tabsData;
   const activeTabsConfig = dynamicTabsConfig || tabsConfig;
@@ -59,18 +61,17 @@ const TabbedNewsSection = ({
                   <StandardArticleCard
                     key={article.id}
                     article={article}
+                    reactions={newsReactions[article.id] || []} // Use newsReactions with article ID
+                    onPostLove={(loveStatus) => onPostLove(article.id, loveStatus)}
+                    onPostComment={(commentText) => onPostComment(article.id, commentText)}
                     className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200"
                   />
                 ))}
               </NewsGrid>
               {articles.length === 0 && (
                 <div className="text-center py-12 text-gray-500">
-                  <p className="text-lg">
-                    No articles available for this section.
-                  </p>
-                  <p className="text-sm mt-2">
-                    Please check back later for updates.
-                  </p>
+                  <p className="text-lg">No articles available for this section.</p>
+                  <p className="text-sm mt-2">Please check back later for updates.</p>
                 </div>
               )}
             </TabsContent>
