@@ -7,12 +7,12 @@ const TimeIndicator = ({ type, value, className }) => {
 
   return (
     <div className={cn("flex items-center", className)}>
-      {isLive && (
+      {/* {isLive && (
         <span className="text-red-600 font-bold mr-2 flex items-center">
           <span className="h-2 w-2 bg-red-600 rounded-full mr-1 animate-pulse"></span>
           LIVE
         </span>
-      )}
+      )} */}
 
       {isReadTime && <span>{value}</span>}
 

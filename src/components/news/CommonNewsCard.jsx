@@ -8,12 +8,11 @@ import SentimentBadge from "../common/SentimentBadge";
 import TimeIndicator from "../common/TimeIndicator";
 import CommentsSection from "../common/CommentSection";
 import { useAuth } from "@/contexts/AuthContext";
-import { 
-  transformReactionsToComments, 
-  countLoves, 
-  countComments, 
-  hasUserLoved, 
-  
+import {
+  transformReactionsToComments,
+  countLoves,
+  countComments,
+  hasUserLoved,
 } from "@/lib/news-service";
 
 const CommonNewsCard = ({
@@ -59,8 +58,6 @@ const CommonNewsCard = ({
     readTime,
   } = article || {};
 
-
-
   const truncatedContent = getTruncatedText(description);
   const shouldShowReadMore = description && description.length > 200;
 
@@ -92,7 +89,7 @@ const CommonNewsCard = ({
     try {
       await onPostLove?.(loveStatus);
     } catch (error) {
-      console.error('Failed to post love reaction:', error);
+      console.error("Failed to post love reaction:", error);
       // You might want to show an error toast here
     }
   };
@@ -107,7 +104,7 @@ const CommonNewsCard = ({
     try {
       await onPostComment?.(commentText);
     } catch (error) {
-      console.error('Failed to post comment:', error);
+      console.error("Failed to post comment:", error);
       // You might want to show an error toast here
       throw error; // Re-throw to let CommentsSection handle the error state
     }
@@ -132,12 +129,10 @@ const CommonNewsCard = ({
             isExpanded && "w-full"
           )}
         >
-          
-            <SentimentBadge
-              sentiment={sentiment}
-              className="mb-3 sm:mb-4 w-full"
-            />
-         
+          <SentimentBadge
+            sentiment={sentiment}
+            className="mb-3 sm:mb-4 w-full"
+          />
 
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
             {title}
@@ -162,29 +157,28 @@ const CommonNewsCard = ({
           {isHorizontal && (
             <div className="flex flex-col justify-between w-full">
               <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
-                
-                  <div>
-                    <InteractionButtons
-                      onCommentClick={handleCommentClick}
-                      onLoveClick={handleLoveClick}
-                      showCommentsCount={commentCount}
-                      isLoved={isLoved}
-                      loveCount={loveCount}
-                      disabled={!isLoggedIn}
-                    />
-                  </div>
-               
+                <div>
+                  <InteractionButtons
+                    onCommentClick={handleCommentClick}
+                    onLoveClick={handleLoveClick}
+                    showCommentsCount={commentCount}
+                    isLoved={isLoved}
+                    loveCount={loveCount}
+                    disabled={!isLoggedIn}
+                  />
+                </div>
+
                 {!isFeatured && <div className=""></div>}
               </div>
 
               {/* Comment Section */}
-              {showComments && (
+              {/* {showComments && (
                 <CommentsSection
                   comments={comments}
                   onPostComment={handleCommentSubmit}
                   disabled={!isLoggedIn}
                 />
-              )}
+              )} */}
             </div>
           )}
         </div>
@@ -245,20 +239,19 @@ const CommonNewsCard = ({
                 )}
                 {!isFeatured && <div className=""></div>}
               </div>
-
-              {/* Comment Section */}
-              {showComments && (
-                <CommentsSection
-                  comments={comments}
-                  onPostComment={handleCommentSubmit}
-                  disabled={!isLoggedIn}
-                  allComments={reactions}
-                />
-              )}
             </div>
           )}
         </div>
+        {/* Comment Section */}
       </div>
+      {showComments && (
+        <CommentsSection
+          comments={comments}
+          onPostComment={handleCommentSubmit}
+          disabled={!isLoggedIn}
+          allComments={reactions}
+        />
+      )}
 
       <AuthModal
         isOpen={authModalOpen}

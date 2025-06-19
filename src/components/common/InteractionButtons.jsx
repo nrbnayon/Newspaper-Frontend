@@ -1,3 +1,4 @@
+// src\components\common\InteractionButtons.jsx
 import { Heart, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";

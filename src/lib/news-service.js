@@ -1,4 +1,7 @@
+// Updated news-service.js with proper distribution
+
 import apiClient from "./auth-service";
+
 // ========================
 // NEWS API FUNCTIONS
 // ========================
@@ -49,7 +52,7 @@ const calculateReadTime = (content) => {
   return Math.max(1, readTime);
 };
 
-const getDefaultImage = (category = "general") => {
+export const getDefaultImage = (category = "general") => {
   const defaultImages = {
     technology:
       "https://images.pexels.com/photos/6476589/pexels-photo-6476589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -96,190 +99,124 @@ export const formatTimeAgo = (datetime) => {
   }
 };
 
-export const formatNewsArray = (newsArray) => {
-  if (!Array.isArray(newsArray)) {
-    console.warn("Expected array but received:", typeof newsArray);
-    return [];
-  }
-  return newsArray
-    .filter((item) => item && (item.title || item.description))
-    .map(formatNewsItem)
-    .sort(
-      (a, b) => new Date(b.publishedDateTime) - new Date(a.publishedDateTime)
-    );
-};
 
-export const getCategorizedNews = async () => {
-  try {
-    const allNews = await getAllNews();
-    const formattedNews = formatNewsArray(allNews);
-    const categorized = {
-      all: formattedNews,
-      featured: formattedNews.filter((item) => item.isFeatured),
-      byCategory: {},
-    };
-    formattedNews.forEach((item) => {
-      const category = item.category;
-      if (!categorized.byCategory[category]) {
-        categorized.byCategory[category] = [];
-      }
-      categorized.byCategory[category].push(item);
-    });
-
-    return categorized;
-  } catch (error) {
-    console.error("Failed to get categorized news:", error);
-    throw error;
-  }
-};
-
-export const organizeNewsByCategory = (allNews) => {
+// Updated organizeNewsByCategory function
+export const organizeNewsByCategory = (allNews, usedIds = new Set()) => {
   if (!Array.isArray(allNews) || allNews.length === 0) {
     return {};
   }
-  const availableNews = [...allNews];
+  const availableNews = allNews
+    .filter((article) => !usedIds.has(article.id))
+    .sort(
+      (a, b) => new Date(b.publishedDateTime) - new Date(a.publishedDateTime)
+    );
+
   const tabsData = {};
   const tabConfigs = [
     {
-      key: "international",
-      preferredCategories: ["International", "Politics", "War Coverage"],
+      key: "latests",
+      label: "Latest News",
       count: 8,
+      categoryFilter: null, 
     },
     {
-      key: "latestNews",
-      preferredCategories: ["Breaking News", "Latest News", "Updates", "Live"],
+      key: "politics",
+      label: "Politics",
       count: 8,
+      categoryFilter: ["politics", "government", "election", "policy"],
+    },
+    {
+      key: "Local",
+      label: "Local",
+      count: 8,
+      categoryFilter: ["local", "city", "community", "regional"],
     },
     {
       key: "whatWeKnow",
-      preferredCategories: ["Analysis", "Investigation", "Background"],
+      label: "Analysis",
       count: 8,
+      categoryFilter: ["analysis", "opinion", "editorial", "insight"],
     },
     {
       key: "maps",
-      preferredCategories: ["Geographic", "Regional", "Local"],
+      label: "Regional",
       count: 8,
+      categoryFilter: ["regional", "national", "international", "world"],
     },
     {
       key: "photos",
-      preferredCategories: ["Photography", "Visual", "Gallery"],
+      label: "Photos",
       count: 8,
+      categoryFilter: ["photos", "gallery", "images", "visual"],
     },
     {
       key: "tunnels",
-      preferredCategories: ["Investigation", "Technical", "Security"],
+      label: "Investigations",
       count: 8,
+      categoryFilter: ["investigation", "exclusive", "report", "expose"],
     },
     {
       key: "oneImage",
-      preferredCategories: ["Photo Story", "Featured", "Iconic"],
+      label: "Sports",
       count: 8,
+      categoryFilter: [
+        "sports",
+        "football",
+        "basketball",
+        "soccer",
+        "athletics",
+        "games",
+      ],
     },
   ];
+
+  // Helper function to check if article matches category
+  const matchesCategory = (article, categoryFilters) => {
+    if (!categoryFilters) return true;
+    const articleCategory = article.category.toLowerCase();
+    const articleTitle = article.title.toLowerCase();
+    const articleDescription = article.description.toLowerCase();
+
+    return categoryFilters.some(
+      (filter) =>
+        articleCategory.includes(filter.toLowerCase()) ||
+        articleTitle.includes(filter.toLowerCase()) ||
+        articleDescription.includes(filter.toLowerCase())
+    );
+  };
+
+  // UPDATED: Distribute articles based on categories
   tabConfigs.forEach((config) => {
-    const tabArticles = [];
-    config.preferredCategories.forEach((preferredCategory) => {
-      const matchingArticles = availableNews.filter(
-        (article) =>
-          article.category &&
-          article.category
-            .toLowerCase()
-            .includes(preferredCategory.toLowerCase())
+    let tabArticles = [];
+
+    if (config.categoryFilter) {
+      // Get articles matching the category
+      const categoryArticles = availableNews.filter((article) =>
+        matchesCategory(article, config.categoryFilter)
       );
-      matchingArticles.forEach((article) => {
-        if (tabArticles.length < config.count) {
-          tabArticles.push(article);
-          const index = availableNews.findIndex(
-            (item) => item.id === article.id
-          );
-          if (index > -1) {
-            availableNews.splice(index, 1);
-          }
-        }
-      });
-    });
-    while (tabArticles.length < config.count && availableNews.length > 0) {
-      tabArticles.push(availableNews.shift());
+
+      // Take up to the required count from category matches
+      tabArticles = categoryArticles.slice(0, config.count);
+
+      // If not enough category-specific articles, fill with general articles
+      if (tabArticles.length < config.count) {
+        const usedInThisTab = new Set(tabArticles.map((a) => a.id));
+        const generalArticles = availableNews.filter(
+          (article) => !usedInThisTab.has(article.id)
+        );
+
+        const needed = config.count - tabArticles.length;
+        tabArticles = [...tabArticles, ...generalArticles.slice(0, needed)];
+      }
+    } else {
+      // For "Latest News" - just take the most recent articles
+      tabArticles = availableNews.slice(0, config.count);
     }
 
     tabsData[config.key] = tabArticles;
   });
-  let tabIndex = 0;
-  while (availableNews.length > 0) {
-    const currentTab = tabConfigs[tabIndex % tabConfigs.length];
-    if (tabsData[currentTab.key].length < currentTab.count) {
-      tabsData[currentTab.key].push(availableNews.shift());
-    }
-    tabIndex++;
-  }
 
   return tabsData;
-};
-
-export const getHomepageNews = async () => {
-  try {
-    const categorizedNews = await getCategorizedNews();
-    const allNews = categorizedNews.all;
-
-    if (allNews.length === 0) {
-      throw new Error("No news articles available");
-    }
-    const availableNews = [...allNews];
-    const featured =
-      availableNews.find((item) => item.isFeatured) || availableNews[0];
-    if (featured) {
-      const featuredIndex = availableNews.findIndex(
-        (item) => item.id === featured.id
-      );
-      if (featuredIndex > -1) {
-        availableNews.splice(featuredIndex, 1);
-      }
-    }
-    const longRead =
-      availableNews.find((item) => item.readTime >= 10) ||
-      availableNews[
-        Math.floor(Math.random() * Math.min(5, availableNews.length))
-      ];
-    if (longRead) {
-      const longReadIndex = availableNews.findIndex(
-        (item) => item.id === longRead.id
-      );
-      if (longReadIndex > -1) {
-        availableNews.splice(longReadIndex, 1);
-      }
-    }
-    const sidebarArticles = availableNews.splice(0, 6);
-    const liveUpdates = availableNews.splice(0, 4).map((article) => ({
-      title: article.title,
-      description: article.description,
-      timeAgo: article.publishedTime,
-      category: article.category,
-      image: article.image,
-    }));
-    const audioNews = {
-      title: featured?.title || "Latest News Update",
-      description: featured?.description || "Stay updated with the latest news",
-      category: "THE HEADLINES",
-      sentiment: featured?.sentiment || "Neutral",
-      image: featured?.image || getDefaultImage(),
-    };
-    const tabsData = organizeNewsByCategory(availableNews);
-    return {
-      featured,
-      latest: allNews.slice(0, 10),
-      trending: allNews.slice(0, 6),
-      longRead,
-      audioNews,
-      liveUpdates,
-      sidebarArticles,
-      byCategory: categorizedNews.byCategory,
-      tabsData,
-      all: allNews,
-    };
-  } catch (error) {
-    console.error("Failed to get homepage news:", error);
-    throw error;
-  }
 };
 
 // ========================
@@ -296,7 +233,6 @@ export const getNewsReactions = async (newsId) => {
   }
 };
 
-// Separate API call for posting love reaction
 export const postNewsLove = async (newsId, loveStatus) => {
   try {
     const response = await apiClient.post(`/news/post/reactions/${newsId}/`, {
@@ -309,7 +245,6 @@ export const postNewsLove = async (newsId, loveStatus) => {
   }
 };
 
-// Separate API call for posting comment
 export const postNewsComment = async (newsId, commentText) => {
   try {
     const response = await apiClient.post(`/news/post/reactions/${newsId}/`, {
@@ -322,25 +257,19 @@ export const postNewsComment = async (newsId, commentText) => {
   }
 };
 
-// Legacy function - kept for backward compatibility but now uses separate calls
 export const postNewsReaction = async (newsId, reactionData) => {
   try {
     const promises = [];
-    
-    // If love reaction is provided, post it separately
-    if (reactionData.hasOwnProperty('love')) {
+
+    if (reactionData.hasOwnProperty("love")) {
       promises.push(postNewsLove(newsId, reactionData.love));
     }
-    
-    // If comment is provided, post it separately
-    if (reactionData.comment && reactionData.comment.trim() !== '') {
+
+    if (reactionData.comment && reactionData.comment.trim() !== "") {
       promises.push(postNewsComment(newsId, reactionData.comment));
     }
-    
-    // Execute all API calls
+
     const results = await Promise.all(promises);
-    
-    // Return the last result or the first one if only one call was made
     return results.length > 0 ? results[results.length - 1] : null;
   } catch (error) {
     console.error(`Failed to post reaction for news ID ${newsId}:`, error);
@@ -368,14 +297,18 @@ export const transformReactionsToComments = (reactions) => {
 
   return reactions
     .filter((reaction) => reaction.comment && reaction.comment.trim() !== "")
-    .map((reaction, index) => ({
+    .map((reaction) => ({
       id: reaction.id,
-      author: `User ${reaction.user}`,
+      author: reaction.user?.user_profile
+        ? `${reaction.user.user_profile.first_name || ""} ${
+            reaction.user.user_profile.last_name || ""
+          }`.trim() || "Anonymous"
+        : "Anonymous",
       content: reaction.comment,
       time: formatTimeAgo(reaction.created_at),
-      avatar: `https://images.unsplash.com/photo-${
-        1472099645785 + index
-      }?w=32&h=32&fit=crop&crop=face`,
+      avatar:
+        reaction.user?.user_profile?.profile_picture ||
+        "/images/default-avatar.jpg",
       loved: reaction.love,
     }));
 };
@@ -392,11 +325,17 @@ export const countComments = (reactions) => {
   ).length;
 };
 
+// In src/lib/news-service.js
+
 export const hasUserLoved = (reactions, currentUserId) => {
-  if (!Array.isArray(reactions)) return false;
-  return reactions.some(
-    (reaction) => reaction.user === currentUserId && reaction.love === true
-  );
+  if (!Array.isArray(reactions) || !currentUserId) return false;
+  const userLoveReactions = reactions
+    .filter(
+      (reaction) => reaction.user.id === currentUserId && reaction.love !== null
+    )
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  if (userLoveReactions.length === 0) return false;
+  return userLoveReactions[0].love === true;
 };
 
 export const getUserComment = (reactions, currentUserId) => {
@@ -405,7 +344,3 @@ export const getUserComment = (reactions, currentUserId) => {
   );
   return userReaction ? userReaction.comment : null;
 };
-
-
-
-

@@ -1,4 +1,3 @@
-// src/pages/HomePage.jsx
 import { Helmet } from "react-helmet-async";
 import { useRef, useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
@@ -10,45 +9,53 @@ import TabbedNewsSection from "@/components/news/TabbedNewsSection";
 import CommonNewsCard from "@/components/news/CommonNewsCard";
 import ListedNewsSection from "@/components/news/ListedNewsSection";
 import { FooterSection } from "@/components/footer/FooterSection";
-import { 
-  getAllNews, 
-  formatNewsItem, 
-  getNewsReactions, 
-  postNewsLove, 
-  postNewsComment 
+import {
+  getAllNews,
+  formatNewsItem,
+  getNewsReactions,
+  postNewsLove,
+  postNewsComment,
+  getDefaultImage,
 } from "@/lib/news-service";
-import { useAuth } from "@/contexts/AuthContext";
+
+const shuffleWithLatest = (
+  array,
+  keepLatestCount = 1,
+  forceReshuffle = false
+) => {
+  if (!array || array.length <= 1) return array;
+  const latest = array.slice(0, keepLatestCount);
+  const remaining = array.slice(keepLatestCount);
+  const seed = Date.now() + Math.random() * 1000000;
+  const shuffled = [...remaining];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const randomFactor = (seed + i) * 0.12345;
+    const j = Math.floor(
+      (Math.sin(randomFactor) * 10000 + Math.random()) % (i + 1)
+    );
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return [...latest, ...shuffled];
+};
 
 export default function HomePage() {
   const footerRef = useRef(null);
-  const { user } = useAuth();
   const [newsData, setNewsData] = useState({
-    allNews: [],
-    featuredArticle: null,
-    audioNews: null,
-    liveUpdates: [],
-    longReadArticle: null,
-    sidebarArticles: [],
-    tabsData: {},
+    sections: [],
     loading: true,
     error: null,
   });
-
-  // Store reactions for each news article
   const [newsReactions, setNewsReactions] = useState({});
   const [loadingReactions, setLoadingReactions] = useState({});
 
   // Fetch reactions for a specific news article
   const fetchNewsReactions = async (newsId) => {
     if (loadingReactions[newsId]) return;
-
     try {
       setLoadingReactions((prev) => ({ ...prev, [newsId]: true }));
       const reactions = await getNewsReactions(newsId);
-      setNewsReactions((prev) => ({
-        ...prev,
-        [newsId]: reactions,
-      }));
+      setNewsReactions((prev) => ({ ...prev, [newsId]: reactions }));
     } catch (error) {
       console.error(`Failed to fetch reactions for news ${newsId}:`, error);
     } finally {
@@ -60,16 +67,11 @@ export default function HomePage() {
   const handlePostLove = async (newsId, loveStatus) => {
     try {
       const newReaction = await postNewsLove(newsId, loveStatus);
-
-      // Update reactions in state
       setNewsReactions((prev) => ({
         ...prev,
         [newsId]: prev[newsId] ? [...prev[newsId], newReaction] : [newReaction],
       }));
-
-      // Refresh reactions to get the latest state
       await fetchNewsReactions(newsId);
-
       return newReaction;
     } catch (error) {
       console.error(`Failed to post love reaction for news ${newsId}:`, error);
@@ -80,21 +82,15 @@ export default function HomePage() {
   // Handle posting comment
   const handlePostComment = async (newsId, commentText) => {
     try {
-      if (!commentText || commentText.trim() === '') {
-        throw new Error('Comment cannot be empty');
+      if (!commentText || commentText.trim() === "") {
+        throw new Error("Comment cannot be empty");
       }
-
       const newReaction = await postNewsComment(newsId, commentText.trim());
-
-      // Update reactions in state
       setNewsReactions((prev) => ({
         ...prev,
         [newsId]: prev[newsId] ? [...prev[newsId], newReaction] : [newReaction],
       }));
-
-      // Refresh reactions to get the latest state
       await fetchNewsReactions(newsId);
-
       return newReaction;
     } catch (error) {
       console.error(`Failed to post comment for news ${newsId}:`, error);
@@ -102,24 +98,17 @@ export default function HomePage() {
     }
   };
 
-  // Combined reaction handler for backward compatibility with existing components
+  // Combined reaction handler
   const handlePostReaction = async (newsId, reactionData) => {
     try {
       const promises = [];
-      
-      // Handle love reaction
-      if (reactionData.hasOwnProperty('love')) {
+      if (reactionData.hasOwnProperty("love")) {
         promises.push(handlePostLove(newsId, reactionData.love));
       }
-      
-      // Handle comment
-      if (reactionData.comment && reactionData.comment.trim() !== '') {
+      if (reactionData.comment && reactionData.comment.trim() !== "") {
         promises.push(handlePostComment(newsId, reactionData.comment));
       }
-      
-      // Execute all reactions
       const results = await Promise.all(promises);
-      
       return results.length > 0 ? results[results.length - 1] : null;
     } catch (error) {
       console.error(`Failed to post reaction for news ${newsId}:`, error);
@@ -127,48 +116,45 @@ export default function HomePage() {
     }
   };
 
-  // Fetch reactions for all visible news articles
-  const fetchAllReactions = async (articles) => {
-    const promises = articles.map((article) =>
-      fetchNewsReactions(article.id).catch((err) =>
-        console.warn(
-          `Failed to fetch reactions for article ${article.id}:`,
-          err
-        )
-      )
-    );
-    await Promise.allSettled(promises);
-  };
-
-  // Fetch and format news data
+  // Fetch and organize news data
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
         setNewsData((prev) => ({ ...prev, loading: true }));
 
-        const allNews = await getAllNews();
-        console.log("Get All News in data::: ", allNews);
+        // Clear any cached reactions to ensure fresh data
+        setNewsReactions({});
+        setLoadingReactions({});
 
+        const allNews = await getAllNews();
         if (!allNews || allNews.length === 0) {
           throw new Error("No news data received");
         }
 
-        const formattedNews = allNews.map(formatNewsItem);
-        const organizedData = organizeNewsData(formattedNews);
+        // Format and sort news by publish time (latest first)
+        const formattedNews = allNews
+          .map(formatNewsItem)
+          .filter((article) => article && article.id) // Filter out invalid articles
+          .sort(
+            (a, b) =>
+              new Date(b.publishedDateTime) - new Date(a.publishedDateTime)
+          );
 
+        // Create a timestamp-based seed for consistent randomization per session
+        const sessionSeed = Date.now() + Math.floor(Math.random() * 1000);
+
+        // Multiple shuffle passes for better randomization
+        let shuffledNews = [...formattedNews];
+        for (let pass = 0; pass < 3; pass++) {
+          shuffledNews = shuffleWithLatest(shuffledNews, 1, true);
+        }
+
+        const organizedSections = organizeNewsData(shuffledNews);
         setNewsData({
-          allNews: formattedNews,
-          featuredArticle: organizedData.featuredArticle,
-          audioNews: organizedData.audioNews,
-          liveUpdates: organizedData.liveUpdates,
-          longReadArticle: organizedData.longReadArticle,
-          sidebarArticles: organizedData.sidebarArticles,
-          tabsData: organizedData.tabsData,
+          sections: organizedSections,
           loading: false,
           error: null,
         });
-
-        // Fetch reactions for all articles
         await fetchAllReactions(formattedNews);
       } catch (error) {
         console.error("Failed to fetch news data:", error);
@@ -179,151 +165,334 @@ export default function HomePage() {
         }));
       }
     };
-
     fetchNewsData();
   }, []);
 
-  const organizeNewsData = (allNews) => {
-    const sortedNews = [...allNews].sort(
-      (a, b) =>
-        new Date(b.publishedDateTime || 0) - new Date(a.publishedDateTime || 0)
-    );
-
-    const featuredArticle =
-      sortedNews.find((article) => article.isFeatured) || sortedNews[0];
-
-    const audioNews = {
-      title: featuredArticle?.title || "Latest News Update",
-      description:
-        featuredArticle?.content || "Stay updated with the latest news",
-      category: "THE HEADLINES",
-      sentiment: featuredArticle?.sentiment || "Neutral",
-      image:
-        featuredArticle?.image ||
-        "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    };
-
-    const liveUpdates = sortedNews.slice(0, 4).map((article) => ({
-      id: article.id,
-      title: article.title,
-      description: article.content || article.description,
-      timeAgo: article.publishedTime,
-      category: article.category,
-      image: article.image,
-    }));
-
-    const longReadArticle =
-      sortedNews.find((article) => article.readTime >= 10) ||
-      sortedNews[Math.floor(Math.random() * Math.min(5, sortedNews.length))];
-
-    // Create unique sidebar articles (avoiding duplicates)
-    const usedIds = new Set(
-      [
-        featuredArticle?.id,
-        longReadArticle?.id,
-        ...liveUpdates.map((update) => update.id),
-      ].filter(Boolean)
-    );
-
-    const sidebarArticles = sortedNews
-      .filter((article) => !usedIds.has(article.id))
-      .slice(0, 6);
-
-    const tabsData = organizeNewsByCategory(sortedNews);
-
-    return {
-      featuredArticle,
-      audioNews,
-      liveUpdates,
-      longReadArticle,
-      sidebarArticles,
-      tabsData,
-    };
+  const fetchAllReactions = async (articles) => {
+    const promises = articles
+      .filter((article) => article && article.id) // Filter out invalid articles
+      .map((article) =>
+        fetchNewsReactions(article.id).catch((err) =>
+          console.warn(
+            `Failed to fetch reactions for article ${article.id}:`,
+            err
+          )
+        )
+      );
+    await Promise.allSettled(promises);
   };
 
-  const organizeNewsByCategory = (allNews) => {
-    const availableNews = [...allNews];
-    const tabsData = {};
+  const organizeNewsData = (allNews) => {
+    const sections = [];
+    let availableNews = [...allNews];
+    const assignedIds = new Set();
 
-    const tabConfigs = [
-      { key: "latests", label: "Latest News", count: 8 },
-      { key: "whatWeKnow", label: "Analysis", count: 8 },
-      { key: "maps", label: "Regional", count: 8 },
-      { key: "photos", label: "Photos", count: 8 },
-      { key: "tunnels", label: "Investigations", count: 8 },
-      { key: "oneImage", label: "Featured Stories", count: 8 },
-    ];
+    // Validate input
+    if (!allNews || allNews.length === 0) {
+      console.warn("No news articles provided to organizeNewsData");
+      return sections;
+    }
 
-    // Distribute articles across tabs ensuring each gets exactly 8 unique articles
-    tabConfigs.forEach((config, index) => {
-      const startIndex = index * config.count;
-      const endIndex = Math.min(
-        startIndex + config.count,
-        availableNews.length
-      );
-      tabsData[config.key] = availableNews.slice(startIndex, endIndex);
-    });
+    // Filter out any invalid articles upfront
+    availableNews = availableNews.filter(
+      (article) =>
+        article && typeof article === "object" && article.id && article.title
+    );
 
-    // If we have remaining articles, distribute them cyclically
-    const remainingNews = availableNews.slice(tabConfigs.length * 8);
-    remainingNews.forEach((article, index) => {
-      const tabIndex = index % tabConfigs.length;
-      const tabKey = tabConfigs[tabIndex].key;
-      if (tabsData[tabKey].length < 12) {
-        // Allow up to 12 articles per tab
-        tabsData[tabKey].push(article);
+    if (availableNews.length === 0) {
+      console.warn("No valid news articles after filtering");
+      return sections;
+    }
+
+    // Create multiple sections with different shuffling for variety
+    const maxSections = Math.min(3, Math.ceil(availableNews.length / 20));
+
+    for (
+      let sectionIndex = 0;
+      sectionIndex < maxSections && availableNews.length > 10;
+      sectionIndex++
+    ) {
+      const section = {};
+
+      // Shuffle available news for this section to create variety
+      const sectionNews = shuffleWithLatest([...availableNews], 0, true);
+
+      const assignUniqueArticles = (count) => {
+        const articles = [];
+        let attempts = 0;
+        const maxAttempts = Math.min(count * 2, sectionNews.length * 2);
+
+        while (
+          articles.length < count &&
+          sectionNews.length > 0 &&
+          attempts < maxAttempts
+        ) {
+          const randomIndex = Math.floor(Math.random() * sectionNews.length);
+          const article = sectionNews[randomIndex];
+
+          // Validate article before processing
+          if (
+            article &&
+            typeof article === "object" &&
+            article.id &&
+            !assignedIds.has(article.id)
+          ) {
+            articles.push(article);
+            assignedIds.add(article.id);
+
+            // Remove from sectionNews array safely
+            sectionNews.splice(randomIndex, 1);
+
+            // Remove from availableNews array safely
+            const originalIndex = availableNews.findIndex(
+              (a) => a && a.id === article.id
+            );
+            if (originalIndex > -1) {
+              availableNews.splice(originalIndex, 1);
+            }
+          } else {
+            // Remove invalid article from sectionNews
+            if (randomIndex < sectionNews.length) {
+              sectionNews.splice(randomIndex, 1);
+            }
+          }
+          attempts++;
+        }
+
+        return articles;
+      };
+
+      // Featured Article
+      const featuredArticles = assignUniqueArticles(1);
+      section.featuredArticle =
+        featuredArticles.length > 0 ? featuredArticles[0] : null;
+
+      if (!section.featuredArticle) {
+        console.warn(
+          `No featured article available for section ${sectionIndex}`
+        );
+        break;
       }
-    });
 
-    return tabsData;
+      // Audio News - Get a different article, not the featured one
+      const audioNewsArticles = assignUniqueArticles(1);
+      const audioNewsArticle =
+        audioNewsArticles.length > 0 ? audioNewsArticles[0] : null;
+
+      section.audioNews = audioNewsArticle
+        ? {
+            title: audioNewsArticle.title || "Latest News Update",
+            description:
+              audioNewsArticle.description ||
+              "Stay updated with the latest news",
+            category: "THE HEADLINES",
+            sentiment: audioNewsArticle.sentiment || "Neutral",
+            image: audioNewsArticle.image || getDefaultImage(),
+          }
+        : null;
+
+      const longReadArticles = assignUniqueArticles(1);
+      section.longReadArticle =
+        longReadArticles.length > 0 ? longReadArticles[0] : null;
+
+      const liveUpdateArticles = assignUniqueArticles(4);
+      section.liveUpdates = liveUpdateArticles
+        .filter((article) => article && article.id)
+        .map((article) => ({
+          id: article.id,
+          title: article.title || "Untitled",
+          description: article.description || "",
+          timeAgo: article.publishedTime || "Recently",
+          category: article.category || "News",
+          image: article.image || getDefaultImage(),
+        }));
+
+      // Ensure sidebarArticles is always an array of valid articles
+      const sidebarArticlesRaw = assignUniqueArticles(6);
+      section.sidebarArticles = sidebarArticlesRaw.filter(
+        (article) => article && article.id
+      );
+
+      section.tabsData = {};
+      const remainingArticles = availableNews.filter(
+        (article) => article && article.id && !assignedIds.has(article.id)
+      );
+
+      const articlesByCategory = {};
+      remainingArticles.forEach((article) => {
+        if (!article || !article.category) return;
+
+        const category = article.category.toLowerCase();
+        if (!articlesByCategory[category]) {
+          articlesByCategory[category] = [];
+        }
+        articlesByCategory[category].push(article);
+      });
+
+      Object.keys(articlesByCategory).forEach((category) => {
+        articlesByCategory[category] = shuffleWithLatest(
+          articlesByCategory[category],
+          0,
+          true
+        );
+      });
+
+      const tabConfigs = [
+        {
+          key: "latests",
+          label: "Latest News",
+          count: 8,
+          categoryFilter: null,
+        },
+        {
+          key: "politics",
+          label: "Politics",
+          count: 8,
+          categoryFilter: "politics",
+        },
+        { key: "Local", label: "Local", count: 8, categoryFilter: "local" },
+        {
+          key: "whatWeKnow",
+          label: "Analysis",
+          count: 8,
+          categoryFilter: "analysis",
+        },
+        {
+          key: "maps",
+          label: "Regional",
+          count: 8,
+          categoryFilter: "regional",
+        },
+        { key: "photos", label: "Photos", count: 8, categoryFilter: "photos" },
+        {
+          key: "tunnels",
+          label: "Investigations",
+          count: 8,
+          categoryFilter: "investigations",
+        },
+        {
+          key: "oneImage",
+          label: "Sports",
+          count: 8,
+          categoryFilter: "sports",
+        },
+      ];
+
+      tabConfigs.forEach((config) => {
+        let tabArticles = [];
+
+        if (config.categoryFilter) {
+          const categoryArticles =
+            articlesByCategory[config.categoryFilter] || [];
+          tabArticles = [...categoryArticles.slice(0, config.count)];
+
+          if (tabArticles.length < config.count) {
+            const otherArticles = shuffleWithLatest(
+              remainingArticles.filter(
+                (article) =>
+                  article &&
+                  article.id &&
+                  !tabArticles.find(
+                    (existing) => existing && existing.id === article.id
+                  ) &&
+                  !assignedIds.has(article.id)
+              ),
+              0,
+              true
+            );
+            const needed = config.count - tabArticles.length;
+            tabArticles = [...tabArticles, ...otherArticles.slice(0, needed)];
+          }
+        } else {
+          const validRemainingArticles = remainingArticles.filter(
+            (article) => article && article.id && !assignedIds.has(article.id)
+          );
+
+          const sortedByDate = validRemainingArticles.sort((a, b) => {
+            const dateA = new Date(a.publishedDateTime || 0);
+            const dateB = new Date(b.publishedDateTime || 0);
+            return dateB - dateA;
+          });
+          const latest = sortedByDate.slice(0, 2);
+          const others = shuffleWithLatest(sortedByDate.slice(2), 0, true);
+          tabArticles = [...latest, ...others].slice(0, config.count);
+        }
+
+        // Filter out invalid articles and mark as assigned
+        tabArticles = tabArticles.filter((article) => {
+          if (article && article.id) {
+            assignedIds.add(article.id);
+            return true;
+          }
+          return false;
+        });
+
+        section.tabsData[config.key] = tabArticles;
+      });
+
+      sections.push(section);
+    }
+
+    if (sections.length === 1 && availableNews.length > 0) {
+      const validRemainingNews = availableNews.filter(
+        (article) => article && article.id && !assignedIds.has(article.id)
+      );
+
+      if (validRemainingNews.length > 0) {
+        const additionalSection = { ...sections[0] };
+        const remainingShuffled = shuffleWithLatest(
+          validRemainingNews,
+          0,
+          true
+        );
+        if (remainingShuffled.length > 0) {
+          additionalSection.featuredArticle = remainingShuffled[0];
+          additionalSection.sidebarArticles = remainingShuffled
+            .slice(1, 7)
+            .filter((article) => article && article.id); // Filter out invalid articles
+          sections.push(additionalSection);
+        }
+      }
+    }
+
+    return sections;
   };
 
   const generateTabsConfig = (tabsData) => {
     const defaultConfig = [
       { key: "latests", label: "Latest News", isDefault: true },
+      { key: "politics", label: "Politics", count: 8 },
+      { key: "Local", label: "Local", count: 8 },
       { key: "whatWeKnow", label: "Analysis" },
       { key: "maps", label: "Regional" },
       { key: "photos", label: "Photos" },
       { key: "tunnels", label: "Investigations" },
-      { key: "oneImage", label: "Featured Stories" },
+      { key: "oneImage", label: "Sports" },
     ];
-
     return defaultConfig.filter(
       (config) => tabsData[config.key] && tabsData[config.key].length > 0
     );
   };
 
-  // Function to scroll to footer
   const scrollToFooter = () => {
     if (footerRef.current) {
-      footerRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      footerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
-  // Listen for custom event from Navbar
   useEffect(() => {
-    const handleScrollToAbout = () => {
-      scrollToFooter();
-    };
-
+    const handleScrollToAbout = () => scrollToFooter();
     window.addEventListener("scrollToAbout", handleScrollToAbout);
-
-    return () => {
+    return () =>
       window.removeEventListener("scrollToAbout", handleScrollToAbout);
-    };
   }, []);
 
-  // Loading component
   const LoadingComponent = () => (
     <div className="flex items-center justify-center min-h-screen">
       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
     </div>
   );
 
-  // Error component
   const ErrorComponent = ({ error }) => (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center">
@@ -341,11 +510,8 @@ export default function HomePage() {
     </div>
   );
 
-  // Show loading or error states
   if (newsData.loading) return <LoadingComponent />;
   if (newsData.error) return <ErrorComponent error={newsData.error} />;
-
-  const tabsConfig = generateTabsConfig(newsData.tabsData);
 
   return (
     <>
@@ -359,83 +525,84 @@ export default function HomePage() {
 
       <div className="min-h-screen">
         <Navbar onScrollToAbout={scrollToFooter} />
-
-        {/* Add top padding to account for fixed navbar */}
         <main className="w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
           <div className="">
-            {/* Main Layout - Responsive Grid */}
-            <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
-              {/* Main Content Area */}
-              <div className="w-full">
-                {/* Featured Article Section */}
-                {newsData.featuredArticle && (
-                  <div className="mb-8">
-                    <CommonNewsCard
-                      article={newsData.featuredArticle}
-                      reactions={
-                        newsReactions[newsData.featuredArticle.id] || []
-                      }
-                      onPostReaction={(reactionData) =>
-                        handlePostReaction(
-                          newsData.featuredArticle.id,
-                          reactionData
-                        )
-                      }
-                      onPostLove={(loveStatus) =>
-                        handlePostLove(newsData.featuredArticle.id, loveStatus)
-                      }
-                      onPostComment={(commentText) =>
-                        handlePostComment(newsData.featuredArticle.id, commentText)
-                      }
-                    />
-                  </div>
-                )}
+            {newsData.sections.map((section, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12"
+              >
+                {/* Main Content Area */}
+                <div className="w-full">
+                  {section.featuredArticle && (
+                    <div className="mb-8">
+                      <CommonNewsCard
+                        article={section.featuredArticle}
+                        reactions={
+                          newsReactions[section.featuredArticle.id] || []
+                        }
+                        onPostReaction={(reactionData) =>
+                          handlePostReaction(
+                            section.featuredArticle.id,
+                            reactionData
+                          )
+                        }
+                        onPostLove={(loveStatus) =>
+                          handlePostLove(section.featuredArticle.id, loveStatus)
+                        }
+                        onPostComment={(commentText) =>
+                          handlePostComment(
+                            section.featuredArticle.id,
+                            commentText
+                          )
+                        }
+                      />
+                    </div>
+                  )}
 
-                {/* Audio News Section */}
-                {newsData.audioNews && (
-                  <div className="mb-8">
-                    <AudioNewsCard {...newsData.audioNews} />
-                  </div>
-                )}
+                  {section.audioNews && (
+                    <div className="mb-8">
+                      <AudioNewsCard {...section.audioNews} />
+                    </div>
+                  )}
 
-                {/* Long Read Article */}
-                {newsData.longReadArticle && (
-                  <NewsSection>
-                    <CommonNewsCard
-                      article={newsData.longReadArticle}
-                      reactions={
-                        newsReactions[newsData.longReadArticle.id] || []
-                      }
-                      onPostReaction={(reactionData) =>
-                        handlePostReaction(
-                          newsData.longReadArticle.id,
-                          reactionData
-                        )
-                      }
-                      onPostLove={(loveStatus) =>
-                        handlePostLove(newsData.longReadArticle.id, loveStatus)
-                      }
-                      onPostComment={(commentText) =>
-                        handlePostComment(newsData.longReadArticle.id, commentText)
-                      }
-                    />
-                  </NewsSection>
-                )}
+                  {section.longReadArticle && (
+                    <NewsSection>
+                      <CommonNewsCard
+                        article={section.longReadArticle}
+                        reactions={
+                          newsReactions[section.longReadArticle.id] || []
+                        }
+                        onPostReaction={(reactionData) =>
+                          handlePostReaction(
+                            section.longReadArticle.id,
+                            reactionData
+                          )
+                        }
+                        onPostLove={(loveStatus) =>
+                          handlePostLove(section.longReadArticle.id, loveStatus)
+                        }
+                        onPostComment={(commentText) =>
+                          handlePostComment(
+                            section.longReadArticle.id,
+                            commentText
+                          )
+                        }
+                      />
+                    </NewsSection>
+                  )}
 
-                {/* Live Updates Section */}
-                {newsData.liveUpdates.length > 0 && (
-                  <NewsSection>
-                    <LiveUpdateCard updates={newsData.liveUpdates} />
-                  </NewsSection>
-                )}
+                  {section.liveUpdates && section.liveUpdates.length > 0 && (
+                    <NewsSection>
+                      <LiveUpdateCard updates={section.liveUpdates} />
+                    </NewsSection>
+                  )}
 
-                {/* Tabbed News Section */}
-                {Object.keys(newsData.tabsData).length > 0 &&
-                  tabsConfig.length > 0 && (
+                  {Object.keys(section.tabsData).length > 0 && (
                     <div className="mb-8">
                       <TabbedNewsSection
-                        dynamicTabsData={newsData.tabsData}
-                        dynamicTabsConfig={tabsConfig}
+                        dynamicTabsData={section.tabsData}
+                        dynamicTabsConfig={generateTabsConfig(section.tabsData)}
                         newsReactions={newsReactions}
                         onPostReaction={handlePostReaction}
                         onPostLove={handlePostLove}
@@ -444,19 +611,17 @@ export default function HomePage() {
                     </div>
                   )}
 
-                <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
-                  <span className="text-gray-600 text-sm">
-                    Center Advertise Space
-                  </span>
-                </div>
+                  <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
+                    <span className="text-gray-600 text-sm">
+                      Center Advertise Space
+                    </span>
+                  </div>
 
-                {/* Listed News Section */}
-                {Object.keys(newsData.tabsData).length > 0 &&
-                  tabsConfig.length > 0 && (
+                  {Object.keys(section.tabsData).length > 0 && (
                     <div className="mb-8">
                       <ListedNewsSection
-                        dynamicTabsData={newsData.tabsData}
-                        dynamicTabsConfig={tabsConfig}
+                        dynamicTabsData={section.tabsData}
+                        dynamicTabsConfig={generateTabsConfig(section.tabsData)}
                         newsReactions={newsReactions}
                         onPostReaction={handlePostReaction}
                         onPostLove={handlePostLove}
@@ -465,169 +630,184 @@ export default function HomePage() {
                     </div>
                   )}
 
-                <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
-                  <span className="text-gray-600 text-sm">
-                    Bottom Advertise Space
-                  </span>
+                  <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg hidden md:flex items-center justify-center mb-6">
+                    <span className="text-gray-600 text-sm">
+                      Bottom Advertise Space
+                    </span>
+                  </div>
                 </div>
+
+                {/* Sidebar */}
+                <aside className="w-full xl:w-full">
+                  <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
+                    <span className="text-gray-600 text-sm">Top Ad Space</span>
+                  </div>
+
+                  {/* Mobile sidebar articles with proper validation */}
+                  {section.sidebarArticles &&
+                    section.sidebarArticles.length > 0 && (
+                      <div className="xl:hidden w-full mb-6">
+                        <h4 className="text-md font-semibold text-gray-700 mb-4">
+                          Trending Now
+                        </h4>
+                        <div className="space-y-4">
+                          {section.sidebarArticles
+                            .filter((article) => article && article.id) // Filter out invalid articles
+                            .slice(0, 3)
+                            .map((article) => (
+                              <div key={article.id} className="w-full">
+                                <StandardArticleCard
+                                  article={article}
+                                  reactions={newsReactions[article.id] || []}
+                                  onPostReaction={(reactionData) =>
+                                    handlePostReaction(article.id, reactionData)
+                                  }
+                                  onPostLove={(loveStatus) =>
+                                    handlePostLove(article.id, loveStatus)
+                                  }
+                                  onPostComment={(commentText) =>
+                                    handlePostComment(article.id, commentText)
+                                  }
+                                />
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
+                  <div className="xl:hidden w-full h-28 sm:h-36 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
+                    <span className="text-gray-600 text-sm">Mid Ad Space</span>
+                  </div>
+
+                  {/* Mobile sidebar articles (second batch) with proper validation */}
+                  {section.sidebarArticles &&
+                    section.sidebarArticles.length > 3 && (
+                      <div className="xl:hidden w-full mb-6">
+                        <div className="space-y-4">
+                          {section.sidebarArticles
+                            .filter((article) => article && article.id) // Filter out invalid articles
+                            .slice(3, 6)
+                            .map((article) => (
+                              <div key={article.id} className="w-full">
+                                <StandardArticleCard
+                                  article={article}
+                                  reactions={newsReactions[article.id] || []}
+                                  onPostReaction={(reactionData) =>
+                                    handlePostReaction(article.id, reactionData)
+                                  }
+                                  onPostLove={(loveStatus) =>
+                                    handlePostLove(article.id, loveStatus)
+                                  }
+                                  onPostComment={(commentText) =>
+                                    handlePostComment(article.id, commentText)
+                                  }
+                                />
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
+                  <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-8">
+                    <span className="text-gray-600 text-sm">
+                      Bottom Ad Space
+                    </span>
+                  </div>
+
+                  {/* Desktop sidebar */}
+                  <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
+                    <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
+                      Advertisement Area
+                    </h3>
+                    <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
+                      <span className="text-gray-600 text-sm">
+                        Sidebar Top Ad
+                      </span>
+                    </div>
+
+                    {/* Desktop sidebar articles with proper validation */}
+                    {section.sidebarArticles &&
+                      section.sidebarArticles.length > 0 && (
+                        <div className="w-full">
+                          <h4 className="text-md font-semibold text-gray-700 mb-4">
+                            Trending Now
+                          </h4>
+                          <div className="space-y-4">
+                            {section.sidebarArticles
+                              .filter((article) => article && article.id) // Filter out invalid articles
+                              .slice(0, 3)
+                              .map((article) => (
+                                <div key={article.id} className="w-full">
+                                  <StandardArticleCard
+                                    article={article}
+                                    reactions={newsReactions[article.id] || []}
+                                    onPostReaction={(reactionData) =>
+                                      handlePostReaction(
+                                        article.id,
+                                        reactionData
+                                      )
+                                    }
+                                    onPostLove={(loveStatus) =>
+                                      handlePostLove(article.id, loveStatus)
+                                    }
+                                    onPostComment={(commentText) =>
+                                      handlePostComment(article.id, commentText)
+                                    }
+                                  />
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+
+                    <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center my-6">
+                      <span className="text-gray-600 text-sm">
+                        Sidebar Mid Ad
+                      </span>
+                    </div>
+
+                    {section.sidebarArticles &&
+                      section.sidebarArticles.length > 3 && (
+                        <div className="w-full">
+                          <div className="space-y-4">
+                            {section.sidebarArticles
+                              .filter((article) => article && article.id) 
+                              .slice(3, 6)
+                              .map((article) => (
+                                <div key={article.id} className="w-full">
+                                  <StandardArticleCard
+                                    article={article}
+                                    reactions={newsReactions[article.id] || []}
+                                    onPostReaction={(reactionData) =>
+                                      handlePostReaction(
+                                        article.id,
+                                        reactionData
+                                      )
+                                    }
+                                    onPostLove={(loveStatus) =>
+                                      handlePostLove(article.id, loveStatus)
+                                    }
+                                    onPostComment={(commentText) =>
+                                      handlePostComment(article.id, commentText)
+                                    }
+                                  />
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+
+                    <div className="w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mt-6">
+                      <span className="text-gray-600 text-sm">
+                        Sidebar Bottom Ad
+                      </span>
+                    </div>
+                  </div>
+                </aside>
               </div>
-
-              {/* Sidebar - Advertisement Area */}
-              <aside className="w-full xl:w-full">
-                {/* First Ad Block - Mobile/Tablet */}
-                <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-                  <span className="text-gray-600 text-sm">Top Ad Space</span>
-                </div>
-
-                {/* Trending Articles - First Set */}
-                {newsData.sidebarArticles.length > 0 && (
-                  <div className="xl:hidden w-full mb-6">
-                    <h4 className="text-md font-semibold text-gray-700 mb-4">
-                      Trending Now
-                    </h4>
-                    <div className="space-y-4">
-                      {newsData.sidebarArticles.slice(0, 3).map((article) => (
-                        <div key={article.id} className="w-full">
-                          <StandardArticleCard
-                            article={article}
-                            reactions={newsReactions[article.id] || []}
-                            onPostReaction={(reactionData) =>
-                              handlePostReaction(article.id, reactionData)
-                            }
-                            onPostLove={(loveStatus) =>
-                              handlePostLove(article.id, loveStatus)
-                            }
-                            onPostComment={(commentText) =>
-                              handlePostComment(article.id, commentText)
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Second Ad Block - Mobile/Tablet */}
-                <div className="xl:hidden w-full h-28 sm:h-36 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-                  <span className="text-gray-600 text-sm">Mid Ad Space</span>
-                </div>
-
-                {/* Trending Articles - Second Set */}
-                {newsData.sidebarArticles.length > 3 && (
-                  <div className="xl:hidden w-full mb-6">
-                    <div className="space-y-4">
-                      {newsData.sidebarArticles.slice(3, 6).map((article) => (
-                        <div key={article.id} className="w-full">
-                          <StandardArticleCard
-                            article={article}
-                            reactions={newsReactions[article.id] || []}
-                            onPostReaction={(reactionData) =>
-                              handlePostReaction(article.id, reactionData)
-                            }
-                            onPostLove={(loveStatus) =>
-                              handlePostLove(article.id, loveStatus)
-                            }
-                            onPostComment={(commentText) =>
-                              handlePostComment(article.id, commentText)
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Third Ad Block - Mobile/Tablet */}
-                <div className="xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-8">
-                  <span className="text-gray-600 text-sm">Bottom Ad Space</span>
-                </div>
-
-                {/* Desktop Sidebar Layout */}
-                <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
-                  <h3 className="text-lg font-bold text-gray-700 mb-4 text-center">
-                    Advertisement Area
-                  </h3>
-
-                  {/* Top Ad in Sidebar */}
-                  <div className="w-full h-48 sm:h-64 bg-gray-300 rounded-lg flex items-center justify-center mb-6">
-                    <span className="text-gray-600 text-sm">
-                      Sidebar Top Ad
-                    </span>
-                  </div>
-
-                  {/* Sidebar News Articles */}
-                  {newsData.sidebarArticles.length > 0 && (
-                    <div className="w-full">
-                      <h4 className="text-md font-semibold text-gray-700 mb-4">
-                        Trending Now
-                      </h4>
-                      <div className="space-y-4">
-                        {newsData.sidebarArticles.slice(0, 3).map((article) => (
-                          <div key={article.id} className="w-full">
-                            <StandardArticleCard
-                              article={article}
-                              reactions={newsReactions[article.id] || []}
-                              onPostReaction={(reactionData) =>
-                                handlePostReaction(article.id, reactionData)
-                              }
-                              onPostLove={(loveStatus) =>
-                                handlePostLove(article.id, loveStatus)
-                              }
-                              onPostComment={(commentText) =>
-                                handlePostComment(article.id, commentText)
-                              }
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Middle Ad in Sidebar */}
-                  <div className="w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center my-6">
-                    <span className="text-gray-600 text-sm">
-                      Sidebar Mid Ad
-                    </span>
-                  </div>
-
-                  {/* More Sidebar News Articles */}
-                  {newsData.sidebarArticles.length > 3 && (
-                    <div className="w-full">
-                      <div className="space-y-4">
-                        {newsData.sidebarArticles.slice(3, 6).map((article) => (
-                          <div key={article.id} className="w-full">
-                            <StandardArticleCard
-                              article={article}
-                              reactions={newsReactions[article.id] || []}
-                              onPostReaction={(reactionData) =>
-                                handlePostReaction(article.id, reactionData)
-                              }
-                              onPostLove={(loveStatus) =>
-                                handlePostLove(article.id, loveStatus)
-                              }
-                              onPostComment={(commentText) =>
-                                handlePostComment(article.id, commentText)
-                              }
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Bottom Ad in Sidebar */}
-                  <div className="w-full h-32 sm:h-48 bg-gray-300 rounded-lg flex items-center justify-center mt-6">
-                    <span className="text-gray-600 text-sm">
-                      Sidebar Bottom Ad
-                    </span>
-                  </div>
-                </div>
-              </aside>
-            </div>
+            ))}
           </div>
         </main>
-
-        {/* Footer with ref */}
         <div ref={footerRef}>
           <FooterSection />
         </div>
