@@ -1,326 +1,315 @@
-import { useState, useRef } from "react";
-import { Badge, Edit, X } from "lucide-react";
-import { createPortal } from "react-dom";
+// src/components/Profile.jsx
+import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { updateUserProfile } from "@/lib/auth-service";
+import { toast } from "react-hot-toast";
+import { Edit, Save, X, Camera, Mail, Phone, Calendar } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-
-// Toast notification function (simplified version)
-const toast = {
-  success: (message, options = {}) => {
-    // Create a simple toast notification
-    const toastEl = document.createElement("div");
-    toastEl.textContent = message;
-    toastEl.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: ${options.style?.background || "#10b981"};
-      color: ${options.style?.color || "#fff"};
-      padding: 12px 24px;
-      border-radius: 8px;
-      z-index: 1000;
-      font-family: system-ui, -apple-system, sans-serif;
-    `;
-    document.body.appendChild(toastEl);
-    setTimeout(() => {
-      document.body.removeChild(toastEl);
-    }, options.duration || 3000);
-  },
-};
-
-// Modal components
-function Modal({ isOpen, onClose, children, className = "" }) {
-  if (!isOpen) return null;
-
-  return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Background overlay */}
-      <div
-        className="absolute inset-0 bg-[#2626268A] bg-opacity-25 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      {/* Modal content */}
-      <div className={`relative z-10 ${className}`}>{children}</div>
-    </div>,
-    document.body
-  );
-}
-
-function ModalContent({ children, onClose, className = "" }) {
-  return (
-    <div
-      className={`bg-white rounded-lg shadow-xl max-w-md w-full mx-4 ${className}`}
-    >
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-20 p-1 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-700"
-        aria-label="Close modal"
-      >
-        <X size={20} />
-      </button>
-      {children}
-    </div>
-  );
-}
-
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
 const Profile = () => {
-  const [profileImage, setProfileImage] = useState(
-    "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
-  );
-  const [name, setName] = useState("Mahdee Rashid");
-  const [email, setEmail] = useState("mahdeerashid@gmail.com");
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [isEditingEmail, setIsEditingEmail] = useState(false);
-
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteConfirmName, setDeleteConfirmName] = useState("");
-  const [deleteError, setDeleteError] = useState("");
-
+  const { user, profile, updateUser, refreshProfile } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    profilePicture: null,
+  });
+  const [previewImage, setPreviewImage] = useState("");
   const fileInputRef = useRef(null);
 
-  const handleImageEdit = () => {
-    fileInputRef.current?.click();
+  // Initialize form data when user data is available
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        phoneNumber: user.phoneNumber || "",
+        profilePicture: null,
+      });
+      if (user.profilePicture) {
+        setPreviewImage(
+          `${import.meta.env.VITE_ASSETS_API_URL}${user.profilePicture}`
+        );
+      }
+    }
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
     if (file) {
+      if (!file.type.startsWith("image/")) {
+        toast.error("Please select a valid image file");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size should be less than 5MB");
+        return;
+      }
+      setImageLoading(true);
+      setFormData((prev) => ({
+        ...prev,
+        profilePicture: file,
+      }));
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfileImage(e.target.result);
+        setPreviewImage(e.target.result);
+        setImageLoading(false);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleNameEdit = () => {
-    setIsEditingName(!isEditingName);
-  };
+  const handleSaveChanges = async () => {
+    try {
+      setIsLoading(true);
+      const updateData = new FormData();
+      updateData.append("first_name", formData.firstName);
+      updateData.append("last_name", formData.lastName);
+      updateData.append("phone_number", formData.phoneNumber);
+      if (formData.profilePicture) {
+        updateData.append("profile_picture", formData.profilePicture);
+      }
 
-  const handleEmailEdit = () => {
-    setIsEditingEmail(!isEditingEmail);
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleDeleteClick = () => {
-    setShowDeleteModal(true);
-    setDeleteConfirmName("");
-    setDeleteError("");
-  };
-
-  const handleDeleteCancel = () => {
-    setShowDeleteModal(false);
-    setDeleteConfirmName("");
-    setDeleteError("");
-  };
-
-  const handleDeleteConfirm = () => {
-    if (deleteConfirmName.trim() === name.trim()) {
-      setShowDeleteModal(false);
-      toast.success("Delete request submitted successfully!", {
-        duration: 4000,
-        style: {
-          background: "#ef4444",
-          color: "#fff",
-        },
+      // Ensure apiClient doesn't override Content-Type for FormData
+      const response = await updateUserProfile(updateData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-    } else {
-      setDeleteError(
-        "Name doesn't match. Please enter your exact profile name."
-      );
+      updateUser({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phoneNumber: formData.phoneNumber,
+        profilePicture:
+          response.user_profile?.profile_picture || user.profilePicture,
+      });
+      await refreshProfile();
+      setIsEditing(false);
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      console.error("Profile update error:", error);
+      toast.error(error.message || "Failed to update profile");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDeleteNameChange = (event) => {
-    setDeleteConfirmName(event.target.value);
-    if (deleteError) {
-      setDeleteError("");
+  const handleCancelEdit = () => {
+    setFormData({
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
+      phoneNumber: user.phoneNumber || "",
+      profilePicture: null,
+    });
+    if (user.profilePicture) {
+      setPreviewImage(
+        `${import.meta.env.VITE_ASSETS_API_URL}${user.profilePicture}`
+      );
+
+    } else {
+      setPreviewImage("");
     }
+    setIsEditing(false);
   };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "Not specified";
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  if (!user) {
+    return <div className="flex justify-center py-10">Loading...</div>;
+  }
 
   return (
-    <div className="flex-1 md:px-30 px-1 pt-4 relative">
-      {/* Delete Confirmation Modal */}
-      <Modal isOpen={showDeleteModal} onClose={handleDeleteCancel}>
-        <ModalContent onClose={handleDeleteCancel} className="p-6">
-          <div className="mb-6">
-            <h3 className="text-xl font-bold text-red-500 mb-2">
-              Delete Account
-            </h3>
-            <p className="text-gray-600 text-sm mb-4">
-              This action cannot be undone. To confirm deletion, please enter
-              your profile name exactly as it appears.
-            </p>
-            <p className="text-sm text-gray-500 mb-4">
-              Your profile name:{" "}
-              <span className="font-semibold text-gray-800">{name}</span>
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Enter your profile name to confirm:
-            </label>
-            <input
-              type="text"
-              value={deleteConfirmName}
-              onChange={handleDeleteNameChange}
-              placeholder="Enter your profile name"
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-            />
-            {deleteError && (
-              <p className="text-red-500 text-sm mt-2">{deleteError}</p>
-            )}
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              onClick={handleDeleteCancel}
-              className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleDeleteConfirm}
-              disabled={!deleteConfirmName.trim()}
-              className="flex-1 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-            >
-              Delete Account
-            </button>
-          </div>
-        </ModalContent>
-      </Modal>
-
-      <h2 className="text-base md:text-2xl font-bold text-gray-800 mb-8">
-        My Profile
-      </h2>
-
-      {/* Profile Section - Responsive Layout */}
-      <div className="flex flex-col lg:flex-row mb-4 lg:mb-12 gap-6">
-        {/* Profile Image and Basic Info */}
-        <div className="flex flex-row justify-baseline items-start sm:items-center gap-4">
-          <div className="relative">
-            <div className="rounded-full overflow-hidden relative h-14 w-14 md:h-16 md:w-16 lg:h-20 lg:w-20 bg-gray-400">
-              <img
-                src={profileImage}
-                alt="Profile"
-                width={96}
-                height={96}
-                className="object-cover bg-gray-300 w-full h-full"
+    <div className="container mx-auto py-8">
+      <Card className="w-full max-w-3xl mx-auto">
+        <CardHeader className="text-center">
+          <CardTitle>My Profile</CardTitle>
+          <CardDescription>Manage your personal information</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col items-center gap-6">
+            <div className="relative">
+              <Avatar className="w-32 h-32">
+                {previewImage ? (
+                  <img
+                    src={previewImage}
+                    alt={`${formData.firstName} ${formData.lastName}`}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <AvatarFallback>
+                    {`${formData.firstName[0]}${formData.lastName[0]}` || "U"}
+                  </AvatarFallback>
+                )}
+              </Avatar>
+              {isEditing && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute bottom-0 right-0 bg-white"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={imageLoading}
+                >
+                  {imageLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Camera className="h-4 w-4" />
+                  )}
+                </Button>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="hidden"
               />
             </div>
-            <button
-              onClick={handleImageEdit}
-              className="absolute bottom-0 right-0 bg-white p-1 rounded-full border border-gray-300"
-            >
-              <Edit className="h-4 w-4 cursor-pointer text-gray-600" />
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-          </div>
 
-          <div className="">
-            <h3 className="text-base md:text-lg lg:text-2xl  font-bold text-gray-800">
-              {name}
-            </h3>
-            <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mb-2">
-              User
-            </span>
-          </div>
-        </div>
+            <div className="space-y-4 w-full">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  value={user.email}
+                  disabled
+                  icon={<Mail className="h-4 w-4" />}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phoneNumber">Phone Number</Label>
+                <Input
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  icon={<Phone className="h-4 w-4" />}
+                />
+              </div>
+            </div>
 
-        {/* Contact Information - Responsive */}
-        <div className="lg:ml-auto lg:mr-12 space-y-2 w-full lg:w-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <p className="text-gray-700 text-base min-w-0 sm:min-w-[80px]">
-              E-mail
-            </p>
-            <span className="text-gray-600 sm:ml-8 break-all">{email}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" /> Account Information
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p>
+                    Member since: <strong>{formatDate(user.joinedDate)}</strong>
+                  </p>
+                  <p>
+                    Account ID: <strong>#{user.id || "N/A"}</strong>
+                  </p>
+                  <p>
+                    Status:{" "}
+                    <strong
+                      className={
+                        profile?.isActive ? "text-green-500" : "text-red-500"
+                      }
+                    >
+                      {profile?.isActive ? "Active" : "Inactive"}
+                    </strong>
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" /> Subscription Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p>
+                    Current Plan:{" "}
+                    <strong>{profile?.plan || "Free Plan"}</strong>
+                  </p>
+                  <p>
+                    Status:{" "}
+                    <strong
+                      className={
+                        profile?.status === "premium"
+                          ? "text-green-500"
+                          : "text-gray-500"
+                      }
+                    >
+                      {profile?.status || "Free"}
+                    </strong>
+                  </p>
+                  {profile?.endDate && (
+                    <p>
+                      Expires: <strong>{formatDate(profile.endDate)}</strong>
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Form Fields - Responsive Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-4 md:mb-12">
-        <div>
-          <h4 className="text-base md:text-xl text-gray-800 mb-4">Name</h4>
-          <div className="relative">
-            <input
-              type="text"
-              value={name}
-              onChange={handleNameChange}
-              readOnly={!isEditingName}
-              className={`w-full p-2 pr-10 text-sm md:text-base text-gray-700 border border-gray-300 rounded ${
-                isEditingName ? "bg-white" : "bg-gray-50"
-              }`}
-            />
-            <button
-              onClick={handleNameEdit}
-              className="absolute right-2 bg-transparent top-1/2 transform -translate-y-1/2"
-            >
-              <Edit className="h-6 w-6 cursor-pointer text-gray-600" />
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="text-base md:text-xl text-gray-800 mb-4">E-mail</h4>
-          <div className="relative">
-            <input
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              readOnly={!isEditingEmail}
-              className={`w-full p-2 pr-10 text-sm md:text-base text-gray-700 border border-gray-300 rounded ${
-                isEditingEmail ? "bg-white" : "bg-gray-50"
-              }`}
-            />
-            <button
-              onClick={handleEmailEdit}
-              className="absolute bg-transparent right-2 top-1/2 transform -translate-y-1/2"
-            >
-              <Edit className="h-6 w-6 cursor-pointer text-gray-600" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Delete Account Section - Responsive */}
-      <div className="border bg-red-50 border-red-500 rounded p-4 sm:p-6">
-        <h4 className="text-base md:text-xl font-bold text-red-500 mb-4">
-          Delete Account
-        </h4>
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <div className="flex-1">
-            <p className="text-gray-800 text-sm md:text-base ">
-              Contact our
-              <a href="#" className="text-blue-600 px-2 underline">
-                support team
-              </a>
-              to process the deletion of your account.
-            </p>
-          </div>
-          <div className="flex-shrink-0">
-            <button
-              onClick={handleDeleteClick}
-              className="bg-red-500 cursor-pointer text-white px-4 py-2 justify-center rounded hover:bg-red-600 transition-colors w-full sm:w-auto"
-            >
-              Apply Delete
-            </button>
-          </div>
-        </div>
-      </div>
+        </CardContent>
+        <CardFooter className="flex justify-end gap-2">
+          {!isEditing ? (
+            <Button onClick={() => setIsEditing(true)} variant="outline">
+              <Edit className="h-4 w-4 mr-2" /> Edit Profile
+            </Button>
+          ) : (
+            <>
+              <Button onClick={handleSaveChanges} disabled={isLoading}>
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Save className="h-4 w-4 mr-2" />
+                )}
+                Save
+              </Button>
+              <Button onClick={handleCancelEdit} variant="outline">
+                <X className="h-4 w-4 mr-2" /> Cancel
+              </Button>
+            </>
+          )}
+        </CardFooter>
+      </Card>
     </div>
   );
 };
