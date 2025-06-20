@@ -1,3 +1,4 @@
+// src\pages\admin\Advertise\AdvertiseList.jsx
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdvertiseContext } from './AdvertiseContext';

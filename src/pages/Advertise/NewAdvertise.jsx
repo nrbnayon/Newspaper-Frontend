@@ -1,14 +1,9 @@
-"use client"
-
+// src\pages\Advertise\NewAdvertise.jsx
 import { useState } from "react"
-import { FileUploader } from "../../components/ui/file-uploader"
-
-import { Textarea } from "../../components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
-import { Card } from "../../components/ui/card"
-import { cn } from "../../lib/utils"
-import { Link } from "react-router-dom"
-import Toast from "../../components/ui/toast"
+import { FileUploader } from "@/components/ui/file-uploader"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card } from "@/components/ui/card"
 
 export default function NewAdvertise() {
   const [serialNumber] = useState("1as84qw1")
@@ -22,12 +17,9 @@ export default function NewAdvertise() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // Handle form submission logic here
-    
-    
-    // Show toast message
-   
+
+    // Show toast message use react-hot-toast that already setup
     setShowToast(true)
-    // Auto hide toast after 4 seconds
     setTimeout(() => {
       setShowToast(false)
     }, 4000)
@@ -138,7 +130,6 @@ export default function NewAdvertise() {
 
           <div className="flex justify-end mt-6">
             <button 
-            
               type="submit" 
               className="bg-[#002855] text-sm md:text-base cursor-pointer hover:bg-[#00396b] text-white px-6 py-3 rounded transition-colors duration-200"
             >

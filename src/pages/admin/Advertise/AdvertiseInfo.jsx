@@ -1,11 +1,11 @@
+// src\pages\admin\Advertise\AdvertiseInfo.jsx
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AdvertiseContext } from "./AdvertiseContext";
-import { Button } from "../../../components/ui/button";
-import { Card, CardContent } from "../../../components/ui/card";
-import { cn } from "../../../lib/utils";
-import Toast from "../../../components/ui/toast";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export default function AdvertiseInfo() {
   const { id } = useParams();

@@ -1,5 +1,5 @@
-import { createContext, useState } from 'react';
-
+// src\pages\admin\Advertise\AdvertiseContext.jsx
+import { createContext, useState } from "react";
 // Sample data (in a real project, these would be imported from separate files)
 const advertiseData1 = [
   {
@@ -10,10 +10,11 @@ const advertiseData1 = [
     description: "Description for national news",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Unread",
   },
@@ -25,10 +26,11 @@ const advertiseData1 = [
     description: "Prime location office space",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Approved",
   },
@@ -40,10 +42,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Read",
   },
@@ -55,10 +58,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Read",
   },
@@ -70,10 +74,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Approved",
   },
@@ -85,10 +90,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Read",
   },
@@ -100,10 +106,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Cancel",
   },
@@ -115,10 +122,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Read",
   },
@@ -130,10 +138,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Cancel",
   },
@@ -145,10 +154,11 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Read",
   },
@@ -160,23 +170,19 @@ const advertiseData1 = [
     description: "After hours of intense discussion...",
     details: "Dhanmondi Branc...",
     image: "Image",
-    images: ["https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+    images: [
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
       "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
-      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg"
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
+      "https://i.ibb.co/V0ZHs3Xp/marwan-V675n9gjy-L0-unsplash.jpg",
     ],
     progress: "Read",
   },
 ];
-
-
 export const AdvertiseContext = createContext();
 
 export const AdvertiseProvider = ({ children }) => {
-  const [advertiseData, setAdvertiseData] = useState([
-    ...advertiseData1,
-    
-  ]);
+  const [advertiseData, setAdvertiseData] = useState([...advertiseData1]);
 
   const updateProgress = (id, newProgress) => {
     setAdvertiseData((prevData) =>
