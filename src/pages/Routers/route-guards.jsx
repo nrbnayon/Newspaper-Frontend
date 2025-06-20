@@ -1,13 +1,7 @@
 // src/pages/Routers/route-guards.jsx
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-
-// Loading Component
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00254A]"></div>
-  </div>
-);
+import HomepageSkeleton from "@/components/common/HomepageSkeleton";
 
 // Public Route - Accessible without authentication
 export const PublicRoute = () => {
@@ -16,7 +10,7 @@ export const PublicRoute = () => {
 
   // Show loading while checking auth status
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <HomepageSkeleton />;
   }
 
   // If authenticated and trying to access auth pages, redirect to dashboard
@@ -36,7 +30,7 @@ export const VerificationRoute = () => {
   const { isLoading } = useAuth();
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <HomepageSkeleton />;
   }
 
   return <Outlet />;
@@ -49,7 +43,7 @@ export const ProtectedRoute = () => {
 
   // Show loading while checking auth status
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <HomepageSkeleton />;
   }
 
   if (!isLoggedIn) {
@@ -66,7 +60,7 @@ export const AdminRoute = () => {
   const { isLoggedIn, isAdmin, isLoading, user } = useAuth();
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <HomepageSkeleton />;
   }
 
   if (!isLoggedIn) {
@@ -88,7 +82,7 @@ export const PremiumRoute = () => {
   const { isLoggedIn, hasActiveSubscription, isLoading } = useAuth();
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <HomepageSkeleton />;
   }
 
   if (!isLoggedIn) {
@@ -108,7 +102,7 @@ export const RoleBasedRoute = ({ allowedRoles = [] }) => {
   const { isLoggedIn, user, isLoading } = useAuth();
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <HomepageSkeleton />;
   }
 
   if (!isLoggedIn) {

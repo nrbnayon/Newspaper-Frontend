@@ -54,3 +54,36 @@ export const getTruncatedText = (text) => {
   if (words.twentyPercentLength <= 90) return text;
   return words.slice(0, 90).join(" ");
 };
+
+export const isValidArticle = (article) => {
+  return (
+    article &&
+    typeof article === "object" &&
+    article.id &&
+    article.title &&
+    typeof article.title === "string" &&
+    article.title.trim() !== ""
+  );
+};
+
+export const shuffleWithLatest = (
+  array,
+  keepLatestCount = 1,
+  forceReshuffle = false
+) => {
+  if (!array || array.length <= 1) return array;
+  const latest = array.slice(0, keepLatestCount);
+  const remaining = array.slice(keepLatestCount);
+  const seed = Date.now() + Math.random() * 1000000;
+  const shuffled = [...remaining];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const randomFactor = (seed + i) * 0.12345;
+    const j = Math.floor(
+      (Math.sin(randomFactor) * 10000 + Math.random()) % (i + 1)
+    );
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return [...latest, ...shuffled];
+};
+

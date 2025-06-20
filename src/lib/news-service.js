@@ -16,6 +16,20 @@ export const getAllNews = async () => {
   }
 };
 
+// Search news
+
+export const searchAllNews = async ({ search_term }) => {
+  try {
+    const encodedTerm = encodeURIComponent(search_term);
+    const response = await apiClient.get(`/news/search/?q=${encodedTerm}`);
+    console.log("Raw API Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to search news:", error);
+    throw error;
+  }
+};
+
 export const formatNewsItem = (newsItem) => {
   const safeNewsItem = newsItem || {};
   return {
@@ -100,11 +114,65 @@ export const formatTimeAgo = (datetime) => {
 };
 
 
+// Export shared tab configurations
+export const TAB_CONFIGS = [
+  {
+    key: "latests",
+    label: "Latest News",
+    count: 8,
+    categoryFilter: null,
+    isDefault: true,
+  },
+  {
+    key: "politics",
+    label: "Politics", 
+    count: 8,
+    categoryFilter: ["politics", "government", "election", "policy"],
+  },
+  {
+    key: "Local",
+    label: "Local",
+    count: 8,
+    categoryFilter: ["local", "city", "community", "regional"],
+  },
+  {
+    key: "whatWeKnow",
+    label: "Analysis",
+    count: 8,
+    categoryFilter: ["analysis", "opinion", "editorial", "insight"],
+  },
+  {
+    key: "maps",
+    label: "Regional",
+    count: 8,
+    categoryFilter: ["regional", "national", "international", "world"],
+  },
+  {
+    key: "photos",
+    label: "Photos",
+    count: 8,
+    categoryFilter: ["photos", "gallery", "images", "visual"],
+  },
+  {
+    key: "tunnels",
+    label: "Investigations",
+    count: 8,
+    categoryFilter: ["investigation", "exclusive", "report", "expose"],
+  },
+  {
+    key: "oneImage",
+    label: "Sports",
+    count: 8,
+    categoryFilter: ["sports", "football", "basketball", "soccer", "athletics", "games"],
+  },
+];
+
 // Updated organizeNewsByCategory function
 export const organizeNewsByCategory = (allNews, usedIds = new Set()) => {
   if (!Array.isArray(allNews) || allNews.length === 0) {
     return {};
   }
+
   const availableNews = allNews
     .filter((article) => !usedIds.has(article.id))
     .sort(
@@ -112,111 +180,36 @@ export const organizeNewsByCategory = (allNews, usedIds = new Set()) => {
     );
 
   const tabsData = {};
-  const tabConfigs = [
-    {
-      key: "latests",
-      label: "Latest News",
-      count: 8,
-      categoryFilter: null, 
-    },
-    {
-      key: "politics",
-      label: "Politics",
-      count: 8,
-      categoryFilter: ["politics", "government", "election", "policy"],
-    },
-    {
-      key: "Local",
-      label: "Local",
-      count: 8,
-      categoryFilter: ["local", "city", "community", "regional"],
-    },
-    {
-      key: "whatWeKnow",
-      label: "Analysis",
-      count: 8,
-      categoryFilter: ["analysis", "opinion", "editorial", "insight"],
-    },
-    {
-      key: "maps",
-      label: "Regional",
-      count: 8,
-      categoryFilter: ["regional", "national", "international", "world"],
-    },
-    {
-      key: "photos",
-      label: "Photos",
-      count: 8,
-      categoryFilter: ["photos", "gallery", "images", "visual"],
-    },
-    {
-      key: "tunnels",
-      label: "Investigations",
-      count: 8,
-      categoryFilter: ["investigation", "exclusive", "report", "expose"],
-    },
-    {
-      key: "oneImage",
-      label: "Sports",
-      count: 8,
-      categoryFilter: [
-        "sports",
-        "football",
-        "basketball",
-        "soccer",
-        "athletics",
-        "games",
-      ],
-    },
-  ];
-
-  // Helper function to check if article matches category
-  const matchesCategory = (article, categoryFilters) => {
-    if (!categoryFilters) return true;
-    const articleCategory = article.category.toLowerCase();
-    const articleTitle = article.title.toLowerCase();
-    const articleDescription = article.description.toLowerCase();
-
-    return categoryFilters.some(
-      (filter) =>
-        articleCategory.includes(filter.toLowerCase()) ||
-        articleTitle.includes(filter.toLowerCase()) ||
-        articleDescription.includes(filter.toLowerCase())
-    );
-  };
-
-  // UPDATED: Distribute articles based on categories
-  tabConfigs.forEach((config) => {
+  // Use shared TAB_CONFIGS
+  TAB_CONFIGS.forEach((config) => {
     let tabArticles = [];
-
     if (config.categoryFilter) {
-      // Get articles matching the category
       const categoryArticles = availableNews.filter((article) =>
         matchesCategory(article, config.categoryFilter)
       );
-
-      // Take up to the required count from category matches
       tabArticles = categoryArticles.slice(0, config.count);
-
-      // If not enough category-specific articles, fill with general articles
       if (tabArticles.length < config.count) {
         const usedInThisTab = new Set(tabArticles.map((a) => a.id));
         const generalArticles = availableNews.filter(
           (article) => !usedInThisTab.has(article.id)
         );
-
         const needed = config.count - tabArticles.length;
         tabArticles = [...tabArticles, ...generalArticles.slice(0, needed)];
       }
     } else {
-      // For "Latest News" - just take the most recent articles
       tabArticles = availableNews.slice(0, config.count);
     }
-
     tabsData[config.key] = tabArticles;
   });
 
   return tabsData;
+};
+
+// Helper function to generate tabs config for HomePage
+export const generateTabsConfig = (tabsData) => {
+  return TAB_CONFIGS.filter(
+    (config) => tabsData[config.key] && tabsData[config.key].length > 0
+  );
 };
 
 // ========================

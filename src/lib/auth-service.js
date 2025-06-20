@@ -54,9 +54,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
     console.error("API Response Error:", error.response?.data?.error);
-
     // Handle unauthorized responses
     if (error?.response?.status === 401) {
       // Check for specific unauthorized messages
@@ -73,13 +71,11 @@ apiClient.interceptors.response.use(
           await handleAuthFailure();
           return Promise.reject(error);
         }
-
         // Don't retry if already attempted
         if (originalRequest._retry) {
           await handleAuthFailure();
           return Promise.reject(error);
         }
-
         // Handle token refresh
         if (isRefreshing) {
           try {

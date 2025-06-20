@@ -3,11 +3,61 @@
 import apiClient from "./auth-service";
 
 const ADVERTISEMENT_ENDPOINTS = {
-  GET_ALL: '/advertisements/get_all/',
+  USERS_ALL_ADS: "/advertisements/user/get_all/",
+  GET_ALL: "/advertisements/get_all/",
   GET_SINGLE: (id) => `/advertisements/${id}/`,
-  CREATE: '/advertisements/create/',
+  CREATE: "/advertisements/create/",
   UPDATE: (id) => `/advertisements/${id}/update/`,
   APPROVE: (id) => `/advertisements/${id}/approve/`,
+};
+
+// Get all advertisements with enhanced error handling
+export const getUerSeeAllAdvertisements = async () => {
+  try {
+    const response = await apiClient.get(ADVERTISEMENT_ENDPOINTS.USERS_ALL_ADS);
+
+    // Process the advertisements data with better validation
+    const processedAds =
+      response.data
+        ?.map((ad, index) => ({
+          ...ad,
+          // Ensure ID exists for consistent sorting
+          id: ad.id || `ad-${index}-${Date.now()}`,
+          // Ensure uploaded_images is always an array
+          uploaded_images: Array.isArray(ad.uploaded_images)
+            ? ad.uploaded_images.filter((img) => img && img.trim() !== "") // Remove empty images
+            : ad.uploaded_images
+            ? [ad.uploaded_images].filter((img) => img && img.trim() !== "")
+            : [],
+          // Ensure all required fields have defaults
+          title: ad.title || `Advertisement ${index + 1}`,
+          description: ad.description || "",
+          category: ad.category || "General",
+          url: ad.url || null,
+          // Add status check
+          is_active: ad.is_active !== false, // Default to true if not specified
+          is_approved: ad.is_approved !== false, // Default to true if not specified
+        }))
+        .filter(
+          (ad) =>
+            // Only return active and approved ads with valid images
+            ad.is_active && ad.is_approved && ad.uploaded_images.length > 0
+        ) || [];
+
+    console.log("Processed advertisements:", processedAds);
+
+    return {
+      success: true,
+      data: processedAds,
+    };
+  } catch (error) {
+    console.error("Error fetching advertisements:", error);
+    return {
+      success: false,
+      error: error.response?.data?.message || "Failed to fetch advertisements",
+      data: [], // Return empty array as fallback
+    };
+  }
 };
 
 // Get all advertisements

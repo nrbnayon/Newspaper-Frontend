@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { BookOpenText } from "lucide-react";
 import { useState } from "react";
 import AuthModal from "../auth/AuthModal";
+import { Helmet } from "react-helmet-async";
 
 const AudioNewsCard = ({
   id,
@@ -45,41 +46,75 @@ const AudioNewsCard = ({
 
   return (
     <>
+      {isExpanded && (
+        <Helmet>
+          <title>{title || "ALAMOCITYPULSE - News Article"}</title>
+          <meta
+            name='description'
+            content={
+              description
+                ? getTruncatedText(description, 160) 
+                : "Read the latest news and updates from ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            name='keywords'
+            content={
+              category ? category.join(", ") : "news, updates, ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            property='og:title'
+            content={title || "ALAMOCITYPULSE - News Article"}
+          />
+          <meta
+            property='og:description'
+            content={
+              description
+                ? getTruncatedText(description, 160)
+                : "Read the latest news and updates from ALAMOCITYPULSE"
+            }
+          />
+          <meta property='og:image' content={image || "/default-image.jpg"} />
+          <meta property='og:type' content='article' />
+          <meta property='og:url' content={url || window.location.href} />
+        </Helmet>
+      )}
       <div className={cn("flex border-y-1 border-black py-6", className)}>
-        <div className="flex-shrink-0 w-[150px] h-28 relative overflow-hidden">
-          <img src={image} alt={title} className="w-full h-full object-cover" />
+        <div className='flex-shrink-0 w-[150px] h-28 relative overflow-hidden'>
+          <img src={image} alt={title} className='w-full h-full object-cover' />
         </div>
 
-        <div className="ml-4 flex-1">
-          <div className="flex items-center mb-1">
-            <span className="text-xs font-bold text-gray-800 mr-2">
+        <div className='ml-4 flex-1'>
+          <div className='flex items-center mb-1'>
+            <span className='text-xs font-bold text-gray-800 mr-2'>
               {category}
             </span>
           </div>
 
-          <h3 className="text-xl font-bold mb-2 line-clamp-2">{title}</h3>
+          <h3 className='text-xl font-bold mb-2 line-clamp-2'>{title}</h3>
 
-          <div className="flex mb-2 items-center">
+          <div className='flex mb-2 items-center'>
             <button
               onClick={handleReadMore}
-              className="flex items-center text-gray-700 mr-2 hover:text-gray-900 transition-colors"
+              className='flex items-center text-gray-700 mr-2 hover:text-gray-900 transition-colors'
             >
-              <BookOpenText size={16} className="mr-1" />
-              <span className="text-sm mr-1">
+              <BookOpenText size={16} className='mr-1' />
+              <span className='text-sm mr-1'>
                 {isExpanded ? description : truncatedContent}
                 {!isExpanded && shouldShowReadMore && "..."}
               </span>
               {shouldShowReadMore && (
-                <span className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+                <span className='text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200'>
                   {isExpanded ? "Read less" : "Read more"}
                 </span>
               )}
             </button>
           </div>
-          <div className="ml-auto">
+          <div className='ml-auto'>
             <SentimentBadge
               sentiment={sentiment}
-              className="text-xs py-0.5 px-2"
+              className='text-xs py-0.5 px-2'
             />
           </div>
         </div>

@@ -16,6 +16,7 @@ import {
 } from "@/lib/news-service";
 import { ChevronDown } from "lucide-react";
 import { ChevronUp } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const CommonNewsCard = ({
   article,
@@ -135,136 +136,175 @@ const CommonNewsCard = ({
   };
 
   return (
-    <article className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}>
-      <div
-        className={cn(
-          "flex flex-col-reverse gap-4 sm:gap-6",
-          isHorizontal &&
-            !isExpanded &&
-            image &&
-            "lg:flex-row lg:items-start lg:gap-8 xl:gap-10",
-          isExpanded && "flex-col-reverse gap-4 sm:gap-6"
-        )}
+    <>
+      {isExpanded && (
+        <Helmet>
+          <title>{title || "ALAMOCITYPULSE - News Article"}</title>
+          <meta
+            name='description'
+            content={
+              description
+                ? getTruncatedText(description, 160)
+                : "Read the latest news and updates from ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            name='keywords'
+            content={
+              category ? category.join(", ") : "news, updates, ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            property='og:title'
+            content={title || "ALAMOCITYPULSE - News Article"}
+          />
+          <meta
+            property='og:description'
+            content={
+              description
+                ? getTruncatedText(description, 160)
+                : "Read the latest news and updates from ALAMOCITYPULSE"
+            }
+          />
+          <meta property='og:image' content={image || "/default-image.jpg"} />
+          <meta property='og:type' content='article' />
+          <meta property='og:url' content={url || window.location.href} />
+        </Helmet>
+      )}
+      <article
+        className={cn("overflow-hidden pb-4 sm:pb-6 lg:pb-8", className)}
       >
-        {/* Content Section */}
         <div
           className={cn(
-            "flex flex-col w-full",
-            isHorizontal && !isExpanded && image && "lg:w-2/5 xl:w-1/3",
-            isExpanded && "w-full"
+            "flex flex-col-reverse gap-4 sm:gap-6",
+            isHorizontal &&
+              !isExpanded &&
+              image &&
+              "lg:flex-row lg:items-start lg:gap-8 xl:gap-10",
+            isExpanded && "flex-col-reverse gap-4 sm:gap-6"
           )}
         >
-          {/* Header Meta Info */}
-          <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-            <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
-              {source && (
-                <button
-                  onClick={handleSourceClick}
-                  className="font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
-                >
-                  {source}
-                </button>
-              )}
-              {source && (publishedDateTime || publishedTime) && (
-                <span className="text-gray-300">•</span>
-              )}
-              {(publishedDateTime || publishedTime) && (
-                <time className="text-gray-500">
-                  {formatPublishedTime(publishedDateTime || publishedTime)}
-                </time>
-              )}
-              {author && (
-                <>
-                  <span className="text-gray-300">•</span>
-                  <span className="text-gray-600 font-medium">By {author}</span>
-                </>
-              )}
-              {category && (
-                <>
-                  <span className="text-gray-300">•</span>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                    {category.toUpperCase()}
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-
-          <SentimentBadge
-            sentiment={sentiment}
-            className="mb-3 sm:mb-4 w-full"
-          />
-
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
-            {title}
-            {isFeatured && (
-              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                FEATURED
-              </span>
+          {/* Content Section */}
+          <div
+            className={cn(
+              "flex flex-col w-full",
+              isHorizontal && !isExpanded && image && "lg:w-2/5 xl:w-1/3",
+              isExpanded && "w-full"
             )}
-          </h1>
-
-          <div className="mb-3 sm:mb-4">
-            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              {isExpanded ? description : truncatedContent}
-              {!isExpanded && shouldShowReadMore && "... "}
-              {shouldShowReadMore && (
-                <button
-                  onClick={handleReadMore}
-                  className="text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline inline-flex items-center gap-1"
-                >
-                  {isExpanded ? (
-                    <>
-                      Read less
-                      <ChevronUp className="w-4 h-4 mt-1" />
-                    </>
-                  ) : (
-                    <>
-                      Read more
-                      <ChevronDown className="w-4 h-4 mt-1" />
-                    </>
-                  )}
-                </button>
-              )}
-            </p>
-          </div>
-
-          {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {tags.slice(0, 4).map((tag, index) => (
-                <span
-                  key={index}
-                  className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
-                >
-                  #{tag}
-                </span>
-              ))}
-              {tags.length > 4 && (
-                <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-500">
-                  +{tags.length - 4} more
-                </span>
-              )}
+          >
+            {/* Header Meta Info */}
+            <div className='flex items-center justify-between mb-3 flex-wrap gap-2'>
+              <div className='flex items-center gap-2 text-sm text-gray-500 flex-wrap'>
+                {source && (
+                  <button
+                    onClick={handleSourceClick}
+                    className='font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer'
+                  >
+                    {source}
+                  </button>
+                )}
+                {source && (publishedDateTime || publishedTime) && (
+                  <span className='text-gray-300'>•</span>
+                )}
+                {(publishedDateTime || publishedTime) && (
+                  <time className='text-gray-500'>
+                    {formatPublishedTime(publishedDateTime || publishedTime)}
+                  </time>
+                )}
+                {author && (
+                  <>
+                    <span className='text-gray-300'>•</span>
+                    <span className='text-gray-600 font-medium'>
+                      By {author}
+                    </span>
+                  </>
+                )}
+                {category && (
+                  <>
+                    <span className='text-gray-300'>•</span>
+                    <span className='inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800'>
+                      {category.toUpperCase()}
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
-          )}
 
-          {/* Comment section in content area when expanded */}
-          {isHorizontal && (
-            <div className="flex flex-col justify-between w-full">
-              <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
-                <div>
-                  <InteractionButtons
-                    onCommentClick={handleCommentClick}
-                    onLoveClick={handleLoveClick}
-                    showCommentsCount={commentCount}
-                    isLoved={isLoved}
-                    loveCount={loveCount}
-                    disabled={!isLoggedIn}
-                  />
-                </div>
+            <SentimentBadge
+              sentiment={sentiment}
+              className='mb-3 sm:mb-4 w-full'
+            />
 
-                {/* Share/Save Options */}
-                {/* <div className="flex items-center gap-2">
+            <h1 className='text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight'>
+              {title}
+              {isFeatured && (
+                <span className='ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800'>
+                  FEATURED
+                </span>
+              )}
+            </h1>
+
+            <div className='mb-3 sm:mb-4'>
+              <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
+                {isExpanded ? description : truncatedContent}
+                {!isExpanded && shouldShowReadMore && "... "}
+                {shouldShowReadMore && (
+                  <button
+                    onClick={handleReadMore}
+                    className='text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline inline-flex items-center gap-1'
+                  >
+                    {isExpanded ? (
+                      <>
+                        Read less
+                        <ChevronUp className='w-4 h-4 mt-1' />
+                      </>
+                    ) : (
+                      <>
+                        Read more
+                        <ChevronDown className='w-4 h-4 mt-1' />
+                      </>
+                    )}
+                  </button>
+                )}
+              </p>
+            </div>
+
+            {/* Tags */}
+            {tags && tags.length > 0 && (
+              <div className='flex flex-wrap gap-2 mb-4'>
+                {tags.slice(0, 4).map((tag, index) => (
+                  <span
+                    key={index}
+                    className='inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer'
+                  >
+                    #{tag}
+                  </span>
+                ))}
+                {tags.length > 4 && (
+                  <span className='inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-500'>
+                    +{tags.length - 4} more
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Comment section in content area when expanded */}
+            {isHorizontal && (
+              <div className='flex flex-col justify-between w-full'>
+                <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+                  <div>
+                    <InteractionButtons
+                      onCommentClick={handleCommentClick}
+                      onLoveClick={handleLoveClick}
+                      showCommentsCount={commentCount}
+                      isLoved={isLoved}
+                      loveCount={loveCount}
+                      disabled={!isLoggedIn}
+                    />
+                  </div>
+
+                  {/* Share/Save Options */}
+                  {/* <div className="flex items-center gap-2">
                   <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200">
                     <svg
                       className="w-4 h-4"
@@ -296,93 +336,95 @@ const CommonNewsCard = ({
                     </svg>
                   </button>
                 </div> */}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Image Section - Only render if image exists */}
-        {image && (
-          <div
-            className={cn(
-              "relative w-full order-1 md:order-2 flex flex-col items-end",
-              isHorizontal && !isExpanded && "lg:w-2/3",
-              isExpanded && "w-full"
-            )}
-          >
-            <div className="relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center">
-              <img
-                src={image}
-                alt={title}
-                className={cn(
-                  "w-full object-cover transition-transform duration-300 hover:scale-105",
-                  !isExpanded && "h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]",
-                  isExpanded && "h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"
-                )}
-                loading="lazy"
-              />
-
-              {/* TimeIndicator - Bottom Left */}
-              <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
-                <TimeIndicator
-                  type="readTime"
-                  value={readTime || publishedTime}
-                  className="text-xs sm:text-sm text-white"
-                />
-              </div>
-
-              {/* ImageAttribution - Bottom Right */}
-              {imageAttribution && (
-                <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
-                  <ImageAttribution
-                    attribution={imageAttribution}
-                    className="text-xs sm:text-sm text-white"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Comment section in image area when not expanded */}
-            {!isHorizontal && (
-              <div className="flex flex-col justify-between w-full">
-                <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
-                  {isFeatured && (
-                    <div>
-                      <InteractionButtons
-                        onCommentClick={handleCommentClick}
-                        onLoveClick={handleLoveClick}
-                        showCommentsCount={commentCount}
-                        isLoved={isLoved}
-                        loveCount={loveCount}
-                        disabled={!isLoggedIn}
-                      />
-                    </div>
-                  )}
-                  {!isFeatured && <div className=""></div>}
                 </div>
               </div>
             )}
           </div>
+
+          {/* Image Section - Only render if image exists */}
+          {image && (
+            <div
+              className={cn(
+                "relative w-full order-1 md:order-2 flex flex-col items-end",
+                isHorizontal && !isExpanded && "lg:w-2/3",
+                isExpanded && "w-full"
+              )}
+            >
+              <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
+                <img
+                  src={image}
+                  alt={title}
+                  className={cn(
+                    "w-full object-cover transition-transform duration-300 hover:scale-105",
+                    !isExpanded && "h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]",
+                    isExpanded &&
+                      "h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"
+                  )}
+                  loading='lazy'
+                />
+
+                {/* TimeIndicator - Bottom Left */}
+                <div className='absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+                  <TimeIndicator
+                    type='readTime'
+                    value={readTime || publishedTime}
+                    className='text-xs sm:text-sm text-white'
+                  />
+                </div>
+
+                {/* ImageAttribution - Bottom Right */}
+                {imageAttribution && (
+                  <div className='absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+                    <ImageAttribution
+                      attribution={imageAttribution}
+                      className='text-xs sm:text-sm text-white'
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Comment section in image area when not expanded */}
+              {!isHorizontal && (
+                <div className='flex flex-col justify-between w-full'>
+                  <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+                    {isFeatured && (
+                      <div>
+                        <InteractionButtons
+                          onCommentClick={handleCommentClick}
+                          onLoveClick={handleLoveClick}
+                          showCommentsCount={commentCount}
+                          isLoved={isLoved}
+                          loveCount={loveCount}
+                          disabled={!isLoggedIn}
+                        />
+                      </div>
+                    )}
+                    {!isFeatured && <div className=''></div>}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Comment Section */}
+        </div>
+
+        {showComments && (
+          <CommentsSection
+            comments={comments}
+            onPostComment={handleCommentSubmit}
+            disabled={!isLoggedIn}
+            allComments={reactions}
+          />
         )}
 
-        {/* Comment Section */}
-      </div>
-
-      {showComments && (
-        <CommentsSection
-          comments={comments}
-          onPostComment={handleCommentSubmit}
-          disabled={!isLoggedIn}
-          allComments={reactions}
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+          initialMode={authMode}
         />
-      )}
-
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authMode}
-      />
-    </article>
+      </article>
+    </>
   );
 };
 
