@@ -20,9 +20,9 @@ const Dashboard = () => {
   // Check if screen is mobile/tablet size
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+      setIsMobile(window.innerWidth < 1024);
       if (window.innerWidth >= 1024) {
-        setIsSidebarOpen(false); // Close sidebar on desktop
+        setIsSidebarOpen(false); 
       }
     };
 
@@ -84,7 +84,6 @@ const Dashboard = () => {
           </button>
         )}
         <div className="flex-row lg:flex gap-8">
-          {/* Overlay for mobile - Fixed to only cover content area */}
           {isMobile && isSidebarOpen && (
             <div className="absolute inset-0 z-40" onClick={closeSidebar}></div>
           )}
