@@ -589,11 +589,8 @@ export default function HomePage() {
               </div>
             ) : (
               newsData.sections.map((section, index) => (
-                <>
-                  <div
-                    key={index}
-                    className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12"
-                  >
+                <div key={index}>
+                  <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
                     {/* Main Content Area */}
                     <div className="w-full">
                       {section.featuredArticle && (
@@ -955,7 +952,7 @@ export default function HomePage() {
                       </div>
                     </aside>
                   </div>
-                </>
+                </div>
               ))
             )}
           </div>

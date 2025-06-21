@@ -120,7 +120,7 @@ const ImageModal = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-white/80 bg-opacity-90 z-50 flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div className="relative max-w-4xl max-h-full">

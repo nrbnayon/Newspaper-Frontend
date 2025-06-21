@@ -16,7 +16,7 @@ export default function NewAdvertise() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [url, setUrl] = useState(""); // Fixed: Added missing url state
+  const [url, setUrl] = useState(""); 
   const [files, setFiles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

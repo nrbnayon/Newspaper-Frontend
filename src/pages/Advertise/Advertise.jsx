@@ -12,6 +12,7 @@ import {
   Upload,
   Save,
   Loader2,
+  Trash2,
 } from "lucide-react";
 import { Card, CardContent } from "../../components/ui/card";
 import { Link } from "react-router-dom";
@@ -20,7 +21,10 @@ import {
   getLoginUserCreateAllAdvertisements,
   getFullImageUrl,
   updateAdvertisement,
+  deleteAdsById,
 } from "@/lib/advertise-service";
+import { Modal, ModalContent } from "@/components/ui/modal";
+import { cn } from "@/lib/utils";
 
 // Categories list - you can customize this based on your requirements
 export const categories = [
@@ -218,8 +222,13 @@ const EditModal = ({ isOpen, onClose, advertisement, onUpdate }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+    <Modal isOpen={isOpen} onClose={handleClose}>
+      <ModalContent
+        onClose={handleClose}
+        className={cn(
+          "max-w-xl bg-white rounded-xl shadow-2xl  w-full max-h-[90vh] overflow-y-auto"
+        )}
+      >
         {/* Modal Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">
@@ -430,18 +439,17 @@ const EditModal = ({ isOpen, onClose, advertisement, onUpdate }) => {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </ModalContent>
+    </Modal>
   );
 };
 
 const AdvertiseCard = ({
-  serialNumber,
   category,
   title,
   description,
   status,
-  views,
+  onDelete,
   createdAt,
   images,
   url,
@@ -486,13 +494,23 @@ const AdvertiseCard = ({
                 +{images.length - 1} more
               </div>
             )}
-            {/* Edit Button Overlay */}
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            {/* Edit/delete Button Overlay */}
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
               <button
                 onClick={() => onEdit(advertisementData)}
                 className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-colors"
+                title="Edit Advertisement"
               >
                 <Edit3 className="h-3 w-3" />
+              </button>
+              <button
+                onClick={() =>
+                  onDelete(advertisementData.id, advertisementData.title)
+                }
+                className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transition-colors"
+                title="Delete Advertisement"
+              >
+                <Trash2 className="h-3 w-3" />
               </button>
             </div>
           </div>
@@ -514,12 +532,24 @@ const AdvertiseCard = ({
             <div className="flex items-center gap-2">
               <StatusBadge status={status} />
               {!primaryImage && (
-                <button
-                  onClick={() => onEdit(advertisementData)}
-                  className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors"
-                >
-                  <Edit3 className="h-3 w-3" />
-                </button>
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => onEdit(advertisementData)}
+                    className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors"
+                    title="Edit Advertisement"
+                  >
+                    <Edit3 className="h-3 w-3" />
+                  </button>
+                  <button
+                    onClick={() =>
+                      onDelete(advertisementData.id, advertisementData.title)
+                    }
+                    className="p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors"
+                    title="Delete Advertisement"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -585,7 +615,7 @@ const Advertise = () => {
       const result = await getLoginUserCreateAllAdvertisements();
       if (result.success) {
         const mappedAds = result.data.map((ad) => ({
-          id: ad.id, 
+          id: ad.id,
           serialNumber: ad.serial_number || ad.id?.toString() || "N/A",
           category: ad.category || "Uncategorized",
           title: ad.title || "No Title",
@@ -615,6 +645,29 @@ const Advertise = () => {
       isOpen: true,
       advertisement: advertisement,
     });
+  };
+
+  const handleDeleteClick = async (advertisementId, advertisementTitle) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete "${advertisementTitle}"? This action cannot be undone.`
+    );
+
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      const result = await deleteAdsById(advertisementId);
+
+      if (result.success) {
+        toast.success("Advertisement deleted successfully");
+        fetchAdvertisements();
+      } else {
+        toast.error(result.error || "Failed to delete advertisement");
+      }
+    } catch (error) {
+      console.error("Error deleting advertisement:", error);
+      toast.error("An unexpected error occurred while deleting");
+    }
   };
 
   const handleEditModalClose = () => {
@@ -719,6 +772,7 @@ const Advertise = () => {
               {...ad}
               advertisementData={ad}
               onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
             />
           ))}
         </div>

@@ -195,12 +195,6 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
             <div className="flex items-center justify-end space-x-4">
               {isLoggedIn ? (
                 <div className="flex items-center space-x-3">
-                  {/* Notifications */}
-                  {/* <button className="relative p-2 text-gray-600 hover:text-[#00254A] hover:bg-gray-100 rounded-full transition-colors">
-                    <Bell size={20} />
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                  </button> */}
-
                   {/* Profile Dropdown */}
                   <div className="relative profile-dropdown">
                     <button

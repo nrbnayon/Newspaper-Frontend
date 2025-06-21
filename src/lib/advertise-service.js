@@ -10,6 +10,7 @@ const ADVERTISEMENT_ENDPOINTS = {
   UPDATE: (id) => `/advertisements/${id}/update/`,
   APPROVE: (id) => `/advertisements/${id}/approve/`,
   REJECT: (id) => `/advertisements/${id}/rejected/`,
+  DELETE_BY_ID: (id) => `/advertisements/${id}/delete/`,
 };
 
 // Get all advertisements with enhanced error handling
@@ -42,12 +43,10 @@ export const getAllPublicAdvertisements = async () => {
           views: ad.views || 0,
           status: ad.status || "pending",
           created_at: ad.created_at || new Date().toISOString(),
-          // Filter logic based on status and images
-          is_active: ad.status === "approved", // Only approved ads are considered active
+          is_active: ad.status === "approved", 
           has_images: Array.isArray(ad.images) && ad.images.length > 0,
         }))
         .filter((ad) => {
-          // Only show approved ads with images
           return ad.status === "approved" && ad.has_images;
         }) || [];
 
@@ -218,6 +217,26 @@ export const approveAdvertisement = async (id, action) => {
       error:
         error.response?.data?.message ||
         "Failed to process advertisement approval",
+    };
+  }
+};
+
+
+// Delete ads
+export const deleteAdsById = async (id) => {
+  try {
+    const response = await apiClient.get(
+      ADVERTISEMENT_ENDPOINTS.DELETE_BY_ID(id)
+    );
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error("Error fetching advertisement:", error);
+    return {
+      success: false,
+      error: error.response?.data?.message || "Failed to fetch advertisement",
     };
   }
 };
