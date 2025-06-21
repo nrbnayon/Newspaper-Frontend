@@ -285,7 +285,7 @@ export default function HomePage() {
         console.warn(
           `No featured article available for section ${sectionIndex}`
         );
-        break;
+        // break;
       }
 
       // Assign Audio News
