@@ -13,8 +13,6 @@ const CommentsSection = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const { user, profile } = useAuth();
-  console.log("User info::", user, profile);
-  console.log("comments    data", comments);
   const handleSubmitComment = async () => {
     if (!newComment.trim() || disabled || isSubmitting) return;
 

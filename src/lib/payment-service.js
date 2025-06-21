@@ -12,7 +12,6 @@ export const createCheckoutSession = async (paymentData) => {
       "/payment/create-checkout-session/",
       paymentData
     );
-    console.log("createCheckoutSession response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Create Checkout Session Error:", error);
@@ -28,7 +27,6 @@ export const verifyPayment = async (sessionId) => {
     const response = await apiClient.get(
       `/payment/verify-payment/${sessionId}/`
     );
-    console.log("verifyPayment response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Verify Payment Error:", error);
@@ -40,7 +38,6 @@ export const verifyPayment = async (sessionId) => {
 export const getSubscriptionStatus = async () => {
   try {
     const response = await apiClient.get("/payment/subscription-status/");
-    console.log("getSubscriptionStatus response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Get Subscription Status Error:", error);
@@ -56,7 +53,6 @@ export const cancelSubscription = async (subscriptionId) => {
     const response = await apiClient.post("/payment/cancel-subscription/", {
       subscription_id: subscriptionId,
     });
-    console.log("cancelSubscription response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Cancel Subscription Error:", error);
@@ -70,7 +66,6 @@ export const cancelSubscription = async (subscriptionId) => {
 export const getPaymentHistory = async () => {
   try {
     const response = await apiClient.get("/payment/history/");
-    console.log("getPaymentHistory response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Get Payment History Error:", error);

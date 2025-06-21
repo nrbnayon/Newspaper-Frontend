@@ -155,13 +155,6 @@ export function ResetPasswordModal({
         inputRefs.current[5].focus();
       }
     }, 0);
-
-    console.log("OTP Pasted:", {
-      action: "otp-pasted",
-      email: email,
-      otp: pastedData,
-      timestamp: new Date().toISOString(),
-    });
   };
 
   const onSubmit = (data) => {
@@ -170,23 +163,10 @@ export function ResetPasswordModal({
       toast.error("Please enter complete verification code");
       return;
     }
-
-    console.log("Password Reset Submit:", {
-      action: "password-reset-submit",
-      email: email,
-      otp: otpCode,
-      timestamp: new Date().toISOString(),
-    });
-
     resetPasswordMutation.mutate({ ...data, otp: otpCode });
   };
 
   const handleResendOTP = () => {
-    console.log("Resend Reset Code Initiated:", {
-      action: "password-reset-otp-resend-initiated",
-      email: email,
-      timestamp: new Date().toISOString(),
-    });
     resendMutation.mutate();
   };
 

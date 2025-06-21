@@ -22,10 +22,12 @@ import {
 } from "@/lib/news-service";
 import { isValidArticle, shuffleWithLatest } from "@/lib/utils";
 import HomepageSkeleton from "@/components/common/HomepageSkeleton";
-import { getUerSeeAllAdvertisements } from "@/lib/advertise-service";
+import { getAllPublicAdvertisements } from "@/lib/advertise-service";
 import { ErrorComponent } from "@/components/news/ErrorComponent";
 import { AdvertisementContainer } from "@/components/advertisements/DynamicAdvertisement";
 import AdvertisementSkeleton from "@/components/advertisements/AdvertisementSkeleton";
+import AdPlacement from "@/components/advertisements/AdPlacement";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   const [advertisements, setAdvertisements] = useState([]);
@@ -66,11 +68,12 @@ export default function HomePage() {
   const fetchAdvertisements = async () => {
     try {
       setLoadingAds(true);
-      const response = await getUerSeeAllAdvertisements();
-      console.log("Get all advertisements response:", response);
+      console.log("Ads in Home page::");
+      const response = await getAllPublicAdvertisements();
+      console.log("Get all advertisements In Home page::", response);
 
       if (response.success) {
-        console.log("Setting advertisements:", response.data);
+        console.log("Setting advertisements::", response.data);
         setAdvertisements(response.data || []);
       } else {
         console.error("Failed to fetch advertisements:", response.error);
@@ -161,7 +164,7 @@ export default function HomePage() {
     }
   };
 
-  // Fetch and organize news data
+  // Fetch and organize news data and ads
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
@@ -222,6 +225,7 @@ export default function HomePage() {
     const sections = [];
     let availableNews = [...allNews];
     const assignedIds = new Set();
+
     if (!allNews || allNews.length === 0) {
       console.warn("No news articles provided to organizeNewsData");
       return sections;
@@ -232,7 +236,7 @@ export default function HomePage() {
       return sections;
     }
     const maxSections = Math.min(3, Math.ceil(availableNews.length / 20));
-    // Create sections
+
     for (
       let sectionIndex = 0;
       sectionIndex < maxSections && availableNews.length > 10;
@@ -240,6 +244,7 @@ export default function HomePage() {
     ) {
       const section = {};
       const sectionNews = shuffleWithLatest([...availableNews], 0, true);
+
       // Helper function to assign unique articles
       const assignUniqueArticles = (count) => {
         const articles = [];
@@ -271,6 +276,7 @@ export default function HomePage() {
         }
         return articles;
       };
+
       // Assign Featured Article
       const featuredArticles = assignUniqueArticles(1);
       section.featuredArticle =
@@ -281,7 +287,8 @@ export default function HomePage() {
         );
         break;
       }
-      // Assign Audio News - Get a different article, not the featured one
+
+      // Assign Audio News
       const audioNewsArticles = assignUniqueArticles(1);
       const audioNewsArticle =
         audioNewsArticles.length > 0 ? audioNewsArticles[0] : null;
@@ -296,11 +303,13 @@ export default function HomePage() {
             image: audioNewsArticle.image || getDefaultImage(),
           }
         : null;
+
       // Assign Long Read Article
       const longReadArticles = assignUniqueArticles(1);
       section.longReadArticle =
         longReadArticles.length > 0 ? longReadArticles[0] : null;
-      // Assign Live Updates (4 articles)
+
+      // Assign Live Updates
       const liveUpdateArticles = assignUniqueArticles(4);
       section.liveUpdates = liveUpdateArticles
         .filter(isValidArticle)
@@ -312,15 +321,19 @@ export default function HomePage() {
           category: article.category || "News",
           image: article.image || getDefaultImage(),
         }));
-      // Assign Sidebar Articles (6 articles)
+
+      // Assign Sidebar Articles
       const sidebarArticlesRaw = assignUniqueArticles(6);
       section.sidebarArticles = sidebarArticlesRaw.filter(isValidArticle);
+
       // Initialize tabs data
       section.tabsData = {};
+
       // Get remaining articles for tabs
       const remainingArticles = availableNews.filter(
         (article) => isValidArticle(article) && !assignedIds.has(article.id)
       );
+
       // Organize articles by category for better distribution
       const articlesByCategory = {};
       remainingArticles.forEach((article) => {
@@ -331,6 +344,7 @@ export default function HomePage() {
         }
         articlesByCategory[category].push(article);
       });
+
       // Shuffle articles within each category
       Object.keys(articlesByCategory).forEach((category) => {
         articlesByCategory[category] = shuffleWithLatest(
@@ -339,7 +353,8 @@ export default function HomePage() {
           true
         );
       });
-      // Helper function to check if article matches category filters
+
+      // Define matchesCategory BEFORE it's used
       const matchesCategory = (article, categoryFilters) => {
         if (!categoryFilters) return true;
         const articleCategory = article.category.toLowerCase();
@@ -353,6 +368,7 @@ export default function HomePage() {
             articleDescription.includes(filter.toLowerCase())
         );
       };
+
       // Process each tab configuration using imported TAB_CONFIGS
       TAB_CONFIGS.forEach((config) => {
         let tabArticles = [];
@@ -397,8 +413,6 @@ export default function HomePage() {
         }
         tabArticles = tabArticles.filter((article) => {
           if (isValidArticle(article)) {
-            // Note: We don't add to assignedIds here because tabs can share articles
-            // within the same section, but not across sections
             return true;
           }
           return false;
@@ -407,6 +421,8 @@ export default function HomePage() {
       });
       sections.push(section);
     }
+
+    // Rest of the function remains unchanged
     if (sections.length === 1 && availableNews.length > 0) {
       const validRemainingNews = availableNews.filter(
         (article) => isValidArticle(article) && !assignedIds.has(article.id)
@@ -419,13 +435,10 @@ export default function HomePage() {
           true
         );
         if (remainingShuffled.length > 0) {
-          // Assign new featured article
           additionalSection.featuredArticle = remainingShuffled[0];
-          // Assign new sidebar articles
           additionalSection.sidebarArticles = remainingShuffled
             .slice(1, 7)
             .filter(isValidArticle);
-          // Update audio news if available
           if (remainingShuffled.length > 7) {
             const audioArticle = remainingShuffled[7];
             additionalSection.audioNews = {
@@ -437,11 +450,9 @@ export default function HomePage() {
               image: audioArticle.image || getDefaultImage(),
             };
           }
-          // Update long read article if available
           if (remainingShuffled.length > 8) {
             additionalSection.longReadArticle = remainingShuffled[8];
           }
-          // Update live updates if available
           if (remainingShuffled.length > 9) {
             const liveUpdateArticles = remainingShuffled.slice(9, 13);
             additionalSection.liveUpdates = liveUpdateArticles
@@ -455,7 +466,6 @@ export default function HomePage() {
                 image: article.image || getDefaultImage(),
               }));
           }
-          // Update tabs with remaining articles
           const tabsRemaining = remainingShuffled.slice(13);
           if (tabsRemaining.length > 0) {
             TAB_CONFIGS.forEach((config) => {
@@ -486,6 +496,7 @@ export default function HomePage() {
         }
       }
     }
+
     return sections;
   };
 
@@ -502,36 +513,50 @@ export default function HomePage() {
       window.removeEventListener("scrollToAbout", handleScrollToAbout);
   }, []);
 
-  if (loadingAds) return <AdvertisementSkeleton />;
   if (newsData.loading) return <HomepageSkeleton />;
   if (newsData.error) return <ErrorComponent error={newsData.error} />;
+
+  const handleAdView = (adId) => {
+    // You can add analytics tracking here if needed
+    console.log(`Ad ${adId} viewed`);
+
+    // If you want to update view count in your advertisements state:
+    // setAdvertisements(prev =>
+    //   prev.map(ad =>
+    //     ad.id === adId
+    //       ? { ...ad, views: (ad.views || 0) + 1 }
+    //       : ad
+    //   )
+    // );
+  };
 
   return (
     <>
       <Helmet>
         <title>ALAMOCITYPULSE - Latest News and Updates</title>
         <meta
-          name='description'
-          content='Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE'
+          name="description"
+          content="Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"
         />
       </Helmet>
 
-      <div className='min-h-screen'>
+      <div className="min-h-screen">
         <Navbar
           onScrollToAbout={scrollToFooter}
           onSearch={handleSearch}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
-        <main className='w-full py-4 mt-10 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]'>
-          <div className=''>
+
+        <main className="w-full py-4 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
+          <div className="">
             {isSearching ? (
-              <div className='search-results'>
-                <h2 className='text-2xl font-bold mb-4'>
+              <div className="search-results">
+                <h2 className="text-2xl font-bold mb-4">
                   Search Results for "{searchTerm}"
                 </h2>
                 {searchResults.length > 0 ? (
-                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {searchResults.map((article) => (
                       <StandardArticleCard
                         key={article.id}
@@ -557,263 +582,182 @@ export default function HomePage() {
                     setIsSearching(false);
                     setSearchTerm("");
                   }}
-                  className='mt-4'
+                  className="mt-4"
                 >
                   Back to Home
                 </Button>
               </div>
             ) : (
               newsData.sections.map((section, index) => (
-                <div
-                  key={index}
-                  className='grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12'
-                >
-                  {" "}
-                  {/* Main Content Area */}
-                  <div className='w-full'>
-                    {section.featuredArticle && (
-                      <div className='mb-8'>
-                        <CommonNewsCard
-                          article={section.featuredArticle}
-                          reactions={
-                            newsReactions[section.featuredArticle.id] || []
-                          }
-                          onPostReaction={(reactionData) =>
-                            handlePostReaction(
-                              section.featuredArticle.id,
-                              reactionData
-                            )
-                          }
-                          onPostLove={(loveStatus) =>
-                            handlePostLove(
-                              section.featuredArticle.id,
-                              loveStatus
-                            )
-                          }
-                          onPostComment={(commentText) =>
-                            handlePostComment(
-                              section.featuredArticle.id,
-                              commentText
-                            )
-                          }
-                        />
-                      </div>
-                    )}
-
-                    {section.audioNews && (
-                      <div className='mb-8'>
-                        <AudioNewsCard {...section.audioNews} />
-                      </div>
-                    )}
-
-                    {section.longReadArticle && (
-                      <NewsSection>
-                        <CommonNewsCard
-                          article={section.longReadArticle}
-                          reactions={
-                            newsReactions[section.longReadArticle.id] || []
-                          }
-                          onPostReaction={(reactionData) =>
-                            handlePostReaction(
-                              section.longReadArticle.id,
-                              reactionData
-                            )
-                          }
-                          onPostLove={(loveStatus) =>
-                            handlePostLove(
-                              section.longReadArticle.id,
-                              loveStatus
-                            )
-                          }
-                          onPostComment={(commentText) =>
-                            handlePostComment(
-                              section.longReadArticle.id,
-                              commentText
-                            )
-                          }
-                        />
-                      </NewsSection>
-                    )}
-
-                    {section.liveUpdates && section.liveUpdates.length > 0 && (
-                      <NewsSection>
-                        <LiveUpdateCard
-                          updates={section.liveUpdates}
-                          newsReactions={newsReactions}
-                          onPostLove={handlePostLove}
-                          onPostComment={handlePostComment}
-                        />
-                      </NewsSection>
-                    )}
-
-                    {Object.keys(section.tabsData).length > 0 && (
-                      <div className='mb-8'>
-                        <TabbedNewsSection
-                          dynamicTabsData={section.tabsData}
-                          dynamicTabsConfig={generateTabsConfig(
-                            section.tabsData
-                          )}
-                          newsReactions={newsReactions}
-                          onPostLove={handlePostLove}
-                          onPostComment={handlePostComment}
-                        />
-                      </div>
-                    )}
-
-                    <AdvertisementContainer
-                      advertisements={advertisements}
-                      position='center'
-                      width='100%'
-                      height='160px'
-                      className='mb-6 hidden md:block'
-                      maxAds={advertisements.length || 3}
-                    />
-
-                    {Object.keys(section.tabsData).length > 0 && (
-                      <div className='mb-8'>
-                        <ListedNewsSection
-                          dynamicTabsData={section.tabsData}
-                          dynamicTabsConfig={generateTabsConfig(
-                            section.tabsData
-                          )}
-                          newsReactions={newsReactions}
-                          onPostLove={handlePostLove}
-                          onPostComment={handlePostComment}
-                        />
-                      </div>
-                    )}
-
-                    <AdvertisementContainer
-                      advertisements={advertisements}
-                      position='bottom'
-                      width='100%'
-                      height='160px'
-                      className='mb-6 hidden md:block'
-                      maxAds={advertisements.length || 3}
-                    />
-                  </div>
-                  {/* Sidebar */}
-                  <aside className='w-full xl:w-full'>
-                    <AdvertisementContainer
-                      advertisements={advertisements}
-                      position='center'
-                      width='100%'
-                      height='160px' // h-32 sm:h-40
-                      className='mb-6 hidden md:block'
-                      maxAds={1}
-                    />
-
-                    {section.sidebarArticles &&
-                      Array.isArray(section.sidebarArticles) &&
-                      section.sidebarArticles.length > 0 && (
-                        <div className='xl:hidden w-full mb-6'>
-                          <h4 className='text-md font-semibold text-gray-700 mb-4'>
-                            Trending Now
-                          </h4>
-                          <div className='space-y-4'>
-                            {section.sidebarArticles
-                              .filter(isValidArticle)
-                              .slice(0, 5)
-                              .map((article) => (
-                                <div key={article.id} className='w-full'>
-                                  <StandardArticleCard
-                                    article={article}
-                                    reactions={newsReactions[article.id] || []}
-                                    onPostReaction={(reactionData) =>
-                                      handlePostReaction(
-                                        article.id,
-                                        reactionData
-                                      )
-                                    }
-                                    onPostLove={(loveStatus) =>
-                                      handlePostLove(article.id, loveStatus)
-                                    }
-                                    onPostComment={(commentText) =>
-                                      handlePostComment(article.id, commentText)
-                                    }
-                                  />
-                                </div>
-                              ))}
-                          </div>
+                <>
+                  <div
+                    key={index}
+                    className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12"
+                  >
+                    {/* Main Content Area */}
+                    <div className="w-full">
+                      {section.featuredArticle && (
+                        <div className="mb-8">
+                          <CommonNewsCard
+                            article={section.featuredArticle}
+                            reactions={
+                              newsReactions[section.featuredArticle.id] || []
+                            }
+                            onPostReaction={(reactionData) =>
+                              handlePostReaction(
+                                section.featuredArticle.id,
+                                reactionData
+                              )
+                            }
+                            onPostLove={(loveStatus) =>
+                              handlePostLove(
+                                section.featuredArticle.id,
+                                loveStatus
+                              )
+                            }
+                            onPostComment={(commentText) =>
+                              handlePostComment(
+                                section.featuredArticle.id,
+                                commentText
+                              )
+                            }
+                          />
+                          <AdPlacement
+                            advertisements={advertisements}
+                            placement="header-banner"
+                            onAdView={handleAdView}
+                            className="mb-6"
+                          />
                         </div>
                       )}
 
-                    <AdvertisementContainer
-                      advertisements={advertisements}
-                      position='mobile-top'
-                      width='100%'
-                      height='160px'
-                      className='mb-4'
-                      maxAds={advertisements.length || 3}
-                    />
-
-                    {section.sidebarArticles &&
-                      Array.isArray(section.sidebarArticles) &&
-                      section.sidebarArticles.length > 3 && (
-                        <div className='xl:hidden w-full mb-6'>
-                          <div className='space-y-4'>
-                            {section.sidebarArticles
-                              .filter(isValidArticle)
-                              .slice(3, 8)
-                              .map((article) => (
-                                <div key={article.id} className='w-full'>
-                                  <StandardArticleCard
-                                    article={article}
-                                    reactions={newsReactions[article.id] || []}
-                                    onPostReaction={(reactionData) =>
-                                      handlePostReaction(
-                                        article.id,
-                                        reactionData
-                                      )
-                                    }
-                                    onPostLove={(loveStatus) =>
-                                      handlePostLove(article.id, loveStatus)
-                                    }
-                                    onPostComment={(commentText) =>
-                                      handlePostComment(article.id, commentText)
-                                    }
-                                  />
-                                </div>
-                              ))}
-                          </div>
+                      {section.audioNews && (
+                        <div className="mb-8">
+                          <AudioNewsCard {...section.audioNews} />
                         </div>
                       )}
 
-                    <AdvertisementContainer
-                      advertisements={advertisements}
-                      position='mobile-mid'
-                      width='100%'
-                      height='160px'
-                      className='mb-6 xl:hidden'
-                      maxAds={1}
-                    />
+                      {section.longReadArticle && (
+                        <NewsSection>
+                          <CommonNewsCard
+                            article={section.longReadArticle}
+                            reactions={
+                              newsReactions[section.longReadArticle.id] || []
+                            }
+                            onPostReaction={(reactionData) =>
+                              handlePostReaction(
+                                section.longReadArticle.id,
+                                reactionData
+                              )
+                            }
+                            onPostLove={(loveStatus) =>
+                              handlePostLove(
+                                section.longReadArticle.id,
+                                loveStatus
+                              )
+                            }
+                            onPostComment={(commentText) =>
+                              handlePostComment(
+                                section.longReadArticle.id,
+                                commentText
+                              )
+                            }
+                          />
+                          <AdPlacement
+                            advertisements={advertisements}
+                            placement="content-middle"
+                            onAdView={handleAdView}
+                            className="mb-6"
+                          />
+                        </NewsSection>
+                      )}
 
-                    <div className='xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center'>
-                      {/* <h3 className='text-lg font-bold text-gray-700 mb-4 text-center'>
-                      Advertisement Area
-                    </h3> */}
-                      <AdvertisementContainer
+                      {section.liveUpdates &&
+                        section.liveUpdates.length > 0 && (
+                          <>
+                            <NewsSection>
+                              <LiveUpdateCard
+                                updates={section.liveUpdates}
+                                newsReactions={newsReactions}
+                                onPostLove={handlePostLove}
+                                onPostComment={handlePostComment}
+                              />
+                            </NewsSection>
+                            <AdvertisementContainer
+                              advertisements={advertisements}
+                              position="center"
+                              width="100%"
+                              height="180px"
+                              className="mb-6 hidden md:flex"
+                              maxAds={advertisements?.length || 1}
+                            />
+                          </>
+                        )}
+
+                      {Object.keys(section.tabsData).length > 0 && (
+                        <div className="mb-8">
+                          <TabbedNewsSection
+                            dynamicTabsData={section.tabsData}
+                            dynamicTabsConfig={generateTabsConfig(
+                              section.tabsData
+                            )}
+                            newsReactions={newsReactions}
+                            onPostLove={handlePostLove}
+                            onPostComment={handlePostComment}
+                          />
+                        </div>
+                      )}
+
+                      {/* Content Middle Ad */}
+                      <AdPlacement
                         advertisements={advertisements}
-                        position='sidebar-top'
-                        width='100%'
-                        height='256px' // h-48 sm:h-64
-                        className='mb-6'
-                        maxAds={1}
+                        placement="content-middle"
+                        onAdView={handleAdView}
+                        className="mb-6"
                       />
 
+                      {Object.keys(section.tabsData).length > 0 && (
+                        <div className="mb-8">
+                          <ListedNewsSection
+                            dynamicTabsData={section.tabsData}
+                            dynamicTabsConfig={generateTabsConfig(
+                              section.tabsData
+                            )}
+                            newsReactions={newsReactions}
+                            onPostLove={handlePostLove}
+                            onPostComment={handlePostComment}
+                          />
+                        </div>
+                      )}
+
+                      {/* Content Bottom Ad */}
+                      <div className="flex justify-center items-center">
+                        <AdvertisementContainer
+                          advertisements={advertisements}
+                          position="sidebar-top"
+                          width="100%"
+                          height="200px"
+                          className="flex justify-between mb-6"
+                          maxAds={1}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Sidebar */}
+                    <aside className="w-full xl:w-full">
                       {section.sidebarArticles &&
                         Array.isArray(section.sidebarArticles) &&
                         section.sidebarArticles.length > 0 && (
-                          <div className='w-full'>
-                            <h4 className='text-md font-semibold text-gray-700 mb-4'>
+                          <div className="xl:hidden w-full mb-6">
+                            <h4 className="text-md font-semibold text-gray-700 mb-4">
                               Trending Now
                             </h4>
-                            <div className='space-y-4'>
+                            <div className="space-y-4">
                               {section.sidebarArticles
                                 .filter(isValidArticle)
                                 .slice(0, 5)
                                 .map((article) => (
-                                  <div key={article.id} className='w-full'>
+                                  <div key={article.id} className="w-full">
                                     <StandardArticleCard
                                       article={article}
                                       reactions={
@@ -837,29 +781,36 @@ export default function HomePage() {
                                     />
                                   </div>
                                 ))}
+                              <AdPlacement
+                                advertisements={advertisements}
+                                placement="card"
+                                onAdView={handleAdView}
+                                className="mt-8"
+                              />
                             </div>
                           </div>
                         )}
 
+                      {/* Sidebar Ad - Mobile Mid */}
                       <AdvertisementContainer
                         advertisements={advertisements}
-                        position='sidebar-mid'
-                        width='100%'
-                        height='160px' // h-32 sm:h-40
-                        className='my-6'
+                        position="mobile-mid"
+                        width="100%"
+                        height="200px"
+                        className="mb-6 xl:hidden"
                         maxAds={1}
                       />
 
                       {section.sidebarArticles &&
                         Array.isArray(section.sidebarArticles) &&
                         section.sidebarArticles.length > 3 && (
-                          <div className='w-full'>
-                            <div className='space-y-4'>
+                          <div className="xl:hidden w-full mb-6">
+                            <div className="space-y-4">
                               {section.sidebarArticles
                                 .filter(isValidArticle)
                                 .slice(3, 8)
                                 .map((article) => (
-                                  <div key={article.id} className='w-full'>
+                                  <div key={article.id} className="w-full">
                                     <StandardArticleCard
                                       article={article}
                                       reactions={
@@ -887,21 +838,137 @@ export default function HomePage() {
                           </div>
                         )}
 
-                      <AdvertisementContainer
-                        advertisements={advertisements}
-                        position='sidebar-bottom'
-                        width='100%'
-                        height='192px' // h-32 sm:h-48
-                        className='mt-6'
-                        maxAds={1}
-                      />
-                    </div>
-                  </aside>
-                </div>
+                      {/* Desktop Sidebar */}
+                      <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
+                        {/* Sidebar Top Ad */}
+                        <AdvertisementContainer
+                          advertisements={advertisements}
+                          position="sidebar-top"
+                          width="100%"
+                          height="200px"
+                          className="mb-6"
+                          maxAds={1}
+                        />
+
+                        {section.sidebarArticles &&
+                          Array.isArray(section.sidebarArticles) &&
+                          section.sidebarArticles.length > 0 && (
+                            <div className="w-full">
+                              <h4 className="text-md font-semibold text-gray-700 mb-4">
+                                Trending Now
+                              </h4>
+                              <div className="space-y-4">
+                                {section.sidebarArticles
+                                  .filter(isValidArticle)
+                                  .slice(0, 5)
+                                  .map((article) => (
+                                    <div key={article.id} className="w-full">
+                                      <StandardArticleCard
+                                        article={article}
+                                        reactions={
+                                          newsReactions[article.id] || []
+                                        }
+                                        onPostReaction={(reactionData) =>
+                                          handlePostReaction(
+                                            article.id,
+                                            reactionData
+                                          )
+                                        }
+                                        onPostLove={(loveStatus) =>
+                                          handlePostLove(article.id, loveStatus)
+                                        }
+                                        onPostComment={(commentText) =>
+                                          handlePostComment(
+                                            article.id,
+                                            commentText
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  ))}
+                                <AdPlacement
+                                  advertisements={advertisements}
+                                  placement="card"
+                                  onAdView={handleAdView}
+                                  className="my-6"
+                                />
+                              </div>
+                            </div>
+                          )}
+
+                        {/* Sidebar Mid Ad */}
+                        <AdvertisementContainer
+                          advertisements={advertisements}
+                          position="sidebar-mid"
+                          width="100%"
+                          height="200px"
+                          className="my-6"
+                          maxAds={1}
+                        />
+
+                        {section.sidebarArticles &&
+                          Array.isArray(section.sidebarArticles) &&
+                          section.sidebarArticles.length > 3 && (
+                            <div className="w-full">
+                              <div className="space-y-4">
+                                {section.sidebarArticles
+                                  .filter(isValidArticle)
+                                  .slice(3, 8)
+                                  .map((article) => (
+                                    <div key={article.id} className="w-full">
+                                      <StandardArticleCard
+                                        article={article}
+                                        reactions={
+                                          newsReactions[article.id] || []
+                                        }
+                                        onPostReaction={(reactionData) =>
+                                          handlePostReaction(
+                                            article.id,
+                                            reactionData
+                                          )
+                                        }
+                                        onPostLove={(loveStatus) =>
+                                          handlePostLove(article.id, loveStatus)
+                                        }
+                                        onPostComment={(commentText) =>
+                                          handlePostComment(
+                                            article.id,
+                                            commentText
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          )}
+
+                        {/* Sidebar Bottom Ad */}
+                        <AdvertisementContainer
+                          advertisements={advertisements}
+                          position="sidebar-bottom"
+                          width="100%"
+                          height="192px"
+                          className="mt-6"
+                          maxAds={1}
+                        />
+                      </div>
+                    </aside>
+                  </div>
+                </>
               ))
             )}
           </div>
         </main>
+
+        {/* Footer Ad */}
+        <AdPlacement
+          advertisements={advertisements}
+          placement="footer"
+          onAdView={handleAdView}
+          className="mb-6"
+        />
+
         <div ref={footerRef}>
           <FooterSection />
         </div>

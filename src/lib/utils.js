@@ -1,18 +1,7 @@
-/**
- * Combines multiple class names into a single string
- * @param  {...string} inputs - Class names to combine
- * @returns {string} - Combined class names
- */
 export function cn(...inputs) {
   return inputs.filter(Boolean).join(" ");
 }
 
-/**
- * Format a date to a human-readable string
- * @param {Date|string} date - Date to format
- * @param {Object} options - Intl.DateTimeFormat options
- * @returns {string} - Formatted date
- */
 export function formatDate(date, options = {}) {
   const defaultOptions = {
     year: "numeric",
@@ -26,20 +15,9 @@ export function formatDate(date, options = {}) {
   }).format(new Date(date));
 }
 
-/**
- * Validate an email address
- * @param {string} email - Email to validate
- * @returns {boolean} - Whether the email is valid
- */
 export function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
-
-/**
- * Validate a phone number
- * @param {string} phone - Phone to validate
- * @returns {boolean} - Whether the phone is valid
- */
 export function isValidPhone(phone) {
   return /^\d{10}$/.test(phone);
 }
@@ -47,8 +25,6 @@ export function isValidPhone(phone) {
 // Function to truncate text to 20% of words
 export const getTruncatedText = (text) => {
   if (!text) return "";
-  //   const words = text.split(" ");
-  //  const twentyPercentLength = Math.max(Math.ceil(words.length * 0.1), 200);
   const words = text.split(" ").filter((word) => word.length > 0);
   if (words.length <= 10) return text;
   if (words.twentyPercentLength <= 90) return text;
@@ -66,11 +42,7 @@ export const isValidArticle = (article) => {
   );
 };
 
-export const shuffleWithLatest = (
-  array,
-  keepLatestCount = 1,
-  forceReshuffle = false
-) => {
+export const shuffleWithLatest = (array, keepLatestCount = 1) => {
   if (!array || array.length <= 1) return array;
   const latest = array.slice(0, keepLatestCount);
   const remaining = array.slice(keepLatestCount);
@@ -87,3 +59,60 @@ export const shuffleWithLatest = (
   return [...latest, ...shuffled];
 };
 
+export function formatFullDate(dateString) {
+  if (!dateString) return "N/A";
+  try {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch (error) {
+    return "Invalid Date";
+  }
+}
+
+// Advertisement status utility functions
+export function getProgressVariant(progress) {
+  switch (progress) {
+    case "Approved":
+    case "approved":
+      return "default";
+    case "Rejected":
+    case "rejected":
+      return "destructive";
+    case "Pending":
+    case "pending":
+      return "secondary";
+    default:
+      return "outline";
+  }
+}
+
+export function getProgressColor(progress) {
+  switch (progress) {
+    case "Approved":
+    case "approved":
+      return "text-green-600 bg-green-50";
+    case "Rejected":
+    case "rejected":
+      return "text-red-600 bg-red-50";
+    case "Pending":
+    case "pending":
+      return "text-yellow-600 bg-yellow-50";
+    default:
+      return "text-gray-600 bg-gray-50";
+  }
+}
+
+export function formatProgress(progress) {
+  const progressMap = {
+    approved: "Approved",
+    rejected: "Rejected",
+    pending: "Pending",
+    draft: "Pending",
+  };
+  return progressMap[progress] || progress;
+}

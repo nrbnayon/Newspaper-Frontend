@@ -101,17 +101,64 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
   }
 
   return (
-    <div className="mb-4">
-      <p className="text-gray-600">
-        {isExpanded ? description : `${truncatedContent}...`}
-        <button
-          onClick={handleReadMore}
-          className="text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors duration-200 focus:outline-none focus:underline"
-        >
-          {isExpanded ? "Read less" : "Read more >"}
-        </button>
-      </p>
-    </div>
+    <>
+      {" "}
+      {isExpanded && (
+        <Helmet>
+          <title>
+            {currentUpdate?.title || "ALAMOCITYPULSE - News Article"}
+          </title>
+          <meta
+            name="description"
+            content={
+              currentUpdate?.description
+                ? getTruncatedText(currentUpdate?.description, 160)
+                : "Read the latest news and updates from ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            name="keywords"
+            content={
+              currentUpdate?.category
+                ? currentUpdate?.category.join(", ")
+                : "news, updates, ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            property="og:title"
+            content={currentUpdate?.title || "ALAMOCITYPULSE - News Article"}
+          />
+          <meta
+            property="og:description"
+            content={
+              currentUpdate?.description
+                ? getTruncatedText(currentUpdate?.description, 160)
+                : "Read the latest news and updates from ALAMOCITYPULSE"
+            }
+          />
+          <meta
+            property="og:image"
+            content={currentUpdate?.image || "/default-image.jpg"}
+          />
+          <meta property="og:type" content="article" />
+          <meta
+            property="og:url"
+            content={currentUpdate?.url || window.location.href}
+          />
+        </Helmet>
+      )}
+      <div className="mb-4">
+        <p className="text-gray-600">
+          {isExpanded ? description : `${truncatedContent}...`}
+          <button
+            onClick={handleReadMore}
+            className="text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors duration-200 focus:outline-none focus:underline"
+          >
+            {isExpanded ? "Read less" : "Read more >"}
+          </button>
+        </p>
+      </div>
+    </>
   );
 };
 
@@ -178,50 +225,6 @@ const LiveUpdateCard = ({
 
   return (
     <>
-      {isExpanded && (
-        <Helmet>
-          <title>
-            {currentUpdate?.title || "ALAMOCITYPULSE - News Article"}
-          </title>
-          <meta
-            name='description'
-            content={
-              currentUpdate?.description
-                ? getTruncatedText(currentUpdate?.description, 160)
-                : "Read the latest news and updates from ALAMOCITYPULSE"
-            }
-          />
-          <meta
-            name='keywords'
-            content={
-              currentUpdate?.category
-                ? currentUpdate?.category.join(", ")
-                : "news, updates, ALAMOCITYPULSE"
-            }
-          />
-          <meta
-            property='og:title'
-            content={currentUpdate?.title || "ALAMOCITYPULSE - News Article"}
-          />
-          <meta
-            property='og:description'
-            content={
-              currentUpdate?.description
-                ? getTruncatedText(currentUpdate?.description, 160)
-                : "Read the latest news and updates from ALAMOCITYPULSE"
-            }
-          />
-          <meta
-            property='og:image'
-            content={currentUpdate?.image || "/default-image.jpg"}
-          />
-          <meta property='og:type' content='article' />
-          <meta
-            property='og:url'
-            content={currentUpdate?.url || window.location.href}
-          />
-        </Helmet>
-      )}
       <div className={cn("pb-6", className)}>
         <div className='flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10'>
           {/* Content Section */}

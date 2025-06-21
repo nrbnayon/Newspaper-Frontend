@@ -51,6 +51,8 @@
   --color-placeholder-color: var(--placeholder-color);
   --color-custom-red: var(--custom-red);
   --color-custom-gray: var(--custom-gray);
+  --color-custom-green: var(--custom-green);
+  --color-custom-yellow: var(--custom-yellow);
 }
 
 :root {
@@ -105,6 +107,8 @@
   --placeholder-color: #acacac;
   --custom-red: #b32021;
   --custom-gray: #727272;
+  --custom-green: #16a34a;
+  --custom-yellow: #ca8a04;
 }
 
 .dark {
@@ -156,6 +160,8 @@
   --placeholder-color: #acacac;
   --custom-red: #b32021;
   --custom-gray: #727272;
+  --custom-green: #16a34a;
+  --custom-yellow: #ca8a04;
 }
 
 /* Base styles using Tailwind utilities and CSS variables */
@@ -195,6 +201,12 @@
   }
   .bg-custom-gray {
     background-color: var(--custom-gray);
+  }
+  .text-custom-green {
+    color: var(--custom-green);
+  }
+  .text-custom-yellow {
+    color: var(--custom-yellow);
   }
   .scrollbar-hide {
     -ms-overflow-style: none;

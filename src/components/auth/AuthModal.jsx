@@ -56,24 +56,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
     setIsSignIn(initialMode === "signin");
   }, [initialMode]);
 
-  // Add debugging for form state
-  useEffect(() => {
-    console.log("Form errors:", errors);
-    console.log("Form is valid:", isValid);
-  }, [errors, isValid]);
 
   // Handle main form submission
   const onSubmit = async (data) => {
-    console.log("Form submitted with data:", data);
-    console.log(
-      "Current mode - isSignIn:",
-      isSignIn,
-      "isForgotPassword:",
-      isForgotPassword
-    );
-
     setIsLoading(true);
-
     try {
       if (isForgotPassword) {
         await sendForgotPasswordOTP({ email: data.email });
@@ -114,7 +100,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
 
   // Handle form submission errors
   const onError = (errors) => {
-    console.log("Form validation errors:", errors);
     toast.error("Please fix the form errors before submitting.");
   };
 
@@ -151,12 +136,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
   // Handle password change success
   const handlePasswordChanged = () => {
     setShowResetPasswordModal(false);
-    setShowSuccessModal(true);
-  };
-
-  // Handle social login
-  const handleSocialLogin = (provider) => {
-    console.log(`Logging in with ${provider}`);
     setShowSuccessModal(true);
   };
 

@@ -2,7 +2,6 @@ import { getAllNews } from "@/lib/news-service";
 
 const allNews = await getAllNews();
 
-console.log("Get All News in data::: ", allNews);
 
 
 // my data structure this way i need  format from get all data 

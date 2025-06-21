@@ -10,9 +10,7 @@ import {
   User,
   Crown,
   Shield,
-  Trash2,
   Loader2,
-  AlertTriangle,
   Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -124,7 +122,6 @@ const ProfilePicture = ({ src, alt, onImageChange, isEditing, isLoading }) => {
     </div>
   );
 };
-
 // Main Profile component
 const Profile = () => {
   const { user, profile, refreshProfile } = useAuth();
@@ -176,25 +173,37 @@ const Profile = () => {
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Validate file type
       if (!file.type.startsWith("image/")) {
         toast.error("Please select a valid image file");
+        event.target.value = ""; // Clear the input
         return;
       }
-      if (file.size > 10 * 1024 * 1024) {
+
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
         toast.error("Image size should be less than 5MB");
+        event.target.value = ""; // Clear the input
         return;
       }
+
       setImageLoading(true);
 
+      // Set the actual file object
       setFormData((prev) => ({
         ...prev,
-        profile_picture: file,
+        profile_picture: file, // This should be the File object
       }));
 
+      // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setPreviewImage(e.target.result);
         setImageLoading(false);
+      };
+      reader.onerror = () => {
+        setImageLoading(false);
+        toast.error("Failed to read image file");
       };
       reader.readAsDataURL(file);
     }
@@ -203,22 +212,38 @@ const Profile = () => {
   const handleSaveChanges = async () => {
     try {
       setIsLoading(true);
+
+      // Create FormData properly
       const updateData = new FormData();
-      updateData.append("first_name", formData.first_name);
-      updateData.append("last_name", formData.last_name);
-      updateData.append("phone_number", formData.phone_number);
-      if (formData.profile_picture) {
+
+      // Only append non-empty values
+      if (formData.first_name?.trim()) {
+        updateData.append("first_name", formData.first_name.trim());
+      }
+      if (formData.last_name?.trim()) {
+        updateData.append("last_name", formData.last_name.trim());
+      }
+      if (formData.phone_number?.trim()) {
+        updateData.append("phone_number", formData.phone_number.trim());
+      }
+
+      // Handle profile picture - only append if a new file is selected
+      if (
+        formData.profile_picture &&
+        formData.profile_picture instanceof File
+      ) {
         updateData.append("profile_picture", formData.profile_picture);
       }
       const response = await updateUserProfile(updateData);
-      console.log("Profile Update response::", response);
       await refreshProfile();
+      // Reset form state
       setOriginalFormData({
         first_name: formData.first_name,
         last_name: formData.last_name,
         phone_number: formData.phone_number,
-        profile_picture: null, 
+        profile_picture: null,
       });
+
       setIsEditing(false);
       toast.success("Profile updated successfully!", {
         icon: "✅",
@@ -282,7 +307,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-full mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
@@ -327,7 +352,7 @@ const Profile = () => {
                 {!isEditing ? (
                   <Button
                     onClick={() => setIsEditing(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium"
+                    className="flex items-center gap-2 px-4 py-2  text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium"
                   >
                     <Edit size={18} />
                     Edit Profile
@@ -479,138 +504,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-// -------------
-
-// Delete confirmation modal
-// const DeleteModal = ({
-//   isOpen,
-//   onClose,
-//   onConfirm,
-//   userName,
-//   error,
-//   onInputChange,
-//   confirmText,
-// }) => {
-//   if (!isOpen) return null;
-
-//   return (
-//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-//       <div
-//         className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
-//         onClick={onClose}
-//       />
-//       <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
-//         <div className="flex items-center gap-3 mb-4">
-//           <div className="p-2 bg-red-100 rounded-full">
-//             <Trash2 className="text-red-600" size={24} />
-//           </div>
-//           <h3 className="text-xl font-bold text-gray-900">Delete Account</h3>
-//         </div>
-
-//         <p className="text-gray-600 mb-4">
-//           This action cannot be undone. To confirm deletion, please enter your
-//           full name exactly as it appears:{" "}
-//           <span className="font-semibold">{userName}</span>.
-//         </p>
-
-//         <div className="mb-4">
-//           <label className="block text-sm font-medium text-gray-700 mb-2">
-//             Enter your full name to confirm:
-//           </label>
-//           <input
-//             type="text"
-//             value={confirmText}
-//             onChange={onInputChange}
-//             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-//             placeholder="Enter your full name"
-//           />
-//           {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-//         </div>
-
-//         <div className="flex gap-3">
-//           <Button
-//             onClick={onClose}
-//             variant="outline"
-//             className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
-//           >
-//             Cancel
-//           </Button>
-//           <Button
-//             onClick={onConfirm}
-//             variant="destructive"
-//             className="flex-1 bg-red-500 hover:bg-red-600"
-//             disabled={!confirmText.trim()}
-//           >
-//             Delete Account
-//           </Button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-const [showDeleteModal, setShowDeleteModal] = useState(false);
-const [deleteConfirmName, setDeleteConfirmName] = useState("");
-const [deleteError, setDeleteError] = useState("");
-
-// const handleDeleteAccount = () => {
-//   if (
-//     deleteConfirmName.trim() === `${user.firstName} ${user.lastName}`.trim()
-//   ) {
-//     setShowDeleteModal(false);
-//     toast.success("Delete request submitted successfully!", {
-//       icon: "🗑️",
-//       duration: 4000,
-//       style: {
-//         background: "#ef4444",
-//         color: "#fff",
-//       },
-//     });
-//     setDeleteConfirmName("");
-//     setDeleteError("");
-//   } else {
-//     setDeleteError("Name doesn't match. Please enter your exact full name.");
-//   }
-// };
-
-//         <div className="bg-white rounded-2xl shadow-lg border-2 border-red-200 p-6">
-//           <h3 className="text-lg font-semibold text-red-600 mb-4 flex items-center gap-2">
-//             <AlertTriangle size={20} />
-//             Danger Zone
-//           </h3>
-//           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-//             <div>
-//               <p className="text-gray-900 font-medium">Delete Account</p>
-//               <p className="text-gray-600 text-sm">
-//                 Permanently delete your account and all associated data. This
-//                 action cannot be undone.
-//               </p>
-//             </div>
-//             <Button
-//               onClick={() => setShowDeleteModal(true)}
-//               variant="destructive"
-//               className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
-//             >
-//               <Trash2 size={18} />
-//               Delete Account
-//             </Button>
-//           </div>
-//         </div>
-
-// <DeleteModal
-// isOpen={showDeleteModal}
-// onClose={() => {
-//   setShowDeleteModal(false);
-//   setDeleteConfirmName("");
-//   setDeleteError("");
-// }}
-// onConfirm={handleDeleteAccount}
-// userName={`${formData.firstName} ${formData.lastName}`}
-// error={deleteError}
-// confirmText={deleteConfirmName}
-// onInputChange={(e) => {
-//   setDeleteConfirmName(e.target.value);
-//   if (deleteError) setDeleteError("");
-// }}
-// />

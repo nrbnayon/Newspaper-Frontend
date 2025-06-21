@@ -181,7 +181,6 @@ export const setCookie = (name, value, options = {}) => {
   }
 
   document.cookie = cookieString;
-  console.log(`Cookie set: ${name} with maxAge: ${cookieOptions.maxAge}`);
 };
 
 export const getCookie = (name) => {
@@ -203,7 +202,6 @@ export const removeCookie = (name, options = {}) => {
     maxAge: -1,
     expires: new Date(0),
   });
-  console.log(`Cookie removed: ${name}`);
 };
 
 export const hasCookie = (name) => {
@@ -274,10 +272,6 @@ export const setAuthTokens = (accessToken, refreshToken) => {
     sameSite: "strict",
     path: "/",
   });
-
-  console.log("Auth tokens set with expiration:");
-  console.log(`- accessToken: ${TOKEN_EXPIRY.ACCESS_TOKEN} seconds`);
-  console.log(`- refreshToken: ${TOKEN_EXPIRY.REFRESH_TOKEN} seconds`);
 };
 
 export const removeAuthTokens = () => {
@@ -285,7 +279,6 @@ export const removeAuthTokens = () => {
   removeCookie("accessToken", cookieOptions);
   removeCookie("refreshToken", cookieOptions);
   removeCookie("isAuthenticated", cookieOptions);
-  console.log("All auth tokens removed");
 };
 
 // Check if user is authenticated
@@ -315,7 +308,6 @@ export const getCurrentUser = () => {
 
 export default apiClient;
 
-
 // ============================
 // AUTH API FUNCTIONS
 // ============================
@@ -324,7 +316,6 @@ export default apiClient;
 export const sendOTP = async ({ email }) => {
   try {
     const response = await apiClient.post("/auth/otp/create/", { email });
-    console.log("sendOTP response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Send OTP Error:", error);
@@ -339,8 +330,6 @@ export const verifyOTP = async ({ email, otp, type }) => {
       email,
       otp,
     });
-    console.log("verifyOTP response::", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Verify OTP Error:", error);
@@ -352,7 +341,6 @@ export const verifyOTP = async ({ email, otp, type }) => {
 export const registerUser = async (userData) => {
   try {
     const response = await apiClient.post("/auth/register/", userData);
-    console.log("registerUser response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Register User Error:", error);
@@ -364,10 +352,7 @@ export const registerUser = async (userData) => {
 export const loginUser = async ({ email, password }) => {
   try {
     const response = await apiClient.post("/auth/login/", { email, password });
-    console.log("Login response::", response.data);
-
     const { access_token, refresh_token, profile } = response.data;
-
     // Set tokens in cookies
     setAuthTokens(access_token, refresh_token);
 
@@ -385,8 +370,6 @@ export const sendForgotPasswordOTP = async ({ email }) => {
       email,
     });
 
-    console.log("sendForgotPasswordOTP response::", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Forgot Password OTP Error:", error);
@@ -402,9 +385,6 @@ export const resetPassword = async ({ email, otp, new_password }) => {
       otp,
       new_password,
     });
-
-    console.log("resetPassword response::", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Reset Password Error:", error);
@@ -421,9 +401,6 @@ export const resendOTP = async ({ email, type }) => {
     }
 
     const response = await apiClient.post(endpoint, { email });
-
-    console.log("resendOTP response::", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Resend OTP Error:", error);
@@ -435,7 +412,6 @@ export const resendOTP = async ({ email, type }) => {
 export const logoutUser = () => {
   // Clear all auth tokens from cookies
   removeAuthTokens();
-  console.log("User logged out successfully");
   // Redirect to home page
   if (typeof window !== "undefined") {
     window.location.href = "/";
@@ -446,7 +422,6 @@ export const logoutUser = () => {
 export const getUserProfile = async () => {
   try {
     const response = await apiClient.get("/auth/profile/");
-    console.log("getUserProfile response::", response.data);
     return response.data;
   } catch (error) {
     console.error("Get Profile Error:", error);
@@ -457,12 +432,14 @@ export const getUserProfile = async () => {
 // Update user profile - NEW FUNCTION
 export const updateUserProfile = async (profileData) => {
   try {
-    const response = await apiClient.put("/auth/profile/", profileData);
-    console.log("updateUserProfile response::", response.data);
+    const response = await apiClient.put("/auth/profile/", profileData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Update Profile Error:", error);
     throw new Error(error.response?.data?.error || "Failed to update profile");
   }
 };
-

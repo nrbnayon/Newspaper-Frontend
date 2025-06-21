@@ -41,9 +41,8 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
   const verifyMutation = useMutation({
     mutationFn: (otpCode) => verifyOTP({ email, otp: otpCode, type }),
     onSuccess: (response) => {
-      console.log("OTP Verification Success:", response);
       toast.success("OTP verified successfully!");
-      onVerified(); // This will trigger signup API call or proceed to reset password
+      onVerified(); 
     },
     onError: (error) => {
       console.error("OTP Verification Error:", error);
@@ -95,13 +94,6 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
     // Auto-submit when all fields are filled
     if (newOtp.every((digit) => digit !== "") && value) {
       const otpCode = newOtp.join("");
-      console.log("OTP Entered:", {
-        action: "otp-entered",
-        email: email,
-        type: type,
-        otp: otpCode,
-        timestamp: new Date().toISOString(),
-      });
       verifyMutation.mutate(otpCode);
     }
   };
@@ -127,13 +119,6 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
 
     // Auto-submit after paste
     const otpCode = pastedData;
-    console.log("OTP Pasted:", {
-      action: "otp-pasted",
-      email: email,
-      type: type,
-      otp: otpCode,
-      timestamp: new Date().toISOString(),
-    });
     verifyMutation.mutate(otpCode);
   };
 
@@ -147,13 +132,6 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
     e.preventDefault();
     const otpCode = otp.join("");
     if (otpCode.length === 6) {
-      console.log("Manual OTP Submit:", {
-        action: "otp-manual-submit",
-        email: email,
-        type: type,
-        otp: otpCode,
-        timestamp: new Date().toISOString(),
-      });
       verifyMutation.mutate(otpCode);
     } else {
       toast.error("Please enter complete OTP");
@@ -161,12 +139,6 @@ export function VerifyOTPModal({ isOpen, onClose, email, type, onVerified }) {
   };
 
   const handleResendOTP = () => {
-    console.log("Resend OTP Initiated:", {
-      action: "otp-resend-initiated",
-      email: email,
-      type: type,
-      timestamp: new Date().toISOString(),
-    });
     resendMutation.mutate();
   };
 

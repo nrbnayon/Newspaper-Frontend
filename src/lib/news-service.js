@@ -8,7 +8,6 @@ import apiClient from "./auth-service";
 export const getAllNews = async () => {
   try {
     const response = await apiClient.get("/news/get/all-news/");
-    console.log("Raw API Response:", response.data);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch all news:", error);
@@ -22,7 +21,6 @@ export const searchAllNews = async ({ search_term }) => {
   try {
     const encodedTerm = encodeURIComponent(search_term);
     const response = await apiClient.get(`/news/search/?q=${encodedTerm}`);
-    console.log("Raw API Response:", response.data);
     return response.data;
   } catch (error) {
     console.error("Failed to search news:", error);
@@ -119,50 +117,50 @@ export const TAB_CONFIGS = [
   {
     key: "latests",
     label: "Latest News",
-    count: 8,
+    count: 4,
     categoryFilter: null,
     isDefault: true,
   },
   {
     key: "politics",
     label: "Politics", 
-    count: 8,
+    count: 4,
     categoryFilter: ["politics", "government", "election", "policy"],
   },
   {
     key: "Local",
     label: "Local",
-    count: 8,
+    count: 4,
     categoryFilter: ["local", "city", "community", "regional"],
   },
   {
     key: "whatWeKnow",
     label: "Analysis",
-    count: 8,
+    count: 4,
     categoryFilter: ["analysis", "opinion", "editorial", "insight"],
   },
   {
     key: "maps",
     label: "Regional",
-    count: 8,
+    count: 4,
     categoryFilter: ["regional", "national", "international", "world"],
   },
   {
     key: "photos",
     label: "Photos",
-    count: 8,
+    count: 4,
     categoryFilter: ["photos", "gallery", "images", "visual"],
   },
   {
     key: "tunnels",
     label: "Investigations",
-    count: 8,
+    count: 4,
     categoryFilter: ["investigation", "exclusive", "report", "expose"],
   },
   {
     key: "oneImage",
     label: "Sports",
-    count: 8,
+    count: 4,
     categoryFilter: ["sports", "football", "basketball", "soccer", "athletics", "games"],
   },
 ];
