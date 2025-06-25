@@ -46,7 +46,7 @@ export default function HomePage() {
     setIsSearching(true);
     try {
       const results = await searchAllNews({ search_term: term });
-      console.log("Search result:", results);
+      // console.log("Search result:", results);
       const formattedResults = results.map(formatNewsItem);
       setSearchResults(formattedResults);
       await fetchAllReactions(formattedResults);
@@ -68,12 +68,12 @@ export default function HomePage() {
   const fetchAdvertisements = async () => {
     try {
       setLoadingAds(true);
-      console.log("Ads in Home page::");
+      // console.log("Ads in Home page::");
       const response = await getAllPublicAdvertisements();
-      console.log("Get all advertisements In Home page::", response);
+      // console.log("Get all advertisements In Home page::", response);
 
       if (response.success) {
-        console.log("Setting advertisements::", response.data);
+        // console.log("Setting advertisements::", response.data);
         setAdvertisements(response.data || []);
       } else {
         console.error("Failed to fetch advertisements:", response.error);
@@ -87,18 +87,18 @@ export default function HomePage() {
     }
   };
 
-  useEffect(() => {
-    console.log("Advertisement state updated:", {
-      count: advertisements.length,
-      loadingAds,
-      advertisements: advertisements.map((ad) => ({
-        id: ad.id,
-        title: ad.title,
-        imageCount: ad.uploaded_images?.length || 0,
-        hasImages: ad.uploaded_images && ad.uploaded_images.length > 0,
-      })),
-    });
-  }, [advertisements, loadingAds]);
+  // useEffect(() => {
+  //   console.log("Advertisement state updated:", {
+  //     count: advertisements.length,
+  //     loadingAds,
+  //     advertisements: advertisements.map((ad) => ({
+  //       id: ad.id,
+  //       title: ad.title,
+  //       imageCount: ad.uploaded_images?.length || 0,
+  //       hasImages: ad.uploaded_images && ad.uploaded_images.length > 0,
+  //     })),
+  //   });
+  // }, [advertisements, loadingAds]);
 
   const fetchNewsReactions = async (newsId) => {
     if (loadingReactions[newsId]) return;
@@ -279,8 +279,37 @@ export default function HomePage() {
 
       // Assign Featured Article
       const featuredArticles = assignUniqueArticles(1);
-      section.featuredArticle =
-        featuredArticles.length > 0 ? featuredArticles[0] : null;
+      if (featuredArticles.length === 0 && availableNews.length > 0) {
+        // Fallback: try to get any valid article from availableNews
+        const fallbackArticle = availableNews.find(
+          (article) => isValidArticle(article) && !assignedIds.has(article.id)
+        );
+
+        if (fallbackArticle) {
+          section.featuredArticle = fallbackArticle;
+          assignedIds.add(fallbackArticle.id);
+          // Remove from availableNews
+          const index = availableNews.findIndex(
+            (a) => a.id === fallbackArticle.id
+          );
+          if (index > -1) {
+            availableNews.splice(index, 1);
+          }
+        } else {
+          section.featuredArticle = null;
+        }
+      } else {
+        section.featuredArticle =
+          featuredArticles.length > 0 ? featuredArticles[0] : null;
+      }
+
+      // Only show warning if we absolutely cannot find any article
+      if (!section.featuredArticle && availableNews.length === 0) {
+        console.warn(
+          `No featured article available for section ${sectionIndex} - no valid articles remaining`
+        );
+      }
+
       if (!section.featuredArticle) {
         console.warn(
           `No featured article available for section ${sectionIndex}`
@@ -680,14 +709,14 @@ export default function HomePage() {
                                 onPostComment={handlePostComment}
                               />
                             </NewsSection>
-                            <AdvertisementContainer
-                              advertisements={advertisements}
-                              position="center"
-                              width="100%"
-                              height="180px"
-                              className="mb-6 hidden md:flex"
-                              maxAds={advertisements?.length || 1}
-                            />
+                            <div className="w-full flex text-center">
+                              <AdPlacement
+                                advertisements={advertisements}
+                                placement="header-banner"
+                                onAdView={handleAdView}
+                                className="mb-6"
+                              />
+                            </div>
                           </>
                         )}
 
@@ -729,13 +758,11 @@ export default function HomePage() {
 
                       {/* Content Bottom Ad */}
                       <div className="flex justify-center items-center">
-                        <AdvertisementContainer
+                        <AdPlacement
                           advertisements={advertisements}
-                          position="sidebar-top"
-                          width="100%"
-                          height="200px"
-                          className="flex justify-between mb-6"
-                          maxAds={1}
+                          placement="content-middle"
+                          onAdView={handleAdView}
+                          className="mb-6"
                         />
                       </div>
                     </div>
@@ -961,7 +988,7 @@ export default function HomePage() {
         {/* Footer Ad */}
         <AdPlacement
           advertisements={advertisements}
-          placement="footer"
+          placement="card"
           onAdView={handleAdView}
           className="mb-6"
         />

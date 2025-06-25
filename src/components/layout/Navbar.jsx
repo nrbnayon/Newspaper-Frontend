@@ -15,7 +15,12 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Megaphone } from "lucide-react";
 
-export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearchTerm }) {
+export default function Navbar({
+  onScrollToAbout,
+  onSearch,
+  searchTerm,
+  setSearchTerm,
+}) {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("signup");
   const [currentDate, setCurrentDate] = useState("");
@@ -27,7 +32,7 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
   const [lastScrollY, setLastScrollY] = useState(0);
 
   // Get authentication state from context
-  const { isLoggedIn, user, logout } = useAuth();
+  const { isLoggedIn, user, logout, isAdmin } = useAuth();
 
   // Get current location to check if we're in dashboard
   const location = useLocation();
@@ -241,7 +246,7 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
                             onClick={() => setShowProfileDropdown(false)}
                           >
                             <Megaphone size={16} className="mr-3" />
-                            Make Advertise
+                            {isAdmin ? "Manage Advertise" : "Make Advertise"}
                           </Link>
                         ) : (
                           <button
@@ -444,7 +449,11 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
         <div className="hidden md:flex items-center justify-center space-x-8 py-3 border-t border-gray-100 bg-white/80">
           <Link
             to="/"
-            className="px-4 py-2 text-foreground font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-full transition-all"
+            className={`px-4 py-2 font-medium rounded-full transition-all ${
+              location.pathname === "/"
+                ? "bg-[#00254A] text-white"
+                : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
+            }`}
           >
             Home
           </Link>
@@ -459,9 +468,13 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
           {isLoggedIn ? (
             <Link
               to="/dashboard/advertise"
-              className="px-4 py-2 text-foreground font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-full transition-all"
+              className={`px-4 py-2 font-medium rounded-full transition-all ${
+                location.pathname === "/dashboard/advertise"
+                  ? "bg-[#00254A] text-white"
+                  : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
+              }`}
             >
-              Make Advertise
+              {isAdmin ? "Manage Advertise" : "Make Advertise"}
             </Link>
           ) : (
             <button
@@ -473,7 +486,11 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
           )}
           <Link
             to="/pricing"
-            className="px-4 py-2 text-foreground font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-full transition-all"
+            className={`px-4 py-2 font-medium rounded-full transition-all ${
+              location.pathname === "/pricing"
+                ? "bg-[#00254A] text-white"
+                : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
+            }`}
           >
             Pricing
           </Link>
@@ -485,7 +502,11 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
             <div className="px-4 py-2 space-y-1">
               <Link
                 to="/"
-                className="block px-4 py-3 text-foreground font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all"
+                className={`block px-4 py-3 font-medium rounded-xl transition-all ${
+                  location.pathname === "/"
+                    ? "bg-[#00254A] text-white"
+                    : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
@@ -503,10 +524,14 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
               {isLoggedIn ? (
                 <Link
                   to="/dashboard/advertise"
-                  className="block px-4 py-3 text-foreground font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all"
+                  className={`block px-4 py-3 font-medium rounded-xl transition-all ${
+                    location.pathname === "/dashboard/advertise"
+                      ? "bg-[#00254A] text-white"
+                      : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
+                  }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Make Advertise
+                  {isAdmin ? "Manage Advertise" : "Make Advertise"}
                 </Link>
               ) : (
                 <button
@@ -522,7 +547,11 @@ export default function Navbar({ onScrollToAbout, onSearch, searchTerm, setSearc
 
               <Link
                 to="/pricing"
-                className="block px-4 py-3 text-foreground font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all"
+                className={`block px-4 py-3 font-medium rounded-xl transition-all ${
+                  location.pathname === "/pricing"
+                    ? "bg-[#00254A] text-white"
+                    : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Pricing

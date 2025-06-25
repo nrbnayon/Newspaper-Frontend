@@ -58,12 +58,6 @@ const AudioNewsCard = ({
             }
           />
           <meta
-            name='keywords'
-            content={
-              category ? category.join(", ") : "news, updates, ALAMOCITYPULSE"
-            }
-          />
-          <meta
             property='og:title'
             content={title || "ALAMOCITYPULSE - News Article"}
           />

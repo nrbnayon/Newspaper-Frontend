@@ -13,7 +13,7 @@ const getResponsiveClasses = (columns) => {
       return `${baseClasses} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
     case 4:
     default:
-      return `${baseClasses} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`;
+      return `${baseClasses} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 `;
   }
 };
 

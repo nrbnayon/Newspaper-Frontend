@@ -111,57 +111,63 @@ export const formatTimeAgo = (datetime) => {
   }
 };
 
-
 // Export shared tab configurations
 export const TAB_CONFIGS = [
   {
     key: "latests",
     label: "Latest News",
-    count: 4,
+    count: 6,
     categoryFilter: null,
     isDefault: true,
   },
   {
     key: "politics",
-    label: "Politics", 
-    count: 4,
+    label: "Politics",
+    count: 6,
     categoryFilter: ["politics", "government", "election", "policy"],
   },
   {
     key: "Local",
     label: "Local",
-    count: 4,
+    count: 6,
     categoryFilter: ["local", "city", "community", "regional"],
   },
   {
     key: "whatWeKnow",
     label: "Analysis",
-    count: 4,
+    count: 6,
     categoryFilter: ["analysis", "opinion", "editorial", "insight"],
   },
   {
     key: "maps",
     label: "Regional",
-    count: 4,
+    count: 6,
     categoryFilter: ["regional", "national", "international", "world"],
   },
   {
     key: "photos",
     label: "Photos",
-    count: 4,
+    count: 6,
     categoryFilter: ["photos", "gallery", "images", "visual"],
   },
   {
     key: "tunnels",
     label: "Investigations",
-    count: 4,
+    count: 5,
     categoryFilter: ["investigation", "exclusive", "report", "expose"],
   },
   {
     key: "oneImage",
     label: "Sports",
-    count: 4,
-    categoryFilter: ["sports", "football", "basketball", "soccer", "athletics", "games"],
+    count: 6,
+    categoryFilter: [
+      "sports",
+      "football",
+      "basketball",
+      "soccer",
+      "athletics",
+      "games",
+    ],
   },
 ];
 
@@ -297,9 +303,7 @@ export const transformReactionsToComments = (reactions) => {
         : "Anonymous",
       content: reaction.comment,
       time: formatTimeAgo(reaction.created_at),
-      avatar:
-        reaction.user?.user_profile?.profile_picture ||
-        "/images/default-avatar.jpg",
+      avatar: reaction.user?.user_profile?.profile_picture,
       loved: reaction.love,
     }));
 };

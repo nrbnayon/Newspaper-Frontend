@@ -92,7 +92,7 @@ const CommentsSection = ({
 
       {/* Comments List */}
       {comments.length > 0 && (
-        <div className="max-h-96 overflow-y-auto space-y-3">
+        <div className="ml-12 max-h-96 overflow-y-auto space-y-3">
           {displayedComments.map((comment, index) => (
             <div
               key={`comment-${comment.id || index}-${comment.time}`}

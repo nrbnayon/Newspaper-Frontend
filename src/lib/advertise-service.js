@@ -43,7 +43,7 @@ export const getAllPublicAdvertisements = async () => {
           views: ad.views || 0,
           status: ad.status || "pending",
           created_at: ad.created_at || new Date().toISOString(),
-          is_active: ad.status === "approved", 
+          is_active: ad.status === "approved",
           has_images: Array.isArray(ad.images) && ad.images.length > 0,
         }))
         .filter((ad) => {
@@ -221,11 +221,10 @@ export const approveAdvertisement = async (id, action) => {
   }
 };
 
-
 // Delete ads
 export const deleteAdsById = async (id) => {
   try {
-    const response = await apiClient.get(
+    const response = await apiClient.delete(
       ADVERTISEMENT_ENDPOINTS.DELETE_BY_ID(id)
     );
     return {

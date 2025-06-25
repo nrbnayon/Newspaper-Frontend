@@ -25,6 +25,7 @@ import {
 } from "@/lib/advertise-service";
 import { Modal, ModalContent } from "@/components/ui/modal";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Categories list - you can customize this based on your requirements
 export const categories = [
@@ -68,6 +69,414 @@ const StatusBadge = ({ status }) => {
     >
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </span>
+  );
+};
+
+const Advertise = () => {
+  const [advertisements, setAdvertisements] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const {
+    user,
+    profile,
+    hasActiveSubscription,
+    isSubscriptionExpired,
+    getSubscriptionStatus,
+  } = useAuth();
+  const [editModal, setEditModal] = useState({
+    isOpen: false,
+    advertisement: null,
+  });
+
+  // console.log("User", user);
+  // console.log("Profile", profile);
+  // console.log("Has Active Subscription", hasActiveSubscription());
+  // console.log("Is Subscription Expired", isSubscriptionExpired());
+  // console.log("Subscription Status", getSubscriptionStatus());
+
+  useEffect(() => {
+    fetchAdvertisements();
+  }, []);
+
+  const fetchAdvertisements = async () => {
+    setLoading(true);
+    try {
+      const result = await getLoginUserCreateAllAdvertisements();
+      if (result.success) {
+        const mappedAds = result.data.map((ad) => ({
+          id: ad.id,
+          serialNumber: ad.serial_number || ad.id?.toString() || "N/A",
+          category: ad.category || "Uncategorized",
+          title: ad.title || "No Title",
+          description: ad.description || "No Description",
+          status: ad.status || "pending",
+          views: ad.views || 0,
+          createdAt: ad.created_at,
+          images: ad.images || [],
+          url: ad.url || null,
+        }));
+        setAdvertisements(mappedAds);
+      } else {
+        toast.error(result.error || "Failed to fetch advertisements");
+        setAdvertisements([]);
+      }
+    } catch (error) {
+      console.error("Error fetching advertisements:", error);
+      toast.error("An unexpected error occurred");
+      setAdvertisements([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditClick = (advertisement) => {
+    setEditModal({
+      isOpen: true,
+      advertisement: advertisement,
+    });
+  };
+
+  const handleDeleteClick = async (advertisementId, advertisementTitle) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete "${advertisementTitle}"? This action cannot be undone.`
+    );
+
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      const result = await deleteAdsById(advertisementId);
+
+      if (result.success) {
+        toast.success("Advertisement deleted successfully");
+        fetchAdvertisements();
+      } else {
+        toast.error(result.error || "Failed to delete advertisement");
+      }
+    } catch (error) {
+      console.error("Error deleting advertisement:", error);
+      toast.error("An unexpected error occurred while deleting");
+    }
+  };
+
+  const handleEditModalClose = () => {
+    setEditModal({
+      isOpen: false,
+      advertisement: null,
+    });
+  };
+
+  const handleAdvertisementUpdate = () => {
+    // Refresh advertisements list after successful update
+    fetchAdvertisements();
+  };
+
+  if (loading) {
+    return (
+      <div className="flex-1 p-4 w-full bg-gray-50 min-h-screen">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 bg-white p-6 rounded-xl shadow-sm">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              My Advertisements
+            </h1>
+            <p className="text-gray-600">
+              {advertisements.length > 0
+                ? `${advertisements.length} advertisement${
+                    advertisements.length !== 1 ? "s" : ""
+                  } found`
+                : "Manage and track your advertisement campaigns"}
+            </p>
+          </div>
+          <div className="mt-4 md:mt-0 flex flex-col items-end gap-2">
+            {hasActiveSubscription() ? (
+              <Link
+                to="/dashboard/newadvertise"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm"
+              >
+                <Plus className="h-5 w-5" />
+                Create New Ad
+              </Link>
+            ) : (
+              <>
+                <button
+                  disabled
+                  className="inline-flex items-center gap-2 bg-gray-400 cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium opacity-60"
+                >
+                  <Plus className="h-5 w-5" />
+                  Create New Ad
+                </button>
+                <p className="text-sm text-red-600 text-right">
+                  Premium subscription required to create ads.{" "}
+                  <Link
+                    to="/pricing"
+                    className="text-blue-600 hover:underline font-medium"
+                  >
+                    Upgrade Plan
+                  </Link>
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Loading State */}
+        <div className="flex justify-center items-center h-64">
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div>
+            <div className="text-lg text-gray-600">
+              Loading advertisements...
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 p-4 w-full bg-gray-50 min-h-screen">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 bg-white p-6 rounded-xl shadow-sm">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+            My Advertisements
+          </h1>
+          <p className="text-gray-600">
+            {advertisements.length > 0
+              ? `${advertisements.length} advertisement${
+                  advertisements.length !== 1 ? "s" : ""
+                } found`
+              : "Manage and track your advertisement campaigns"}
+          </p>
+        </div>
+        <Link
+          to="/dashboard/newadvertise"
+          className="mt-4 md:mt-0 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm"
+        >
+          <Plus className="h-5 w-5" />
+          Create New Ad
+        </Link>
+      </div>
+
+      {/* Content */}
+      {advertisements.length === 0 ? (
+        <div className="flex flex-col justify-center items-center h-64 bg-white rounded-xl shadow-sm">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FileText className="h-8 w-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No advertisements yet
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Get started by creating your first advertisement
+            </p>
+            {hasActiveSubscription() ? (
+              <Link
+                to="/dashboard/newadvertise"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+              >
+                <Plus className="h-5 w-5" />
+                Create Your First Ad
+              </Link>
+            ) : (
+              <div className="space-y-3">
+                <button
+                  disabled
+                  className="inline-flex items-center gap-2 bg-gray-400 cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium opacity-60"
+                >
+                  <Plus className="h-5 w-5" />
+                  Create Your First Ad
+                </button>
+                <p className="text-sm text-red-600">
+                  Premium subscription required to create ads.{" "}
+                  <Link
+                    to="/pricing"
+                    className="text-blue-600 hover:underline font-medium"
+                  >
+                    Upgrade your plan
+                  </Link>
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {advertisements.map((ad, index) => (
+            <AdvertiseCard
+              key={`${ad.serialNumber}-${index}`}
+              {...ad}
+              advertisementData={ad}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      <EditModal
+        isOpen={editModal.isOpen}
+        onClose={handleEditModalClose}
+        advertisement={editModal.advertisement}
+        onUpdate={handleAdvertisementUpdate}
+      />
+    </div>
+  );
+};
+
+export default Advertise;
+
+const AdvertiseCard = ({
+  category,
+  title,
+  description,
+  status,
+  onDelete,
+  createdAt,
+  images,
+  url,
+  onEdit,
+  advertisementData,
+}) => {
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const truncateText = (text, maxLength = 80) => {
+    if (!text) return "No description available";
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
+
+  const primaryImage =
+    images && images.length > 0 ? getFullImageUrl(images[0].image) : null;
+
+  return (
+    <Card className="group p-0 hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-white rounded-xl overflow-hidden">
+      <CardContent className="p-0">
+        {/* Image Section */}
+        {primaryImage && (
+          <div className="relative h-36 bg-gray-100 overflow-hidden">
+            <img
+              src={primaryImage}
+              alt={title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              onError={(e) => {
+                e.target.style.display = "none";
+                e.target.parentElement.style.display = "none";
+              }}
+            />
+            {images.length > 1 && (
+              <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
+                +{images.length - 1} more
+              </div>
+            )}
+            {/* Edit/delete Button Overlay */}
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+              <button
+                onClick={() => onEdit(advertisementData)}
+                className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-colors"
+                title="Edit Advertisement"
+              >
+                <Edit3 className="h-3 w-3" />
+              </button>
+              <button
+                onClick={() =>
+                  onDelete(advertisementData.id, advertisementData.title)
+                }
+                className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transition-colors"
+                title="Delete Advertisement"
+              >
+                <Trash2 className="h-3 w-3" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Content Section */}
+        <div className="p-2 space-y-3">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-gray-900 text-sm leading-tight line-clamp-2 mb-1">
+                {title || "Untitled Advertisement"}
+              </h3>
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <Tag className="h-3 w-3" />
+                <span className="font-medium text-blue-600">{category}</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <StatusBadge status={status} />
+              {!primaryImage && (
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => onEdit(advertisementData)}
+                    className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors"
+                    title="Edit Advertisement"
+                  >
+                    <Edit3 className="h-3 w-3" />
+                  </button>
+                  <button
+                    onClick={() =>
+                      onDelete(advertisementData.id, advertisementData.title)
+                    }
+                    className="p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors"
+                    title="Delete Advertisement"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="flex items-start gap-2">
+            <FileText className="h-3 w-3 text-gray-400 mt-0.5 flex-shrink-0" />
+            <p className="text-xs text-gray-600 leading-relaxed">
+              {truncateText(description)}
+            </p>
+          </div>
+
+          {/* Metadata Grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-100">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="h-3 w-3 text-gray-400" />
+              <div>
+                <div className="text-xs font-medium text-gray-900">
+                  {formatDate(createdAt)}
+                </div>
+                <div className="text-xs text-gray-500">Created</div>
+              </div>
+            </div>
+
+            {url && (
+              <div className="flex items-center gap-1.5">
+                <ExternalLink className="h-3 w-3 text-gray-400" />
+                <div>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-medium text-blue-600 hover:text-blue-800 truncate block"
+                  >
+                    Visit Link
+                  </a>
+                  <div className="text-xs text-gray-500">URL</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -356,7 +765,7 @@ const EditModal = ({ isOpen, onClose, advertisement, onUpdate }) => {
                 <h4 className="text-sm font-medium text-gray-600 mb-2">
                   New Images
                 </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {newImages.map((image, index) => (
                     <div key={index} className="relative group">
                       <img
@@ -443,350 +852,3 @@ const EditModal = ({ isOpen, onClose, advertisement, onUpdate }) => {
     </Modal>
   );
 };
-
-const AdvertiseCard = ({
-  category,
-  title,
-  description,
-  status,
-  onDelete,
-  createdAt,
-  images,
-  url,
-  onEdit,
-  advertisementData,
-}) => {
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
-  const truncateText = (text, maxLength = 80) => {
-    if (!text) return "No description available";
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
-  };
-
-  const primaryImage =
-    images && images.length > 0 ? getFullImageUrl(images[0].image) : null;
-
-  return (
-    <Card className="group p-0 hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-white rounded-xl overflow-hidden">
-      <CardContent className="p-0">
-        {/* Image Section */}
-        {primaryImage && (
-          <div className="relative h-36 bg-gray-100 overflow-hidden">
-            <img
-              src={primaryImage}
-              alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.parentElement.style.display = "none";
-              }}
-            />
-            {images.length > 1 && (
-              <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
-                +{images.length - 1} more
-              </div>
-            )}
-            {/* Edit/delete Button Overlay */}
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-              <button
-                onClick={() => onEdit(advertisementData)}
-                className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-colors"
-                title="Edit Advertisement"
-              >
-                <Edit3 className="h-3 w-3" />
-              </button>
-              <button
-                onClick={() =>
-                  onDelete(advertisementData.id, advertisementData.title)
-                }
-                className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transition-colors"
-                title="Delete Advertisement"
-              >
-                <Trash2 className="h-3 w-3" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Content Section */}
-        <div className="p-2 space-y-3">
-          {/* Header */}
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 text-sm leading-tight line-clamp-2 mb-1">
-                {title || "Untitled Advertisement"}
-              </h3>
-              <div className="flex items-center gap-2 text-xs text-gray-500">
-                <Tag className="h-3 w-3" />
-                <span className="font-medium text-blue-600">{category}</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <StatusBadge status={status} />
-              {!primaryImage && (
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => onEdit(advertisementData)}
-                    className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors"
-                    title="Edit Advertisement"
-                  >
-                    <Edit3 className="h-3 w-3" />
-                  </button>
-                  <button
-                    onClick={() =>
-                      onDelete(advertisementData.id, advertisementData.title)
-                    }
-                    className="p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors"
-                    title="Delete Advertisement"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Description */}
-          <div className="flex items-start gap-2">
-            <FileText className="h-3 w-3 text-gray-400 mt-0.5 flex-shrink-0" />
-            <p className="text-xs text-gray-600 leading-relaxed">
-              {truncateText(description)}
-            </p>
-          </div>
-
-          {/* Metadata Grid */}
-          <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-100">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="h-3 w-3 text-gray-400" />
-              <div>
-                <div className="text-xs font-medium text-gray-900">
-                  {formatDate(createdAt)}
-                </div>
-                <div className="text-xs text-gray-500">Created</div>
-              </div>
-            </div>
-
-            {url && (
-              <div className="flex items-center gap-1.5">
-                <ExternalLink className="h-3 w-3 text-gray-400" />
-                <div>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-medium text-blue-600 hover:text-blue-800 truncate block"
-                  >
-                    Visit Link
-                  </a>
-                  <div className="text-xs text-gray-500">URL</div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-const Advertise = () => {
-  const [advertisements, setAdvertisements] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [editModal, setEditModal] = useState({
-    isOpen: false,
-    advertisement: null,
-  });
-
-  useEffect(() => {
-    fetchAdvertisements();
-  }, []);
-
-  const fetchAdvertisements = async () => {
-    setLoading(true);
-    try {
-      const result = await getLoginUserCreateAllAdvertisements();
-      if (result.success) {
-        const mappedAds = result.data.map((ad) => ({
-          id: ad.id,
-          serialNumber: ad.serial_number || ad.id?.toString() || "N/A",
-          category: ad.category || "Uncategorized",
-          title: ad.title || "No Title",
-          description: ad.description || "No Description",
-          status: ad.status || "pending",
-          views: ad.views || 0,
-          createdAt: ad.created_at,
-          images: ad.images || [],
-          url: ad.url || null,
-        }));
-        setAdvertisements(mappedAds);
-      } else {
-        toast.error(result.error || "Failed to fetch advertisements");
-        setAdvertisements([]);
-      }
-    } catch (error) {
-      console.error("Error fetching advertisements:", error);
-      toast.error("An unexpected error occurred");
-      setAdvertisements([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEditClick = (advertisement) => {
-    setEditModal({
-      isOpen: true,
-      advertisement: advertisement,
-    });
-  };
-
-  const handleDeleteClick = async (advertisementId, advertisementTitle) => {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete "${advertisementTitle}"? This action cannot be undone.`
-    );
-
-    if (!isConfirmed) {
-      return;
-    }
-    try {
-      const result = await deleteAdsById(advertisementId);
-
-      if (result.success) {
-        toast.success("Advertisement deleted successfully");
-        fetchAdvertisements();
-      } else {
-        toast.error(result.error || "Failed to delete advertisement");
-      }
-    } catch (error) {
-      console.error("Error deleting advertisement:", error);
-      toast.error("An unexpected error occurred while deleting");
-    }
-  };
-
-  const handleEditModalClose = () => {
-    setEditModal({
-      isOpen: false,
-      advertisement: null,
-    });
-  };
-
-  const handleAdvertisementUpdate = () => {
-    // Refresh advertisements list after successful update
-    fetchAdvertisements();
-  };
-
-  if (loading) {
-    return (
-      <div className="flex-1 p-4 w-full bg-gray-50 min-h-screen">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 bg-white p-6 rounded-xl shadow-sm">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-              My Advertisements
-            </h1>
-            <p className="text-gray-600">
-              Manage and track your advertisement campaigns
-            </p>
-          </div>
-          <Link
-            to="/dashboard/newadvertise"
-            className="mt-4 md:mt-0 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm"
-          >
-            <Plus className="h-5 w-5" />
-            Create New Ad
-          </Link>
-        </div>
-
-        {/* Loading State */}
-        <div className="flex justify-center items-center h-64">
-          <div className="flex flex-col items-center gap-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div>
-            <div className="text-lg text-gray-600">
-              Loading advertisements...
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex-1 p-4 w-full bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 bg-white p-6 rounded-xl shadow-sm">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            My Advertisements
-          </h1>
-          <p className="text-gray-600">
-            {advertisements.length > 0
-              ? `${advertisements.length} advertisement${
-                  advertisements.length !== 1 ? "s" : ""
-                } found`
-              : "Manage and track your advertisement campaigns"}
-          </p>
-        </div>
-        <Link
-          to="/dashboard/newadvertise"
-          className="mt-4 md:mt-0 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm"
-        >
-          <Plus className="h-5 w-5" />
-          Create New Ad
-        </Link>
-      </div>
-
-      {/* Content */}
-      {advertisements.length === 0 ? (
-        <div className="flex flex-col justify-center items-center h-64 bg-white rounded-xl shadow-sm">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FileText className="h-8 w-8 text-gray-400" />
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No advertisements yet
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Get started by creating your first advertisement
-            </p>
-            <Link
-              to="/dashboard/newadvertise"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
-            >
-              <Plus className="h-5 w-5" />
-              Create Your First Ad
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {advertisements.map((ad, index) => (
-            <AdvertiseCard
-              key={`${ad.serialNumber}-${index}`}
-              {...ad}
-              advertisementData={ad}
-              onEdit={handleEditClick}
-              onDelete={handleDeleteClick}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Edit Modal */}
-      <EditModal
-        isOpen={editModal.isOpen}
-        onClose={handleEditModalClose}
-        advertisement={editModal.advertisement}
-        onUpdate={handleAdvertisementUpdate}
-      />
-    </div>
-  );
-};
-
-export default Advertise;
