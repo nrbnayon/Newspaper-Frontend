@@ -14,5 +14,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "esnext", // This enables top-level await support
+  },
 });
-// , tailwindcss()
