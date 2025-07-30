@@ -27,7 +27,7 @@ const Pricing = () => {
     try {
       const paymentData = {
         plan_name: "Monthly",
-        price_id: "price_1RVkSlALRymUd61pFbGdKDDL",
+        price_id: import.meta.env.VITE_SUBSCRIPTION_PRICE_ID,
         duration_type: "monthly",
         // Add success and cancel URLs
         success_url: `${window.location.origin}/payment/success`,
