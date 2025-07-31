@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useRef, useEffect, useState, useMemo, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import StandardArticleCard from "@/components/news/StandardArticleCard";
 import AudioNewsCard from "@/components/news/AudioNewsCard";
@@ -20,10 +20,9 @@ import {
   generateTabsConfig,
   searchAllNews,
 } from "@/lib/news-service";
-// Import as dynamic import instead of static
-const { getAllPublicAdvertisements } = await import("@/lib/advertise-service");
 import { isValidArticle, shuffleWithLatest } from "@/lib/utils";
 import HomepageSkeleton from "@/components/common/HomepageSkeleton";
+import { getAllPublicAdvertisements } from "@/lib/advertise-service";
 import { ErrorComponent } from "@/components/news/ErrorComponent";
 import { AdvertisementContainer } from "@/components/advertisements/DynamicAdvertisement";
 import AdvertisementSkeleton from "@/components/advertisements/AdvertisementSkeleton";
@@ -38,28 +37,24 @@ export default function HomePage() {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  // Debounced search to prevent excessive API calls
-  const handleSearch = useCallback(
-    debounce(async (term) => {
-      if (!term.trim()) {
-        setIsSearching(false);
-        setSearchResults([]);
-        return;
-      }
-      setIsSearching(true);
-      try {
-        const results = await searchAllNews({ search_term: term });
-        const formattedResults = results.map(formatNewsItem);
-        setSearchResults(formattedResults);
-        // Batch fetch reactions for search results
-        await fetchAllReactions(formattedResults);
-      } catch (error) {
-        console.error("Search failed:", error);
-        setSearchResults([]);
-      }
-    }, 300),
-    []
-  );
+  const handleSearch = async (term) => {
+    if (!term.trim()) {
+      setIsSearching(false);
+      setSearchResults([]);
+      return;
+    }
+    setIsSearching(true);
+    try {
+      const results = await searchAllNews({ search_term: term });
+      // console.log("Search result:", results);
+      const formattedResults = results.map(formatNewsItem);
+      setSearchResults(formattedResults);
+      await fetchAllReactions(formattedResults);
+    } catch (error) {
+      console.error("Search failed:", error);
+      setSearchResults([]);
+    }
+  };
 
   const [newsData, setNewsData] = useState({
     sections: [],
@@ -69,12 +64,16 @@ export default function HomePage() {
   const [newsReactions, setNewsReactions] = useState({});
   const [loadingReactions, setLoadingReactions] = useState({});
 
-  // Memoize advertisement fetch to prevent unnecessary re-renders
-  const fetchAdvertisements = useCallback(async () => {
+  // Add this function to fetch advertisements:
+  const fetchAdvertisements = async () => {
     try {
       setLoadingAds(true);
+      // console.log("Ads in Home page::");
       const response = await getAllPublicAdvertisements();
+      // console.log("Get all advertisements In Home page::", response);
+
       if (response.success) {
+        // console.log("Setting advertisements::", response.data);
         setAdvertisements(response.data || []);
       } else {
         console.error("Failed to fetch advertisements:", response.error);
@@ -86,137 +85,117 @@ export default function HomePage() {
     } finally {
       setLoadingAds(false);
     }
-  }, []);
+  };
 
-  // Batch reaction fetching to reduce API calls
-  const fetchNewsReactions = useCallback(
-    async (newsId) => {
-      if (loadingReactions[newsId]) return;
-      try {
-        setLoadingReactions((prev) => ({ ...prev, [newsId]: true }));
-        const reactions = await getNewsReactions(newsId);
-        setNewsReactions((prev) => ({ ...prev, [newsId]: reactions }));
-      } catch (error) {
-        console.error(`Failed to fetch reactions for news ${newsId}:`, error);
-      } finally {
-        setLoadingReactions((prev) => ({ ...prev, [newsId]: false }));
+  // useEffect(() => {
+  //   console.log("Advertisement state updated:", {
+  //     count: advertisements.length,
+  //     loadingAds,
+  //     advertisements: advertisements.map((ad) => ({
+  //       id: ad.id,
+  //       title: ad.title,
+  //       imageCount: ad.uploaded_images?.length || 0,
+  //       hasImages: ad.uploaded_images && ad.uploaded_images.length > 0,
+  //     })),
+  //   });
+  // }, [advertisements, loadingAds]);
+
+  const fetchNewsReactions = async (newsId) => {
+    if (loadingReactions[newsId]) return;
+    try {
+      setLoadingReactions((prev) => ({ ...prev, [newsId]: true }));
+      const reactions = await getNewsReactions(newsId);
+      setNewsReactions((prev) => ({ ...prev, [newsId]: reactions }));
+    } catch (error) {
+      console.error(`Failed to fetch reactions for news ${newsId}:`, error);
+    } finally {
+      setLoadingReactions((prev) => ({ ...prev, [newsId]: false }));
+    }
+  };
+
+  // Handle posting love reaction
+  const handlePostLove = async (newsId, loveStatus) => {
+    try {
+      const newReaction = await postNewsLove(newsId, loveStatus);
+      setNewsReactions((prev) => ({
+        ...prev,
+        [newsId]: prev[newsId] ? [...prev[newsId], newReaction] : [newReaction],
+      }));
+      await fetchNewsReactions(newsId);
+      return newReaction;
+    } catch (error) {
+      console.error(`Failed to post love reaction for news ${newsId}:`, error);
+      throw error;
+    }
+  };
+  // Handle posting comment
+  const handlePostComment = async (newsId, commentText) => {
+    try {
+      if (!commentText || commentText.trim() === "") {
+        throw new Error("Comment cannot be empty");
       }
-    },
-    [loadingReactions]
-  );
-
-  // Optimized reaction handlers with better error handling
-  const handlePostLove = useCallback(
-    async (newsId, loveStatus) => {
-      try {
-        const newReaction = await postNewsLove(newsId, loveStatus);
-        setNewsReactions((prev) => ({
-          ...prev,
-          [newsId]: prev[newsId]
-            ? [...prev[newsId], newReaction]
-            : [newReaction],
-        }));
-        await fetchNewsReactions(newsId);
-        return newReaction;
-      } catch (error) {
-        console.error(
-          `Failed to post love reaction for news ${newsId}:`,
-          error
-        );
-        throw error;
+      const newReaction = await postNewsComment(newsId, commentText.trim());
+      setNewsReactions((prev) => ({
+        ...prev,
+        [newsId]: prev[newsId] ? [...prev[newsId], newReaction] : [newReaction],
+      }));
+      await fetchNewsReactions(newsId);
+      return newReaction;
+    } catch (error) {
+      console.error(`Failed to post comment for news ${newsId}:`, error);
+      throw error;
+    }
+  };
+  // Combined reaction handler
+  const handlePostReaction = async (newsId, reactionData) => {
+    try {
+      const promises = [];
+      if (reactionData.hasOwnProperty("love")) {
+        promises.push(handlePostLove(newsId, reactionData.love));
       }
-    },
-    [fetchNewsReactions]
-  );
-
-  const handlePostComment = useCallback(
-    async (newsId, commentText) => {
-      try {
-        if (!commentText || commentText.trim() === "") {
-          throw new Error("Comment cannot be empty");
-        }
-        const newReaction = await postNewsComment(newsId, commentText.trim());
-        setNewsReactions((prev) => ({
-          ...prev,
-          [newsId]: prev[newsId]
-            ? [...prev[newsId], newReaction]
-            : [newReaction],
-        }));
-        await fetchNewsReactions(newsId);
-        return newReaction;
-      } catch (error) {
-        console.error(`Failed to post comment for news ${newsId}:`, error);
-        throw error;
+      if (reactionData.comment && reactionData.comment.trim() !== "") {
+        promises.push(handlePostComment(newsId, reactionData.comment));
       }
-    },
-    [fetchNewsReactions]
-  );
+      const results = await Promise.all(promises);
+      return results.length > 0 ? results[results.length - 1] : null;
+    } catch (error) {
+      console.error(`Failed to post reaction for news ${newsId}:`, error);
+      throw error;
+    }
+  };
 
-  const handlePostReaction = useCallback(
-    async (newsId, reactionData) => {
-      try {
-        const promises = [];
-        if (reactionData.hasOwnProperty("love")) {
-          promises.push(handlePostLove(newsId, reactionData.love));
-        }
-        if (reactionData.comment && reactionData.comment.trim() !== "") {
-          promises.push(handlePostComment(newsId, reactionData.comment));
-        }
-        const results = await Promise.all(promises);
-        return results.length > 0 ? results[results.length - 1] : null;
-      } catch (error) {
-        console.error(`Failed to post reaction for news ${newsId}:`, error);
-        throw error;
-      }
-    },
-    [handlePostLove, handlePostComment]
-  );
-
-  // Fetch data in parallel and use Promise.allSettled for better error handling
+  // Fetch and organize news data and ads
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchNewsData = async () => {
       try {
         setNewsData((prev) => ({ ...prev, loading: true }));
         setNewsReactions({});
         setLoadingReactions({});
-
-        // Fetch news and ads in parallel
-        const [newsResult, adsResult] = await Promise.allSettled([
-          getAllNews(),
-          fetchAdvertisements(),
-        ]);
-
-        if (newsResult.status === "fulfilled") {
-          const allNews = newsResult.value;
-          if (!allNews || allNews.length === 0) {
-            throw new Error("No news data received");
-          }
-
-          const formattedNews = allNews
-            .map(formatNewsItem)
-            .filter((article) => article && article.id)
-            .sort(
-              (a, b) =>
-                new Date(b.publishedDateTime) - new Date(a.publishedDateTime)
-            );
-
-          // Optimize shuffling - do it once instead of multiple passes
-          const shuffledNews = shuffleWithLatest([...formattedNews], 1, true);
-          const organizedSections = organizeNewsData(shuffledNews);
-
-          setNewsData({
-            sections: organizedSections,
-            loading: false,
-            error: null,
-          });
-
-          // Fetch reactions in background, don't block UI
-          fetchAllReactions(formattedNews.slice(0, 20)); // Only fetch for first 20 articles initially
-        } else {
-          throw new Error(newsResult.reason?.message || "Failed to fetch news");
+        const allNews = await getAllNews();
+        if (!allNews || allNews.length === 0) {
+          throw new Error("No news data received");
         }
+        const formattedNews = allNews
+          .map(formatNewsItem)
+          .filter((article) => article && article.id)
+          .sort(
+            (a, b) =>
+              new Date(b.publishedDateTime) - new Date(a.publishedDateTime)
+          );
+        const sessionSeed = Date.now() + Math.floor(Math.random() * 1000);
+        let shuffledNews = [...formattedNews];
+        for (let pass = 0; pass < 3; pass++) {
+          shuffledNews = shuffleWithLatest(shuffledNews, 1, true);
+        }
+        const organizedSections = organizeNewsData(shuffledNews);
+        setNewsData({
+          sections: organizedSections,
+          loading: false,
+          error: null,
+        });
+        await fetchAllReactions(formattedNews);
       } catch (error) {
-        console.error("Failed to fetch initial data:", error);
+        console.error("Failed to fetch news data:", error);
         setNewsData((prev) => ({
           ...prev,
           loading: false,
@@ -224,312 +203,361 @@ export default function HomePage() {
         }));
       }
     };
-
-    fetchInitialData();
-  }, [fetchAdvertisements]);
-
-  // Optimize reaction fetching - use batch requests and limit concurrent requests
-  const fetchAllReactions = useCallback(
-    async (articles) => {
-      const validArticles = articles.filter((article) => article && article.id);
-
-      // Process reactions in batches of 5 to avoid overwhelming the server
-      const batchSize = 5;
-      for (let i = 0; i < validArticles.length; i += batchSize) {
-        const batch = validArticles.slice(i, i + batchSize);
-        const promises = batch.map((article) =>
-          fetchNewsReactions(article.id).catch((err) =>
-            console.warn(
-              `Failed to fetch reactions for article ${article.id}:`,
-              err
-            )
-          )
-        );
-        await Promise.allSettled(promises);
-
-        // Add small delay between batches to prevent rate limiting
-        if (i + batchSize < validArticles.length) {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        }
-      }
-    },
-    [fetchNewsReactions]
-  );
-
-  // Memoize the organizeNewsData function to prevent unnecessary recalculations
-  const organizeNewsData = useMemo(() => {
-    return (allNews) => {
-      const sections = [];
-      let availableNews = [...allNews];
-      const assignedIds = new Set();
-
-      if (!allNews || allNews.length === 0) {
-        console.warn("No news articles provided to organizeNewsData");
-        return sections;
-      }
-
-      availableNews = availableNews.filter(isValidArticle);
-      if (availableNews.length === 0) {
-        console.warn("No valid news articles after filtering");
-        return sections;
-      }
-
-      const maxSections = Math.min(3, Math.ceil(availableNews.length / 20));
-
-      for (
-        let sectionIndex = 0;
-        sectionIndex < maxSections && availableNews.length > 10;
-        sectionIndex++
-      ) {
-        const section = {};
-        const sectionNews = shuffleWithLatest([...availableNews], 0, true);
-
-        // Helper function to assign unique articles (optimized)
-        const assignUniqueArticles = (count) => {
-          const articles = [];
-          let attempts = 0;
-          const maxAttempts = Math.min(count * 2, sectionNews.length);
-
-          while (
-            articles.length < count &&
-            sectionNews.length > 0 &&
-            attempts < maxAttempts
-          ) {
-            const randomIndex = Math.floor(Math.random() * sectionNews.length);
-            const article = sectionNews[randomIndex];
-
-            if (isValidArticle(article) && !assignedIds.has(article.id)) {
-              articles.push(article);
-              assignedIds.add(article.id);
-              sectionNews.splice(randomIndex, 1);
-
-              const originalIndex = availableNews.findIndex(
-                (a) => isValidArticle(a) && a.id === article.id
-              );
-              if (originalIndex > -1) {
-                availableNews.splice(originalIndex, 1);
-              }
-            } else {
-              if (randomIndex < sectionNews.length) {
-                sectionNews.splice(randomIndex, 1);
-              }
-            }
-            attempts++;
-          }
-          return articles;
-        };
-
-        // Assign articles more efficiently
-        const featuredArticles = assignUniqueArticles(1);
-        section.featuredArticle =
-          featuredArticles.length > 0 ? featuredArticles[0] : null;
-
-        const audioNewsArticles = assignUniqueArticles(1);
-        const audioNewsArticle =
-          audioNewsArticles.length > 0 ? audioNewsArticles[0] : null;
-        section.audioNews = audioNewsArticle
-          ? {
-              title: audioNewsArticle.title || "Latest News Update",
-              description:
-                audioNewsArticle.description ||
-                "Stay updated with the latest news",
-              category: "THE HEADLINES",
-              sentiment: audioNewsArticle.sentiment || "Neutral",
-              image: audioNewsArticle.image || getDefaultImage(),
-            }
-          : null;
-
-        const longReadArticles = assignUniqueArticles(1);
-        section.longReadArticle =
-          longReadArticles.length > 0 ? longReadArticles[0] : null;
-
-        const liveUpdateArticles = assignUniqueArticles(4);
-        section.liveUpdates = liveUpdateArticles
-          .filter(isValidArticle)
-          .map((article) => ({
-            id: article.id,
-            title: article.title || "Untitled",
-            description: article.description || "",
-            timeAgo: article.publishedTime || "Recently",
-            category: article.category || "News",
-            image: article.image || getDefaultImage(),
-          }));
-
-        const sidebarArticlesRaw = assignUniqueArticles(6);
-        section.sidebarArticles = sidebarArticlesRaw.filter(isValidArticle);
-
-        // Initialize tabs data more efficiently
-        section.tabsData = {};
-        const remainingArticles = availableNews.filter(
-          (article) => isValidArticle(article) && !assignedIds.has(article.id)
-        );
-
-        // Optimize tab processing
-        const matchesCategory = (article, categoryFilters) => {
-          if (!categoryFilters) return true;
-          const articleCategory = article.category.toLowerCase();
-          const articleTitle = article.title.toLowerCase();
-          const articleDescription = article.description.toLowerCase();
-
-          return categoryFilters.some(
-            (filter) =>
-              articleCategory.includes(filter.toLowerCase()) ||
-              articleTitle.includes(filter.toLowerCase()) ||
-              articleDescription.includes(filter.toLowerCase())
-          );
-        };
-
-        TAB_CONFIGS.forEach((config) => {
-          let tabArticles = [];
-          if (config.categoryFilter) {
-            const categoryArticles = remainingArticles.filter((article) => {
-              if (!isValidArticle(article)) return false;
-              return matchesCategory(article, config.categoryFilter);
-            });
-            tabArticles = [...categoryArticles.slice(0, config.count)];
-
-            if (tabArticles.length < config.count) {
-              const usedInThisTab = new Set(tabArticles.map((a) => a.id));
-              const otherArticles = shuffleWithLatest(
-                remainingArticles.filter(
-                  (article) =>
-                    isValidArticle(article) &&
-                    !usedInThisTab.has(article.id) &&
-                    !assignedIds.has(article.id)
-                ),
-                0,
-                true
-              );
-              const needed = config.count - tabArticles.length;
-              tabArticles = [...tabArticles, ...otherArticles.slice(0, needed)];
-            }
-          } else {
-            const validRemainingArticles = remainingArticles.filter(
-              (article) =>
-                isValidArticle(article) && !assignedIds.has(article.id)
-            );
-            const sortedByDate = validRemainingArticles.sort((a, b) => {
-              const dateA = new Date(a.publishedDateTime || 0);
-              const dateB = new Date(b.publishedDateTime || 0);
-              return dateB - dateA;
-            });
-            const latest = sortedByDate.slice(0, 2);
-            const others = shuffleWithLatest(sortedByDate.slice(2), 0, true);
-            tabArticles = [...latest, ...others].slice(0, config.count);
-          }
-
-          tabArticles = tabArticles.filter(isValidArticle);
-          section.tabsData[config.key] = tabArticles;
-        });
-
-        sections.push(section);
-      }
-
-      // Handle additional section logic (simplified)
-      if (sections.length === 1 && availableNews.length > 0) {
-        const validRemainingNews = availableNews.filter(
-          (article) => isValidArticle(article) && !assignedIds.has(article.id)
-        );
-        if (validRemainingNews.length > 0) {
-          const additionalSection = { ...sections[0] };
-          const remainingShuffled = shuffleWithLatest(
-            validRemainingNews,
-            0,
-            true
-          );
-
-          if (remainingShuffled.length > 0) {
-            additionalSection.featuredArticle = remainingShuffled[0];
-            additionalSection.sidebarArticles = remainingShuffled
-              .slice(1, 7)
-              .filter(isValidArticle);
-
-            // Add audio news, long read, live updates efficiently
-            if (remainingShuffled.length > 7) {
-              const audioArticle = remainingShuffled[7];
-              additionalSection.audioNews = {
-                title: audioArticle.title || "Latest News Update",
-                description:
-                  audioArticle.description ||
-                  "Stay updated with the latest news",
-                category: "THE HEADLINES",
-                sentiment: audioArticle.sentiment || "Neutral",
-                image: audioArticle.image || getDefaultImage(),
-              };
-            }
-
-            if (remainingShuffled.length > 8) {
-              additionalSection.longReadArticle = remainingShuffled[8];
-            }
-
-            if (remainingShuffled.length > 9) {
-              const liveUpdateArticles = remainingShuffled.slice(9, 13);
-              additionalSection.liveUpdates = liveUpdateArticles
-                .filter(isValidArticle)
-                .map((article) => ({
-                  id: article.id,
-                  title: article.title || "Untitled",
-                  description: article.description || "",
-                  timeAgo: article.publishedTime || "Recently",
-                  category: article.category || "News",
-                  image: article.image || getDefaultImage(),
-                }));
-            }
-
-            const tabsRemaining = remainingShuffled.slice(13);
-            if (tabsRemaining.length > 0) {
-              TAB_CONFIGS.forEach((config) => {
-                let tabArticles = [];
-                if (config.categoryFilter) {
-                  const categoryArticles = tabsRemaining.filter((article) => {
-                    if (!isValidArticle(article)) return false;
-                    return matchesCategory(article, config.categoryFilter);
-                  });
-                  tabArticles = categoryArticles.slice(
-                    0,
-                    Math.min(config.count, 4)
-                  );
-                } else {
-                  tabArticles = tabsRemaining
-                    .sort(
-                      (a, b) =>
-                        new Date(b.publishedDateTime) -
-                        new Date(a.publishedDateTime)
-                    )
-                    .slice(0, Math.min(config.count, 4));
-                }
-                additionalSection.tabsData[config.key] =
-                  tabArticles.filter(isValidArticle);
-              });
-            }
-            sections.push(additionalSection);
-          }
-        }
-      }
-
-      return sections;
-    };
+    fetchNewsData();
+    fetchAdvertisements();
   }, []);
 
-  const scrollToFooter = useCallback(() => {
+  const fetchAllReactions = async (articles) => {
+    const promises = articles
+      .filter((article) => article && article.id)
+      .map((article) =>
+        fetchNewsReactions(article.id).catch((err) =>
+          console.warn(
+            `Failed to fetch reactions for article ${article.id}:`,
+            err
+          )
+        )
+      );
+    await Promise.allSettled(promises);
+  };
+
+  const organizeNewsData = (allNews) => {
+    const sections = [];
+    let availableNews = [...allNews];
+    const assignedIds = new Set();
+
+    if (!allNews || allNews.length === 0) {
+      console.warn("No news articles provided to organizeNewsData");
+      return sections;
+    }
+    availableNews = availableNews.filter(isValidArticle);
+    if (availableNews.length === 0) {
+      console.warn("No valid news articles after filtering");
+      return sections;
+    }
+    const maxSections = Math.min(3, Math.ceil(availableNews.length / 20));
+
+    for (
+      let sectionIndex = 0;
+      sectionIndex < maxSections && availableNews.length > 10;
+      sectionIndex++
+    ) {
+      const section = {};
+      const sectionNews = shuffleWithLatest([...availableNews], 0, true);
+
+      // Helper function to assign unique articles
+      const assignUniqueArticles = (count) => {
+        const articles = [];
+        let attempts = 0;
+        const maxAttempts = Math.min(count * 2, sectionNews.length * 2);
+        while (
+          articles.length < count &&
+          sectionNews.length > 0 &&
+          attempts < maxAttempts
+        ) {
+          const randomIndex = Math.floor(Math.random() * sectionNews.length);
+          const article = sectionNews[randomIndex];
+          if (isValidArticle(article) && !assignedIds.has(article.id)) {
+            articles.push(article);
+            assignedIds.add(article.id);
+            sectionNews.splice(randomIndex, 1);
+            const originalIndex = availableNews.findIndex(
+              (a) => isValidArticle(a) && a.id === article.id
+            );
+            if (originalIndex > -1) {
+              availableNews.splice(originalIndex, 1);
+            }
+          } else {
+            if (randomIndex < sectionNews.length) {
+              sectionNews.splice(randomIndex, 1);
+            }
+          }
+          attempts++;
+        }
+        return articles;
+      };
+
+      // Assign Featured Article
+      const featuredArticles = assignUniqueArticles(1);
+      if (featuredArticles.length === 0 && availableNews.length > 0) {
+        // Fallback: try to get any valid article from availableNews
+        const fallbackArticle = availableNews.find(
+          (article) => isValidArticle(article) && !assignedIds.has(article.id)
+        );
+
+        if (fallbackArticle) {
+          section.featuredArticle = fallbackArticle;
+          assignedIds.add(fallbackArticle.id);
+          // Remove from availableNews
+          const index = availableNews.findIndex(
+            (a) => a.id === fallbackArticle.id
+          );
+          if (index > -1) {
+            availableNews.splice(index, 1);
+          }
+        } else {
+          section.featuredArticle = null;
+        }
+      } else {
+        section.featuredArticle =
+          featuredArticles.length > 0 ? featuredArticles[0] : null;
+      }
+
+      // Only show warning if we absolutely cannot find any article
+      if (!section.featuredArticle && availableNews.length === 0) {
+        console.warn(
+          `No featured article available for section ${sectionIndex} - no valid articles remaining`
+        );
+      }
+
+      if (!section.featuredArticle) {
+        console.warn(
+          `No featured article available for section ${sectionIndex}`
+        );
+        // break;
+      }
+
+      // Assign Audio News
+      const audioNewsArticles = assignUniqueArticles(1);
+      const audioNewsArticle =
+        audioNewsArticles.length > 0 ? audioNewsArticles[0] : null;
+      section.audioNews = audioNewsArticle
+        ? {
+            title: audioNewsArticle.title || "Latest News Update",
+            description:
+              audioNewsArticle.description ||
+              "Stay updated with the latest news",
+            category: "THE HEADLINES",
+            sentiment: audioNewsArticle.sentiment || "Neutral",
+            image: audioNewsArticle.image || getDefaultImage(),
+          }
+        : null;
+
+      // Assign Long Read Article
+      const longReadArticles = assignUniqueArticles(1);
+      section.longReadArticle =
+        longReadArticles.length > 0 ? longReadArticles[0] : null;
+
+      // Assign Live Updates
+      const liveUpdateArticles = assignUniqueArticles(4);
+      section.liveUpdates = liveUpdateArticles
+        .filter(isValidArticle)
+        .map((article) => ({
+          id: article.id,
+          title: article.title || "Untitled",
+          description: article.description || "",
+          timeAgo: article.publishedTime || "Recently",
+          category: article.category || "News",
+          image: article.image || getDefaultImage(),
+        }));
+
+      // Assign Sidebar Articles
+      const sidebarArticlesRaw = assignUniqueArticles(6);
+      section.sidebarArticles = sidebarArticlesRaw.filter(isValidArticle);
+
+      // Initialize tabs data
+      section.tabsData = {};
+
+      // Get remaining articles for tabs
+      const remainingArticles = availableNews.filter(
+        (article) => isValidArticle(article) && !assignedIds.has(article.id)
+      );
+
+      // Organize articles by category for better distribution
+      const articlesByCategory = {};
+      remainingArticles.forEach((article) => {
+        if (!isValidArticle(article)) return;
+        const category = article.category.toLowerCase();
+        if (!articlesByCategory[category]) {
+          articlesByCategory[category] = [];
+        }
+        articlesByCategory[category].push(article);
+      });
+
+      // Shuffle articles within each category
+      Object.keys(articlesByCategory).forEach((category) => {
+        articlesByCategory[category] = shuffleWithLatest(
+          articlesByCategory[category],
+          0,
+          true
+        );
+      });
+
+      // Define matchesCategory BEFORE it's used
+      const matchesCategory = (article, categoryFilters) => {
+        if (!categoryFilters) return true;
+        const articleCategory = article.category.toLowerCase();
+        const articleTitle = article.title.toLowerCase();
+        const articleDescription = article.description.toLowerCase();
+
+        return categoryFilters.some(
+          (filter) =>
+            articleCategory.includes(filter.toLowerCase()) ||
+            articleTitle.includes(filter.toLowerCase()) ||
+            articleDescription.includes(filter.toLowerCase())
+        );
+      };
+
+      // Process each tab configuration using imported TAB_CONFIGS
+      TAB_CONFIGS.forEach((config) => {
+        let tabArticles = [];
+        if (config.categoryFilter) {
+          // Get articles matching the category filters
+          const categoryArticles = remainingArticles.filter((article) => {
+            if (!isValidArticle(article)) return false;
+            return matchesCategory(article, config.categoryFilter);
+          });
+          // Take up to the required count from category matches
+          tabArticles = [...categoryArticles.slice(0, config.count)];
+          // If not enough category-specific articles, fill with general articles
+          if (tabArticles.length < config.count) {
+            const usedInThisTab = new Set(tabArticles.map((a) => a.id));
+            const otherArticles = shuffleWithLatest(
+              remainingArticles.filter(
+                (article) =>
+                  isValidArticle(article) &&
+                  !usedInThisTab.has(article.id) &&
+                  !assignedIds.has(article.id)
+              ),
+              0,
+              true
+            );
+            const needed = config.count - tabArticles.length;
+            tabArticles = [...tabArticles, ...otherArticles.slice(0, needed)];
+          }
+        } else {
+          const validRemainingArticles = remainingArticles.filter(
+            (article) => isValidArticle(article) && !assignedIds.has(article.id)
+          );
+          // Sort by publication date (newest first)
+          const sortedByDate = validRemainingArticles.sort((a, b) => {
+            const dateA = new Date(a.publishedDateTime || 0);
+            const dateB = new Date(b.publishedDateTime || 0);
+            return dateB - dateA;
+          });
+          // Take the 2 most recent, then shuffle the rest
+          const latest = sortedByDate.slice(0, 2);
+          const others = shuffleWithLatest(sortedByDate.slice(2), 0, true);
+          tabArticles = [...latest, ...others].slice(0, config.count);
+        }
+        tabArticles = tabArticles.filter((article) => {
+          if (isValidArticle(article)) {
+            return true;
+          }
+          return false;
+        });
+        section.tabsData[config.key] = tabArticles;
+      });
+      sections.push(section);
+    }
+
+    // Rest of the function remains unchanged
+    if (sections.length === 1 && availableNews.length > 0) {
+      const validRemainingNews = availableNews.filter(
+        (article) => isValidArticle(article) && !assignedIds.has(article.id)
+      );
+      if (validRemainingNews.length > 0) {
+        const additionalSection = { ...sections[0] };
+        const remainingShuffled = shuffleWithLatest(
+          validRemainingNews,
+          0,
+          true
+        );
+        if (remainingShuffled.length > 0) {
+          additionalSection.featuredArticle = remainingShuffled[0];
+          additionalSection.sidebarArticles = remainingShuffled
+            .slice(1, 7)
+            .filter(isValidArticle);
+          if (remainingShuffled.length > 7) {
+            const audioArticle = remainingShuffled[7];
+            additionalSection.audioNews = {
+              title: audioArticle.title || "Latest News Update",
+              description:
+                audioArticle.description || "Stay updated with the latest news",
+              category: "THE HEADLINES",
+              sentiment: audioArticle.sentiment || "Neutral",
+              image: audioArticle.image || getDefaultImage(),
+            };
+          }
+          if (remainingShuffled.length > 8) {
+            additionalSection.longReadArticle = remainingShuffled[8];
+          }
+          if (remainingShuffled.length > 9) {
+            const liveUpdateArticles = remainingShuffled.slice(9, 13);
+            additionalSection.liveUpdates = liveUpdateArticles
+              .filter(isValidArticle)
+              .map((article) => ({
+                id: article.id,
+                title: article.title || "Untitled",
+                description: article.description || "",
+                timeAgo: article.publishedTime || "Recently",
+                category: article.category || "News",
+                image: article.image || getDefaultImage(),
+              }));
+          }
+          const tabsRemaining = remainingShuffled.slice(13);
+          if (tabsRemaining.length > 0) {
+            TAB_CONFIGS.forEach((config) => {
+              let tabArticles = [];
+              if (config.categoryFilter) {
+                const categoryArticles = tabsRemaining.filter((article) => {
+                  if (!isValidArticle(article)) return false;
+                  return matchesCategory(article, config.categoryFilter);
+                });
+                tabArticles = categoryArticles.slice(
+                  0,
+                  Math.min(config.count, 4)
+                );
+              } else {
+                tabArticles = tabsRemaining
+                  .sort(
+                    (a, b) =>
+                      new Date(b.publishedDateTime) -
+                      new Date(a.publishedDateTime)
+                  )
+                  .slice(0, Math.min(config.count, 4));
+              }
+              additionalSection.tabsData[config.key] =
+                tabArticles.filter(isValidArticle);
+            });
+          }
+          sections.push(additionalSection);
+        }
+      }
+    }
+
+    return sections;
+  };
+
+  const scrollToFooter = () => {
     if (footerRef.current) {
       footerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, []);
+  };
 
   useEffect(() => {
     const handleScrollToAbout = () => scrollToFooter();
     window.addEventListener("scrollToAbout", handleScrollToAbout);
     return () =>
       window.removeEventListener("scrollToAbout", handleScrollToAbout);
-  }, [scrollToFooter]);
-
-  const handleAdView = useCallback((adId) => {
-    console.log(`Ad ${adId} viewed`);
   }, []);
 
   if (newsData.loading) return <HomepageSkeleton />;
   if (newsData.error) return <ErrorComponent error={newsData.error} />;
+
+  const handleAdView = (adId) => {
+    // You can add analytics tracking here if needed
+    console.log(`Ad ${adId} viewed`);
+
+    // If you want to update view count in your advertisements state:
+    // setAdvertisements(prev =>
+    //   prev.map(ad =>
+    //     ad.id === adId
+    //       ? { ...ad, views: (ad.views || 0) + 1 }
+    //       : ad
+    //   )
+    // );
+  };
 
   return (
     <>
@@ -960,7 +988,7 @@ export default function HomePage() {
         {/* Footer Ad */}
         <AdPlacement
           advertisements={advertisements}
-          placement="header-banner"
+          placement="banner"
           onAdView={handleAdView}
           className="mb-6"
         />
@@ -971,16 +999,4 @@ export default function HomePage() {
       </div>
     </>
   );
-}
-
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
 }
