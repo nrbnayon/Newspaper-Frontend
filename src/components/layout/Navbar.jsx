@@ -33,6 +33,7 @@ export default function Navbar({
 
   // Get authentication state from context
   const { isLoggedIn, user, logout, isAdmin } = useAuth();
+  // console.log("Login user  is Admin::", isLoggedIn, isAdmin(), user);
 
   // Get current location to check if we're in dashboard
   const location = useLocation();
@@ -246,7 +247,7 @@ export default function Navbar({
                             onClick={() => setShowProfileDropdown(false)}
                           >
                             <Megaphone size={16} className="mr-3" />
-                            {isAdmin ? "Manage Advertise" : "Make Advertise"}
+                            {isAdmin() ? "Manage Advertise" : "Make Advertise"}
                           </Link>
                         ) : (
                           <button
@@ -474,7 +475,7 @@ export default function Navbar({
                   : "text-foreground hover:text-[#00254a] hover:bg-gray-50"
               }`}
             >
-              {isAdmin ? "Manage Advertise" : "Make Advertise"}
+              {isAdmin() ? "Manage Advertise" : "Make Advertise"}
             </Link>
           ) : (
             <button
@@ -531,7 +532,7 @@ export default function Navbar({
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {isAdmin ? "Manage Advertise" : "Make Advertise"}
+                  {isAdmin() ? "Manage Advertise" : "Make Advertise"}
                 </Link>
               ) : (
                 <button

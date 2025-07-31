@@ -6,7 +6,6 @@ import {
   removeAuthTokens,
   loginUser as authLoginUser,
   logoutUser as authLogoutUser,
-  setAuthTokens,
 } from "@/lib/auth-service";
 import apiClient from "@/lib/auth-service";
 
