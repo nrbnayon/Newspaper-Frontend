@@ -106,7 +106,7 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
       {isExpanded && (
         <Helmet>
           <title>
-            {currentUpdate?.title || "ALAMOCITYPULSE - News Article"}
+            {"ALAMOCITYPULSE - News Article"}
           </title>
           <meta
             name="description"
@@ -133,10 +133,6 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
             content={currentUpdate?.image || "/default-image.jpg"}
           />
           <meta property="og:type" content="article" />
-          <meta
-            property="og:url"
-            content={currentUpdate?.url || window.location.href}
-          />
         </Helmet>
       )}
       <div className="mb-4">

@@ -12,6 +12,7 @@ import {
   countComments,
   hasUserLoved,
 } from "@/lib/news-service";
+import { Helmet } from "react-helmet-async";
 
 const StandardArticleCard = ({
   article: {
@@ -108,7 +109,7 @@ const StandardArticleCard = ({
     <>
       {isExpanded && (
         <Helmet>
-          <title>{title || "ALAMOCITYPULSE - News Article"}</title>
+          <title>{ "ALAMOCITYPULSE - News Article"}</title>
           <meta
             name='description'
             content={
@@ -131,7 +132,6 @@ const StandardArticleCard = ({
           />
           <meta property='og:image' content={image || "/default-image.jpg"} />
           <meta property='og:type' content='article' />
-          <meta property='og:url' content={url || window.location.href} />
         </Helmet>
       )}
       <div

@@ -162,7 +162,6 @@ const CommonNewsCard = ({
           />
           <meta property='og:image' content={image || "/default-image.jpg"} />
           <meta property='og:type' content='article' />
-          <meta property='og:url' content={url || window.location.href} />
         </Helmet>
       )}
       <article
