@@ -30,14 +30,14 @@ const InputField = ({
   disabled = false,
 }) => {
   return (
-    <div className="space-y-2">
-      <label className="block text-sm font-semibold text-gray-700 mb-1">
+    <div className='space-y-2'>
+      <label className='block text-sm font-semibold text-gray-700 mb-1'>
         {label}
       </label>
-      <div className="relative">
+      <div className='relative'>
         {Icon && (
           <Icon
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'
             size={20}
           />
         )}
@@ -72,7 +72,7 @@ const ProfilePicture = ({ src, alt, onImageChange, isEditing, isLoading }) => {
   };
 
   return (
-    <div className="relative group">
+    <div className='relative group'>
       <div
         className={`relative w-32 h-32 rounded-full overflow-hidden ring-4 ring-white shadow-lg ${
           isEditing ? "cursor-pointer" : ""
@@ -83,21 +83,21 @@ const ProfilePicture = ({ src, alt, onImageChange, isEditing, isLoading }) => {
           <img
             src={src}
             alt={alt}
-            className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+            className='w-full h-full object-cover transition-transform duration-200 group-hover:scale-105'
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
-            <span className="text-white text-2xl font-bold">
+          <div className='w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600'>
+            <span className='text-white text-2xl font-bold'>
               {alt?.[0] || "U"}
             </span>
           </div>
         )}
         {isEditing && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
             {isLoading ? (
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+              <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-white'></div>
             ) : (
-              <Camera className="text-white" size={24} />
+              <Camera className='text-white' size={24} />
             )}
           </div>
         )}
@@ -106,7 +106,7 @@ const ProfilePicture = ({ src, alt, onImageChange, isEditing, isLoading }) => {
       {isEditing && (
         <button
           onClick={handleImageClick}
-          className="absolute -bottom-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-lg transition-all duration-200"
+          className='absolute -bottom-2 -right-2 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-lg transition-all duration-200'
         >
           <Upload size={16} />
         </button>
@@ -114,10 +114,10 @@ const ProfilePicture = ({ src, alt, onImageChange, isEditing, isLoading }) => {
 
       <input
         ref={fileInputRef}
-        type="file"
-        accept="image/*"
+        type='file'
+        accept='image/*'
         onChange={onImageChange}
-        className="hidden"
+        className='hidden'
       />
     </div>
   );
@@ -299,28 +299,28 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center'>
+        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-full mx-auto">
+    <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8'>
+      <div className='max-w-full mx-auto'>
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
-          <p className="text-gray-600">
+        <div className='text-center mb-5'>
+          <h1 className='text-3xl font-bold text-gray-900 mb-2'>My Profile</h1>
+          <p className='text-gray-600'>
             Manage your personal information and preferences
           </p>
         </div>
 
         {/* Main Profile Card */}
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-6">
+        <div className='bg-white rounded-3xl shadow-xl overflow-hidden mb-6'>
           {/* Profile Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-8">
-            <div className="flex flex-col sm:flex-row items-center gap-6">
+          <div className='bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-8'>
+            <div className='flex flex-col sm:flex-row items-center gap-6'>
               <ProfilePicture
                 src={previewImage}
                 alt={`${formData.first_name} ${formData.last_name}`}
@@ -329,12 +329,12 @@ const Profile = () => {
                 isLoading={imageLoading}
               />
 
-              <div className="text-center sm:text-left flex-1">
-                <h2 className="text-2xl font-bold text-white mb-2">
+              <div className='text-center sm:text-left flex-1'>
+                <h2 className='text-2xl font-bold text-white mb-2'>
                   {formData.first_name} {formData.last_name}
                 </h2>
-                <p className="text-blue-100 mb-2">{user.email}</p>
-                <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                <p className='text-blue-100 mb-2'>{user.email}</p>
+                <div className='flex flex-wrap gap-2 justify-center sm:justify-start'>
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${subscriptionBadge.color}`}
                   >
@@ -342,30 +342,30 @@ const Profile = () => {
                       ? "👑 Premium"
                       : "👤 Free"}
                   </span>
-                  <span className="px-3 py-1 bg-blue-500 text-white rounded-full text-sm font-medium">
+                  <span className='px-3 py-1 bg-blue-500 text-white rounded-full text-sm font-medium'>
                     {user.role || "User"}
                   </span>
                 </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className='flex gap-2'>
                 {!isEditing ? (
                   <Button
                     onClick={() => setIsEditing(true)}
-                    className="flex items-center gap-2 px-4 py-2  text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium"
+                    className='flex items-center gap-2 px-4 py-2  text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium'
                   >
                     <Edit size={18} />
                     Edit Profile
                   </Button>
                 ) : (
-                  <div className="flex gap-2">
+                  <div className='flex gap-2'>
                     <Button
                       onClick={handleSaveChanges}
                       disabled={isLoading}
-                      className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium"
+                      className='flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium'
                     >
                       {isLoading ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <Loader2 className='h-4 w-4 animate-spin' />
                       ) : (
                         <Save size={18} />
                       )}
@@ -373,7 +373,7 @@ const Profile = () => {
                     </Button>
                     <Button
                       onClick={handleCancelEdit}
-                      className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
+                      className='flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium'
                     >
                       <X size={18} />
                       Cancel
@@ -385,47 +385,47 @@ const Profile = () => {
           </div>
 
           {/* Profile Form */}
-          <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className='p-6'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <InputField
-                label="First Name"
-                name="first_name"
+                label='First Name'
+                name='first_name'
                 value={formData.first_name}
                 onChange={handleInputChange}
                 icon={User}
-                placeholder="Enter your first name"
+                placeholder='Enter your first name'
                 disabled={!isEditing}
               />
 
               <InputField
-                label="Last Name"
-                name="last_name"
+                label='Last Name'
+                name='last_name'
                 value={formData.last_name}
                 onChange={handleInputChange}
                 icon={User}
-                placeholder="Enter your last name"
+                placeholder='Enter your last name'
                 disabled={!isEditing}
               />
 
               <InputField
-                label="Email Address"
-                name="email"
+                label='Email Address'
+                name='email'
                 value={user.email}
                 onChange={() => {}}
-                type="email"
+                type='email'
                 icon={Mail}
-                placeholder="Enter your email"
+                placeholder='Enter your email'
                 disabled={true}
               />
 
               <InputField
-                label="Phone Number"
-                name="phone_number"
+                label='Phone Number'
+                name='phone_number'
                 value={formData.phone_number}
                 onChange={handleInputChange}
-                type="tel"
+                type='tel'
                 icon={Phone}
-                placeholder="Enter your phone number"
+                placeholder='Enter your phone number'
                 disabled={!isEditing}
               />
             </div>
@@ -433,25 +433,25 @@ const Profile = () => {
         </div>
 
         {/* Account Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Calendar className="text-blue-600" size={20} />
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
+          <div className='bg-white rounded-2xl shadow-lg p-6'>
+            <h3 className='text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2'>
+              <Calendar className='text-blue-600' size={20} />
               Account Information
             </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Member since:</span>
-                <span className="font-medium">
+            <div className='space-y-3'>
+              <div className='flex justify-between'>
+                <span className='text-gray-600'>Member since:</span>
+                <span className='font-medium'>
                   {formatDate(user.joinedDate)}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Account ID:</span>
-                <span className="font-medium">#{user.id || "N/A"}</span>
+              <div className='flex justify-between'>
+                <span className='text-gray-600'>Account ID:</span>
+                <span className='font-medium'>#{user.id || "N/A"}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Status:</span>
+              <div className='flex justify-between'>
+                <span className='text-gray-600'>Status:</span>
                 <span
                   className={`font-medium ${
                     profile?.isActive ? "text-green-500" : "text-red-500"
@@ -463,20 +463,20 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Shield className="text-green-600" size={20} />
+          <div className='bg-white rounded-2xl shadow-lg p-6'>
+            <h3 className='text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2'>
+              <Shield className='text-green-600' size={20} />
               Subscription Details
             </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Current Plan:</span>
-                <span className="font-medium">
+            <div className='space-y-3'>
+              <div className='flex justify-between'>
+                <span className='text-gray-600'>Current Plan:</span>
+                <span className='font-medium'>
                   {profile?.plan || "Free Plan"}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Status:</span>
+              <div className='flex justify-between'>
+                <span className='text-gray-600'>Status:</span>
                 <span
                   className={`font-medium ${
                     profile?.status === "premium"
@@ -488,9 +488,9 @@ const Profile = () => {
                 </span>
               </div>
               {profile?.endDate && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Expires:</span>
-                  <span className="font-medium">
+                <div className='flex justify-between'>
+                  <span className='text-gray-600'>Expires:</span>
+                  <span className='font-medium'>
                     {formatDate(profile.endDate)}
                   </span>
                 </div>

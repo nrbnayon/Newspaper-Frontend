@@ -210,7 +210,7 @@ const SkeletonSidebar = () => (
       </div>
     </div>
 
-    <div className='xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-8'>
+    <div className='xl:hidden w-full h-32 sm:h-40 bg-gray-300 rounded-lg flex items-center justify-center mb-5'>
       <SkeletonBox className='w-24 h-4' />
     </div>
 
@@ -287,27 +287,27 @@ export default function HomepageSkeleton() {
               {/* Main Content Area */}
               <div className='w-full'>
                 {/* Featured Article */}
-                <div className='mb-8'>
+                <div className='mb-5'>
                   <SkeletonFeaturedCard />
                 </div>
 
                 {/* Audio News */}
-                <div className='mb-8'>
+                <div className='mb-5'>
                   <SkeletonAudioCard />
                 </div>
 
                 {/* Long Read Article */}
-                <div className='mb-8'>
+                <div className='mb-5'>
                   <SkeletonFeaturedCard />
                 </div>
 
                 {/* Live Updates */}
-                <div className='mb-8'>
+                <div className='mb-5'>
                   <SkeletonLiveUpdates />
                 </div>
 
                 {/* Tabbed News Section */}
-                <div className='mb-8'>
+                <div className='mb-5'>
                   <SkeletonTabbedSection />
                 </div>
 
@@ -317,7 +317,7 @@ export default function HomepageSkeleton() {
                 </div>
 
                 {/* Listed News Section */}
-                <div className='mb-8'>
+                <div className='mb-5'>
                   <SkeletonListedSection />
                 </div>
 

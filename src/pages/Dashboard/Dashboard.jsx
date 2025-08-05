@@ -187,7 +187,7 @@ const Dashboard = () => {
 
           {/* Main Content Area - This is where child routes will render */}
           <div
-            className={`flex-1 pt-32 md:pt-40 lg:pt-44 ${
+            className={`flex-1 pt-5 md:pt-40 lg:pt-44 ${
               isMobile ? "w-full mt-24" : ""
             } transition-all duration-300`}
           >

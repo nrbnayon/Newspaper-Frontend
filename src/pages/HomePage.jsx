@@ -536,12 +536,12 @@ export default function HomePage() {
       <Helmet>
         <title>ALAMOCITYPULSE - Latest News and Updates</title>
         <meta
-          name="description"
-          content="Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"
+          name='description'
+          content='Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE'
         />
       </Helmet>
 
-      <div className="min-h-screen">
+      <div className='min-h-screen'>
         <Navbar
           onScrollToAbout={scrollToFooter}
           onSearch={handleSearch}
@@ -549,15 +549,15 @@ export default function HomePage() {
           setSearchTerm={setSearchTerm}
         />
 
-        <main className="w-full py-4 sm:py-8 pt-[120px] md:pt-[185px] lg:pt-[165px]">
-          <div className="">
+        <main className='w-full py-4 sm:py-8 pt-[120px] md:pt-[185px] lg:pt-[165px]'>
+          <div className=''>
             {isSearching ? (
-              <div className="search-results">
-                <h2 className="text-2xl font-bold mb-4">
+              <div className='search-results'>
+                <h2 className='text-2xl font-bold mb-4'>
                   Search Results for "{searchTerm}"
                 </h2>
                 {searchResults.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                     {searchResults.map((article) => (
                       <StandardArticleCard
                         key={article.id}
@@ -583,7 +583,7 @@ export default function HomePage() {
                     setIsSearching(false);
                     setSearchTerm("");
                   }}
-                  className="mt-4"
+                  className='mt-4'
                 >
                   Back to Home
                 </Button>
@@ -591,11 +591,11 @@ export default function HomePage() {
             ) : (
               newsData.sections.map((section, index) => (
                 <div key={index}>
-                  <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
+                  <div className='grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12'>
                     {/* Main Content Area */}
-                    <div className="w-full">
+                    <div className='w-full'>
                       {section.featuredArticle && (
-                        <div className="mb-8">
+                        <div className='mb-5'>
                           <CommonNewsCard
                             article={section.featuredArticle}
                             reactions={
@@ -622,15 +622,15 @@ export default function HomePage() {
                           />
                           <AdPlacement
                             advertisements={advertisements}
-                            placement="header-banner"
+                            placement='header-banner'
                             onAdView={handleAdView}
-                            className="mb-6"
+                            className='mb-6'
                           />
                         </div>
                       )}
 
                       {section.audioNews && (
-                        <div className="mb-8">
+                        <div className='mb-5'>
                           <AudioNewsCard {...section.audioNews} />
                         </div>
                       )}
@@ -663,9 +663,9 @@ export default function HomePage() {
                           />
                           <AdPlacement
                             advertisements={advertisements}
-                            placement="content-middle"
+                            placement='content-middle'
                             onAdView={handleAdView}
-                            className="mb-6"
+                            className='mb-6'
                           />
                         </NewsSection>
                       )}
@@ -681,19 +681,19 @@ export default function HomePage() {
                                 onPostComment={handlePostComment}
                               />
                             </NewsSection>
-                            <div className="w-full flex text-center">
+                            <div className='w-full flex text-center'>
                               <AdPlacement
                                 advertisements={advertisements}
-                                placement="header-banner"
+                                placement='header-banner'
                                 onAdView={handleAdView}
-                                className="mb-6"
+                                className='mb-6'
                               />
                             </div>
                           </>
                         )}
 
                       {Object.keys(section.tabsData).length > 0 && (
-                        <div className="mb-8">
+                        <div className='mb-5'>
                           <TabbedNewsSection
                             dynamicTabsData={section.tabsData}
                             dynamicTabsConfig={generateTabsConfig(
@@ -709,13 +709,13 @@ export default function HomePage() {
                       {/* Content Middle Ad */}
                       <AdPlacement
                         advertisements={advertisements}
-                        placement="content-middle"
+                        placement='content-middle'
                         onAdView={handleAdView}
-                        className="mb-6"
+                        className='mb-6'
                       />
 
                       {Object.keys(section.tabsData).length > 0 && (
-                        <div className="mb-8">
+                        <div className='mb-5'>
                           <ListedNewsSection
                             dynamicTabsData={section.tabsData}
                             dynamicTabsConfig={generateTabsConfig(
@@ -729,31 +729,31 @@ export default function HomePage() {
                       )}
 
                       {/* Content Bottom Ad */}
-                      <div className="flex justify-center items-center">
+                      <div className='flex justify-center items-center'>
                         <AdPlacement
                           advertisements={advertisements}
-                          placement="content-middle"
+                          placement='content-middle'
                           onAdView={handleAdView}
-                          className="mb-6"
+                          className='mb-6'
                         />
                       </div>
                     </div>
 
                     {/* Sidebar */}
-                    <aside className="w-full xl:w-full">
+                    <aside className='w-full xl:w-full'>
                       {section.sidebarArticles &&
                         Array.isArray(section.sidebarArticles) &&
                         section.sidebarArticles.length > 0 && (
-                          <div className="xl:hidden w-full mb-6">
-                            <h4 className="text-md font-semibold text-gray-700 mb-4">
+                          <div className='xl:hidden w-full mb-6'>
+                            <h4 className='text-md font-semibold text-gray-700 mb-4'>
                               Trending Now
                             </h4>
-                            <div className="space-y-4">
+                            <div className='space-y-4'>
                               {section.sidebarArticles
                                 .filter(isValidArticle)
                                 .slice(0, 5)
                                 .map((article) => (
-                                  <div key={article.id} className="w-full">
+                                  <div key={article.id} className='w-full'>
                                     <StandardArticleCard
                                       article={article}
                                       reactions={
@@ -779,9 +779,9 @@ export default function HomePage() {
                                 ))}
                               <AdPlacement
                                 advertisements={advertisements}
-                                placement="card"
+                                placement='card'
                                 onAdView={handleAdView}
-                                className="mt-8"
+                                className='mt-8'
                               />
                             </div>
                           </div>
@@ -790,23 +790,23 @@ export default function HomePage() {
                       {/* Sidebar Ad - Mobile Mid */}
                       <AdvertisementContainer
                         advertisements={advertisements}
-                        position="mobile-mid"
-                        width="100%"
-                        height="200px"
-                        className="mb-6 xl:hidden"
+                        position='mobile-mid'
+                        width='100%'
+                        height='200px'
+                        className='mb-6 xl:hidden'
                         maxAds={1}
                       />
 
                       {section.sidebarArticles &&
                         Array.isArray(section.sidebarArticles) &&
                         section.sidebarArticles.length > 3 && (
-                          <div className="xl:hidden w-full mb-6">
-                            <div className="space-y-4">
+                          <div className='xl:hidden w-full mb-6'>
+                            <div className='space-y-4'>
                               {section.sidebarArticles
                                 .filter(isValidArticle)
                                 .slice(3, 8)
                                 .map((article) => (
-                                  <div key={article.id} className="w-full">
+                                  <div key={article.id} className='w-full'>
                                     <StandardArticleCard
                                       article={article}
                                       reactions={
@@ -835,30 +835,30 @@ export default function HomePage() {
                         )}
 
                       {/* Desktop Sidebar */}
-                      <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
+                      <div className='xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center'>
                         {/* Sidebar Top Ad */}
                         <AdvertisementContainer
                           advertisements={advertisements}
-                          position="sidebar-top"
-                          width="100%"
-                          height="200px"
-                          className="mb-6"
+                          position='sidebar-top'
+                          width='100%'
+                          height='200px'
+                          className='mb-6'
                           maxAds={1}
                         />
 
                         {section.sidebarArticles &&
                           Array.isArray(section.sidebarArticles) &&
                           section.sidebarArticles.length > 0 && (
-                            <div className="w-full">
-                              <h4 className="text-md font-semibold text-gray-700 mb-4">
+                            <div className='w-full'>
+                              <h4 className='text-md font-semibold text-gray-700 mb-4'>
                                 Trending Now
                               </h4>
-                              <div className="space-y-4">
+                              <div className='space-y-4'>
                                 {section.sidebarArticles
                                   .filter(isValidArticle)
                                   .slice(0, 5)
                                   .map((article) => (
-                                    <div key={article.id} className="w-full">
+                                    <div key={article.id} className='w-full'>
                                       <StandardArticleCard
                                         article={article}
                                         reactions={
@@ -884,9 +884,9 @@ export default function HomePage() {
                                   ))}
                                 <AdPlacement
                                   advertisements={advertisements}
-                                  placement="card"
+                                  placement='card'
                                   onAdView={handleAdView}
-                                  className="my-6"
+                                  className='my-6'
                                 />
                               </div>
                             </div>
@@ -895,23 +895,23 @@ export default function HomePage() {
                         {/* Sidebar Mid Ad */}
                         <AdvertisementContainer
                           advertisements={advertisements}
-                          position="sidebar-mid"
-                          width="100%"
-                          height="200px"
-                          className="my-6"
+                          position='sidebar-mid'
+                          width='100%'
+                          height='200px'
+                          className='my-6'
                           maxAds={1}
                         />
 
                         {section.sidebarArticles &&
                           Array.isArray(section.sidebarArticles) &&
                           section.sidebarArticles.length > 3 && (
-                            <div className="w-full">
-                              <div className="space-y-4">
+                            <div className='w-full'>
+                              <div className='space-y-4'>
                                 {section.sidebarArticles
                                   .filter(isValidArticle)
                                   .slice(3, 8)
                                   .map((article) => (
-                                    <div key={article.id} className="w-full">
+                                    <div key={article.id} className='w-full'>
                                       <StandardArticleCard
                                         article={article}
                                         reactions={
@@ -942,10 +942,10 @@ export default function HomePage() {
                         {/* Sidebar Bottom Ad */}
                         <AdvertisementContainer
                           advertisements={advertisements}
-                          position="sidebar-bottom"
-                          width="100%"
-                          height="192px"
-                          className="mt-6"
+                          position='sidebar-bottom'
+                          width='100%'
+                          height='192px'
+                          className='mt-6'
                           maxAds={1}
                         />
                       </div>
@@ -960,9 +960,9 @@ export default function HomePage() {
         {/* Footer Ad */}
         <AdPlacement
           advertisements={advertisements}
-          placement="header-banner"
+          placement='header-banner'
           onAdView={handleAdView}
-          className="mb-6"
+          className='mb-6'
         />
 
         <div ref={footerRef}>

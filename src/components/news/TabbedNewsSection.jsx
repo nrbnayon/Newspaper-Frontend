@@ -33,13 +33,13 @@ const TabbedNewsSection = ({
 
   return (
     <div className={`w-full ${className}`}>
-      <Tabs defaultValue={defaultTab} className="w-full">
-        <TabsList className="flex gap-2 items-center mb-8 p-1 bg-transparent md:mx-auto overflow-x-auto">
+      <Tabs defaultValue={defaultTab} className='w-full'>
+        <TabsList className='flex gap-2 items-center mb-5 p-1 bg-transparent md:mx-auto overflow-x-auto'>
           {activeTabsConfig.map((tab) => (
             <TabsTrigger
               key={tab.key}
               value={tab.key}
-              className="data-[state=active]:h-11 cursor-pointer rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap"
+              className='data-[state=active]:h-11 cursor-pointer rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap'
             >
               {tab.label}
             </TabsTrigger>
@@ -51,7 +51,7 @@ const TabbedNewsSection = ({
           const gridClasses = getResponsiveClasses(tab.columns || 4);
 
           return (
-            <TabsContent key={tab.key} value={tab.key} className="mt-0">
+            <TabsContent key={tab.key} value={tab.key} className='mt-0'>
               <NewsGrid
                 columns={tab.columns || 4}
                 gap={tab.gap || 4}
@@ -62,16 +62,24 @@ const TabbedNewsSection = ({
                     key={article.id}
                     article={article}
                     reactions={newsReactions[article.id] || []} // Use newsReactions with article ID
-                    onPostLove={(loveStatus) => onPostLove(article.id, loveStatus)}
-                    onPostComment={(commentText) => onPostComment(article.id, commentText)}
-                    className="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200"
+                    onPostLove={(loveStatus) =>
+                      onPostLove(article.id, loveStatus)
+                    }
+                    onPostComment={(commentText) =>
+                      onPostComment(article.id, commentText)
+                    }
+                    className='bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200'
                   />
                 ))}
               </NewsGrid>
               {articles.length === 0 && (
-                <div className="text-center py-12 text-gray-500">
-                  <p className="text-lg">No articles available for this section.</p>
-                  <p className="text-sm mt-2">Please check back later for updates.</p>
+                <div className='text-center py-12 text-gray-500'>
+                  <p className='text-lg'>
+                    No articles available for this section.
+                  </p>
+                  <p className='text-sm mt-2'>
+                    Please check back later for updates.
+                  </p>
                 </div>
               )}
             </TabsContent>

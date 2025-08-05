@@ -1,46 +1,4452 @@
-import{c as J,r as g,j as e,a as P,u as me,b as ue,A as we,H as ve,g as oe,C as Ce,d as Te,e as We,P as le,f as Q,h as Nt,i as Ge,k as At,l as Ct,R as se,m as Tt,n as kt,X as de,E as ke,T as Ne,o as St,N as It,B as Pt,p as O,q as Mt,s as ie}from"./index-D5yeGsJ4.js";import{c as Rt,u as Ve,a as Ye,b as Ft,C as Lt}from"./index-BYleTeBh.js";/**
+import {
+  c as J,
+  r as g,
+  j as e,
+  a as P,
+  u as me,
+  b as ue,
+  A as we,
+  H as ve,
+  g as oe,
+  C as Ce,
+  d as Te,
+  e as We,
+  P as le,
+  f as Q,
+  h as Nt,
+  i as Ge,
+  k as At,
+  l as Ct,
+  R as se,
+  m as Tt,
+  n as kt,
+  X as de,
+  E as ke,
+  T as Ne,
+  o as St,
+  N as It,
+  B as Pt,
+  p as O,
+  q as Mt,
+  s as ie,
+} from "./index-D5yeGsJ4.js";
+import {
+  c as Rt,
+  u as Ve,
+  a as Ye,
+  b as Ft,
+  C as Lt,
+} from "./index-BYleTeBh.js";
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Et=[["path",{d:"M12 7v14",key:"1akyts"}],["path",{d:"M16 12h2",key:"7q9ll5"}],["path",{d:"M16 8h2",key:"msurwy"}],["path",{d:"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z",key:"ruj8y"}],["path",{d:"M6 12h2",key:"32wvfc"}],["path",{d:"M6 8h2",key:"30oboj"}]],Dt=J("book-open-text",Et);/**
+ */ const Et = [
+    ["path", { d: "M12 7v14", key: "1akyts" }],
+    ["path", { d: "M16 12h2", key: "7q9ll5" }],
+    ["path", { d: "M16 8h2", key: "msurwy" }],
+    [
+      "path",
+      {
+        d: "M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z",
+        key: "ruj8y",
+      },
+    ],
+    ["path", { d: "M6 12h2", key: "32wvfc" }],
+    ["path", { d: "M6 8h2", key: "30oboj" }],
+  ],
+  Dt = J("book-open-text", Et);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Ut=[["path",{d:"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z",key:"c3ymky"}]],Ot=J("heart",Ut);/**
+ */ const Ut = [
+    [
+      "path",
+      {
+        d: "M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z",
+        key: "c3ymky",
+      },
+    ],
+  ],
+  Ot = J("heart", Ut);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const _t=[["rect",{width:"20",height:"20",x:"2",y:"2",rx:"5",ry:"5",key:"2e1cvw"}],["path",{d:"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z",key:"9exkf1"}],["line",{x1:"17.5",x2:"17.51",y1:"6.5",y2:"6.5",key:"r4j83e"}]],$t=J("instagram",_t);/**
+ */ const _t = [
+    [
+      "rect",
+      {
+        width: "20",
+        height: "20",
+        x: "2",
+        y: "2",
+        rx: "5",
+        ry: "5",
+        key: "2e1cvw",
+      },
+    ],
+    [
+      "path",
+      { d: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z", key: "9exkf1" },
+    ],
+    ["line", { x1: "17.5", x2: "17.51", y1: "6.5", y2: "6.5", key: "r4j83e" }],
+  ],
+  $t = J("instagram", _t);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const zt=[["path",{d:"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",key:"c2jq9f"}],["rect",{width:"4",height:"12",x:"2",y:"9",key:"mk3on5"}],["circle",{cx:"4",cy:"4",r:"2",key:"bt5ra8"}]],Ht=J("linkedin",zt);/**
+ */ const zt = [
+    [
+      "path",
+      {
+        d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",
+        key: "c2jq9f",
+      },
+    ],
+    ["rect", { width: "4", height: "12", x: "2", y: "9", key: "mk3on5" }],
+    ["circle", { cx: "4", cy: "4", r: "2", key: "bt5ra8" }],
+  ],
+  Ht = J("linkedin", zt);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Bt=[["path",{d:"M7.9 20A9 9 0 1 0 4 16.1L2 22Z",key:"vv11sd"}]],Wt=J("message-circle",Bt);/**
+ */ const Bt = [
+    ["path", { d: "M7.9 20A9 9 0 1 0 4 16.1L2 22Z", key: "vv11sd" }],
+  ],
+  Wt = J("message-circle", Bt);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Gt=[["path",{d:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",key:"1lielz"}]],Vt=J("message-square",Gt);/**
+ */ const Gt = [
+    [
+      "path",
+      {
+        d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+        key: "1lielz",
+      },
+    ],
+  ],
+  Vt = J("message-square", Gt);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Yt=[["path",{d:"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z",key:"1ffxy3"}],["path",{d:"m21.854 2.147-10.94 10.939",key:"12cjpa"}]],Kt=J("send",Yt);/**
+ */ const Yt = [
+    [
+      "path",
+      {
+        d: "M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z",
+        key: "1ffxy3",
+      },
+    ],
+    ["path", { d: "m21.854 2.147-10.94 10.939", key: "12cjpa" }],
+  ],
+  Kt = J("send", Yt);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Zt=[["path",{d:"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z",key:"pff0z6"}]],qt=J("twitter",Zt);/**
+ */ const Zt = [
+    [
+      "path",
+      {
+        d: "M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z",
+        key: "pff0z6",
+      },
+    ],
+  ],
+  qt = J("twitter", Zt);
+/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const Xt=[["path",{d:"M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17",key:"1q2vi4"}],["path",{d:"m10 15 5-3-5-3z",key:"1jp15x"}]],Qt=J("youtube",Xt),fe=({className:t,size:s="default",onCommentClick:a,showCommentsCount:r=0,onLoveClick:c,isLoved:l=!1,loveCount:d=0,disabled:u=!1})=>{const f=s==="small"?16:18,h=s==="small"?"text-xs":"text-sm",[p,o]=g.useState(!1),m=async()=>{if(!(u||p)){o(!0);try{await c?.(!l)}catch(N){console.error("Failed to toggle love:",N)}finally{o(!1)}}},A=()=>{u||a?.()};return e.jsxs("div",{className:P("flex items-center space-x-4",t),children:[e.jsxs("button",{onClick:m,disabled:u||p,className:P("flex cursor-pointer items-center transition-all duration-200 hover:scale-105",l?"text-red-500 hover:text-red-600":"text-gray-600 hover:text-red-500",(u||p)&&"opacity-50 cursor-not-allowed hover:scale-100"),"aria-label":l?"Unlike this article":"Like this article",children:[e.jsx(Ot,{size:f,className:P("mr-2 transition-all duration-200",l&&"fill-current animate-pulse",p&&"animate-spin")}),e.jsxs("span",{className:P(h,"font-medium"),children:[l?"Loved":"Love",d>0&&` (${d})`]})]}),e.jsxs("button",{onClick:A,disabled:u,className:P("flex cursor-pointer items-center text-gray-600 hover:text-blue-500 transition-all duration-200 hover:scale-105",u&&"opacity-50 cursor-not-allowed hover:scale-100"),"aria-label":"View comments",children:[e.jsx(Wt,{size:f,className:"mr-2"}),e.jsxs("span",{className:P(h,"font-medium"),children:["Comment",r>0&&` (${r})`]})]})]})},Pe=({comments:t=[],onPostComment:s,disabled:a=!1,allComments:r=[]})=>{const[c,l]=g.useState(!1),[d,u]=g.useState(""),[f,h]=g.useState(!1),[p,o]=g.useState(""),{user:m,profile:A}=me(),N=async()=>{if(!(!d.trim()||a||f)){h(!0),o("");try{await s?.(d.trim()),u("")}catch(v){console.error("Failed to submit comment:",v),o("Failed to post comment. Please try again.")}finally{h(!1)}}},y=v=>{v.key==="Enter"&&!v.shiftKey&&(v.preventDefault(),N())},x=c?t:t.slice(0,2);return e.jsxs("div",{className:"w-full mt-4 border-t pt-4",children:[e.jsxs("div",{className:"mb-4",children:[e.jsxs("div",{className:"flex gap-3",children:[m?.profilePicture?e.jsx("img",{src:`https://api.alamocitypulse.com/${m.profilePicture}`,alt:m.firstName,className:"w-8 h-8 rounded-full object-cover"}):e.jsx("div",{className:"w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-medium",children:m?.firstName?.slice(0,2).toUpperCase()}),e.jsxs("div",{className:"flex-1 flex gap-2",children:[e.jsx("input",{type:"text",value:d,onChange:v=>u(v.target.value),onKeyPress:y,placeholder:a?"Please login to comment":"Write a comment...",disabled:a||f,className:"flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"}),e.jsx("button",{onClick:N,disabled:!d.trim()||a||f,className:"px-3 py-2 cursor-pointer bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors",children:f?e.jsx("div",{className:"w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"}):e.jsx(Kt,{size:16})})]})]}),p&&e.jsx("div",{className:"mt-2 text-sm text-red-600 ml-11",children:p})]}),t.length>0&&e.jsx("div",{className:"ml-12 max-h-96 overflow-y-auto space-y-3",children:x.map((v,D)=>e.jsxs("div",{className:"flex gap-3",children:[v.avatar?e.jsx("img",{src:v.avatar.startsWith("/media/")?`https://api.alamocitypulse.com/${v.avatar}`:v.avatar,alt:`${v.author}'s avatar`,className:"w-8 h-8 rounded-full object-cover flex-shrink-0"}):e.jsx("div",{className:"w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-medium",children:v.author?.slice(0,2).toUpperCase()}),e.jsx("div",{className:"flex-1 min-w-0",children:e.jsxs("div",{className:"bg-gray-50 rounded-lg px-3 py-2",children:[e.jsxs("div",{className:"flex items-center gap-2 mb-1",children:[e.jsx("span",{className:"font-medium text-sm text-gray-900",children:v.author}),e.jsx("span",{className:"text-xs text-gray-500",children:v.time}),v.loved&&e.jsx("span",{className:"text-xs text-red-500",children:"❤️ Loved this article"})]}),e.jsx("p",{className:"text-sm text-gray-700 leading-relaxed break-words",children:v.content})]})})]},`comment-${v.id||D}-${v.time}`))}),t.length>2&&e.jsx("button",{onClick:()=>l(!c),className:"text-blue-600 cursor-pointer hover:text-blue-800 text-sm font-medium transition-colors duration-200 ml-11 mt-3",children:c?"Show fewer comments":`See all ${t.length} comments`}),t.length===0&&e.jsx("div",{className:"text-center py-4 text-gray-500 text-sm",children:"No comments yet. Be the first to comment!"})]})},Me=({sentiment:t,className:s})=>{const a={positive:"bg-green-600 text-white",negative:"bg-custom-red text-white",neutral:"bg-gray-100 text-gray-700"},r=t.charAt(0).toUpperCase()+t.slice(1).toLowerCase(),c=a[r.toLowerCase()]||a.neutral;return e.jsx("div",{className:P("inline-block px-3 py-1 text-sm font-medium w-fit",c,s),children:r})},Ke=async()=>{try{return(await ue.get("/news/get/all-news/")).data}catch(t){throw console.error("Failed to fetch all news:",t),t}},Jt=async({search_term:t})=>{try{const s=encodeURIComponent(t);return(await ue.get(`/news/search/?q=${s}`)).data}catch(s){throw console.error("Failed to search news:",s),s}},Ue=t=>{const s=t||{};return{id:s.id||Math.random(),title:s.title||"Untitled Article",description:s.description||"No description available",category:s.category||"General",publishedTime:s.published_relative_time||Ze(s.published_datetime)||"Recently",publishedDateTime:s.published_datetime||new Date().toISOString(),image:s.image||ce(s.category),sentiment:s.badge_status||"Neutral",isFeatured:s.is_featured||!1,imageAttribution:s.author||s.source||"News Source",readTime:es(s.description)||3,author:s.author||"Unknown Author",source:s.source||"News Source",url:s.url||"#",tags:s.tags||[]}},es=t=>{if(!t||typeof t!="string")return 3;const s=200,a=t.trim().split(/\s+/).length,r=Math.ceil(a/s);return Math.max(1,r)},ce=(t="general")=>{const s={technology:"https://images.pexels.com/photos/6476589/pexels-photo-6476589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",business:"https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",health:"https://images.pexels.com/photos/3938022/pexels-photo-3938022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",environment:"https://images.pexels.com/photos/3894224/pexels-photo-3894224.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",politics:"https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",sports:"https://images.pexels.com/photos/5915202/pexels-photo-5915202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",local:"https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",general:"https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"},a=t.toLowerCase();return s[a]||s.general},Ze=t=>{if(!t)return"Recently";try{const s=new Date,a=new Date(t);if(isNaN(a.getTime()))return"Recently";const r=Math.floor((s-a)/1e3);return r<60?`${r} seconds ago`:r<3600?`${Math.floor(r/60)} minutes ago`:r<86400?`${Math.floor(r/3600)} hours ago`:r<2592e3?`${Math.floor(r/86400)} days ago`:r<31536e3?`${Math.floor(r/2592e3)} months ago`:`${Math.floor(r/31536e3)} years ago`}catch(s){return console.error("Error formatting time:",s),"Recently"}},Se=[{key:"latests",label:"Latest News",count:6,categoryFilter:null,isDefault:!0},{key:"politics",label:"Politics",count:6,categoryFilter:["politics","government","election","policy"]},{key:"Local",label:"Local",count:6,categoryFilter:["local","city","community","regional"]},{key:"whatWeKnow",label:"Analysis",count:6,categoryFilter:["analysis","opinion","editorial","insight"]},{key:"maps",label:"Regional",count:6,categoryFilter:["regional","national","international","world"]},{key:"photos",label:"Photos",count:6,categoryFilter:["photos","gallery","images","visual"]},{key:"tunnels",label:"Investigations",count:5,categoryFilter:["investigation","exclusive","report","expose"]},{key:"oneImage",label:"Sports",count:6,categoryFilter:["sports","football","basketball","soccer","athletics","games"]}],Oe=t=>Se.filter(s=>t[s.key]&&t[s.key].length>0),ts=async t=>{try{return(await ue.get(`/news/get/all-reactions/${t}/`)).data}catch(s){throw console.error(`Failed to fetch reactions for news ID ${t}:`,s),s}},ss=async(t,s)=>{try{return(await ue.post(`/news/post/reactions/${t}/`,{love:s})).data}catch(a){throw console.error(`Failed to post love reaction for news ID ${t}:`,a),a}},as=async(t,s)=>{try{return(await ue.post(`/news/post/reactions/${t}/`,{comment:s})).data}catch(a){throw console.error(`Failed to post comment for news ID ${t}:`,a),a}},Re=t=>Array.isArray(t)?t.filter(s=>s.comment&&s.comment.trim()!=="").map(s=>({id:s.id,author:s.user?.user_profile&&`${s.user.user_profile.first_name||""} ${s.user.user_profile.last_name||""}`.trim()||"Anonymous",content:s.comment,time:Ze(s.created_at),avatar:s.user?.user_profile?.profile_picture,loved:s.love})):[],Fe=t=>Array.isArray(t)?t.filter(s=>s.love===!0).length:0,Le=t=>Array.isArray(t)?t.filter(s=>s.comment&&s.comment.trim()!=="").length:0,Ee=(t,s)=>{if(!Array.isArray(t)||!s)return!1;const a=t.filter(r=>r.user.id===s&&r.love!==null).sort((r,c)=>new Date(c.created_at)-new Date(r.created_at));return a.length===0?!1:a[0].love===!0},ae=({article:{id:t,title:s,description:a,category:r,publishedTime:c,publishedDateTime:l,image:d="/placeholder.svg?height=200&width=300",sentiment:u,isFeatured:f,imageAttribution:h,readTime:p},className:o,imagePosition:m="top",reactions:A=[],onPostLove:N,onPostComment:y})=>{const[x,v]=g.useState(!1),{isLoggedIn:D,user:M}=me(),[T,I]=g.useState(!1),[U,E]=g.useState("signin"),[S,z]=g.useState(!1),R=Re(A),n=Fe(A),w=Le(A),i=Ee(A,M?.id),b=H=>{if(!H)return"";const B=H.split(" ").filter(re=>re.length>0);return B.length<=10?H:B.slice(0,10).join(" ")},W=b(a),F=a&&a.length>200,C=()=>{if(!D){E("signin"),I(!0);return}v(!x)},L=()=>{if(!D){E("signin"),I(!0);return}z(!S)},G=async H=>{if(!D){E("signin"),I(!0);return}try{await N?.(H)}catch(B){console.error("Failed to post love reaction:",B)}},_=async H=>{if(!D){E("signin"),I(!0);return}try{await y?.(H)}catch(B){throw console.error("Failed to post comment:",B),B}},$=m==="left"||m==="right";return e.jsxs(e.Fragment,{children:[x&&e.jsxs(Helmet,{children:[e.jsx("title",{children:s||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{name:"description",content:a?b(a):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:title",content:s||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{property:"og:description",content:a?b(a):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:image",content:d||"/default-image.jpg"}),e.jsx("meta",{property:"og:type",content:"article"}),e.jsx("meta",{property:"og:url",content:url||window.location.href})]}),e.jsxs("div",{className:P("rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 bg-white",$?"flex":"flex-col",o),children:[e.jsxs("div",{className:P($?"w-1/3 flex-shrink-0":"w-full",m==="right"?"order-2":"order-1","relative"),children:[e.jsx("img",{src:d,alt:s,className:"w-full h-72 xl:h-48 object-cover"}),u&&e.jsx("div",{className:"absolute top-1 left-1",children:e.jsx(Me,{sentiment:u,className:"text-xs py-0.5 px-2"})})]}),e.jsxs("div",{className:P("p-4 flex flex-col",$?"w-2/3":"w-full",m==="right"?"order-1":"order-2"),children:[e.jsx("div",{className:"w-full bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2 self-start",children:r}),e.jsx("h3",{className:"font-bold text-gray-900 mb-2 line-clamp-2 leading-tight",children:s}),a&&e.jsx("div",{className:"text-gray-600 text-sm mb-3",children:e.jsxs("p",{className:"text-sm sm:text-base text-gray-600 leading-relaxed",children:[x?a:W,!x&&F&&"... ",F&&e.jsx("button",{onClick:C,className:"text-blue-400 hover:text-blue-500 cursor-pointer text-sm sm:text-base font-medium transition-colors duration-200 focus:outline-none focus:underline",children:x?"Read less":"Read more"})]})}),e.jsxs("div",{className:"flex items-center justify-between text-xs text-gray-500 mt-auto",children:[e.jsx("div",{children:c&&e.jsx("span",{children:c})}),e.jsx("div",{children:e.jsx(fe,{onCommentClick:L,onLoveClick:G,showCommentsCount:w,isLoved:i,loveCount:n,disabled:!D})})]}),S&&e.jsx(Pe,{comments:R,onPostComment:_,disabled:!D,allComments:A})]}),e.jsx(we,{isOpen:T,onClose:()=>I(!1),initialMode:U})]})]})},rs=({id:t,title:s,description:a,category:r="THE HEADLINES",publishedTime:c,publishedDateTime:l,image:d="/placeholder.svg?height=100&width=150",sentiment:u="neutral",isFeatured:f,imageAttribution:h,readTime:p,className:o})=>{const{isLoggedIn:m,user:A}=me(),[N,y]=g.useState(!1),[x,v]=g.useState(!1),[D,M]=g.useState("signin"),T=S=>{if(!S)return"";const z=S.split(" ").filter(R=>R.length>0);return z.length<=15?S:z.slice(0,15).join(" ")},I=T(a),U=a&&a.length>200,E=()=>{if(!m){M("signin"),v(!0);return}y(!N)};return e.jsxs(e.Fragment,{children:[N&&e.jsxs(ve,{children:[e.jsx("title",{children:s||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{name:"description",content:a?T(a):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:title",content:s||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{property:"og:description",content:a?T(a):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:image",content:d||"/default-image.jpg"}),e.jsx("meta",{property:"og:type",content:"article"}),e.jsx("meta",{property:"og:url",content:url||window.location.href})]}),e.jsxs("div",{className:P("flex border-y-1 border-black py-6",o),children:[e.jsx("div",{className:"flex-shrink-0 w-[150px] h-28 relative overflow-hidden",children:e.jsx("img",{src:d,alt:s,className:"w-full h-full object-cover"})}),e.jsxs("div",{className:"ml-4 flex-1",children:[e.jsx("div",{className:"flex items-center mb-1",children:e.jsx("span",{className:"text-xs font-bold text-gray-800 mr-2",children:r})}),e.jsx("h3",{className:"text-xl font-bold mb-2 line-clamp-2",children:s}),e.jsx("div",{className:"flex mb-2 items-center",children:e.jsxs("button",{onClick:E,className:"flex items-center text-gray-700 mr-2 hover:text-gray-900 transition-colors",children:[e.jsx(Dt,{size:16,className:"mr-1"}),e.jsxs("span",{className:"text-sm mr-1",children:[N?a:I,!N&&U&&"..."]}),U&&e.jsx("span",{className:"text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200",children:N?"Read less":"Read more"})]})}),e.jsx("div",{className:"ml-auto",children:e.jsx(Me,{sentiment:u,className:"text-xs py-0.5 px-2"})})]})]}),e.jsx(we,{isOpen:x,onClose:()=>v(!1),initialMode:D})]})},qe=({type:t,value:s,className:a})=>{const r=t==="readTime",c=t==="timeAgo";return e.jsxs("div",{className:P("flex items-center",a),children:[r&&e.jsxs("span",{children:["Read Time ",s," Min"]}),c&&e.jsxs("span",{className:"text-gray-500 text-sm flex items-center",children:[" ","Read Time",s," Min"]})]})},ns=({currentIndex:t,setCurrentIndex:s,totalItems:a})=>{const r=c=>{const l=Math.abs(c-t);return l===0?"w-3 h-3":l===1?"w-2.5 h-2.5":"w-2 h-2"};return e.jsx("div",{className:"flex items-center gap-2",children:Array.from({length:a}).map((c,l)=>e.jsx("button",{className:`${r(l)} rounded-full transition-all duration-200 ${l===t?"bg-black":"bg-gray-300"}`,onClick:()=>s(l)},l))})},is=({currentIndex:t,setCurrentIndex:s,totalItems:a})=>{const r=()=>{s(u=>u>0?u-1:a-1)},c=()=>{s(u=>u<a-1?u+1:0)},l=t>0,d=t<a-1;return e.jsxs("div",{className:"flex items-center gap-1",children:[e.jsx("button",{onClick:r,disabled:!l,className:`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${l?"bg-white border-gray-300 text-gray-800 hover:bg-gray-50 hover:border-gray-400":"bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"}`,children:e.jsx(Ce,{className:"w-4 h-4"})}),e.jsx("button",{onClick:c,disabled:!d,className:`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${d?"bg-white border-gray-300 text-gray-800 hover:bg-gray-50 hover:border-gray-400":"bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"}`,children:e.jsx(Te,{className:"w-4 h-4"})})]})},os=({description:t,isLoggedIn:s,onAuthRequired:a})=>{const[r,c]=g.useState(!1),l=oe(t),d=t&&t.length>200,u=()=>{if(!s){a();return}c(!r)};return d?e.jsxs(e.Fragment,{children:[" ",r&&e.jsxs(ve,{children:[e.jsx("title",{children:currentUpdate?.title||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{name:"description",content:currentUpdate?.description?oe(currentUpdate?.description):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:title",content:currentUpdate?.title||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{property:"og:description",content:currentUpdate?.description?oe(currentUpdate?.description):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:image",content:currentUpdate?.image||"/default-image.jpg"}),e.jsx("meta",{property:"og:type",content:"article"}),e.jsx("meta",{property:"og:url",content:currentUpdate?.url||window.location.href})]}),e.jsx("div",{className:"mb-4",children:e.jsxs("p",{className:"text-gray-600",children:[r?t:`${l}...`,e.jsx("button",{onClick:u,className:"text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors duration-200 focus:outline-none focus:underline",children:r?"Read less":"Read more >"})]})})]}):e.jsx("p",{className:"text-gray-600 mb-4",children:t})},ls=({updates:t,className:s,newsReactions:a,onPostLove:r,onPostComment:c})=>{const[l,d]=g.useState(0),{isLoggedIn:u,user:f}=me(),[h,p]=g.useState(!1),[o,m]=g.useState("signin"),[A,N]=g.useState(!1),y=t[l],x=a[y.id]||[],v=Re(x),D=Fe(x),M=Le(x),T=Ee(x,f?.id),I=()=>{if(!u){m("signin"),p(!0);return}N(!A)},U=async z=>{if(!u){m("signin"),p(!0);return}try{await r(y.id,z)}catch(R){console.error("Failed to post love reaction:",R)}},E=async z=>{if(!u){m("signin"),p(!0);return}try{await c(y.id,z)}catch(R){throw console.error("Failed to post comment:",R),R}},S=()=>{m("signin"),p(!0)};return e.jsxs(e.Fragment,{children:[e.jsx("div",{className:P("pb-6",s),children:e.jsxs("div",{className:"flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10",children:[e.jsxs("div",{className:"flex flex-col w-full lg:w-2/5 xl:w-1/3",children:[e.jsx("div",{className:"font-bold text-xl mb-1",children:y.category}),e.jsxs("div",{className:"flex justify-start items-center gap-3 mt-2 text-custom-red",children:[e.jsx(qe,{type:"live",value:null}),e.jsx("span",{className:"text-sm",children:y.timeAgo})]}),e.jsx("h2",{className:"text-2xl font-bold mb-3",children:y.title}),e.jsx(os,{description:y.description,isLoggedIn:u,onAuthRequired:S}),e.jsxs("div",{className:"flex items-center mb-4",children:[e.jsx("button",{className:"text-gray-700 font-medium mr-2",children:"See more updates"}),e.jsx("span",{className:"bg-gray-700 text-white text-xs px-2 py-1 rounded-full",children:t.length})]}),e.jsx("div",{children:e.jsx(fe,{onCommentClick:I,onLoveClick:U,showCommentsCount:M,isLoved:T,loveCount:D,disabled:!u})})]}),e.jsxs("div",{className:"relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end",children:[e.jsx("div",{className:"relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center",children:e.jsx("img",{src:y.image,alt:y.title,className:"w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105",loading:"lazy"})}),e.jsx("div",{className:"w-full py-2",children:e.jsxs("div",{className:"flex justify-between items-center",children:[e.jsx("div",{className:"flex-1 flex justify-center",children:t.length>1&&e.jsx(ns,{currentIndex:l,setCurrentIndex:d,totalItems:t.length})}),e.jsx("div",{className:"flex items-center md:mt-6",children:t.length>1&&e.jsx(is,{currentIndex:l,setCurrentIndex:d,totalItems:t.length})})]})})]})]})}),A&&e.jsx(Pe,{comments:v,onPostComment:E,disabled:!u,allComments:x}),e.jsx(we,{isOpen:h,onClose:()=>p(!1),initialMode:o})]})},_e=({title:t,children:s,className:a})=>e.jsxs("section",{className:P("mb-12 py-2 border-b border-black",a),children:[t&&e.jsx("h2",{className:"text-xl font-bold mb-6 border-b border-gray-300 pb-2",children:t}),e.jsx("div",{children:s})]});var Ae="rovingFocusGroup.onEntryFocus",cs={bubbles:!1,cancelable:!0},he="RovingFocusGroup",[Ie,Xe,ds]=Rt(he),[ms,Qe]=We(he,[ds]),[us,hs]=ms(he),Je=g.forwardRef((t,s)=>e.jsx(Ie.Provider,{scope:t.__scopeRovingFocusGroup,children:e.jsx(Ie.Slot,{scope:t.__scopeRovingFocusGroup,children:e.jsx(gs,{...t,ref:s})})}));Je.displayName=he;var gs=g.forwardRef((t,s)=>{const{__scopeRovingFocusGroup:a,orientation:r,loop:c=!1,dir:l,currentTabStopId:d,defaultCurrentTabStopId:u,onCurrentTabStopIdChange:f,onEntryFocus:h,preventScrollOnEntryFocus:p=!1,...o}=t,m=g.useRef(null),A=Nt(s,m),N=Ye(l),[y,x]=Ge({prop:d,defaultProp:u??null,onChange:f,caller:he}),[v,D]=g.useState(!1),M=Ft(h),T=Xe(a),I=g.useRef(!1),[U,E]=g.useState(0);return g.useEffect(()=>{const S=m.current;if(S)return S.addEventListener(Ae,M),()=>S.removeEventListener(Ae,M)},[M]),e.jsx(us,{scope:a,orientation:r,dir:N,loop:c,currentTabStopId:y,onItemFocus:g.useCallback(S=>x(S),[x]),onItemShiftTab:g.useCallback(()=>D(!0),[]),onFocusableItemAdd:g.useCallback(()=>E(S=>S+1),[]),onFocusableItemRemove:g.useCallback(()=>E(S=>S-1),[]),children:e.jsx(le.div,{tabIndex:v||U===0?-1:0,"data-orientation":r,...o,ref:A,style:{outline:"none",...t.style},onMouseDown:Q(t.onMouseDown,()=>{I.current=!0}),onFocus:Q(t.onFocus,S=>{const z=!I.current;if(S.target===S.currentTarget&&z&&!v){const R=new CustomEvent(Ae,cs);if(S.currentTarget.dispatchEvent(R),!R.defaultPrevented){const n=T().filter(F=>F.focusable),w=n.find(F=>F.active),i=n.find(F=>F.id===y),W=[w,i,...n].filter(Boolean).map(F=>F.ref.current);st(W,p)}}I.current=!1}),onBlur:Q(t.onBlur,()=>D(!1))})})}),et="RovingFocusGroupItem",tt=g.forwardRef((t,s)=>{const{__scopeRovingFocusGroup:a,focusable:r=!0,active:c=!1,tabStopId:l,children:d,...u}=t,f=Ve(),h=l||f,p=hs(et,a),o=p.currentTabStopId===h,m=Xe(a),{onFocusableItemAdd:A,onFocusableItemRemove:N,currentTabStopId:y}=p;return g.useEffect(()=>{if(r)return A(),()=>N()},[r,A,N]),e.jsx(Ie.ItemSlot,{scope:a,id:h,focusable:r,active:c,children:e.jsx(le.span,{tabIndex:o?0:-1,"data-orientation":p.orientation,...u,ref:s,onMouseDown:Q(t.onMouseDown,x=>{r?p.onItemFocus(h):x.preventDefault()}),onFocus:Q(t.onFocus,()=>p.onItemFocus(h)),onKeyDown:Q(t.onKeyDown,x=>{if(x.key==="Tab"&&x.shiftKey){p.onItemShiftTab();return}if(x.target!==x.currentTarget)return;const v=fs(x,p.orientation,p.dir);if(v!==void 0){if(x.metaKey||x.ctrlKey||x.altKey||x.shiftKey)return;x.preventDefault();let M=m().filter(T=>T.focusable).map(T=>T.ref.current);if(v==="last")M.reverse();else if(v==="prev"||v==="next"){v==="prev"&&M.reverse();const T=M.indexOf(x.currentTarget);M=p.loop?bs(M,T+1):M.slice(T+1)}setTimeout(()=>st(M))}}),children:typeof d=="function"?d({isCurrentTabStop:o,hasTabStop:y!=null}):d})})});tt.displayName=et;var ps={ArrowLeft:"prev",ArrowUp:"prev",ArrowRight:"next",ArrowDown:"next",PageUp:"first",Home:"first",PageDown:"last",End:"last"};function xs(t,s){return s!=="rtl"?t:t==="ArrowLeft"?"ArrowRight":t==="ArrowRight"?"ArrowLeft":t}function fs(t,s,a){const r=xs(t.key,a);if(!(s==="vertical"&&["ArrowLeft","ArrowRight"].includes(r))&&!(s==="horizontal"&&["ArrowUp","ArrowDown"].includes(r)))return ps[r]}function st(t,s=!1){const a=document.activeElement;for(const r of t)if(r===a||(r.focus({preventScroll:s}),document.activeElement!==a))return}function bs(t,s){return t.map((a,r)=>t[(s+r)%t.length])}var ys=Je,ws=tt,je="Tabs",[vs,Ks]=We(je,[Qe]),at=Qe(),[js,De]=vs(je),rt=g.forwardRef((t,s)=>{const{__scopeTabs:a,value:r,onValueChange:c,defaultValue:l,orientation:d="horizontal",dir:u,activationMode:f="automatic",...h}=t,p=Ye(u),[o,m]=Ge({prop:r,onChange:c,defaultProp:l??"",caller:je});return e.jsx(js,{scope:a,baseId:Ve(),value:o,onValueChange:m,orientation:d,dir:p,activationMode:f,children:e.jsx(le.div,{dir:p,"data-orientation":d,...h,ref:s})})});rt.displayName=je;var nt="TabsList",it=g.forwardRef((t,s)=>{const{__scopeTabs:a,loop:r=!0,...c}=t,l=De(nt,a),d=at(a);return e.jsx(ys,{asChild:!0,...d,orientation:l.orientation,dir:l.dir,loop:r,children:e.jsx(le.div,{role:"tablist","aria-orientation":l.orientation,...c,ref:s})})});it.displayName=nt;var ot="TabsTrigger",lt=g.forwardRef((t,s)=>{const{__scopeTabs:a,value:r,disabled:c=!1,...l}=t,d=De(ot,a),u=at(a),f=mt(d.baseId,r),h=ut(d.baseId,r),p=r===d.value;return e.jsx(ws,{asChild:!0,...u,focusable:!c,active:p,children:e.jsx(le.button,{type:"button",role:"tab","aria-selected":p,"aria-controls":h,"data-state":p?"active":"inactive","data-disabled":c?"":void 0,disabled:c,id:f,...l,ref:s,onMouseDown:Q(t.onMouseDown,o=>{!c&&o.button===0&&o.ctrlKey===!1?d.onValueChange(r):o.preventDefault()}),onKeyDown:Q(t.onKeyDown,o=>{[" ","Enter"].includes(o.key)&&d.onValueChange(r)}),onFocus:Q(t.onFocus,()=>{const o=d.activationMode!=="manual";!p&&!c&&o&&d.onValueChange(r)})})})});lt.displayName=ot;var ct="TabsContent",dt=g.forwardRef((t,s)=>{const{__scopeTabs:a,value:r,forceMount:c,children:l,...d}=t,u=De(ct,a),f=mt(u.baseId,r),h=ut(u.baseId,r),p=r===u.value,o=g.useRef(p);return g.useEffect(()=>{const m=requestAnimationFrame(()=>o.current=!1);return()=>cancelAnimationFrame(m)},[]),e.jsx(At,{present:c||p,children:({present:m})=>e.jsx(le.div,{"data-state":p?"active":"inactive","data-orientation":u.orientation,role:"tabpanel","aria-labelledby":f,hidden:!m,id:h,tabIndex:0,...d,ref:s,style:{...t.style,animationDuration:o.current?"0s":void 0},children:m&&l})})});dt.displayName=ct;function mt(t,s){return`${t}-trigger-${s}`}function ut(t,s){return`${t}-content-${s}`}var Ns=rt,As=it,Cs=lt,Ts=dt;function ht({className:t,...s}){return e.jsx(Ns,{"data-slot":"tabs",className:P("flex flex-col gap-2",t),...s})}function gt({className:t,...s}){return e.jsx(As,{"data-slot":"tabs-list",className:P("bg-muted text-muted-foreground flex h-9 items-center rounded-lg p-[3px] overflow-x-auto scrollbar-hide","[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",t),...s})}function pt({className:t,...s}){return e.jsx(Cs,{"data-slot":"tabs-trigger",className:P("data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-shrink-0 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",t),...s})}function xt({className:t,...s}){return e.jsx(Ts,{"data-slot":"tabs-content",className:P("flex-1 outline-none",t),...s})}const ft=({children:t,className:s,columns:a=2,gap:r=6})=>e.jsx("div",{className:P(`grid grid-cols-1 md:grid-cols-${a} gap-${r}`,s),children:t});await Ke();const bt={israelHamasWar:[{id:1,title:"Israel-Hamas War: Complete Coverage",description:"Comprehensive coverage of the ongoing conflict with latest developments... Comprehensive coverage of the ongoing conflict with latest developments... Comprehensive coverage of the ongoing conflict with latest developments... Comprehensive coverage of the ongoing conflict with latest developments...",category:"War Coverage",publishedTime:"15 minutes ago",publishedDateTime:null,image:"/fn1.png",sentiment:"Breaking",isFeatured:!0,imageAttribution:null,readTime:8},{id:2,title:"International Response Analysis",description:"How world leaders are responding to the escalating situation...",category:"International",publishedTime:"45 minutes ago",publishedDateTime:null,image:"/fn2.png",sentiment:"Analysis",isFeatured:!1,imageAttribution:null,readTime:6},{id:3,title:"Civilian Impact Assessment",description:"Understanding the humanitarian crisis and civilian casualties...",category:"Humanitarian",publishedTime:"1 hour ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Critical",isFeatured:!1,imageAttribution:null,readTime:7},{id:4,title:"Military Operations Update",description:"Latest military developments and strategic movements...",category:"Military",publishedTime:"2 hours ago",publishedDateTime:null,image:"/fn4.png",sentiment:"Update",isFeatured:!1,imageAttribution:null,readTime:5}],updates:[{id:5,title:"Latest Updates on Israel-Hamas Conflict",description:"Breaking news and developments from the ongoing situation...",category:"Breaking News",publishedTime:"30 minutes ago",publishedDateTime:null,image:"/fn1.png",sentiment:"Live",isFeatured:!0,imageAttribution:null,readTime:5},{id:6,title:"Diplomatic Efforts Continue",description:"International leaders work toward ceasefire negotiations...",category:"Politics",publishedTime:"1 hour ago",publishedDateTime:null,image:"/fn2.png",sentiment:"Urgent",isFeatured:!1,imageAttribution:null,readTime:4},{id:7,title:"Humanitarian Aid Distribution",description:"Relief efforts reach affected areas...",category:"Humanitarian",publishedTime:"2 hours ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Update",isFeatured:!1,imageAttribution:null,readTime:3},{id:8,title:"Security Council Meeting",description:"UN discusses resolution proposals...",category:"International",publishedTime:"3 hours ago",publishedDateTime:null,image:"/fn4.png",sentiment:"Official",isFeatured:!1,imageAttribution:null,readTime:6}],whatWeKnow:[{id:9,title:"Timeline of Recent Events",description:"Comprehensive overview of key developments...",category:"Analysis",publishedTime:"4 hours ago",publishedDateTime:null,image:"/fn5.png",sentiment:"Complete",isFeatured:!1,imageAttribution:null,readTime:8},{id:10,title:"Key Players and Positions",description:"Understanding the main parties involved...",category:"Analysis",publishedTime:"5 hours ago",publishedDateTime:null,image:"/fn1.png",sentiment:"Detailed",isFeatured:!1,imageAttribution:null,readTime:7},{id:11,title:"Historical Context",description:"Background information to understand current events...",category:"Background",publishedTime:"6 hours ago",publishedDateTime:null,image:"/fn2.png",sentiment:"Essential",isFeatured:!1,imageAttribution:null,readTime:10},{id:12,title:"Regional Analysis",description:"Understanding regional implications and effects...",category:"Regional",publishedTime:"7 hours ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Important",isFeatured:!1,imageAttribution:null,readTime:6}],maps:[{id:13,title:"Regional Map Overview",description:"Interactive maps showing affected areas...",category:"Geographic",publishedTime:"1 hour ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Interactive",isFeatured:!1,imageAttribution:null,readTime:2},{id:14,title:"Strategic Locations",description:"Key points of interest in the conflict zone...",category:"Strategic",publishedTime:"3 hours ago",publishedDateTime:null,image:"/fn4.png",sentiment:"Important",isFeatured:!1,imageAttribution:null,readTime:4},{id:15,title:"Border Areas Analysis",description:"Detailed view of border regions and checkpoints...",category:"Border",publishedTime:"4 hours ago",publishedDateTime:null,image:"/fn5.png",sentiment:"Detailed",isFeatured:!1,imageAttribution:null,readTime:5},{id:16,title:"Population Centers",description:"Major cities and population centers in the region...",category:"Demographics",publishedTime:"5 hours ago",publishedDateTime:null,image:"/fn1.png",sentiment:"Reference",isFeatured:!1,imageAttribution:null,readTime:3}],photos:[{id:17,title:"Photo Gallery: Recent Events",description:"Visual documentation of recent developments...",category:"Photography",publishedTime:"2 hours ago",publishedDateTime:null,image:"/fn5.png",sentiment:"Gallery",isFeatured:!1,imageAttribution:null,readTime:5},{id:18,title:"Before and After Images",description:"Satellite imagery showing changes over time...",category:"Documentation",publishedTime:"4 hours ago",publishedDateTime:null,image:"/fn1.png",sentiment:"Comparison",isFeatured:!1,imageAttribution:null,readTime:3},{id:19,title:"Ground Reports in Pictures",description:"On-ground photography from conflict areas...",category:"Field Reports",publishedTime:"6 hours ago",publishedDateTime:null,image:"/fn2.png",sentiment:"Exclusive",isFeatured:!1,imageAttribution:null,readTime:4},{id:20,title:"Humanitarian Crisis Images",description:"Visual documentation of humanitarian impact...",category:"Humanitarian",publishedTime:"8 hours ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Critical",isFeatured:!1,imageAttribution:null,readTime:6}],tunnels:[{id:21,title:"Underground Infrastructure",description:"Investigation into tunnel networks...",category:"Investigation",publishedTime:"5 hours ago",publishedDateTime:null,image:"/fn2.png",sentiment:"Exclusive",isFeatured:!1,imageAttribution:null,readTime:7},{id:22,title:"Security Implications",description:"Analysis of underground threats...",category:"Security",publishedTime:"6 hours ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Analysis",isFeatured:!1,imageAttribution:null,readTime:6},{id:23,title:"Construction Methods",description:"How these underground networks are built...",category:"Technical",publishedTime:"8 hours ago",publishedDateTime:null,image:"/fn4.png",sentiment:"Technical",isFeatured:!1,imageAttribution:null,readTime:8},{id:24,title:"Detection Technologies",description:"Methods used to detect underground tunnels...",category:"Technology",publishedTime:"10 hours ago",publishedDateTime:null,image:"/fn5.png",sentiment:"Innovation",isFeatured:!1,imageAttribution:null,readTime:5}],oneImage:[{id:25,title:"The Story in One Image",description:"Powerful photography that captures the moment...",category:"Photo Story",publishedTime:"1 hour ago",publishedDateTime:null,image:"/fn4.png",sentiment:"Featured",isFeatured:!0,imageAttribution:null,readTime:2},{id:26,title:"Iconic Moment Captured",description:"Single frame that tells the entire story...",category:"Iconic",publishedTime:"3 hours ago",publishedDateTime:null,image:"/fn1.png",sentiment:"Powerful",isFeatured:!1,imageAttribution:null,readTime:3},{id:27,title:"Symbolic Representation",description:"Image that represents the broader conflict...",category:"Symbolic",publishedTime:"5 hours ago",publishedDateTime:null,image:"/fn2.png",sentiment:"Symbolic",isFeatured:!1,imageAttribution:null,readTime:4},{id:28,title:"Historical Moment",description:"Capturing history as it unfolds...",category:"Historical",publishedTime:"7 hours ago",publishedDateTime:null,image:"/fn3.png",sentiment:"Historic",isFeatured:!1,imageAttribution:null,readTime:3}]},yt=[{key:"israelHamasWar",label:"Israel-Hamas War",isDefault:!0},{key:"updates",label:"Updates"},{key:"whatWeKnow",label:"What We Know"},{key:"maps",label:"Maps"},{key:"photos",label:"Photos"},{key:"tunnels",label:"The Tunnels of Gaza"},{key:"oneImage",label:"The War in One Image"}],ks=t=>{const s="grid gap-2 md:gap-4";switch(t){case 2:return`${s} grid-cols-1 sm:grid-cols-2`;case 3:return`${s} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;case 4:default:return`${s} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 `}},Ss=({className:t,dynamicTabsData:s,dynamicTabsConfig:a,newsReactions:r={},onPostLove:c,onPostComment:l})=>{const d=s||bt,u=a||yt,f=u.find(h=>h.isDefault)?.key||u[0]?.key;return e.jsx("div",{className:`w-full ${t}`,children:e.jsxs(ht,{defaultValue:f,className:"w-full",children:[e.jsx(gt,{className:"flex gap-2 items-center mb-8 p-1 bg-transparent md:mx-auto overflow-x-auto",children:u.map(h=>e.jsx(pt,{value:h.key,className:"data-[state=active]:h-11 cursor-pointer rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap",children:h.label},h.key))}),u.map(h=>{const p=d[h.key]||[],o=ks(h.columns||4);return e.jsxs(xt,{value:h.key,className:"mt-0",children:[e.jsx(ft,{columns:h.columns||4,gap:h.gap||4,className:o,children:p.map(m=>e.jsx(ae,{article:m,reactions:r[m.id]||[],onPostLove:A=>c(m.id,A),onPostComment:A=>l(m.id,A),className:"bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200"},m.id))}),p.length===0&&e.jsxs("div",{className:"text-center py-12 text-gray-500",children:[e.jsx("p",{className:"text-lg",children:"No articles available for this section."}),e.jsx("p",{className:"text-sm mt-2",children:"Please check back later for updates."})]})]},h.key)})]})})},Is=({attribution:t,className:s})=>t?e.jsx("div",{className:P("text-xs text-gray-500 mt-1",s),children:t}):null,$e=({article:t,className:s,layout:a="horizontal",reactions:r=[],onPostLove:c,onPostComment:l})=>{const[d,u]=g.useState(!1),f=a==="horizontal",{isLoggedIn:h,user:p}=me(),[o,m]=g.useState(!1),[A,N]=g.useState("signin"),[y,x]=g.useState(!1),v=Re(r),D=Fe(r),M=Le(r),T=Ee(r,p?.id),{id:I,title:U,description:E,category:S,publishedTime:z,publishedDateTime:R,image:n,sentiment:w,source:i,author:b,tags:W,isFeatured:F,imageAttribution:C,readTime:L,url:G}=t||{},_=oe(E),$=E&&E.length>200,H=Z=>{if(!Z)return"";try{const j=new Date(Z),k=new Date,V=Math.floor((k-j)/(1e3*60*60));return V<1?"Just now":V<24?`${V}h ago`:V<48?"Yesterday":j.toLocaleDateString("en-US",{month:"short",day:"numeric",year:j.getFullYear()!==k.getFullYear()?"numeric":void 0})}catch{return""}},B=()=>{if(!h){N("signin"),m(!0);return}u(!d)},re=()=>{if(!h){N("signin"),m(!0);return}x(!y)},ge=async Z=>{if(!h){N("signin"),m(!0);return}try{await c?.(Z)}catch(j){console.error("Failed to post love reaction:",j)}},ne=async Z=>{if(!h){N("signin"),m(!0);return}try{await l?.(Z)}catch(j){throw console.error("Failed to post comment:",j),j}},ee=Z=>{G&&(Z.preventDefault(),window.open(G,"_blank","noopener,noreferrer"))};return e.jsxs(e.Fragment,{children:[d&&e.jsxs(ve,{children:[e.jsx("title",{children:U||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{name:"description",content:E?oe(E):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:title",content:U||"ALAMOCITYPULSE - News Article"}),e.jsx("meta",{property:"og:description",content:E?oe(E):"Read the latest news and updates from ALAMOCITYPULSE"}),e.jsx("meta",{property:"og:image",content:n||"/default-image.jpg"}),e.jsx("meta",{property:"og:type",content:"article"}),e.jsx("meta",{property:"og:url",content:G||window.location.href})]}),e.jsxs("article",{className:P("overflow-hidden pb-4 sm:pb-6 lg:pb-8",s),children:[e.jsxs("div",{className:P("flex flex-col-reverse gap-4 sm:gap-6",f&&!d&&n&&"lg:flex-row lg:items-start lg:gap-8 xl:gap-10",d&&"flex-col-reverse gap-4 sm:gap-6"),children:[e.jsxs("div",{className:P("flex flex-col w-full",f&&!d&&n&&"lg:w-2/5 xl:w-1/3",d&&"w-full"),children:[e.jsx("div",{className:"flex items-center justify-between mb-3 flex-wrap gap-2",children:e.jsxs("div",{className:"flex items-center gap-2 text-sm text-gray-500 flex-wrap",children:[i&&e.jsx("button",{onClick:ee,className:"font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer",children:i}),i&&(R||z)&&e.jsx("span",{className:"text-gray-300",children:"•"}),(R||z)&&e.jsx("time",{className:"text-gray-500",children:H(R||z)}),b&&e.jsxs(e.Fragment,{children:[e.jsx("span",{className:"text-gray-300",children:"•"}),e.jsxs("span",{className:"text-gray-600 font-medium",children:["By ",b]})]}),S&&e.jsxs(e.Fragment,{children:[e.jsx("span",{className:"text-gray-300",children:"•"}),e.jsx("span",{className:"inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800",children:S.toUpperCase()})]})]})}),e.jsx(Me,{sentiment:w,className:"mb-3 sm:mb-4 w-full"}),e.jsxs("h1",{className:"text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight",children:[U,F&&e.jsx("span",{className:"ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800",children:"FEATURED"})]}),e.jsx("div",{className:"mb-3 sm:mb-4",children:e.jsxs("p",{className:"text-sm sm:text-base text-gray-600 leading-relaxed",children:[d?E:_,!d&&$&&"... ",$&&e.jsx("button",{onClick:B,className:"text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline inline-flex items-center gap-1",children:d?e.jsxs(e.Fragment,{children:["Read less",e.jsx(Lt,{className:"w-4 h-4 mt-1"})]}):e.jsxs(e.Fragment,{children:["Read more",e.jsx(Ct,{className:"w-4 h-4 mt-1"})]})})]})}),W&&W.length>0&&e.jsxs("div",{className:"flex flex-wrap gap-2 mb-4",children:[W.slice(0,4).map((Z,j)=>e.jsxs("span",{className:"inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer",children:["#",Z]},j)),W.length>4&&e.jsxs("span",{className:"inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-500",children:["+",W.length-4," more"]})]}),f&&e.jsx("div",{className:"flex flex-col justify-between w-full",children:e.jsx("div",{className:"w-full flex justify-between items-center mt-2 sm:mt-3",children:e.jsx("div",{children:e.jsx(fe,{onCommentClick:re,onLoveClick:ge,showCommentsCount:M,isLoved:T,loveCount:D,disabled:!h})})})})]}),n&&e.jsxs("div",{className:P("relative w-full order-1 md:order-2 flex flex-col items-end",f&&!d&&"lg:w-2/3",d&&"w-full"),children:[e.jsxs("div",{className:"relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center",children:[e.jsx("img",{src:n,alt:U,className:P("w-full object-cover transition-transform duration-300 hover:scale-105",!d&&"h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]",d&&"h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"),loading:"lazy"}),e.jsx("div",{className:"absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1",children:e.jsx(qe,{type:"readTime",value:L||z,className:"text-xs sm:text-sm text-white"})}),C&&e.jsx("div",{className:"absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1",children:e.jsx(Is,{attribution:C,className:"text-xs sm:text-sm text-white"})})]}),!f&&e.jsx("div",{className:"flex flex-col justify-between w-full",children:e.jsxs("div",{className:"w-full flex justify-between items-center mt-2 sm:mt-3",children:[F&&e.jsx("div",{children:e.jsx(fe,{onCommentClick:re,onLoveClick:ge,showCommentsCount:M,isLoved:T,loveCount:D,disabled:!h})}),!F&&e.jsx("div",{className:""})]})})]})]}),y&&e.jsx(Pe,{comments:v,onPostComment:ne,disabled:!h,allComments:r}),e.jsx(we,{isOpen:o,onClose:()=>m(!1),initialMode:A})]})]})},Ps=t=>(t?.length,{columns:4,gap:4}),Ms=({className:t,dynamicTabsData:s,dynamicTabsConfig:a,newsReactions:r={},onPostLove:c,onPostComment:l})=>{const d=s||bt,u=a||yt,f=u.find(h=>h.isDefault)?.key||u[0]?.key;return e.jsx("div",{className:`w-full ${t}`,children:e.jsxs(ht,{defaultValue:f,className:"w-full",children:[e.jsx(gt,{className:"flex items-center justify-start gap-2 md:gap-8 p-0 bg-transparent border-none h-auto overflow-x-auto",children:u.map(h=>e.jsx(pt,{value:h.key,className:"px-2 py-1 cursor-pointer text-base font-normal focus-visible:border-none focus-visible:outline-0 !shadow-none data-[state=active]:!shadow-none text-gray-600 bg-transparent border-none hover:text-black data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:font-bold transition-all duration-200 whitespace-nowrap",children:h.label},h.key))}),u.map(h=>{const p=d[h.key]||[],o=Ps(p);return e.jsxs(xt,{value:h.key,className:"mt-0",children:[e.jsx(ft,{columns:o.columns,gap:o.gap,className:"grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6",children:p.map(m=>e.jsx(ae,{article:m,reactions:r[m.id]||[],onPostLove:A=>c(m.id,A),onPostComment:A=>l(m.id,A),className:"bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200"},m.id))}),p.length===0&&e.jsxs("div",{className:"text-center py-12 text-gray-500",children:[e.jsx("p",{className:"text-lg",children:"No articles available for this section."}),e.jsx("p",{className:"text-sm mt-2",children:"Please check back later for updates."})]})]},h.key)})]})})};var wt={color:void 0,size:void 0,className:void 0,style:void 0,attr:void 0},ze=se.createContext&&se.createContext(wt),Rs=["attr","size","title"];function Fs(t,s){if(t==null)return{};var a=Ls(t,s),r,c;if(Object.getOwnPropertySymbols){var l=Object.getOwnPropertySymbols(t);for(c=0;c<l.length;c++)r=l[c],!(s.indexOf(r)>=0)&&Object.prototype.propertyIsEnumerable.call(t,r)&&(a[r]=t[r])}return a}function Ls(t,s){if(t==null)return{};var a={};for(var r in t)if(Object.prototype.hasOwnProperty.call(t,r)){if(s.indexOf(r)>=0)continue;a[r]=t[r]}return a}function be(){return be=Object.assign?Object.assign.bind():function(t){for(var s=1;s<arguments.length;s++){var a=arguments[s];for(var r in a)Object.prototype.hasOwnProperty.call(a,r)&&(t[r]=a[r])}return t},be.apply(this,arguments)}function He(t,s){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);s&&(r=r.filter(function(c){return Object.getOwnPropertyDescriptor(t,c).enumerable})),a.push.apply(a,r)}return a}function ye(t){for(var s=1;s<arguments.length;s++){var a=arguments[s]!=null?arguments[s]:{};s%2?He(Object(a),!0).forEach(function(r){Es(t,r,a[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):He(Object(a)).forEach(function(r){Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(a,r))})}return t}function Es(t,s,a){return s=Ds(s),s in t?Object.defineProperty(t,s,{value:a,enumerable:!0,configurable:!0,writable:!0}):t[s]=a,t}function Ds(t){var s=Us(t,"string");return typeof s=="symbol"?s:s+""}function Us(t,s){if(typeof t!="object"||!t)return t;var a=t[Symbol.toPrimitive];if(a!==void 0){var r=a.call(t,s);if(typeof r!="object")return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return(s==="string"?String:Number)(t)}function vt(t){return t&&t.map((s,a)=>se.createElement(s.tag,ye({key:a},s.attr),vt(s.child)))}function Os(t){return s=>se.createElement(_s,be({attr:ye({},t.attr)},s),vt(t.child))}function _s(t){var s=a=>{var{attr:r,size:c,title:l}=t,d=Fs(t,Rs),u=c||a.size||"1em",f;return a.className&&(f=a.className),t.className&&(f=(f?f+" ":"")+t.className),se.createElement("svg",be({stroke:"currentColor",fill:"currentColor",strokeWidth:"0"},a.attr,r,d,{className:f,style:ye(ye({color:t.color||a.color},a.style),t.style),height:u,width:u,xmlns:"http://www.w3.org/2000/svg"}),l&&se.createElement("title",null,l),t.children)};return ze!==void 0?se.createElement(ze.Consumer,null,a=>s(a)):s(wt)}function $s(t){return Os({attr:{viewBox:"0 0 384 512"},child:[{tag:"path",attr:{d:"M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z"},child:[]}]})(t)}const zs=()=>{const t=[{title:"News"},{title:"About Us"},{title:"Home"},{title:"Make Advertise"}],s=[{title:"Terms and Conditions"},{title:"Privacy Policy"}],a=["Top Stories","Breaking News","World","National","Politics","Business","Technology","Entertainment","Sports","Health"];return e.jsxs("section",{className:"flex flex-col w-full lg:flex-row items-start justify-between gap-6 xl:gap-32 p-4 sm:p-6 md:p-8 lg:p-10 bg-[#00254a]",children:[e.jsxs("div",{className:"flex flex-col w-full lg:w-1/2 items-start gap-4 md:gap-6 lg:gap-10",children:[e.jsx("h1",{className:"self-stretch font-bold text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0] leading-tight lg:leading-[78px] font-sans",children:"ALAMOCITYPULSE"}),e.jsxs("div",{className:"flex flex-col w-full items-start gap-2.5",children:[e.jsx("h2",{className:"self-stretch font-semibold text-white text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl tracking-[0] leading-tight lg:leading-[38.4px] font-sans",children:"Experience the pinnacle of luxury air travel with JETSTRATIX, where excellence and trust are our guiding principles."}),e.jsx("p",{className:"self-stretch font-normal text-[#9b9b9b] text-sm md:text-base tracking-[0] leading-6 font-sans",children:"With over 30 years of unparalleled hospitality and aviation expertise, we ensure your journey is seamless and exceptional."})]}),e.jsx("div",{className:"w-full sm:w-80 lg:w-[304px]",children:e.jsxs("button",{className:"w-full h-12 sm:h-14 cursor-pointer rounded-xl border-[0.5px] border-solid border-white bg-transparent text-white text-lg sm:text-xl font-normal flex justify-between items-center px-4 sm:px-5 hover:bg-white hover:text-[#00254a] transition-colors",children:[e.jsx("div",{children:"Reach Out"}),e.jsx("div",{className:"w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-lg flex items-center justify-center",children:e.jsx(Vt,{className:"w-5 h-5 sm:w-6 sm:h-6 text-[#00254a]"})})]})})]}),e.jsxs("div",{className:"flex flex-col w-full lg:w-1/2 items-start gap-4 lg:gap-[23px]",children:[e.jsx("div",{className:"hidden xl:flex self-stretch w-full h-8  md:h-12 lg:h-20 bg-white"}),e.jsx(Tt,{className:"w-full bg-transparent border-none shadow-none",children:e.jsxs(kt,{className:"flex flex-col items-start justify-end gap-4 sm:gap-6 p-0 pt-2",children:[e.jsxs("div",{className:"flex flex-col sm:flex-row w-full items-start justify-between gap-6 sm:gap-4 lg:gap-8",children:[e.jsxs("div",{className:"flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0",children:[e.jsx("h3",{className:"font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans",children:"Resources"}),e.jsx("div",{className:"flex flex-col items-start gap-2 sm:gap-3",children:t.map((r,c)=>e.jsx("a",{href:"#",className:"font-normal text-white text-sm lg:text-base tracking-[0] leading-normal font-sans hover:text-gray-300 transition-colors",children:r.title},c))})]}),e.jsxs("div",{className:"flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0",children:[e.jsx("h3",{className:"font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans",children:"JETSTRATIX"}),e.jsx("div",{className:"flex flex-col gap-2 sm:gap-3",children:s.map((r,c)=>e.jsx("a",{href:"#",className:"font-normal text-white text-sm lg:text-base racking-[0] leading-[21px] font-sans hover:text-gray-300 transition-colors",children:r.title},c))})]}),e.jsxs("div",{className:"flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0",children:[e.jsx("h3",{className:"font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans",children:"Category"}),e.jsx("div",{className:"font-normal text-white text-sm lg:text-base tracking-[0] leading-[20px] sm:leading-[27.2px] font-sans",children:a.map((r,c)=>e.jsxs(se.Fragment,{children:[e.jsx("a",{href:"#",className:"hover:text-gray-300 transition-colors",children:r}),c<a.length-1&&e.jsx("br",{})]},c))})]})]}),e.jsxs("div",{className:"flex items-center justify-center sm:justify-start gap-3 sm:gap-4 lg:gap-5 flex-wrap w-full",children:[e.jsx("button",{className:"flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",children:e.jsx(Ht,{size:14,className:"sm:w-4 sm:h-4",color:"#fdfdfd",strokeWidth:3})}),e.jsx("button",{className:"flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",children:e.jsx(qt,{size:14,className:"sm:w-4 sm:h-4",color:"#fdfdfd",strokeWidth:3})}),e.jsx("button",{className:"flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",children:e.jsx(Qt,{size:14,className:"sm:w-4 sm:h-4",color:"#fdfdfd",strokeWidth:3})}),e.jsx("button",{className:"flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",children:e.jsx($t,{size:14,className:"sm:w-4 sm:h-4",color:"#fdfdfd",strokeWidth:3})}),e.jsx("button",{className:"flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",children:e.jsx($s,{size:14,className:"sm:w-4 sm:h-4"})})]})]})})]})]})},Hs=({error:t})=>e.jsx("div",{className:"flex items-center justify-center min-h-screen",children:e.jsxs("div",{className:"text-center",children:[e.jsx("h2",{className:"text-2xl font-bold text-red-600 mb-4",children:"Error Loading News"}),e.jsx("p",{className:"text-gray-600",children:t}),e.jsx("button",{onClick:()=>window.location.reload(),className:"mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700",children:"Retry"})]})}),Be=({advertisement:t,width:s="100%",height:a="200px",position:r="center",onHide:c,className:l=""})=>{const[d,u]=g.useState(!0),[f,h]=g.useState(0),[p,o]=g.useState(!1);g.useEffect(()=>{if(!t?.imageUrls||t.imageUrls.length<=1)return;const y=setInterval(()=>{p||h(x=>(x+1)%t.imageUrls.length)},1e4);return()=>clearInterval(y)},[t?.imageUrls,p]);const m=()=>{u(!1),c&&c(t?.id)},A=()=>{t?.url&&window.open(t.url,"_blank","noopener,noreferrer")};if(!d||!t)return null;if(!t.imageUrls||t.imageUrls.length===0)return e.jsxs("div",{className:`bg-gray-300 rounded-lg flex items-center justify-center relative group ${l}`,style:{width:s,height:a},children:[e.jsx("span",{className:"text-gray-600 text-sm",children:"Advertisement Space"}),e.jsx("button",{onClick:m,className:"absolute top-2 right-2 p-1 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70",title:"Hide advertisement",children:e.jsx(de,{size:12})})]});const N=t.imageUrls.length>1;return e.jsxs("div",{className:`relative rounded-lg overflow-hidden group cursor-pointer transition-transform duration-200 hover:scale-[1.02] group-hover:shadow-lg ${l}`,style:{width:s,height:a},onMouseEnter:()=>o(!0),onMouseLeave:()=>o(!1),onClick:A,children:[e.jsx("div",{className:"absolute top-0 left-0 bg-gray-800 text-red-500 text-xs px-2 py-1 rounded-br z-10",children:"Ads"}),e.jsx("div",{className:"relative w-full h-full overflow-hidden",children:e.jsx("div",{className:"flex transition-transform duration-500 ease-in-out",style:{transform:`translateX(-${f*100}%)`},children:t.imageUrls.map((y,x)=>e.jsx("img",{src:y,alt:`${t.title||"Advertisement"} ${x+1}`,className:"w-full h-full object-cover flex-shrink-0",onError:v=>{v.target.src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOWNhM2FmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QWQ8L3RleHQ+PC9zdmc+"}},x))})}),t.url&&e.jsx("div",{className:"absolute top-2 right-8 z-10",children:e.jsx("div",{className:"bg-black bg-opacity-50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200",children:e.jsx(ke,{size:12})})}),e.jsx("button",{onClick:y=>{y.stopPropagation(),m()},"aria-label":"Hide advertisement",className:"absolute top-2 right-2 p-1 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70 z-10",children:e.jsx(de,{size:12})}),N&&e.jsx("div",{className:"absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 z-10",children:t.imageUrls.map((y,x)=>e.jsx("button",{onClick:v=>{v.stopPropagation(),h(x)},className:`w-2 h-2 rounded-full transition-colors duration-200 ${x===f?"bg-white":"bg-white/50"}`},x))})]})},xe=({advertisements:t=[],position:s="center",width:a="100%",height:r="200px",className:c="",maxAds:l=1})=>{const[d,u]=g.useState(new Set),f=o=>{u(m=>new Set(m).add(o))},p=(()=>{let o=t.filter(m=>!d.has(m.id));switch(o=o.sort((m,A)=>m.id-A.id),s){case"center":return o.slice(0,l);case"sidebar-top":return o.slice(0,l);case"sidebar-mid":return o.slice(Math.min(1,o.length),Math.min(1,o.length)+l);case"sidebar-bottom":return o.slice(Math.min(2,o.length),Math.min(2,o.length)+l);case"bottom":return o.slice(Math.min(3,o.length),Math.min(3,o.length)+l);case"mobile-top":return o.slice(0,l);case"mobile-mid":return o.slice(Math.min(1,o.length),Math.min(1,o.length)+l);default:return o.slice(0,l)}})();return t.length===0||p.length===0?e.jsx(Be,{advertisement:null,width:a,height:r,position:s,className:c}):e.jsx("div",{className:`space-y-4 ${c}`,children:p.map((o,m)=>e.jsx(Be,{advertisement:o,width:a,height:r,position:s,onHide:f},`${o.id}-${s}-${m}`))})},Bs=({advertisement:t,format:s="card",onHide:a,onView:r,className:c=""})=>{const[l,d]=g.useState(0),[u,f]=g.useState(!1),[h,p]=g.useState(!1);g.useEffect(()=>{if(!h&&r){const y=setTimeout(()=>{r(t.id),p(!0)},1e3);return()=>clearTimeout(y)}},[h,r,t.id]),g.useEffect(()=>{if(t.imageUrls.length>1&&!u){const y=setInterval(()=>{d(x=>(x+1)%t.imageUrls.length)},4e3);return()=>clearInterval(y)}},[t.imageUrls.length,u]);const o=()=>{t.url&&window.open(t.url,"_blank","noopener,noreferrer")},m=y=>{y.stopPropagation(),d(x=>(x+1)%t.imageUrls.length)},A=y=>{y.stopPropagation(),d(x=>x===0?t.imageUrls.length-1:x-1)},N=y=>{y.stopPropagation(),a&&a(t.id)};return s==="banner"?e.jsxs("div",{className:`relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-md ${c}`,onMouseEnter:()=>f(!0),onMouseLeave:()=>f(!1),onClick:o,children:[e.jsx("div",{className:"absolute top-2 left-2 z-10",children:e.jsx("span",{className:"bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-medium",children:"Sponsored"})}),e.jsx("button",{onClick:N,className:"absolute top-2 right-2 z-10 p-1.5 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70",title:"Hide this ad",children:e.jsx(de,{size:14})}),e.jsxs("div",{className:"flex h-24 sm:h-28",children:[e.jsxs("div",{className:"relative w-32 sm:w-40 flex-shrink-0",children:[e.jsx("img",{src:t.imageUrls[l],alt:t.title,className:"w-full h-full object-cover",onError:y=>{y.target.src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=400"}}),t.imageUrls.length>1&&e.jsx("div",{className:"absolute bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1",children:t.imageUrls.slice(0,3).map((y,x)=>e.jsx("div",{className:`w-1.5 h-1.5 rounded-full ${x===l?"bg-white":"bg-white/50"}`},x))})]}),e.jsxs("div",{className:"flex-1 p-3 sm:p-4 flex flex-col justify-between",children:[e.jsxs("div",{children:[e.jsx("h3",{className:"font-semibold text-gray-900 text-sm sm:text-base line-clamp-1 mb-1",children:t.title}),e.jsx("p",{className:"text-gray-600 text-xs sm:text-sm line-clamp-2 mb-2",children:t.description})]}),e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsxs("div",{className:"flex items-center space-x-2 text-xs text-gray-500",children:[e.jsx(Ne,{size:12}),e.jsx("span",{children:t.category})]}),e.jsxs("div",{className:"flex items-center text-blue-600 text-xs font-medium group-hover:text-blue-700",children:[e.jsx("span",{className:"mr-1",children:"Learn More"}),e.jsx(ke,{size:12})]})]})]})]})]}):s==="sidebar"?e.jsxs("div",{className:`relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-md w-full ${c}`,onMouseEnter:()=>f(!0),onMouseLeave:()=>f(!1),onClick:o,children:[e.jsx("div",{className:"absolute top-2 left-2 z-10",children:e.jsx("span",{className:"bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium",children:"Ad"})}),e.jsx("button",{onClick:N,className:"absolute top-2 right-2 z-10 p-1 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200",title:"Hide this ad",children:e.jsx(de,{size:12})}),e.jsxs("div",{className:"relative h-32",children:[e.jsx("img",{src:t.imageUrls[l],alt:t.title,className:"w-full h-full object-cover",onError:y=>{y.target.src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=400"}}),t.imageUrls.length>1&&u&&e.jsxs(e.Fragment,{children:[e.jsx("button",{onClick:A,className:"absolute left-1 top-1/2 transform -translate-y-1/2 p-1 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70",children:e.jsx(Ce,{size:12})}),e.jsx("button",{onClick:m,className:"absolute right-1 top-1/2 transform -translate-y-1/2 p-1 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70",children:e.jsx(Te,{size:12})})]}),t.imageUrls.length>1&&e.jsx("div",{className:"absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1",children:t.imageUrls.map((y,x)=>e.jsx("div",{className:`w-1.5 h-1.5 rounded-full ${x===l?"bg-white":"bg-white/50"}`},x))})]}),e.jsxs("div",{className:"p-3",children:[e.jsx("h3",{className:"font-medium text-gray-900 text-sm line-clamp-2 mb-2",children:t.title}),e.jsx("p",{className:"text-gray-600 text-xs line-clamp-2 mb-3",children:t.description}),e.jsx("div",{className:"flex items-center justify-between text-xs text-gray-500 mb-2",children:e.jsxs("span",{className:"flex items-center",children:[e.jsx(Ne,{size:10,className:"mr-1"}),t.category]})}),e.jsx("button",{className:"w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-2 rounded-md transition-colors duration-200",children:"Visit Now"})]})]}):e.jsxs("div",{className:`relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${c}`,onMouseEnter:()=>f(!0),onMouseLeave:()=>f(!1),onClick:o,children:[e.jsx("div",{className:"absolute top-3 left-3 z-10",children:e.jsx("div",{className:"bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg",children:"Sponsored"})}),e.jsx("button",{onClick:N,className:"absolute top-3 right-3 z-10 p-2 bg-black bg-opacity-30 backdrop-blur-sm text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-opacity-50",title:"Hide this ad",children:e.jsx(de,{size:16})}),e.jsxs("div",{className:"relative h-48 overflow-hidden",children:[e.jsx("img",{src:t.imageUrls[l],alt:t.title,className:"w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",onError:y=>{y.target.src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600"}}),t.imageUrls.length>1&&u&&e.jsxs("div",{className:"absolute inset-0 flex items-center justify-between px-2",children:[e.jsx("button",{onClick:A,className:"p-2 bg-black bg-opacity-50 backdrop-blur-sm text-white rounded-full hover:bg-opacity-70 transition-all duration-200",children:e.jsx(Ce,{size:16})}),e.jsx("button",{onClick:m,className:"p-2 bg-black bg-opacity-50 backdrop-blur-sm text-white rounded-full hover:bg-opacity-70 transition-all duration-200",children:e.jsx(Te,{size:16})})]}),t.imageUrls.length>1&&e.jsx("div",{className:"absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2",children:t.imageUrls.map((y,x)=>e.jsx("button",{onClick:v=>{v.stopPropagation(),d(x)},className:`w-2 h-2 rounded-full transition-all duration-200 ${x===l?"bg-white scale-110":"bg-white/60 hover:bg-white/80"}`},x))}),e.jsx("div",{className:"absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"})]}),e.jsxs("div",{className:"p-5",children:[e.jsx("div",{className:"flex items-center justify-between mb-3",children:e.jsxs("span",{className:"inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800",children:[e.jsx(Ne,{size:12,className:"mr-1"}),t.category]})}),e.jsx("h3",{className:"font-bold text-gray-900 text-lg mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-200",children:t.title}),e.jsx("p",{className:"text-gray-600 text-sm line-clamp-3 mb-4 leading-relaxed",children:t.description}),e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsxs("div",{className:"text-xs text-gray-500",children:["by ",t.user?.split("@")[0]||"Advertiser"]}),e.jsxs("button",{className:"inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform group-hover:scale-105 shadow-md",children:[e.jsx("span",{className:"mr-2",children:"Learn More"}),e.jsx(ke,{size:14})]})]})]})]})},Ws=({advertisements:t=[],position:s="center",format:a="card",maxAds:r=1,className:c="",onAdView:l})=>{const[d,u]=g.useState(new Set),f=o=>{u(m=>new Set(m).add(o))},h=g.useMemo(()=>{const o=t.filter(m=>m.status==="approved"&&!d.has(m.id)).sort((m,A)=>(A.views||0)-(m.views||0));switch(s){case"center":return o.slice(0,r);case"sidebar-top":return o.slice(0,r);case"sidebar-mid":return o.slice(1,1+r);case"sidebar-bottom":return o.slice(2,2+r);case"bottom":return o.slice(3,3+r);case"mobile-top":return o.slice(0,r);case"mobile-mid":return o.slice(1,1+r);default:return o.slice(0,r)}},[t,d,s,r]);if(h.length===0)return e.jsx("div",{className:`text-center py-8 ${c}`,children:e.jsx("div",{className:"text-gray-400 text-sm",children:"No advertisements available"})});const p=()=>{switch(a){case"banner":return"space-y-3";case"sidebar":return"space-y-4";case"card":return r>1?"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6":"flex justify-center";default:return"space-y-4"}};return e.jsx("div",{className:`${p()} ${c}`,children:h.map((o,m)=>e.jsx(Bs,{advertisement:o,format:a,onHide:f,onView:l,className:a==="card"&&r===1?"max-w-sm mx-auto":""},`${o.id}-${s}-${m}`))})},te=({advertisements:t,placement:s,onAdView:a,className:r=""})=>{const l=(()=>{switch(s){case"header-banner":return{format:"banner",position:"center",maxAds:1,containerClass:"w-full max-w-4xl mx-auto mb-6"};case"content-top":return{format:"card",position:"center",maxAds:1,containerClass:"w-full max-w-sm mx-auto my-8"};case"content-middle":return{format:"banner",position:"center",maxAds:1,containerClass:"w-full max-w-3xl mx-auto my-8"};case"content-bottom":return{format:"card",position:"bottom",maxAds:1,containerClass:"w-full max-w-4xl mx-auto mt-8"};case"sidebar":return{format:"sidebar",position:"sidebar-top",maxAds:1,containerClass:"w-full max-w-xs"};case"footer":return{format:"banner",position:"bottom",maxAds:1,containerClass:"w-full max-w-6xl mx-auto"};default:return{format:"card",position:"center",maxAds:1,containerClass:"w-full"}}})();return e.jsx("div",{className:`${l.containerClass} ${r}`,children:e.jsx(Ws,{advertisements:t,format:l.format,position:l.position,maxAds:l.maxAds,onAdView:a})})};function Zs(){const[t,s]=g.useState([]),[a,r]=g.useState(!1),c=g.useRef(null),[l,d]=g.useState(""),[u,f]=g.useState([]),[h,p]=g.useState(!1),o=async n=>{if(!n.trim()){p(!1),f([]);return}p(!0);try{const i=(await Jt({search_term:n})).map(Ue);f(i),await E(i)}catch(w){console.error("Search failed:",w),f([])}},[m,A]=g.useState({sections:[],loading:!0,error:null}),[N,y]=g.useState({}),[x,v]=g.useState({}),D=async()=>{try{r(!0);const n=await Mt();n.success?s(n.data||[]):(console.error("Failed to fetch advertisements:",n.error),s([]))}catch(n){console.error("Error fetching advertisements:",n),s([])}finally{r(!1)}},M=async n=>{if(!x[n])try{v(i=>({...i,[n]:!0}));const w=await ts(n);y(i=>({...i,[n]:w}))}catch(w){console.error(`Failed to fetch reactions for news ${n}:`,w)}finally{v(w=>({...w,[n]:!1}))}},T=async(n,w)=>{try{const i=await ss(n,w);return y(b=>({...b,[n]:b[n]?[...b[n],i]:[i]})),await M(n),i}catch(i){throw console.error(`Failed to post love reaction for news ${n}:`,i),i}},I=async(n,w)=>{try{if(!w||w.trim()==="")throw new Error("Comment cannot be empty");const i=await as(n,w.trim());return y(b=>({...b,[n]:b[n]?[...b[n],i]:[i]})),await M(n),i}catch(i){throw console.error(`Failed to post comment for news ${n}:`,i),i}},U=async(n,w)=>{try{const i=[];w.hasOwnProperty("love")&&i.push(T(n,w.love)),w.comment&&w.comment.trim()!==""&&i.push(I(n,w.comment));const b=await Promise.all(i);return b.length>0?b[b.length-1]:null}catch(i){throw console.error(`Failed to post reaction for news ${n}:`,i),i}};g.useEffect(()=>{(async()=>{try{A(C=>({...C,loading:!0})),y({}),v({});const w=await Ke();if(!w||w.length===0)throw new Error("No news data received");const i=w.map(Ue).filter(C=>C&&C.id).sort((C,L)=>new Date(L.publishedDateTime)-new Date(C.publishedDateTime)),b=Date.now()+Math.floor(Math.random()*1e3);let W=[...i];for(let C=0;C<3;C++)W=ie(W,1,!0);const F=S(W);A({sections:F,loading:!1,error:null}),await E(i)}catch(w){console.error("Failed to fetch news data:",w),A(i=>({...i,loading:!1,error:w.message}))}})(),D()},[]);const E=async n=>{const w=n.filter(i=>i&&i.id).map(i=>M(i.id).catch(b=>console.warn(`Failed to fetch reactions for article ${i.id}:`,b)));await Promise.allSettled(w)},S=n=>{const w=[];let i=[...n];const b=new Set;if(!n||n.length===0)return console.warn("No news articles provided to organizeNewsData"),w;if(i=i.filter(O),i.length===0)return console.warn("No valid news articles after filtering"),w;const W=Math.min(3,Math.ceil(i.length/20));for(let F=0;F<W&&i.length>10;F++){const C={},L=ie([...i],0),G=j=>{const k=[];let V=0;const q=Math.min(j*2,L.length*2);for(;k.length<j&&L.length>0&&V<q;){const X=Math.floor(Math.random()*L.length),Y=L[X];if(O(Y)&&!b.has(Y.id)){k.push(Y),b.add(Y.id),L.splice(X,1);const K=i.findIndex(pe=>O(pe)&&pe.id===Y.id);K>-1&&i.splice(K,1)}else X<L.length&&L.splice(X,1);V++}return k},_=G(1);if(_.length===0&&i.length>0){const j=i.find(k=>O(k)&&!b.has(k.id));if(j){C.featuredArticle=j,b.add(j.id);const k=i.findIndex(V=>V.id===j.id);k>-1&&i.splice(k,1)}else C.featuredArticle=null}else C.featuredArticle=_.length>0?_[0]:null;!C.featuredArticle&&i.length===0&&console.warn(`No featured article available for section ${F} - no valid articles remaining`),C.featuredArticle||console.warn(`No featured article available for section ${F}`);const $=G(1),H=$.length>0?$[0]:null;C.audioNews=H?{title:H.title||"Latest News Update",description:H.description||"Stay updated with the latest news",category:"THE HEADLINES",sentiment:H.sentiment||"Neutral",image:H.image||ce()}:null;const B=G(1);C.longReadArticle=B.length>0?B[0]:null;const re=G(4);C.liveUpdates=re.filter(O).map(j=>({id:j.id,title:j.title||"Untitled",description:j.description||"",timeAgo:j.publishedTime||"Recently",category:j.category||"News",image:j.image||ce()}));const ge=G(6);C.sidebarArticles=ge.filter(O),C.tabsData={};const ne=i.filter(j=>O(j)&&!b.has(j.id)),ee={};ne.forEach(j=>{if(!O(j))return;const k=j.category.toLowerCase();ee[k]||(ee[k]=[]),ee[k].push(j)}),Object.keys(ee).forEach(j=>{ee[j]=ie(ee[j],0)});const Z=(j,k)=>{if(!k)return!0;const V=j.category.toLowerCase(),q=j.title.toLowerCase(),X=j.description.toLowerCase();return k.some(Y=>V.includes(Y.toLowerCase())||q.includes(Y.toLowerCase())||X.includes(Y.toLowerCase()))};Se.forEach(j=>{let k=[];if(j.categoryFilter){if(k=[...ne.filter(q=>O(q)?Z(q,j.categoryFilter):!1).slice(0,j.count)],k.length<j.count){const q=new Set(k.map(K=>K.id)),X=ie(ne.filter(K=>O(K)&&!q.has(K.id)&&!b.has(K.id)),0),Y=j.count-k.length;k=[...k,...X.slice(0,Y)]}}else{const q=ne.filter(K=>O(K)&&!b.has(K.id)).sort((K,pe)=>{const jt=new Date(K.publishedDateTime||0);return new Date(pe.publishedDateTime||0)-jt}),X=q.slice(0,2),Y=ie(q.slice(2),0);k=[...X,...Y].slice(0,j.count)}k=k.filter(V=>!!O(V)),C.tabsData[j.key]=k}),w.push(C)}if(w.length===1&&i.length>0){const F=i.filter(C=>O(C)&&!b.has(C.id));if(F.length>0){const C={...w[0]},L=ie(F,0);if(L.length>0){if(C.featuredArticle=L[0],C.sidebarArticles=L.slice(1,7).filter(O),L.length>7){const _=L[7];C.audioNews={title:_.title||"Latest News Update",description:_.description||"Stay updated with the latest news",category:"THE HEADLINES",sentiment:_.sentiment||"Neutral",image:_.image||ce()}}if(L.length>8&&(C.longReadArticle=L[8]),L.length>9){const _=L.slice(9,13);C.liveUpdates=_.filter(O).map($=>({id:$.id,title:$.title||"Untitled",description:$.description||"",timeAgo:$.publishedTime||"Recently",category:$.category||"News",image:$.image||ce()}))}const G=L.slice(13);G.length>0&&Se.forEach(_=>{let $=[];_.categoryFilter?$=G.filter(B=>O(B)?matchesCategory(B,_.categoryFilter):!1).slice(0,Math.min(_.count,4)):$=G.sort((H,B)=>new Date(B.publishedDateTime)-new Date(H.publishedDateTime)).slice(0,Math.min(_.count,4)),C.tabsData[_.key]=$.filter(O)}),w.push(C)}}}return w},z=()=>{c.current&&c.current.scrollIntoView({behavior:"smooth",block:"start"})};if(g.useEffect(()=>{const n=()=>z();return window.addEventListener("scrollToAbout",n),()=>window.removeEventListener("scrollToAbout",n)},[]),m.loading)return e.jsx(St,{});if(m.error)return e.jsx(Hs,{error:m.error});const R=n=>{console.log(`Ad ${n} viewed`)};return e.jsxs(e.Fragment,{children:[e.jsxs(ve,{children:[e.jsx("title",{children:"ALAMOCITYPULSE - Latest News and Updates"}),e.jsx("meta",{name:"description",content:"Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE"})]}),e.jsxs("div",{className:"min-h-screen",children:[e.jsx(It,{onScrollToAbout:z,onSearch:o,searchTerm:l,setSearchTerm:d}),e.jsx("main",{className:"w-full py-4 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]",children:e.jsx("div",{className:"",children:h?e.jsxs("div",{className:"search-results",children:[e.jsxs("h2",{className:"text-2xl font-bold mb-4",children:['Search Results for "',l,'"']}),u.length>0?e.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",children:u.map(n=>e.jsx(ae,{article:n,reactions:N[n.id]||[],onPostReaction:w=>U(n.id,w),onPostLove:w=>T(n.id,w),onPostComment:w=>I(n.id,w)},n.id))}):e.jsx("p",{children:"No results found."}),e.jsx(Pt,{onClick:()=>{p(!1),d("")},className:"mt-4",children:"Back to Home"})]}):m.sections.map((n,w)=>e.jsx("div",{children:e.jsxs("div",{className:"grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12",children:[e.jsxs("div",{className:"w-full",children:[n.featuredArticle&&e.jsxs("div",{className:"mb-8",children:[e.jsx($e,{article:n.featuredArticle,reactions:N[n.featuredArticle.id]||[],onPostReaction:i=>U(n.featuredArticle.id,i),onPostLove:i=>T(n.featuredArticle.id,i),onPostComment:i=>I(n.featuredArticle.id,i)}),e.jsx(te,{advertisements:t,placement:"header-banner",onAdView:R,className:"mb-6"})]}),n.audioNews&&e.jsx("div",{className:"mb-8",children:e.jsx(rs,{...n.audioNews})}),n.longReadArticle&&e.jsxs(_e,{children:[e.jsx($e,{article:n.longReadArticle,reactions:N[n.longReadArticle.id]||[],onPostReaction:i=>U(n.longReadArticle.id,i),onPostLove:i=>T(n.longReadArticle.id,i),onPostComment:i=>I(n.longReadArticle.id,i)}),e.jsx(te,{advertisements:t,placement:"content-middle",onAdView:R,className:"mb-6"})]}),n.liveUpdates&&n.liveUpdates.length>0&&e.jsxs(e.Fragment,{children:[e.jsx(_e,{children:e.jsx(ls,{updates:n.liveUpdates,newsReactions:N,onPostLove:T,onPostComment:I})}),e.jsx("div",{className:"w-full flex text-center",children:e.jsx(te,{advertisements:t,placement:"header-banner",onAdView:R,className:"mb-6"})})]}),Object.keys(n.tabsData).length>0&&e.jsx("div",{className:"mb-8",children:e.jsx(Ss,{dynamicTabsData:n.tabsData,dynamicTabsConfig:Oe(n.tabsData),newsReactions:N,onPostLove:T,onPostComment:I})}),e.jsx(te,{advertisements:t,placement:"content-middle",onAdView:R,className:"mb-6"}),Object.keys(n.tabsData).length>0&&e.jsx("div",{className:"mb-8",children:e.jsx(Ms,{dynamicTabsData:n.tabsData,dynamicTabsConfig:Oe(n.tabsData),newsReactions:N,onPostLove:T,onPostComment:I})}),e.jsx("div",{className:"flex justify-center items-center",children:e.jsx(te,{advertisements:t,placement:"content-middle",onAdView:R,className:"mb-6"})})]}),e.jsxs("aside",{className:"w-full xl:w-full",children:[n.sidebarArticles&&Array.isArray(n.sidebarArticles)&&n.sidebarArticles.length>0&&e.jsxs("div",{className:"xl:hidden w-full mb-6",children:[e.jsx("h4",{className:"text-md font-semibold text-gray-700 mb-4",children:"Trending Now"}),e.jsxs("div",{className:"space-y-4",children:[n.sidebarArticles.filter(O).slice(0,5).map(i=>e.jsx("div",{className:"w-full",children:e.jsx(ae,{article:i,reactions:N[i.id]||[],onPostReaction:b=>U(i.id,b),onPostLove:b=>T(i.id,b),onPostComment:b=>I(i.id,b)})},i.id)),e.jsx(te,{advertisements:t,placement:"card",onAdView:R,className:"mt-8"})]})]}),e.jsx(xe,{advertisements:t,position:"mobile-mid",width:"100%",height:"200px",className:"mb-6 xl:hidden",maxAds:1}),n.sidebarArticles&&Array.isArray(n.sidebarArticles)&&n.sidebarArticles.length>3&&e.jsx("div",{className:"xl:hidden w-full mb-6",children:e.jsx("div",{className:"space-y-4",children:n.sidebarArticles.filter(O).slice(3,8).map(i=>e.jsx("div",{className:"w-full",children:e.jsx(ae,{article:i,reactions:N[i.id]||[],onPostReaction:b=>U(i.id,b),onPostLove:b=>T(i.id,b),onPostComment:b=>I(i.id,b)})},i.id))})}),e.jsxs("div",{className:"xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center",children:[e.jsx(xe,{advertisements:t,position:"sidebar-top",width:"100%",height:"200px",className:"mb-6",maxAds:1}),n.sidebarArticles&&Array.isArray(n.sidebarArticles)&&n.sidebarArticles.length>0&&e.jsxs("div",{className:"w-full",children:[e.jsx("h4",{className:"text-md font-semibold text-gray-700 mb-4",children:"Trending Now"}),e.jsxs("div",{className:"space-y-4",children:[n.sidebarArticles.filter(O).slice(0,5).map(i=>e.jsx("div",{className:"w-full",children:e.jsx(ae,{article:i,reactions:N[i.id]||[],onPostReaction:b=>U(i.id,b),onPostLove:b=>T(i.id,b),onPostComment:b=>I(i.id,b)})},i.id)),e.jsx(te,{advertisements:t,placement:"card",onAdView:R,className:"my-6"})]})]}),e.jsx(xe,{advertisements:t,position:"sidebar-mid",width:"100%",height:"200px",className:"my-6",maxAds:1}),n.sidebarArticles&&Array.isArray(n.sidebarArticles)&&n.sidebarArticles.length>3&&e.jsx("div",{className:"w-full",children:e.jsx("div",{className:"space-y-4",children:n.sidebarArticles.filter(O).slice(3,8).map(i=>e.jsx("div",{className:"w-full",children:e.jsx(ae,{article:i,reactions:N[i.id]||[],onPostReaction:b=>U(i.id,b),onPostLove:b=>T(i.id,b),onPostComment:b=>I(i.id,b)})},i.id))})}),e.jsx(xe,{advertisements:t,position:"sidebar-bottom",width:"100%",height:"192px",className:"mt-6",maxAds:1})]})]})]})},w))})}),e.jsx(te,{advertisements:t,placement:"card",onAdView:R,className:"mb-6"}),e.jsx("div",{ref:c,children:e.jsx(zs,{})})]})]})}export{Zs as default};
+ */ const Xt = [
+    [
+      "path",
+      {
+        d: "M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17",
+        key: "1q2vi4",
+      },
+    ],
+    ["path", { d: "m10 15 5-3-5-3z", key: "1jp15x" }],
+  ],
+  Qt = J("youtube", Xt),
+  fe = ({
+    className: t,
+    size: s = "default",
+    onCommentClick: a,
+    showCommentsCount: r = 0,
+    onLoveClick: c,
+    isLoved: l = !1,
+    loveCount: d = 0,
+    disabled: u = !1,
+  }) => {
+    const f = s === "small" ? 16 : 18,
+      h = s === "small" ? "text-xs" : "text-sm",
+      [p, o] = g.useState(!1),
+      m = async () => {
+        if (!(u || p)) {
+          o(!0);
+          try {
+            await c?.(!l);
+          } catch (N) {
+            console.error("Failed to toggle love:", N);
+          } finally {
+            o(!1);
+          }
+        }
+      },
+      A = () => {
+        u || a?.();
+      };
+    return e.jsxs("div", {
+      className: P("flex items-center space-x-4", t),
+      children: [
+        e.jsxs("button", {
+          onClick: m,
+          disabled: u || p,
+          className: P(
+            "flex cursor-pointer items-center transition-all duration-200 hover:scale-105",
+            l
+              ? "text-red-500 hover:text-red-600"
+              : "text-gray-600 hover:text-red-500",
+            (u || p) && "opacity-50 cursor-not-allowed hover:scale-100"
+          ),
+          "aria-label": l ? "Unlike this article" : "Like this article",
+          children: [
+            e.jsx(Ot, {
+              size: f,
+              className: P(
+                "mr-2 transition-all duration-200",
+                l && "fill-current animate-pulse",
+                p && "animate-spin"
+              ),
+            }),
+            e.jsxs("span", {
+              className: P(h, "font-medium"),
+              children: [l ? "Loved" : "Love", d > 0 && ` (${d})`],
+            }),
+          ],
+        }),
+        e.jsxs("button", {
+          onClick: A,
+          disabled: u,
+          className: P(
+            "flex cursor-pointer items-center text-gray-600 hover:text-blue-500 transition-all duration-200 hover:scale-105",
+            u && "opacity-50 cursor-not-allowed hover:scale-100"
+          ),
+          "aria-label": "View comments",
+          children: [
+            e.jsx(Wt, { size: f, className: "mr-2" }),
+            e.jsxs("span", {
+              className: P(h, "font-medium"),
+              children: ["Comment", r > 0 && ` (${r})`],
+            }),
+          ],
+        }),
+      ],
+    });
+  },
+  Pe = ({
+    comments: t = [],
+    onPostComment: s,
+    disabled: a = !1,
+    allComments: r = [],
+  }) => {
+    const [c, l] = g.useState(!1),
+      [d, u] = g.useState(""),
+      [f, h] = g.useState(!1),
+      [p, o] = g.useState(""),
+      { user: m, profile: A } = me(),
+      N = async () => {
+        if (!(!d.trim() || a || f)) {
+          h(!0), o("");
+          try {
+            await s?.(d.trim()), u("");
+          } catch (v) {
+            console.error("Failed to submit comment:", v),
+              o("Failed to post comment. Please try again.");
+          } finally {
+            h(!1);
+          }
+        }
+      },
+      y = (v) => {
+        v.key === "Enter" && !v.shiftKey && (v.preventDefault(), N());
+      },
+      x = c ? t : t.slice(0, 2);
+    return e.jsxs("div", {
+      className: "w-full mt-4 border-t pt-4",
+      children: [
+        e.jsxs("div", {
+          className: "mb-4",
+          children: [
+            e.jsxs("div", {
+              className: "flex gap-3",
+              children: [
+                m?.profilePicture
+                  ? e.jsx("img", {
+                      src: `https://api.alamocitypulse.com/${m.profilePicture}`,
+                      alt: m.firstName,
+                      className: "w-8 h-8 rounded-full object-cover",
+                    })
+                  : e.jsx("div", {
+                      className:
+                        "w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-medium",
+                      children: m?.firstName?.slice(0, 2).toUpperCase(),
+                    }),
+                e.jsxs("div", {
+                  className: "flex-1 flex gap-2",
+                  children: [
+                    e.jsx("input", {
+                      type: "text",
+                      value: d,
+                      onChange: (v) => u(v.target.value),
+                      onKeyPress: y,
+                      placeholder: a
+                        ? "Please login to comment"
+                        : "Write a comment...",
+                      disabled: a || f,
+                      className:
+                        "flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm disabled:bg-gray-100 disabled:cursor-not-allowed",
+                    }),
+                    e.jsx("button", {
+                      onClick: N,
+                      disabled: !d.trim() || a || f,
+                      className:
+                        "px-3 py-2 cursor-pointer bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors",
+                      children: f
+                        ? e.jsx("div", {
+                            className:
+                              "w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin",
+                          })
+                        : e.jsx(Kt, { size: 16 }),
+                    }),
+                  ],
+                }),
+              ],
+            }),
+            p &&
+              e.jsx("div", {
+                className: "mt-2 text-sm text-red-600 ml-11",
+                children: p,
+              }),
+          ],
+        }),
+        t.length > 0 &&
+          e.jsx("div", {
+            className: "ml-12 max-h-96 overflow-y-auto space-y-3",
+            children: x.map((v, D) =>
+              e.jsxs(
+                "div",
+                {
+                  className: "flex gap-3",
+                  children: [
+                    v.avatar
+                      ? e.jsx("img", {
+                          src: v.avatar.startsWith("/media/")
+                            ? `https://api.alamocitypulse.com/${v.avatar}`
+                            : v.avatar,
+                          alt: `${v.author}'s avatar`,
+                          className:
+                            "w-8 h-8 rounded-full object-cover flex-shrink-0",
+                        })
+                      : e.jsx("div", {
+                          className:
+                            "w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-medium",
+                          children: v.author?.slice(0, 2).toUpperCase(),
+                        }),
+                    e.jsx("div", {
+                      className: "flex-1 min-w-0",
+                      children: e.jsxs("div", {
+                        className: "bg-gray-50 rounded-lg px-3 py-2",
+                        children: [
+                          e.jsxs("div", {
+                            className: "flex items-center gap-2 mb-1",
+                            children: [
+                              e.jsx("span", {
+                                className: "font-medium text-sm text-gray-900",
+                                children: v.author,
+                              }),
+                              e.jsx("span", {
+                                className: "text-xs text-gray-500",
+                                children: v.time,
+                              }),
+                              v.loved &&
+                                e.jsx("span", {
+                                  className: "text-xs text-red-500",
+                                  children: "❤️ Loved this article",
+                                }),
+                            ],
+                          }),
+                          e.jsx("p", {
+                            className:
+                              "text-sm text-gray-700 leading-relaxed break-words",
+                            children: v.content,
+                          }),
+                        ],
+                      }),
+                    }),
+                  ],
+                },
+                `comment-${v.id || D}-${v.time}`
+              )
+            ),
+          }),
+        t.length > 2 &&
+          e.jsx("button", {
+            onClick: () => l(!c),
+            className:
+              "text-blue-600 cursor-pointer hover:text-blue-800 text-sm font-medium transition-colors duration-200 ml-11 mt-3",
+            children: c
+              ? "Show fewer comments"
+              : `See all ${t.length} comments`,
+          }),
+        t.length === 0 &&
+          e.jsx("div", {
+            className: "text-center py-4 text-gray-500 text-sm",
+            children: "No comments yet. Be the first to comment!",
+          }),
+      ],
+    });
+  },
+  Me = ({ sentiment: t, className: s }) => {
+    const a = {
+        positive: "bg-green-600 text-white",
+        negative: "bg-custom-red text-white",
+        neutral: "bg-gray-100 text-gray-700",
+      },
+      r = t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(),
+      c = a[r.toLowerCase()] || a.neutral;
+    return e.jsx("div", {
+      className: P("inline-block px-3 py-1 text-sm font-medium w-fit", c, s),
+      children: r,
+    });
+  },
+  Ke = async () => {
+    try {
+      return (await ue.get("/news/get/all-news/")).data;
+    } catch (t) {
+      throw (console.error("Failed to fetch all news:", t), t);
+    }
+  },
+  Jt = async ({ search_term: t }) => {
+    try {
+      const s = encodeURIComponent(t);
+      return (await ue.get(`/news/search/?q=${s}`)).data;
+    } catch (s) {
+      throw (console.error("Failed to search news:", s), s);
+    }
+  },
+  Ue = (t) => {
+    const s = t || {};
+    return {
+      id: s.id || Math.random(),
+      title: s.title || "Untitled Article",
+      description: s.description || "No description available",
+      category: s.category || "General",
+      publishedTime:
+        s.published_relative_time || Ze(s.published_datetime) || "Recently",
+      publishedDateTime: s.published_datetime || new Date().toISOString(),
+      image: s.image || ce(s.category),
+      sentiment: s.badge_status || "Neutral",
+      isFeatured: s.is_featured || !1,
+      imageAttribution: s.author || s.source || "News Source",
+      readTime: es(s.description) || 3,
+      author: s.author || "Unknown Author",
+      source: s.source || "News Source",
+      url: s.url || "#",
+      tags: s.tags || [],
+    };
+  },
+  es = (t) => {
+    if (!t || typeof t != "string") return 3;
+    const s = 200,
+      a = t.trim().split(/\s+/).length,
+      r = Math.ceil(a / s);
+    return Math.max(1, r);
+  },
+  ce = (t = "general") => {
+    const s = {
+        technology:
+          "https://images.pexels.com/photos/6476589/pexels-photo-6476589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        business:
+          "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        health:
+          "https://images.pexels.com/photos/3938022/pexels-photo-3938022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        environment:
+          "https://images.pexels.com/photos/3894224/pexels-photo-3894224.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        politics:
+          "https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        sports:
+          "https://images.pexels.com/photos/5915202/pexels-photo-5915202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        local:
+          "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        general:
+          "https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      },
+      a = t.toLowerCase();
+    return s[a] || s.general;
+  },
+  Ze = (t) => {
+    if (!t) return "Recently";
+    try {
+      const s = new Date(),
+        a = new Date(t);
+      if (isNaN(a.getTime())) return "Recently";
+      const r = Math.floor((s - a) / 1e3);
+      return r < 60
+        ? `${r} seconds ago`
+        : r < 3600
+        ? `${Math.floor(r / 60)} minutes ago`
+        : r < 86400
+        ? `${Math.floor(r / 3600)} hours ago`
+        : r < 2592e3
+        ? `${Math.floor(r / 86400)} days ago`
+        : r < 31536e3
+        ? `${Math.floor(r / 2592e3)} months ago`
+        : `${Math.floor(r / 31536e3)} years ago`;
+    } catch (s) {
+      return console.error("Error formatting time:", s), "Recently";
+    }
+  },
+  Se = [
+    {
+      key: "latests",
+      label: "Latest News",
+      count: 6,
+      categoryFilter: null,
+      isDefault: !0,
+    },
+    {
+      key: "politics",
+      label: "Politics",
+      count: 6,
+      categoryFilter: ["politics", "government", "election", "policy"],
+    },
+    {
+      key: "Local",
+      label: "Local",
+      count: 6,
+      categoryFilter: ["local", "city", "community", "regional"],
+    },
+    {
+      key: "whatWeKnow",
+      label: "Analysis",
+      count: 6,
+      categoryFilter: ["analysis", "opinion", "editorial", "insight"],
+    },
+    {
+      key: "maps",
+      label: "Regional",
+      count: 6,
+      categoryFilter: ["regional", "national", "international", "world"],
+    },
+    {
+      key: "photos",
+      label: "Photos",
+      count: 6,
+      categoryFilter: ["photos", "gallery", "images", "visual"],
+    },
+    {
+      key: "tunnels",
+      label: "Investigations",
+      count: 5,
+      categoryFilter: ["investigation", "exclusive", "report", "expose"],
+    },
+    {
+      key: "oneImage",
+      label: "Sports",
+      count: 6,
+      categoryFilter: [
+        "sports",
+        "football",
+        "basketball",
+        "soccer",
+        "athletics",
+        "games",
+      ],
+    },
+  ],
+  Oe = (t) => Se.filter((s) => t[s.key] && t[s.key].length > 0),
+  ts = async (t) => {
+    try {
+      return (await ue.get(`/news/get/all-reactions/${t}/`)).data;
+    } catch (s) {
+      throw (
+        (console.error(`Failed to fetch reactions for news ID ${t}:`, s), s)
+      );
+    }
+  },
+  ss = async (t, s) => {
+    try {
+      return (await ue.post(`/news/post/reactions/${t}/`, { love: s })).data;
+    } catch (a) {
+      throw (
+        (console.error(`Failed to post love reaction for news ID ${t}:`, a), a)
+      );
+    }
+  },
+  as = async (t, s) => {
+    try {
+      return (await ue.post(`/news/post/reactions/${t}/`, { comment: s })).data;
+    } catch (a) {
+      throw (console.error(`Failed to post comment for news ID ${t}:`, a), a);
+    }
+  },
+  Re = (t) =>
+    Array.isArray(t)
+      ? t
+          .filter((s) => s.comment && s.comment.trim() !== "")
+          .map((s) => ({
+            id: s.id,
+            author:
+              (s.user?.user_profile &&
+                `${s.user.user_profile.first_name || ""} ${
+                  s.user.user_profile.last_name || ""
+                }`.trim()) ||
+              "Anonymous",
+            content: s.comment,
+            time: Ze(s.created_at),
+            avatar: s.user?.user_profile?.profile_picture,
+            loved: s.love,
+          }))
+      : [],
+  Fe = (t) => (Array.isArray(t) ? t.filter((s) => s.love === !0).length : 0),
+  Le = (t) =>
+    Array.isArray(t)
+      ? t.filter((s) => s.comment && s.comment.trim() !== "").length
+      : 0,
+  Ee = (t, s) => {
+    if (!Array.isArray(t) || !s) return !1;
+    const a = t
+      .filter((r) => r.user.id === s && r.love !== null)
+      .sort((r, c) => new Date(c.created_at) - new Date(r.created_at));
+    return a.length === 0 ? !1 : a[0].love === !0;
+  },
+  ae = ({
+    article: {
+      id: t,
+      title: s,
+      description: a,
+      category: r,
+      publishedTime: c,
+      publishedDateTime: l,
+      image: d = "/placeholder.svg?height=200&width=300",
+      sentiment: u,
+      isFeatured: f,
+      imageAttribution: h,
+      readTime: p,
+    },
+    className: o,
+    imagePosition: m = "top",
+    reactions: A = [],
+    onPostLove: N,
+    onPostComment: y,
+  }) => {
+    const [x, v] = g.useState(!1),
+      { isLoggedIn: D, user: M } = me(),
+      [T, I] = g.useState(!1),
+      [U, E] = g.useState("signin"),
+      [S, z] = g.useState(!1),
+      R = Re(A),
+      n = Fe(A),
+      w = Le(A),
+      i = Ee(A, M?.id),
+      b = (H) => {
+        if (!H) return "";
+        const B = H.split(" ").filter((re) => re.length > 0);
+        return B.length <= 10 ? H : B.slice(0, 10).join(" ");
+      },
+      W = b(a),
+      F = a && a.length > 200,
+      C = () => {
+        if (!D) {
+          E("signin"), I(!0);
+          return;
+        }
+        v(!x);
+      },
+      L = () => {
+        if (!D) {
+          E("signin"), I(!0);
+          return;
+        }
+        z(!S);
+      },
+      G = async (H) => {
+        if (!D) {
+          E("signin"), I(!0);
+          return;
+        }
+        try {
+          await N?.(H);
+        } catch (B) {
+          console.error("Failed to post love reaction:", B);
+        }
+      },
+      _ = async (H) => {
+        if (!D) {
+          E("signin"), I(!0);
+          return;
+        }
+        try {
+          await y?.(H);
+        } catch (B) {
+          throw (console.error("Failed to post comment:", B), B);
+        }
+      },
+      $ = m === "left" || m === "right";
+    return e.jsxs(e.Fragment, {
+      children: [
+        x &&
+          e.jsxs(Helmet, {
+            children: [
+              e.jsx("title", {
+                children: s || "ALAMOCITYPULSE - News Article",
+              }),
+              e.jsx("meta", {
+                name: "description",
+                content: a
+                  ? b(a)
+                  : "Read the latest news and updates from ALAMOCITYPULSE",
+              }),
+              e.jsx("meta", {
+                property: "og:title",
+                content: s || "ALAMOCITYPULSE - News Article",
+              }),
+              e.jsx("meta", {
+                property: "og:description",
+                content: a
+                  ? b(a)
+                  : "Read the latest news and updates from ALAMOCITYPULSE",
+              }),
+              e.jsx("meta", {
+                property: "og:image",
+                content: d || "/default-image.jpg",
+              }),
+              e.jsx("meta", { property: "og:type", content: "article" }),
+              e.jsx("meta", {
+                property: "og:url",
+                content: url || window.location.href,
+              }),
+            ],
+          }),
+        e.jsxs("div", {
+          className: P(
+            "rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 bg-white",
+            $ ? "flex" : "flex-col",
+            o
+          ),
+          children: [
+            e.jsxs("div", {
+              className: P(
+                $ ? "w-1/3 flex-shrink-0" : "w-full",
+                m === "right" ? "order-2" : "order-1",
+                "relative"
+              ),
+              children: [
+                e.jsx("img", {
+                  src: d,
+                  alt: s,
+                  className: "w-full h-72 xl:h-48 object-cover",
+                }),
+                u &&
+                  e.jsx("div", {
+                    className: "absolute top-1 left-1",
+                    children: e.jsx(Me, {
+                      sentiment: u,
+                      className: "text-xs py-0.5 px-2",
+                    }),
+                  }),
+              ],
+            }),
+            e.jsxs("div", {
+              className: P(
+                "p-4 flex flex-col",
+                $ ? "w-2/3" : "w-full",
+                m === "right" ? "order-1" : "order-2"
+              ),
+              children: [
+                e.jsx("div", {
+                  className:
+                    "w-full bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2 self-start",
+                  children: r,
+                }),
+                e.jsx("h3", {
+                  className:
+                    "font-bold text-gray-900 mb-2 line-clamp-2 leading-tight",
+                  children: s,
+                }),
+                a &&
+                  e.jsx("div", {
+                    className: "text-gray-600 text-sm mb-3",
+                    children: e.jsxs("p", {
+                      className:
+                        "text-sm sm:text-base text-gray-600 leading-relaxed",
+                      children: [
+                        x ? a : W,
+                        !x && F && "... ",
+                        F &&
+                          e.jsx("button", {
+                            onClick: C,
+                            className:
+                              "text-blue-400 hover:text-blue-500 cursor-pointer text-sm sm:text-base font-medium transition-colors duration-200 focus:outline-none focus:underline",
+                            children: x ? "Read less" : "Read more",
+                          }),
+                      ],
+                    }),
+                  }),
+                e.jsxs("div", {
+                  className:
+                    "flex items-center justify-between text-xs text-gray-500 mt-auto",
+                  children: [
+                    e.jsx("div", {
+                      children: c && e.jsx("span", { children: c }),
+                    }),
+                    e.jsx("div", {
+                      children: e.jsx(fe, {
+                        onCommentClick: L,
+                        onLoveClick: G,
+                        showCommentsCount: w,
+                        isLoved: i,
+                        loveCount: n,
+                        disabled: !D,
+                      }),
+                    }),
+                  ],
+                }),
+                S &&
+                  e.jsx(Pe, {
+                    comments: R,
+                    onPostComment: _,
+                    disabled: !D,
+                    allComments: A,
+                  }),
+              ],
+            }),
+            e.jsx(we, { isOpen: T, onClose: () => I(!1), initialMode: U }),
+          ],
+        }),
+      ],
+    });
+  },
+  rs = ({
+    id: t,
+    title: s,
+    description: a,
+    category: r = "THE HEADLINES",
+    publishedTime: c,
+    publishedDateTime: l,
+    image: d = "/placeholder.svg?height=100&width=150",
+    sentiment: u = "neutral",
+    isFeatured: f,
+    imageAttribution: h,
+    readTime: p,
+    className: o,
+  }) => {
+    const { isLoggedIn: m, user: A } = me(),
+      [N, y] = g.useState(!1),
+      [x, v] = g.useState(!1),
+      [D, M] = g.useState("signin"),
+      T = (S) => {
+        if (!S) return "";
+        const z = S.split(" ").filter((R) => R.length > 0);
+        return z.length <= 15 ? S : z.slice(0, 15).join(" ");
+      },
+      I = T(a),
+      U = a && a.length > 200,
+      E = () => {
+        if (!m) {
+          M("signin"), v(!0);
+          return;
+        }
+        y(!N);
+      };
+    return e.jsxs(e.Fragment, {
+      children: [
+        N &&
+          e.jsxs(ve, {
+            children: [
+              e.jsx("title", {
+                children: s || "ALAMOCITYPULSE - News Article",
+              }),
+              e.jsx("meta", {
+                name: "description",
+                content: a
+                  ? T(a)
+                  : "Read the latest news and updates from ALAMOCITYPULSE",
+              }),
+              e.jsx("meta", {
+                property: "og:title",
+                content: s || "ALAMOCITYPULSE - News Article",
+              }),
+              e.jsx("meta", {
+                property: "og:description",
+                content: a
+                  ? T(a)
+                  : "Read the latest news and updates from ALAMOCITYPULSE",
+              }),
+              e.jsx("meta", {
+                property: "og:image",
+                content: d || "/default-image.jpg",
+              }),
+              e.jsx("meta", { property: "og:type", content: "article" }),
+              e.jsx("meta", {
+                property: "og:url",
+                content: url || window.location.href,
+              }),
+            ],
+          }),
+        e.jsxs("div", {
+          className: P("flex border-y-1 border-black py-6", o),
+          children: [
+            e.jsx("div", {
+              className:
+                "flex-shrink-0 w-[150px] h-28 relative overflow-hidden",
+              children: e.jsx("img", {
+                src: d,
+                alt: s,
+                className: "w-full h-full object-cover",
+              }),
+            }),
+            e.jsxs("div", {
+              className: "ml-4 flex-1",
+              children: [
+                e.jsx("div", {
+                  className: "flex items-center mb-1",
+                  children: e.jsx("span", {
+                    className: "text-xs font-bold text-gray-800 mr-2",
+                    children: r,
+                  }),
+                }),
+                e.jsx("h3", {
+                  className: "text-xl font-bold mb-2 line-clamp-2",
+                  children: s,
+                }),
+                e.jsx("div", {
+                  className: "flex mb-2 items-center",
+                  children: e.jsxs("button", {
+                    onClick: E,
+                    className:
+                      "flex items-center text-gray-700 mr-2 hover:text-gray-900 transition-colors",
+                    children: [
+                      e.jsx(Dt, { size: 16, className: "mr-1" }),
+                      e.jsxs("span", {
+                        className: "text-sm mr-1",
+                        children: [N ? a : I, !N && U && "..."],
+                      }),
+                      U &&
+                        e.jsx("span", {
+                          className:
+                            "text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200",
+                          children: N ? "Read less" : "Read more",
+                        }),
+                    ],
+                  }),
+                }),
+                e.jsx("div", {
+                  className: "ml-auto",
+                  children: e.jsx(Me, {
+                    sentiment: u,
+                    className: "text-xs py-0.5 px-2",
+                  }),
+                }),
+              ],
+            }),
+          ],
+        }),
+        e.jsx(we, { isOpen: x, onClose: () => v(!1), initialMode: D }),
+      ],
+    });
+  },
+  qe = ({ type: t, value: s, className: a }) => {
+    const r = t === "readTime",
+      c = t === "timeAgo";
+    return e.jsxs("div", {
+      className: P("flex items-center", a),
+      children: [
+        r && e.jsxs("span", { children: ["Read Time ", s, " Min"] }),
+        c &&
+          e.jsxs("span", {
+            className: "text-gray-500 text-sm flex items-center",
+            children: [" ", "Read Time", s, " Min"],
+          }),
+      ],
+    });
+  },
+  ns = ({ currentIndex: t, setCurrentIndex: s, totalItems: a }) => {
+    const r = (c) => {
+      const l = Math.abs(c - t);
+      return l === 0 ? "w-3 h-3" : l === 1 ? "w-2.5 h-2.5" : "w-2 h-2";
+    };
+    return e.jsx("div", {
+      className: "flex items-center gap-2",
+      children: Array.from({ length: a }).map((c, l) =>
+        e.jsx(
+          "button",
+          {
+            className: `${r(l)} rounded-full transition-all duration-200 ${
+              l === t ? "bg-black" : "bg-gray-300"
+            }`,
+            onClick: () => s(l),
+          },
+          l
+        )
+      ),
+    });
+  },
+  is = ({ currentIndex: t, setCurrentIndex: s, totalItems: a }) => {
+    const r = () => {
+        s((u) => (u > 0 ? u - 1 : a - 1));
+      },
+      c = () => {
+        s((u) => (u < a - 1 ? u + 1 : 0));
+      },
+      l = t > 0,
+      d = t < a - 1;
+    return e.jsxs("div", {
+      className: "flex items-center gap-1",
+      children: [
+        e.jsx("button", {
+          onClick: r,
+          disabled: !l,
+          className: `w-8 h-8 rounded-full flex items-center justify-center border transition-all ${
+            l
+              ? "bg-white border-gray-300 text-gray-800 hover:bg-gray-50 hover:border-gray-400"
+              : "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
+          }`,
+          children: e.jsx(Ce, { className: "w-4 h-4" }),
+        }),
+        e.jsx("button", {
+          onClick: c,
+          disabled: !d,
+          className: `w-8 h-8 rounded-full flex items-center justify-center border transition-all ${
+            d
+              ? "bg-white border-gray-300 text-gray-800 hover:bg-gray-50 hover:border-gray-400"
+              : "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
+          }`,
+          children: e.jsx(Te, { className: "w-4 h-4" }),
+        }),
+      ],
+    });
+  },
+  os = ({ description: t, isLoggedIn: s, onAuthRequired: a }) => {
+    const [r, c] = g.useState(!1),
+      l = oe(t),
+      d = t && t.length > 200,
+      u = () => {
+        if (!s) {
+          a();
+          return;
+        }
+        c(!r);
+      };
+    return d
+      ? e.jsxs(e.Fragment, {
+          children: [
+            " ",
+            r &&
+              e.jsxs(ve, {
+                children: [
+                  e.jsx("title", {
+                    children:
+                      currentUpdate?.title || "ALAMOCITYPULSE - News Article",
+                  }),
+                  e.jsx("meta", {
+                    name: "description",
+                    content: currentUpdate?.description
+                      ? oe(currentUpdate?.description)
+                      : "Read the latest news and updates from ALAMOCITYPULSE",
+                  }),
+                  e.jsx("meta", {
+                    property: "og:title",
+                    content:
+                      currentUpdate?.title || "ALAMOCITYPULSE - News Article",
+                  }),
+                  e.jsx("meta", {
+                    property: "og:description",
+                    content: currentUpdate?.description
+                      ? oe(currentUpdate?.description)
+                      : "Read the latest news and updates from ALAMOCITYPULSE",
+                  }),
+                  e.jsx("meta", {
+                    property: "og:image",
+                    content: currentUpdate?.image || "/default-image.jpg",
+                  }),
+                  e.jsx("meta", { property: "og:type", content: "article" }),
+                  e.jsx("meta", {
+                    property: "og:url",
+                    content: currentUpdate?.url || window.location.href,
+                  }),
+                ],
+              }),
+            e.jsx("div", {
+              className: "mb-4",
+              children: e.jsxs("p", {
+                className: "text-gray-600",
+                children: [
+                  r ? t : `${l}...`,
+                  e.jsx("button", {
+                    onClick: u,
+                    className:
+                      "text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors duration-200 focus:outline-none focus:underline",
+                    children: r ? "Read less" : "Read more >",
+                  }),
+                ],
+              }),
+            }),
+          ],
+        })
+      : e.jsx("p", { className: "text-gray-600 mb-4", children: t });
+  },
+  ls = ({
+    updates: t,
+    className: s,
+    newsReactions: a,
+    onPostLove: r,
+    onPostComment: c,
+  }) => {
+    const [l, d] = g.useState(0),
+      { isLoggedIn: u, user: f } = me(),
+      [h, p] = g.useState(!1),
+      [o, m] = g.useState("signin"),
+      [A, N] = g.useState(!1),
+      y = t[l],
+      x = a[y.id] || [],
+      v = Re(x),
+      D = Fe(x),
+      M = Le(x),
+      T = Ee(x, f?.id),
+      I = () => {
+        if (!u) {
+          m("signin"), p(!0);
+          return;
+        }
+        N(!A);
+      },
+      U = async (z) => {
+        if (!u) {
+          m("signin"), p(!0);
+          return;
+        }
+        try {
+          await r(y.id, z);
+        } catch (R) {
+          console.error("Failed to post love reaction:", R);
+        }
+      },
+      E = async (z) => {
+        if (!u) {
+          m("signin"), p(!0);
+          return;
+        }
+        try {
+          await c(y.id, z);
+        } catch (R) {
+          throw (console.error("Failed to post comment:", R), R);
+        }
+      },
+      S = () => {
+        m("signin"), p(!0);
+      };
+    return e.jsxs(e.Fragment, {
+      children: [
+        e.jsx("div", {
+          className: P("pb-6", s),
+          children: e.jsxs("div", {
+            className:
+              "flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10",
+            children: [
+              e.jsxs("div", {
+                className: "flex flex-col w-full lg:w-2/5 xl:w-1/3",
+                children: [
+                  e.jsx("div", {
+                    className: "font-bold text-xl mb-1",
+                    children: y.category,
+                  }),
+                  e.jsxs("div", {
+                    className:
+                      "flex justify-start items-center gap-3 mt-2 text-custom-red",
+                    children: [
+                      e.jsx(qe, { type: "live", value: null }),
+                      e.jsx("span", {
+                        className: "text-sm",
+                        children: y.timeAgo,
+                      }),
+                    ],
+                  }),
+                  e.jsx("h2", {
+                    className: "text-2xl font-bold mb-3",
+                    children: y.title,
+                  }),
+                  e.jsx(os, {
+                    description: y.description,
+                    isLoggedIn: u,
+                    onAuthRequired: S,
+                  }),
+                  e.jsxs("div", {
+                    className: "flex items-center mb-4",
+                    children: [
+                      e.jsx("button", {
+                        className: "text-gray-700 font-medium mr-2",
+                        children: "See more updates",
+                      }),
+                      e.jsx("span", {
+                        className:
+                          "bg-gray-700 text-white text-xs px-2 py-1 rounded-full",
+                        children: t.length,
+                      }),
+                    ],
+                  }),
+                  e.jsx("div", {
+                    children: e.jsx(fe, {
+                      onCommentClick: I,
+                      onLoveClick: U,
+                      showCommentsCount: M,
+                      isLoved: T,
+                      loveCount: D,
+                      disabled: !u,
+                    }),
+                  }),
+                ],
+              }),
+              e.jsxs("div", {
+                className:
+                  "relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end",
+                children: [
+                  e.jsx("div", {
+                    className:
+                      "relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center",
+                    children: e.jsx("img", {
+                      src: y.image,
+                      alt: y.title,
+                      className:
+                        "w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105",
+                      loading: "lazy",
+                    }),
+                  }),
+                  e.jsx("div", {
+                    className: "w-full py-2",
+                    children: e.jsxs("div", {
+                      className: "flex justify-between items-center",
+                      children: [
+                        e.jsx("div", {
+                          className: "flex-1 flex justify-center",
+                          children:
+                            t.length > 1 &&
+                            e.jsx(ns, {
+                              currentIndex: l,
+                              setCurrentIndex: d,
+                              totalItems: t.length,
+                            }),
+                        }),
+                        e.jsx("div", {
+                          className: "flex items-center md:mt-6",
+                          children:
+                            t.length > 1 &&
+                            e.jsx(is, {
+                              currentIndex: l,
+                              setCurrentIndex: d,
+                              totalItems: t.length,
+                            }),
+                        }),
+                      ],
+                    }),
+                  }),
+                ],
+              }),
+            ],
+          }),
+        }),
+        A &&
+          e.jsx(Pe, {
+            comments: v,
+            onPostComment: E,
+            disabled: !u,
+            allComments: x,
+          }),
+        e.jsx(we, { isOpen: h, onClose: () => p(!1), initialMode: o }),
+      ],
+    });
+  },
+  _e = ({ title: t, children: s, className: a }) =>
+    e.jsxs("section", {
+      className: P("mb-12 py-2 border-b border-black", a),
+      children: [
+        t &&
+          e.jsx("h2", {
+            className: "text-xl font-bold mb-6 border-b border-gray-300 pb-2",
+            children: t,
+          }),
+        e.jsx("div", { children: s }),
+      ],
+    });
+var Ae = "rovingFocusGroup.onEntryFocus",
+  cs = { bubbles: !1, cancelable: !0 },
+  he = "RovingFocusGroup",
+  [Ie, Xe, ds] = Rt(he),
+  [ms, Qe] = We(he, [ds]),
+  [us, hs] = ms(he),
+  Je = g.forwardRef((t, s) =>
+    e.jsx(Ie.Provider, {
+      scope: t.__scopeRovingFocusGroup,
+      children: e.jsx(Ie.Slot, {
+        scope: t.__scopeRovingFocusGroup,
+        children: e.jsx(gs, { ...t, ref: s }),
+      }),
+    })
+  );
+Je.displayName = he;
+var gs = g.forwardRef((t, s) => {
+    const {
+        __scopeRovingFocusGroup: a,
+        orientation: r,
+        loop: c = !1,
+        dir: l,
+        currentTabStopId: d,
+        defaultCurrentTabStopId: u,
+        onCurrentTabStopIdChange: f,
+        onEntryFocus: h,
+        preventScrollOnEntryFocus: p = !1,
+        ...o
+      } = t,
+      m = g.useRef(null),
+      A = Nt(s, m),
+      N = Ye(l),
+      [y, x] = Ge({ prop: d, defaultProp: u ?? null, onChange: f, caller: he }),
+      [v, D] = g.useState(!1),
+      M = Ft(h),
+      T = Xe(a),
+      I = g.useRef(!1),
+      [U, E] = g.useState(0);
+    return (
+      g.useEffect(() => {
+        const S = m.current;
+        if (S)
+          return S.addEventListener(Ae, M), () => S.removeEventListener(Ae, M);
+      }, [M]),
+      e.jsx(us, {
+        scope: a,
+        orientation: r,
+        dir: N,
+        loop: c,
+        currentTabStopId: y,
+        onItemFocus: g.useCallback((S) => x(S), [x]),
+        onItemShiftTab: g.useCallback(() => D(!0), []),
+        onFocusableItemAdd: g.useCallback(() => E((S) => S + 1), []),
+        onFocusableItemRemove: g.useCallback(() => E((S) => S - 1), []),
+        children: e.jsx(le.div, {
+          tabIndex: v || U === 0 ? -1 : 0,
+          "data-orientation": r,
+          ...o,
+          ref: A,
+          style: { outline: "none", ...t.style },
+          onMouseDown: Q(t.onMouseDown, () => {
+            I.current = !0;
+          }),
+          onFocus: Q(t.onFocus, (S) => {
+            const z = !I.current;
+            if (S.target === S.currentTarget && z && !v) {
+              const R = new CustomEvent(Ae, cs);
+              if ((S.currentTarget.dispatchEvent(R), !R.defaultPrevented)) {
+                const n = T().filter((F) => F.focusable),
+                  w = n.find((F) => F.active),
+                  i = n.find((F) => F.id === y),
+                  W = [w, i, ...n].filter(Boolean).map((F) => F.ref.current);
+                st(W, p);
+              }
+            }
+            I.current = !1;
+          }),
+          onBlur: Q(t.onBlur, () => D(!1)),
+        }),
+      })
+    );
+  }),
+  et = "RovingFocusGroupItem",
+  tt = g.forwardRef((t, s) => {
+    const {
+        __scopeRovingFocusGroup: a,
+        focusable: r = !0,
+        active: c = !1,
+        tabStopId: l,
+        children: d,
+        ...u
+      } = t,
+      f = Ve(),
+      h = l || f,
+      p = hs(et, a),
+      o = p.currentTabStopId === h,
+      m = Xe(a),
+      {
+        onFocusableItemAdd: A,
+        onFocusableItemRemove: N,
+        currentTabStopId: y,
+      } = p;
+    return (
+      g.useEffect(() => {
+        if (r) return A(), () => N();
+      }, [r, A, N]),
+      e.jsx(Ie.ItemSlot, {
+        scope: a,
+        id: h,
+        focusable: r,
+        active: c,
+        children: e.jsx(le.span, {
+          tabIndex: o ? 0 : -1,
+          "data-orientation": p.orientation,
+          ...u,
+          ref: s,
+          onMouseDown: Q(t.onMouseDown, (x) => {
+            r ? p.onItemFocus(h) : x.preventDefault();
+          }),
+          onFocus: Q(t.onFocus, () => p.onItemFocus(h)),
+          onKeyDown: Q(t.onKeyDown, (x) => {
+            if (x.key === "Tab" && x.shiftKey) {
+              p.onItemShiftTab();
+              return;
+            }
+            if (x.target !== x.currentTarget) return;
+            const v = fs(x, p.orientation, p.dir);
+            if (v !== void 0) {
+              if (x.metaKey || x.ctrlKey || x.altKey || x.shiftKey) return;
+              x.preventDefault();
+              let M = m()
+                .filter((T) => T.focusable)
+                .map((T) => T.ref.current);
+              if (v === "last") M.reverse();
+              else if (v === "prev" || v === "next") {
+                v === "prev" && M.reverse();
+                const T = M.indexOf(x.currentTarget);
+                M = p.loop ? bs(M, T + 1) : M.slice(T + 1);
+              }
+              setTimeout(() => st(M));
+            }
+          }),
+          children:
+            typeof d == "function"
+              ? d({ isCurrentTabStop: o, hasTabStop: y != null })
+              : d,
+        }),
+      })
+    );
+  });
+tt.displayName = et;
+var ps = {
+  ArrowLeft: "prev",
+  ArrowUp: "prev",
+  ArrowRight: "next",
+  ArrowDown: "next",
+  PageUp: "first",
+  Home: "first",
+  PageDown: "last",
+  End: "last",
+};
+function xs(t, s) {
+  return s !== "rtl"
+    ? t
+    : t === "ArrowLeft"
+    ? "ArrowRight"
+    : t === "ArrowRight"
+    ? "ArrowLeft"
+    : t;
+}
+function fs(t, s, a) {
+  const r = xs(t.key, a);
+  if (
+    !(s === "vertical" && ["ArrowLeft", "ArrowRight"].includes(r)) &&
+    !(s === "horizontal" && ["ArrowUp", "ArrowDown"].includes(r))
+  )
+    return ps[r];
+}
+function st(t, s = !1) {
+  const a = document.activeElement;
+  for (const r of t)
+    if (
+      r === a ||
+      (r.focus({ preventScroll: s }), document.activeElement !== a)
+    )
+      return;
+}
+function bs(t, s) {
+  return t.map((a, r) => t[(s + r) % t.length]);
+}
+var ys = Je,
+  ws = tt,
+  je = "Tabs",
+  [vs, Ks] = We(je, [Qe]),
+  at = Qe(),
+  [js, De] = vs(je),
+  rt = g.forwardRef((t, s) => {
+    const {
+        __scopeTabs: a,
+        value: r,
+        onValueChange: c,
+        defaultValue: l,
+        orientation: d = "horizontal",
+        dir: u,
+        activationMode: f = "automatic",
+        ...h
+      } = t,
+      p = Ye(u),
+      [o, m] = Ge({ prop: r, onChange: c, defaultProp: l ?? "", caller: je });
+    return e.jsx(js, {
+      scope: a,
+      baseId: Ve(),
+      value: o,
+      onValueChange: m,
+      orientation: d,
+      dir: p,
+      activationMode: f,
+      children: e.jsx(le.div, { dir: p, "data-orientation": d, ...h, ref: s }),
+    });
+  });
+rt.displayName = je;
+var nt = "TabsList",
+  it = g.forwardRef((t, s) => {
+    const { __scopeTabs: a, loop: r = !0, ...c } = t,
+      l = De(nt, a),
+      d = at(a);
+    return e.jsx(ys, {
+      asChild: !0,
+      ...d,
+      orientation: l.orientation,
+      dir: l.dir,
+      loop: r,
+      children: e.jsx(le.div, {
+        role: "tablist",
+        "aria-orientation": l.orientation,
+        ...c,
+        ref: s,
+      }),
+    });
+  });
+it.displayName = nt;
+var ot = "TabsTrigger",
+  lt = g.forwardRef((t, s) => {
+    const { __scopeTabs: a, value: r, disabled: c = !1, ...l } = t,
+      d = De(ot, a),
+      u = at(a),
+      f = mt(d.baseId, r),
+      h = ut(d.baseId, r),
+      p = r === d.value;
+    return e.jsx(ws, {
+      asChild: !0,
+      ...u,
+      focusable: !c,
+      active: p,
+      children: e.jsx(le.button, {
+        type: "button",
+        role: "tab",
+        "aria-selected": p,
+        "aria-controls": h,
+        "data-state": p ? "active" : "inactive",
+        "data-disabled": c ? "" : void 0,
+        disabled: c,
+        id: f,
+        ...l,
+        ref: s,
+        onMouseDown: Q(t.onMouseDown, (o) => {
+          !c && o.button === 0 && o.ctrlKey === !1
+            ? d.onValueChange(r)
+            : o.preventDefault();
+        }),
+        onKeyDown: Q(t.onKeyDown, (o) => {
+          [" ", "Enter"].includes(o.key) && d.onValueChange(r);
+        }),
+        onFocus: Q(t.onFocus, () => {
+          const o = d.activationMode !== "manual";
+          !p && !c && o && d.onValueChange(r);
+        }),
+      }),
+    });
+  });
+lt.displayName = ot;
+var ct = "TabsContent",
+  dt = g.forwardRef((t, s) => {
+    const { __scopeTabs: a, value: r, forceMount: c, children: l, ...d } = t,
+      u = De(ct, a),
+      f = mt(u.baseId, r),
+      h = ut(u.baseId, r),
+      p = r === u.value,
+      o = g.useRef(p);
+    return (
+      g.useEffect(() => {
+        const m = requestAnimationFrame(() => (o.current = !1));
+        return () => cancelAnimationFrame(m);
+      }, []),
+      e.jsx(At, {
+        present: c || p,
+        children: ({ present: m }) =>
+          e.jsx(le.div, {
+            "data-state": p ? "active" : "inactive",
+            "data-orientation": u.orientation,
+            role: "tabpanel",
+            "aria-labelledby": f,
+            hidden: !m,
+            id: h,
+            tabIndex: 0,
+            ...d,
+            ref: s,
+            style: { ...t.style, animationDuration: o.current ? "0s" : void 0 },
+            children: m && l,
+          }),
+      })
+    );
+  });
+dt.displayName = ct;
+function mt(t, s) {
+  return `${t}-trigger-${s}`;
+}
+function ut(t, s) {
+  return `${t}-content-${s}`;
+}
+var Ns = rt,
+  As = it,
+  Cs = lt,
+  Ts = dt;
+function ht({ className: t, ...s }) {
+  return e.jsx(Ns, {
+    "data-slot": "tabs",
+    className: P("flex flex-col gap-2", t),
+    ...s,
+  });
+}
+function gt({ className: t, ...s }) {
+  return e.jsx(As, {
+    "data-slot": "tabs-list",
+    className: P(
+      "bg-muted text-muted-foreground flex h-9 items-center rounded-lg p-[3px] overflow-x-auto scrollbar-hide",
+      "[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
+      t
+    ),
+    ...s,
+  });
+}
+function pt({ className: t, ...s }) {
+  return e.jsx(Cs, {
+    "data-slot": "tabs-trigger",
+    className: P(
+      "data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-shrink-0 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+      t
+    ),
+    ...s,
+  });
+}
+function xt({ className: t, ...s }) {
+  return e.jsx(Ts, {
+    "data-slot": "tabs-content",
+    className: P("flex-1 outline-none", t),
+    ...s,
+  });
+}
+const ft = ({ children: t, className: s, columns: a = 2, gap: r = 6 }) =>
+  e.jsx("div", {
+    className: P(`grid grid-cols-1 md:grid-cols-${a} gap-${r}`, s),
+    children: t,
+  });
+await Ke();
+const bt = {
+    israelHamasWar: [
+      {
+        id: 1,
+        title: "Israel-Hamas War: Complete Coverage",
+        description:
+          "Comprehensive coverage of the ongoing conflict with latest developments... Comprehensive coverage of the ongoing conflict with latest developments... Comprehensive coverage of the ongoing conflict with latest developments... Comprehensive coverage of the ongoing conflict with latest developments...",
+        category: "War Coverage",
+        publishedTime: "15 minutes ago",
+        publishedDateTime: null,
+        image: "/fn1.png",
+        sentiment: "Breaking",
+        isFeatured: !0,
+        imageAttribution: null,
+        readTime: 8,
+      },
+      {
+        id: 2,
+        title: "International Response Analysis",
+        description:
+          "How world leaders are responding to the escalating situation...",
+        category: "International",
+        publishedTime: "45 minutes ago",
+        publishedDateTime: null,
+        image: "/fn2.png",
+        sentiment: "Analysis",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 6,
+      },
+      {
+        id: 3,
+        title: "Civilian Impact Assessment",
+        description:
+          "Understanding the humanitarian crisis and civilian casualties...",
+        category: "Humanitarian",
+        publishedTime: "1 hour ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Critical",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 7,
+      },
+      {
+        id: 4,
+        title: "Military Operations Update",
+        description: "Latest military developments and strategic movements...",
+        category: "Military",
+        publishedTime: "2 hours ago",
+        publishedDateTime: null,
+        image: "/fn4.png",
+        sentiment: "Update",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 5,
+      },
+    ],
+    updates: [
+      {
+        id: 5,
+        title: "Latest Updates on Israel-Hamas Conflict",
+        description:
+          "Breaking news and developments from the ongoing situation...",
+        category: "Breaking News",
+        publishedTime: "30 minutes ago",
+        publishedDateTime: null,
+        image: "/fn1.png",
+        sentiment: "Live",
+        isFeatured: !0,
+        imageAttribution: null,
+        readTime: 5,
+      },
+      {
+        id: 6,
+        title: "Diplomatic Efforts Continue",
+        description:
+          "International leaders work toward ceasefire negotiations...",
+        category: "Politics",
+        publishedTime: "1 hour ago",
+        publishedDateTime: null,
+        image: "/fn2.png",
+        sentiment: "Urgent",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 4,
+      },
+      {
+        id: 7,
+        title: "Humanitarian Aid Distribution",
+        description: "Relief efforts reach affected areas...",
+        category: "Humanitarian",
+        publishedTime: "2 hours ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Update",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 3,
+      },
+      {
+        id: 8,
+        title: "Security Council Meeting",
+        description: "UN discusses resolution proposals...",
+        category: "International",
+        publishedTime: "3 hours ago",
+        publishedDateTime: null,
+        image: "/fn4.png",
+        sentiment: "Official",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 6,
+      },
+    ],
+    whatWeKnow: [
+      {
+        id: 9,
+        title: "Timeline of Recent Events",
+        description: "Comprehensive overview of key developments...",
+        category: "Analysis",
+        publishedTime: "4 hours ago",
+        publishedDateTime: null,
+        image: "/fn5.png",
+        sentiment: "Complete",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 8,
+      },
+      {
+        id: 10,
+        title: "Key Players and Positions",
+        description: "Understanding the main parties involved...",
+        category: "Analysis",
+        publishedTime: "5 hours ago",
+        publishedDateTime: null,
+        image: "/fn1.png",
+        sentiment: "Detailed",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 7,
+      },
+      {
+        id: 11,
+        title: "Historical Context",
+        description: "Background information to understand current events...",
+        category: "Background",
+        publishedTime: "6 hours ago",
+        publishedDateTime: null,
+        image: "/fn2.png",
+        sentiment: "Essential",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 10,
+      },
+      {
+        id: 12,
+        title: "Regional Analysis",
+        description: "Understanding regional implications and effects...",
+        category: "Regional",
+        publishedTime: "7 hours ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Important",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 6,
+      },
+    ],
+    maps: [
+      {
+        id: 13,
+        title: "Regional Map Overview",
+        description: "Interactive maps showing affected areas...",
+        category: "Geographic",
+        publishedTime: "1 hour ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Interactive",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 2,
+      },
+      {
+        id: 14,
+        title: "Strategic Locations",
+        description: "Key points of interest in the conflict zone...",
+        category: "Strategic",
+        publishedTime: "3 hours ago",
+        publishedDateTime: null,
+        image: "/fn4.png",
+        sentiment: "Important",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 4,
+      },
+      {
+        id: 15,
+        title: "Border Areas Analysis",
+        description: "Detailed view of border regions and checkpoints...",
+        category: "Border",
+        publishedTime: "4 hours ago",
+        publishedDateTime: null,
+        image: "/fn5.png",
+        sentiment: "Detailed",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 5,
+      },
+      {
+        id: 16,
+        title: "Population Centers",
+        description: "Major cities and population centers in the region...",
+        category: "Demographics",
+        publishedTime: "5 hours ago",
+        publishedDateTime: null,
+        image: "/fn1.png",
+        sentiment: "Reference",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 3,
+      },
+    ],
+    photos: [
+      {
+        id: 17,
+        title: "Photo Gallery: Recent Events",
+        description: "Visual documentation of recent developments...",
+        category: "Photography",
+        publishedTime: "2 hours ago",
+        publishedDateTime: null,
+        image: "/fn5.png",
+        sentiment: "Gallery",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 5,
+      },
+      {
+        id: 18,
+        title: "Before and After Images",
+        description: "Satellite imagery showing changes over time...",
+        category: "Documentation",
+        publishedTime: "4 hours ago",
+        publishedDateTime: null,
+        image: "/fn1.png",
+        sentiment: "Comparison",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 3,
+      },
+      {
+        id: 19,
+        title: "Ground Reports in Pictures",
+        description: "On-ground photography from conflict areas...",
+        category: "Field Reports",
+        publishedTime: "6 hours ago",
+        publishedDateTime: null,
+        image: "/fn2.png",
+        sentiment: "Exclusive",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 4,
+      },
+      {
+        id: 20,
+        title: "Humanitarian Crisis Images",
+        description: "Visual documentation of humanitarian impact...",
+        category: "Humanitarian",
+        publishedTime: "8 hours ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Critical",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 6,
+      },
+    ],
+    tunnels: [
+      {
+        id: 21,
+        title: "Underground Infrastructure",
+        description: "Investigation into tunnel networks...",
+        category: "Investigation",
+        publishedTime: "5 hours ago",
+        publishedDateTime: null,
+        image: "/fn2.png",
+        sentiment: "Exclusive",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 7,
+      },
+      {
+        id: 22,
+        title: "Security Implications",
+        description: "Analysis of underground threats...",
+        category: "Security",
+        publishedTime: "6 hours ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Analysis",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 6,
+      },
+      {
+        id: 23,
+        title: "Construction Methods",
+        description: "How these underground networks are built...",
+        category: "Technical",
+        publishedTime: "8 hours ago",
+        publishedDateTime: null,
+        image: "/fn4.png",
+        sentiment: "Technical",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 8,
+      },
+      {
+        id: 24,
+        title: "Detection Technologies",
+        description: "Methods used to detect underground tunnels...",
+        category: "Technology",
+        publishedTime: "10 hours ago",
+        publishedDateTime: null,
+        image: "/fn5.png",
+        sentiment: "Innovation",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 5,
+      },
+    ],
+    oneImage: [
+      {
+        id: 25,
+        title: "The Story in One Image",
+        description: "Powerful photography that captures the moment...",
+        category: "Photo Story",
+        publishedTime: "1 hour ago",
+        publishedDateTime: null,
+        image: "/fn4.png",
+        sentiment: "Featured",
+        isFeatured: !0,
+        imageAttribution: null,
+        readTime: 2,
+      },
+      {
+        id: 26,
+        title: "Iconic Moment Captured",
+        description: "Single frame that tells the entire story...",
+        category: "Iconic",
+        publishedTime: "3 hours ago",
+        publishedDateTime: null,
+        image: "/fn1.png",
+        sentiment: "Powerful",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 3,
+      },
+      {
+        id: 27,
+        title: "Symbolic Representation",
+        description: "Image that represents the broader conflict...",
+        category: "Symbolic",
+        publishedTime: "5 hours ago",
+        publishedDateTime: null,
+        image: "/fn2.png",
+        sentiment: "Symbolic",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 4,
+      },
+      {
+        id: 28,
+        title: "Historical Moment",
+        description: "Capturing history as it unfolds...",
+        category: "Historical",
+        publishedTime: "7 hours ago",
+        publishedDateTime: null,
+        image: "/fn3.png",
+        sentiment: "Historic",
+        isFeatured: !1,
+        imageAttribution: null,
+        readTime: 3,
+      },
+    ],
+  },
+  yt = [
+    { key: "israelHamasWar", label: "Israel-Hamas War", isDefault: !0 },
+    { key: "updates", label: "Updates" },
+    { key: "whatWeKnow", label: "What We Know" },
+    { key: "maps", label: "Maps" },
+    { key: "photos", label: "Photos" },
+    { key: "tunnels", label: "The Tunnels of Gaza" },
+    { key: "oneImage", label: "The War in One Image" },
+  ],
+  ks = (t) => {
+    const s = "grid gap-2 md:gap-4";
+    switch (t) {
+      case 2:
+        return `${s} grid-cols-1 sm:grid-cols-2`;
+      case 3:
+        return `${s} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
+      case 4:
+      default:
+        return `${s} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 `;
+    }
+  },
+  Ss = ({
+    className: t,
+    dynamicTabsData: s,
+    dynamicTabsConfig: a,
+    newsReactions: r = {},
+    onPostLove: c,
+    onPostComment: l,
+  }) => {
+    const d = s || bt,
+      u = a || yt,
+      f = u.find((h) => h.isDefault)?.key || u[0]?.key;
+    return e.jsx("div", {
+      className: `w-full ${t}`,
+      children: e.jsxs(ht, {
+        defaultValue: f,
+        className: "w-full",
+        children: [
+          e.jsx(gt, {
+            className:
+              "flex gap-2 items-center mb-5 p-1 bg-transparent md:mx-auto overflow-x-auto",
+            children: u.map((h) =>
+              e.jsx(
+                pt,
+                {
+                  value: h.key,
+                  className:
+                    "data-[state=active]:h-11 cursor-pointer rounded-md data-[state=active]:py-3 data-[state=active]:px-4 text-custom-gray data-[state=active]:text-black data-[state=active]:font-bold data-[state=active]:bg-[#F2F2F2] hover:text-black whitespace-nowrap",
+                  children: h.label,
+                },
+                h.key
+              )
+            ),
+          }),
+          u.map((h) => {
+            const p = d[h.key] || [],
+              o = ks(h.columns || 4);
+            return e.jsxs(
+              xt,
+              {
+                value: h.key,
+                className: "mt-0",
+                children: [
+                  e.jsx(ft, {
+                    columns: h.columns || 4,
+                    gap: h.gap || 4,
+                    className: o,
+                    children: p.map((m) =>
+                      e.jsx(
+                        ae,
+                        {
+                          article: m,
+                          reactions: r[m.id] || [],
+                          onPostLove: (A) => c(m.id, A),
+                          onPostComment: (A) => l(m.id, A),
+                          className:
+                            "bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200",
+                        },
+                        m.id
+                      )
+                    ),
+                  }),
+                  p.length === 0 &&
+                    e.jsxs("div", {
+                      className: "text-center py-12 text-gray-500",
+                      children: [
+                        e.jsx("p", {
+                          className: "text-lg",
+                          children: "No articles available for this section.",
+                        }),
+                        e.jsx("p", {
+                          className: "text-sm mt-2",
+                          children: "Please check back later for updates.",
+                        }),
+                      ],
+                    }),
+                ],
+              },
+              h.key
+            );
+          }),
+        ],
+      }),
+    });
+  },
+  Is = ({ attribution: t, className: s }) =>
+    t
+      ? e.jsx("div", {
+          className: P("text-xs text-gray-500 mt-1", s),
+          children: t,
+        })
+      : null,
+  $e = ({
+    article: t,
+    className: s,
+    layout: a = "horizontal",
+    reactions: r = [],
+    onPostLove: c,
+    onPostComment: l,
+  }) => {
+    const [d, u] = g.useState(!1),
+      f = a === "horizontal",
+      { isLoggedIn: h, user: p } = me(),
+      [o, m] = g.useState(!1),
+      [A, N] = g.useState("signin"),
+      [y, x] = g.useState(!1),
+      v = Re(r),
+      D = Fe(r),
+      M = Le(r),
+      T = Ee(r, p?.id),
+      {
+        id: I,
+        title: U,
+        description: E,
+        category: S,
+        publishedTime: z,
+        publishedDateTime: R,
+        image: n,
+        sentiment: w,
+        source: i,
+        author: b,
+        tags: W,
+        isFeatured: F,
+        imageAttribution: C,
+        readTime: L,
+        url: G,
+      } = t || {},
+      _ = oe(E),
+      $ = E && E.length > 200,
+      H = (Z) => {
+        if (!Z) return "";
+        try {
+          const j = new Date(Z),
+            k = new Date(),
+            V = Math.floor((k - j) / (1e3 * 60 * 60));
+          return V < 1
+            ? "Just now"
+            : V < 24
+            ? `${V}h ago`
+            : V < 48
+            ? "Yesterday"
+            : j.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: j.getFullYear() !== k.getFullYear() ? "numeric" : void 0,
+              });
+        } catch {
+          return "";
+        }
+      },
+      B = () => {
+        if (!h) {
+          N("signin"), m(!0);
+          return;
+        }
+        u(!d);
+      },
+      re = () => {
+        if (!h) {
+          N("signin"), m(!0);
+          return;
+        }
+        x(!y);
+      },
+      ge = async (Z) => {
+        if (!h) {
+          N("signin"), m(!0);
+          return;
+        }
+        try {
+          await c?.(Z);
+        } catch (j) {
+          console.error("Failed to post love reaction:", j);
+        }
+      },
+      ne = async (Z) => {
+        if (!h) {
+          N("signin"), m(!0);
+          return;
+        }
+        try {
+          await l?.(Z);
+        } catch (j) {
+          throw (console.error("Failed to post comment:", j), j);
+        }
+      },
+      ee = (Z) => {
+        G &&
+          (Z.preventDefault(), window.open(G, "_blank", "noopener,noreferrer"));
+      };
+    return e.jsxs(e.Fragment, {
+      children: [
+        d &&
+          e.jsxs(ve, {
+            children: [
+              e.jsx("title", {
+                children: U || "ALAMOCITYPULSE - News Article",
+              }),
+              e.jsx("meta", {
+                name: "description",
+                content: E
+                  ? oe(E)
+                  : "Read the latest news and updates from ALAMOCITYPULSE",
+              }),
+              e.jsx("meta", {
+                property: "og:title",
+                content: U || "ALAMOCITYPULSE - News Article",
+              }),
+              e.jsx("meta", {
+                property: "og:description",
+                content: E
+                  ? oe(E)
+                  : "Read the latest news and updates from ALAMOCITYPULSE",
+              }),
+              e.jsx("meta", {
+                property: "og:image",
+                content: n || "/default-image.jpg",
+              }),
+              e.jsx("meta", { property: "og:type", content: "article" }),
+              e.jsx("meta", {
+                property: "og:url",
+                content: G || window.location.href,
+              }),
+            ],
+          }),
+        e.jsxs("article", {
+          className: P("overflow-hidden pb-4 sm:pb-6 lg:pb-8", s),
+          children: [
+            e.jsxs("div", {
+              className: P(
+                "flex flex-col-reverse gap-4 sm:gap-6",
+                f && !d && n && "lg:flex-row lg:items-start lg:gap-8 xl:gap-10",
+                d && "flex-col-reverse gap-4 sm:gap-6"
+              ),
+              children: [
+                e.jsxs("div", {
+                  className: P(
+                    "flex flex-col w-full",
+                    f && !d && n && "lg:w-2/5 xl:w-1/3",
+                    d && "w-full"
+                  ),
+                  children: [
+                    e.jsx("div", {
+                      className:
+                        "flex items-center justify-between mb-3 flex-wrap gap-2",
+                      children: e.jsxs("div", {
+                        className:
+                          "flex items-center gap-2 text-sm text-gray-500 flex-wrap",
+                        children: [
+                          i &&
+                            e.jsx("button", {
+                              onClick: ee,
+                              className:
+                                "font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer",
+                              children: i,
+                            }),
+                          i &&
+                            (R || z) &&
+                            e.jsx("span", {
+                              className: "text-gray-300",
+                              children: "•",
+                            }),
+                          (R || z) &&
+                            e.jsx("time", {
+                              className: "text-gray-500",
+                              children: H(R || z),
+                            }),
+                          b &&
+                            e.jsxs(e.Fragment, {
+                              children: [
+                                e.jsx("span", {
+                                  className: "text-gray-300",
+                                  children: "•",
+                                }),
+                                e.jsxs("span", {
+                                  className: "text-gray-600 font-medium",
+                                  children: ["By ", b],
+                                }),
+                              ],
+                            }),
+                          S &&
+                            e.jsxs(e.Fragment, {
+                              children: [
+                                e.jsx("span", {
+                                  className: "text-gray-300",
+                                  children: "•",
+                                }),
+                                e.jsx("span", {
+                                  className:
+                                    "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800",
+                                  children: S.toUpperCase(),
+                                }),
+                              ],
+                            }),
+                        ],
+                      }),
+                    }),
+                    e.jsx(Me, {
+                      sentiment: w,
+                      className: "mb-3 sm:mb-4 w-full",
+                    }),
+                    e.jsxs("h1", {
+                      className:
+                        "text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight",
+                      children: [
+                        U,
+                        F &&
+                          e.jsx("span", {
+                            className:
+                              "ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800",
+                            children: "FEATURED",
+                          }),
+                      ],
+                    }),
+                    e.jsx("div", {
+                      className: "mb-3 sm:mb-4",
+                      children: e.jsxs("p", {
+                        className:
+                          "text-sm sm:text-base text-gray-600 leading-relaxed",
+                        children: [
+                          d ? E : _,
+                          !d && $ && "... ",
+                          $ &&
+                            e.jsx("button", {
+                              onClick: B,
+                              className:
+                                "text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline inline-flex items-center gap-1",
+                              children: d
+                                ? e.jsxs(e.Fragment, {
+                                    children: [
+                                      "Read less",
+                                      e.jsx(Lt, { className: "w-4 h-4 mt-1" }),
+                                    ],
+                                  })
+                                : e.jsxs(e.Fragment, {
+                                    children: [
+                                      "Read more",
+                                      e.jsx(Ct, { className: "w-4 h-4 mt-1" }),
+                                    ],
+                                  }),
+                            }),
+                        ],
+                      }),
+                    }),
+                    W &&
+                      W.length > 0 &&
+                      e.jsxs("div", {
+                        className: "flex flex-wrap gap-2 mb-4",
+                        children: [
+                          W.slice(0, 4).map((Z, j) =>
+                            e.jsxs(
+                              "span",
+                              {
+                                className:
+                                  "inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer",
+                                children: ["#", Z],
+                              },
+                              j
+                            )
+                          ),
+                          W.length > 4 &&
+                            e.jsxs("span", {
+                              className:
+                                "inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-500",
+                              children: ["+", W.length - 4, " more"],
+                            }),
+                        ],
+                      }),
+                    f &&
+                      e.jsx("div", {
+                        className: "flex flex-col justify-between w-full",
+                        children: e.jsx("div", {
+                          className:
+                            "w-full flex justify-between items-center mt-2 sm:mt-3",
+                          children: e.jsx("div", {
+                            children: e.jsx(fe, {
+                              onCommentClick: re,
+                              onLoveClick: ge,
+                              showCommentsCount: M,
+                              isLoved: T,
+                              loveCount: D,
+                              disabled: !h,
+                            }),
+                          }),
+                        }),
+                      }),
+                  ],
+                }),
+                n &&
+                  e.jsxs("div", {
+                    className: P(
+                      "relative w-full order-1 md:order-2 flex flex-col items-end",
+                      f && !d && "lg:w-2/3",
+                      d && "w-full"
+                    ),
+                    children: [
+                      e.jsxs("div", {
+                        className:
+                          "relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center",
+                        children: [
+                          e.jsx("img", {
+                            src: n,
+                            alt: U,
+                            className: P(
+                              "w-full object-cover transition-transform duration-300 hover:scale-105",
+                              !d && "h-56 sm:h-96 md:h-96 lg:h-96 xl:h-[28rem]",
+                              d &&
+                                "h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"
+                            ),
+                            loading: "lazy",
+                          }),
+                          e.jsx("div", {
+                            className:
+                              "absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1",
+                            children: e.jsx(qe, {
+                              type: "readTime",
+                              value: L || z,
+                              className: "text-xs sm:text-sm text-white",
+                            }),
+                          }),
+                          C &&
+                            e.jsx("div", {
+                              className:
+                                "absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1",
+                              children: e.jsx(Is, {
+                                attribution: C,
+                                className: "text-xs sm:text-sm text-white",
+                              }),
+                            }),
+                        ],
+                      }),
+                      !f &&
+                        e.jsx("div", {
+                          className: "flex flex-col justify-between w-full",
+                          children: e.jsxs("div", {
+                            className:
+                              "w-full flex justify-between items-center mt-2 sm:mt-3",
+                            children: [
+                              F &&
+                                e.jsx("div", {
+                                  children: e.jsx(fe, {
+                                    onCommentClick: re,
+                                    onLoveClick: ge,
+                                    showCommentsCount: M,
+                                    isLoved: T,
+                                    loveCount: D,
+                                    disabled: !h,
+                                  }),
+                                }),
+                              !F && e.jsx("div", { className: "" }),
+                            ],
+                          }),
+                        }),
+                    ],
+                  }),
+              ],
+            }),
+            y &&
+              e.jsx(Pe, {
+                comments: v,
+                onPostComment: ne,
+                disabled: !h,
+                allComments: r,
+              }),
+            e.jsx(we, { isOpen: o, onClose: () => m(!1), initialMode: A }),
+          ],
+        }),
+      ],
+    });
+  },
+  Ps = (t) => (t?.length, { columns: 4, gap: 4 }),
+  Ms = ({
+    className: t,
+    dynamicTabsData: s,
+    dynamicTabsConfig: a,
+    newsReactions: r = {},
+    onPostLove: c,
+    onPostComment: l,
+  }) => {
+    const d = s || bt,
+      u = a || yt,
+      f = u.find((h) => h.isDefault)?.key || u[0]?.key;
+    return e.jsx("div", {
+      className: `w-full ${t}`,
+      children: e.jsxs(ht, {
+        defaultValue: f,
+        className: "w-full",
+        children: [
+          e.jsx(gt, {
+            className:
+              "flex items-center justify-start gap-2 md:gap-8 p-0 bg-transparent border-none h-auto overflow-x-auto",
+            children: u.map((h) =>
+              e.jsx(
+                pt,
+                {
+                  value: h.key,
+                  className:
+                    "px-2 py-1 cursor-pointer text-base font-normal focus-visible:border-none focus-visible:outline-0 !shadow-none data-[state=active]:!shadow-none text-gray-600 bg-transparent border-none hover:text-black data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:font-bold transition-all duration-200 whitespace-nowrap",
+                  children: h.label,
+                },
+                h.key
+              )
+            ),
+          }),
+          u.map((h) => {
+            const p = d[h.key] || [],
+              o = Ps(p);
+            return e.jsxs(
+              xt,
+              {
+                value: h.key,
+                className: "mt-0",
+                children: [
+                  e.jsx(ft, {
+                    columns: o.columns,
+                    gap: o.gap,
+                    className:
+                      "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6",
+                    children: p.map((m) =>
+                      e.jsx(
+                        ae,
+                        {
+                          article: m,
+                          reactions: r[m.id] || [],
+                          onPostLove: (A) => c(m.id, A),
+                          onPostComment: (A) => l(m.id, A),
+                          className:
+                            "bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-200",
+                        },
+                        m.id
+                      )
+                    ),
+                  }),
+                  p.length === 0 &&
+                    e.jsxs("div", {
+                      className: "text-center py-12 text-gray-500",
+                      children: [
+                        e.jsx("p", {
+                          className: "text-lg",
+                          children: "No articles available for this section.",
+                        }),
+                        e.jsx("p", {
+                          className: "text-sm mt-2",
+                          children: "Please check back later for updates.",
+                        }),
+                      ],
+                    }),
+                ],
+              },
+              h.key
+            );
+          }),
+        ],
+      }),
+    });
+  };
+var wt = {
+    color: void 0,
+    size: void 0,
+    className: void 0,
+    style: void 0,
+    attr: void 0,
+  },
+  ze = se.createContext && se.createContext(wt),
+  Rs = ["attr", "size", "title"];
+function Fs(t, s) {
+  if (t == null) return {};
+  var a = Ls(t, s),
+    r,
+    c;
+  if (Object.getOwnPropertySymbols) {
+    var l = Object.getOwnPropertySymbols(t);
+    for (c = 0; c < l.length; c++)
+      (r = l[c]),
+        !(s.indexOf(r) >= 0) &&
+          Object.prototype.propertyIsEnumerable.call(t, r) &&
+          (a[r] = t[r]);
+  }
+  return a;
+}
+function Ls(t, s) {
+  if (t == null) return {};
+  var a = {};
+  for (var r in t)
+    if (Object.prototype.hasOwnProperty.call(t, r)) {
+      if (s.indexOf(r) >= 0) continue;
+      a[r] = t[r];
+    }
+  return a;
+}
+function be() {
+  return (
+    (be = Object.assign
+      ? Object.assign.bind()
+      : function (t) {
+          for (var s = 1; s < arguments.length; s++) {
+            var a = arguments[s];
+            for (var r in a)
+              Object.prototype.hasOwnProperty.call(a, r) && (t[r] = a[r]);
+          }
+          return t;
+        }),
+    be.apply(this, arguments)
+  );
+}
+function He(t, s) {
+  var a = Object.keys(t);
+  if (Object.getOwnPropertySymbols) {
+    var r = Object.getOwnPropertySymbols(t);
+    s &&
+      (r = r.filter(function (c) {
+        return Object.getOwnPropertyDescriptor(t, c).enumerable;
+      })),
+      a.push.apply(a, r);
+  }
+  return a;
+}
+function ye(t) {
+  for (var s = 1; s < arguments.length; s++) {
+    var a = arguments[s] != null ? arguments[s] : {};
+    s % 2
+      ? He(Object(a), !0).forEach(function (r) {
+          Es(t, r, a[r]);
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(t, Object.getOwnPropertyDescriptors(a))
+      : He(Object(a)).forEach(function (r) {
+          Object.defineProperty(t, r, Object.getOwnPropertyDescriptor(a, r));
+        });
+  }
+  return t;
+}
+function Es(t, s, a) {
+  return (
+    (s = Ds(s)),
+    s in t
+      ? Object.defineProperty(t, s, {
+          value: a,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0,
+        })
+      : (t[s] = a),
+    t
+  );
+}
+function Ds(t) {
+  var s = Us(t, "string");
+  return typeof s == "symbol" ? s : s + "";
+}
+function Us(t, s) {
+  if (typeof t != "object" || !t) return t;
+  var a = t[Symbol.toPrimitive];
+  if (a !== void 0) {
+    var r = a.call(t, s);
+    if (typeof r != "object") return r;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (s === "string" ? String : Number)(t);
+}
+function vt(t) {
+  return (
+    t &&
+    t.map((s, a) =>
+      se.createElement(s.tag, ye({ key: a }, s.attr), vt(s.child))
+    )
+  );
+}
+function Os(t) {
+  return (s) =>
+    se.createElement(_s, be({ attr: ye({}, t.attr) }, s), vt(t.child));
+}
+function _s(t) {
+  var s = (a) => {
+    var { attr: r, size: c, title: l } = t,
+      d = Fs(t, Rs),
+      u = c || a.size || "1em",
+      f;
+    return (
+      a.className && (f = a.className),
+      t.className && (f = (f ? f + " " : "") + t.className),
+      se.createElement(
+        "svg",
+        be(
+          { stroke: "currentColor", fill: "currentColor", strokeWidth: "0" },
+          a.attr,
+          r,
+          d,
+          {
+            className: f,
+            style: ye(ye({ color: t.color || a.color }, a.style), t.style),
+            height: u,
+            width: u,
+            xmlns: "http://www.w3.org/2000/svg",
+          }
+        ),
+        l && se.createElement("title", null, l),
+        t.children
+      )
+    );
+  };
+  return ze !== void 0
+    ? se.createElement(ze.Consumer, null, (a) => s(a))
+    : s(wt);
+}
+function $s(t) {
+  return Os({
+    attr: { viewBox: "0 0 384 512" },
+    child: [
+      {
+        tag: "path",
+        attr: {
+          d: "M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z",
+        },
+        child: [],
+      },
+    ],
+  })(t);
+}
+const zs = () => {
+    const t = [
+        { title: "News" },
+        { title: "About Us" },
+        { title: "Home" },
+        { title: "Make Advertise" },
+      ],
+      s = [{ title: "Terms and Conditions" }, { title: "Privacy Policy" }],
+      a = [
+        "Top Stories",
+        "Breaking News",
+        "World",
+        "National",
+        "Politics",
+        "Business",
+        "Technology",
+        "Entertainment",
+        "Sports",
+        "Health",
+      ];
+    return e.jsxs("section", {
+      className:
+        "flex flex-col w-full lg:flex-row items-start justify-between gap-6 xl:gap-32 p-4 sm:p-6 md:p-8 lg:p-10 bg-[#00254a]",
+      children: [
+        e.jsxs("div", {
+          className:
+            "flex flex-col w-full lg:w-1/2 items-start gap-4 md:gap-6 lg:gap-10",
+          children: [
+            e.jsx("h1", {
+              className:
+                "self-stretch font-bold text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-[0] leading-tight lg:leading-[78px] font-sans",
+              children: "ALAMOCITYPULSE",
+            }),
+            e.jsxs("div", {
+              className: "flex flex-col w-full items-start gap-2.5",
+              children: [
+                e.jsx("h2", {
+                  className:
+                    "self-stretch font-semibold text-white text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl tracking-[0] leading-tight lg:leading-[38.4px] font-sans",
+                  children:
+                    "Experience the pinnacle of luxury air travel with JETSTRATIX, where excellence and trust are our guiding principles.",
+                }),
+                e.jsx("p", {
+                  className:
+                    "self-stretch font-normal text-[#9b9b9b] text-sm md:text-base tracking-[0] leading-6 font-sans",
+                  children:
+                    "With over 30 years of unparalleled hospitality and aviation expertise, we ensure your journey is seamless and exceptional.",
+                }),
+              ],
+            }),
+            e.jsx("div", {
+              className: "w-full sm:w-80 lg:w-[304px]",
+              children: e.jsxs("button", {
+                className:
+                  "w-full h-12 sm:h-14 cursor-pointer rounded-xl border-[0.5px] border-solid border-white bg-transparent text-white text-lg sm:text-xl font-normal flex justify-between items-center px-4 sm:px-5 hover:bg-white hover:text-[#00254a] transition-colors",
+                children: [
+                  e.jsx("div", { children: "Reach Out" }),
+                  e.jsx("div", {
+                    className:
+                      "w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-lg flex items-center justify-center",
+                    children: e.jsx(Vt, {
+                      className: "w-5 h-5 sm:w-6 sm:h-6 text-[#00254a]",
+                    }),
+                  }),
+                ],
+              }),
+            }),
+          ],
+        }),
+        e.jsxs("div", {
+          className:
+            "flex flex-col w-full lg:w-1/2 items-start gap-4 lg:gap-[23px]",
+          children: [
+            e.jsx("div", {
+              className:
+                "hidden xl:flex self-stretch w-full h-8  md:h-12 lg:h-20 bg-white",
+            }),
+            e.jsx(Tt, {
+              className: "w-full bg-transparent border-none shadow-none",
+              children: e.jsxs(kt, {
+                className:
+                  "flex flex-col items-start justify-end gap-4 sm:gap-6 p-0 pt-2",
+                children: [
+                  e.jsxs("div", {
+                    className:
+                      "flex flex-col sm:flex-row w-full items-start justify-between gap-6 sm:gap-4 lg:gap-8",
+                    children: [
+                      e.jsxs("div", {
+                        className:
+                          "flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0",
+                        children: [
+                          e.jsx("h3", {
+                            className:
+                              "font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans",
+                            children: "Resources",
+                          }),
+                          e.jsx("div", {
+                            className:
+                              "flex flex-col items-start gap-2 sm:gap-3",
+                            children: t.map((r, c) =>
+                              e.jsx(
+                                "a",
+                                {
+                                  href: "#",
+                                  className:
+                                    "font-normal text-white text-sm lg:text-base tracking-[0] leading-normal font-sans hover:text-gray-300 transition-colors",
+                                  children: r.title,
+                                },
+                                c
+                              )
+                            ),
+                          }),
+                        ],
+                      }),
+                      e.jsxs("div", {
+                        className:
+                          "flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0",
+                        children: [
+                          e.jsx("h3", {
+                            className:
+                              "font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans",
+                            children: "JETSTRATIX",
+                          }),
+                          e.jsx("div", {
+                            className: "flex flex-col gap-2 sm:gap-3",
+                            children: s.map((r, c) =>
+                              e.jsx(
+                                "a",
+                                {
+                                  href: "#",
+                                  className:
+                                    "font-normal text-white text-sm lg:text-base racking-[0] leading-[21px] font-sans hover:text-gray-300 transition-colors",
+                                  children: r.title,
+                                },
+                                c
+                              )
+                            ),
+                          }),
+                        ],
+                      }),
+                      e.jsxs("div", {
+                        className:
+                          "flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0",
+                        children: [
+                          e.jsx("h3", {
+                            className:
+                              "font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans",
+                            children: "Category",
+                          }),
+                          e.jsx("div", {
+                            className:
+                              "font-normal text-white text-sm lg:text-base tracking-[0] leading-[20px] sm:leading-[27.2px] font-sans",
+                            children: a.map((r, c) =>
+                              e.jsxs(
+                                se.Fragment,
+                                {
+                                  children: [
+                                    e.jsx("a", {
+                                      href: "#",
+                                      className:
+                                        "hover:text-gray-300 transition-colors",
+                                      children: r,
+                                    }),
+                                    c < a.length - 1 && e.jsx("br", {}),
+                                  ],
+                                },
+                                c
+                              )
+                            ),
+                          }),
+                        ],
+                      }),
+                    ],
+                  }),
+                  e.jsxs("div", {
+                    className:
+                      "flex items-center justify-center sm:justify-start gap-3 sm:gap-4 lg:gap-5 flex-wrap w-full",
+                    children: [
+                      e.jsx("button", {
+                        className:
+                          "flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",
+                        children: e.jsx(Ht, {
+                          size: 14,
+                          className: "sm:w-4 sm:h-4",
+                          color: "#fdfdfd",
+                          strokeWidth: 3,
+                        }),
+                      }),
+                      e.jsx("button", {
+                        className:
+                          "flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",
+                        children: e.jsx(qt, {
+                          size: 14,
+                          className: "sm:w-4 sm:h-4",
+                          color: "#fdfdfd",
+                          strokeWidth: 3,
+                        }),
+                      }),
+                      e.jsx("button", {
+                        className:
+                          "flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",
+                        children: e.jsx(Qt, {
+                          size: 14,
+                          className: "sm:w-4 sm:h-4",
+                          color: "#fdfdfd",
+                          strokeWidth: 3,
+                        }),
+                      }),
+                      e.jsx("button", {
+                        className:
+                          "flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",
+                        children: e.jsx($t, {
+                          size: 14,
+                          className: "sm:w-4 sm:h-4",
+                          color: "#fdfdfd",
+                          strokeWidth: 3,
+                        }),
+                      }),
+                      e.jsx("button", {
+                        className:
+                          "flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors",
+                        children: e.jsx($s, {
+                          size: 14,
+                          className: "sm:w-4 sm:h-4",
+                        }),
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+            }),
+          ],
+        }),
+      ],
+    });
+  },
+  Hs = ({ error: t }) =>
+    e.jsx("div", {
+      className: "flex items-center justify-center min-h-screen",
+      children: e.jsxs("div", {
+        className: "text-center",
+        children: [
+          e.jsx("h2", {
+            className: "text-2xl font-bold text-red-600 mb-4",
+            children: "Error Loading News",
+          }),
+          e.jsx("p", { className: "text-gray-600", children: t }),
+          e.jsx("button", {
+            onClick: () => window.location.reload(),
+            className:
+              "mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700",
+            children: "Retry",
+          }),
+        ],
+      }),
+    }),
+  Be = ({
+    advertisement: t,
+    width: s = "100%",
+    height: a = "200px",
+    position: r = "center",
+    onHide: c,
+    className: l = "",
+  }) => {
+    const [d, u] = g.useState(!0),
+      [f, h] = g.useState(0),
+      [p, o] = g.useState(!1);
+    g.useEffect(() => {
+      if (!t?.imageUrls || t.imageUrls.length <= 1) return;
+      const y = setInterval(() => {
+        p || h((x) => (x + 1) % t.imageUrls.length);
+      }, 1e4);
+      return () => clearInterval(y);
+    }, [t?.imageUrls, p]);
+    const m = () => {
+        u(!1), c && c(t?.id);
+      },
+      A = () => {
+        t?.url && window.open(t.url, "_blank", "noopener,noreferrer");
+      };
+    if (!d || !t) return null;
+    if (!t.imageUrls || t.imageUrls.length === 0)
+      return e.jsxs("div", {
+        className: `bg-gray-300 rounded-lg flex items-center justify-center relative group ${l}`,
+        style: { width: s, height: a },
+        children: [
+          e.jsx("span", {
+            className: "text-gray-600 text-sm",
+            children: "Advertisement Space",
+          }),
+          e.jsx("button", {
+            onClick: m,
+            className:
+              "absolute top-2 right-2 p-1 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70",
+            title: "Hide advertisement",
+            children: e.jsx(de, { size: 12 }),
+          }),
+        ],
+      });
+    const N = t.imageUrls.length > 1;
+    return e.jsxs("div", {
+      className: `relative rounded-lg overflow-hidden group cursor-pointer transition-transform duration-200 hover:scale-[1.02] group-hover:shadow-lg ${l}`,
+      style: { width: s, height: a },
+      onMouseEnter: () => o(!0),
+      onMouseLeave: () => o(!1),
+      onClick: A,
+      children: [
+        e.jsx("div", {
+          className:
+            "absolute top-0 left-0 bg-gray-800 text-red-500 text-xs px-2 py-1 rounded-br z-10",
+          children: "Ads",
+        }),
+        e.jsx("div", {
+          className: "relative w-full h-full overflow-hidden",
+          children: e.jsx("div", {
+            className: "flex transition-transform duration-500 ease-in-out",
+            style: { transform: `translateX(-${f * 100}%)` },
+            children: t.imageUrls.map((y, x) =>
+              e.jsx(
+                "img",
+                {
+                  src: y,
+                  alt: `${t.title || "Advertisement"} ${x + 1}`,
+                  className: "w-full h-full object-cover flex-shrink-0",
+                  onError: (v) => {
+                    v.target.src =
+                      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOWNhM2FmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QWQ8L3RleHQ+PC9zdmc+";
+                  },
+                },
+                x
+              )
+            ),
+          }),
+        }),
+        t.url &&
+          e.jsx("div", {
+            className: "absolute top-2 right-8 z-10",
+            children: e.jsx("div", {
+              className:
+                "bg-black bg-opacity-50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200",
+              children: e.jsx(ke, { size: 12 }),
+            }),
+          }),
+        e.jsx("button", {
+          onClick: (y) => {
+            y.stopPropagation(), m();
+          },
+          "aria-label": "Hide advertisement",
+          className:
+            "absolute top-2 right-2 p-1 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70 z-10",
+          children: e.jsx(de, { size: 12 }),
+        }),
+        N &&
+          e.jsx("div", {
+            className:
+              "absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 z-10",
+            children: t.imageUrls.map((y, x) =>
+              e.jsx(
+                "button",
+                {
+                  onClick: (v) => {
+                    v.stopPropagation(), h(x);
+                  },
+                  className: `w-2 h-2 rounded-full transition-colors duration-200 ${
+                    x === f ? "bg-white" : "bg-white/50"
+                  }`,
+                },
+                x
+              )
+            ),
+          }),
+      ],
+    });
+  },
+  xe = ({
+    advertisements: t = [],
+    position: s = "center",
+    width: a = "100%",
+    height: r = "200px",
+    className: c = "",
+    maxAds: l = 1,
+  }) => {
+    const [d, u] = g.useState(new Set()),
+      f = (o) => {
+        u((m) => new Set(m).add(o));
+      },
+      p = (() => {
+        let o = t.filter((m) => !d.has(m.id));
+        switch (((o = o.sort((m, A) => m.id - A.id)), s)) {
+          case "center":
+            return o.slice(0, l);
+          case "sidebar-top":
+            return o.slice(0, l);
+          case "sidebar-mid":
+            return o.slice(Math.min(1, o.length), Math.min(1, o.length) + l);
+          case "sidebar-bottom":
+            return o.slice(Math.min(2, o.length), Math.min(2, o.length) + l);
+          case "bottom":
+            return o.slice(Math.min(3, o.length), Math.min(3, o.length) + l);
+          case "mobile-top":
+            return o.slice(0, l);
+          case "mobile-mid":
+            return o.slice(Math.min(1, o.length), Math.min(1, o.length) + l);
+          default:
+            return o.slice(0, l);
+        }
+      })();
+    return t.length === 0 || p.length === 0
+      ? e.jsx(Be, {
+          advertisement: null,
+          width: a,
+          height: r,
+          position: s,
+          className: c,
+        })
+      : e.jsx("div", {
+          className: `space-y-4 ${c}`,
+          children: p.map((o, m) =>
+            e.jsx(
+              Be,
+              { advertisement: o, width: a, height: r, position: s, onHide: f },
+              `${o.id}-${s}-${m}`
+            )
+          ),
+        });
+  },
+  Bs = ({
+    advertisement: t,
+    format: s = "card",
+    onHide: a,
+    onView: r,
+    className: c = "",
+  }) => {
+    const [l, d] = g.useState(0),
+      [u, f] = g.useState(!1),
+      [h, p] = g.useState(!1);
+    g.useEffect(() => {
+      if (!h && r) {
+        const y = setTimeout(() => {
+          r(t.id), p(!0);
+        }, 1e3);
+        return () => clearTimeout(y);
+      }
+    }, [h, r, t.id]),
+      g.useEffect(() => {
+        if (t.imageUrls.length > 1 && !u) {
+          const y = setInterval(() => {
+            d((x) => (x + 1) % t.imageUrls.length);
+          }, 4e3);
+          return () => clearInterval(y);
+        }
+      }, [t.imageUrls.length, u]);
+    const o = () => {
+        t.url && window.open(t.url, "_blank", "noopener,noreferrer");
+      },
+      m = (y) => {
+        y.stopPropagation(), d((x) => (x + 1) % t.imageUrls.length);
+      },
+      A = (y) => {
+        y.stopPropagation(),
+          d((x) => (x === 0 ? t.imageUrls.length - 1 : x - 1));
+      },
+      N = (y) => {
+        y.stopPropagation(), a && a(t.id);
+      };
+    return s === "banner"
+      ? e.jsxs("div", {
+          className: `relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-md ${c}`,
+          onMouseEnter: () => f(!0),
+          onMouseLeave: () => f(!1),
+          onClick: o,
+          children: [
+            e.jsx("div", {
+              className: "absolute top-2 left-2 z-10",
+              children: e.jsx("span", {
+                className:
+                  "bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-medium",
+                children: "Sponsored",
+              }),
+            }),
+            e.jsx("button", {
+              onClick: N,
+              className:
+                "absolute top-2 right-2 z-10 p-1.5 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-opacity-70",
+              title: "Hide this ad",
+              children: e.jsx(de, { size: 14 }),
+            }),
+            e.jsxs("div", {
+              className: "flex h-24 sm:h-28",
+              children: [
+                e.jsxs("div", {
+                  className: "relative w-32 sm:w-40 flex-shrink-0",
+                  children: [
+                    e.jsx("img", {
+                      src: t.imageUrls[l],
+                      alt: t.title,
+                      className: "w-full h-full object-cover",
+                      onError: (y) => {
+                        y.target.src =
+                          "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=400";
+                      },
+                    }),
+                    t.imageUrls.length > 1 &&
+                      e.jsx("div", {
+                        className:
+                          "absolute bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1",
+                        children: t.imageUrls
+                          .slice(0, 3)
+                          .map((y, x) =>
+                            e.jsx(
+                              "div",
+                              {
+                                className: `w-1.5 h-1.5 rounded-full ${
+                                  x === l ? "bg-white" : "bg-white/50"
+                                }`,
+                              },
+                              x
+                            )
+                          ),
+                      }),
+                  ],
+                }),
+                e.jsxs("div", {
+                  className: "flex-1 p-3 sm:p-4 flex flex-col justify-between",
+                  children: [
+                    e.jsxs("div", {
+                      children: [
+                        e.jsx("h3", {
+                          className:
+                            "font-semibold text-gray-900 text-sm sm:text-base line-clamp-1 mb-1",
+                          children: t.title,
+                        }),
+                        e.jsx("p", {
+                          className:
+                            "text-gray-600 text-xs sm:text-sm line-clamp-2 mb-2",
+                          children: t.description,
+                        }),
+                      ],
+                    }),
+                    e.jsxs("div", {
+                      className: "flex items-center justify-between",
+                      children: [
+                        e.jsxs("div", {
+                          className:
+                            "flex items-center space-x-2 text-xs text-gray-500",
+                          children: [
+                            e.jsx(Ne, { size: 12 }),
+                            e.jsx("span", { children: t.category }),
+                          ],
+                        }),
+                        e.jsxs("div", {
+                          className:
+                            "flex items-center text-blue-600 text-xs font-medium group-hover:text-blue-700",
+                          children: [
+                            e.jsx("span", {
+                              className: "mr-1",
+                              children: "Learn More",
+                            }),
+                            e.jsx(ke, { size: 12 }),
+                          ],
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        })
+      : s === "sidebar"
+      ? e.jsxs("div", {
+          className: `relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-md w-full ${c}`,
+          onMouseEnter: () => f(!0),
+          onMouseLeave: () => f(!1),
+          onClick: o,
+          children: [
+            e.jsx("div", {
+              className: "absolute top-2 left-2 z-10",
+              children: e.jsx("span", {
+                className:
+                  "bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium",
+                children: "Ad",
+              }),
+            }),
+            e.jsx("button", {
+              onClick: N,
+              className:
+                "absolute top-2 right-2 z-10 p-1 bg-black bg-opacity-50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200",
+              title: "Hide this ad",
+              children: e.jsx(de, { size: 12 }),
+            }),
+            e.jsxs("div", {
+              className: "relative h-32",
+              children: [
+                e.jsx("img", {
+                  src: t.imageUrls[l],
+                  alt: t.title,
+                  className: "w-full h-full object-cover",
+                  onError: (y) => {
+                    y.target.src =
+                      "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=400";
+                  },
+                }),
+                t.imageUrls.length > 1 &&
+                  u &&
+                  e.jsxs(e.Fragment, {
+                    children: [
+                      e.jsx("button", {
+                        onClick: A,
+                        className:
+                          "absolute left-1 top-1/2 transform -translate-y-1/2 p-1 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70",
+                        children: e.jsx(Ce, { size: 12 }),
+                      }),
+                      e.jsx("button", {
+                        onClick: m,
+                        className:
+                          "absolute right-1 top-1/2 transform -translate-y-1/2 p-1 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70",
+                        children: e.jsx(Te, { size: 12 }),
+                      }),
+                    ],
+                  }),
+                t.imageUrls.length > 1 &&
+                  e.jsx("div", {
+                    className:
+                      "absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1",
+                    children: t.imageUrls.map((y, x) =>
+                      e.jsx(
+                        "div",
+                        {
+                          className: `w-1.5 h-1.5 rounded-full ${
+                            x === l ? "bg-white" : "bg-white/50"
+                          }`,
+                        },
+                        x
+                      )
+                    ),
+                  }),
+              ],
+            }),
+            e.jsxs("div", {
+              className: "p-3",
+              children: [
+                e.jsx("h3", {
+                  className:
+                    "font-medium text-gray-900 text-sm line-clamp-2 mb-2",
+                  children: t.title,
+                }),
+                e.jsx("p", {
+                  className: "text-gray-600 text-xs line-clamp-2 mb-3",
+                  children: t.description,
+                }),
+                e.jsx("div", {
+                  className:
+                    "flex items-center justify-between text-xs text-gray-500 mb-2",
+                  children: e.jsxs("span", {
+                    className: "flex items-center",
+                    children: [
+                      e.jsx(Ne, { size: 10, className: "mr-1" }),
+                      t.category,
+                    ],
+                  }),
+                }),
+                e.jsx("button", {
+                  className:
+                    "w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-2 rounded-md transition-colors duration-200",
+                  children: "Visit Now",
+                }),
+              ],
+            }),
+          ],
+        })
+      : e.jsxs("div", {
+          className: `relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${c}`,
+          onMouseEnter: () => f(!0),
+          onMouseLeave: () => f(!1),
+          onClick: o,
+          children: [
+            e.jsx("div", {
+              className: "absolute top-3 left-3 z-10",
+              children: e.jsx("div", {
+                className:
+                  "bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg",
+                children: "Sponsored",
+              }),
+            }),
+            e.jsx("button", {
+              onClick: N,
+              className:
+                "absolute top-3 right-3 z-10 p-2 bg-black bg-opacity-30 backdrop-blur-sm text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-opacity-50",
+              title: "Hide this ad",
+              children: e.jsx(de, { size: 16 }),
+            }),
+            e.jsxs("div", {
+              className: "relative h-48 overflow-hidden",
+              children: [
+                e.jsx("img", {
+                  src: t.imageUrls[l],
+                  alt: t.title,
+                  className:
+                    "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",
+                  onError: (y) => {
+                    y.target.src =
+                      "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600";
+                  },
+                }),
+                t.imageUrls.length > 1 &&
+                  u &&
+                  e.jsxs("div", {
+                    className:
+                      "absolute inset-0 flex items-center justify-between px-2",
+                    children: [
+                      e.jsx("button", {
+                        onClick: A,
+                        className:
+                          "p-2 bg-black bg-opacity-50 backdrop-blur-sm text-white rounded-full hover:bg-opacity-70 transition-all duration-200",
+                        children: e.jsx(Ce, { size: 16 }),
+                      }),
+                      e.jsx("button", {
+                        onClick: m,
+                        className:
+                          "p-2 bg-black bg-opacity-50 backdrop-blur-sm text-white rounded-full hover:bg-opacity-70 transition-all duration-200",
+                        children: e.jsx(Te, { size: 16 }),
+                      }),
+                    ],
+                  }),
+                t.imageUrls.length > 1 &&
+                  e.jsx("div", {
+                    className:
+                      "absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2",
+                    children: t.imageUrls.map((y, x) =>
+                      e.jsx(
+                        "button",
+                        {
+                          onClick: (v) => {
+                            v.stopPropagation(), d(x);
+                          },
+                          className: `w-2 h-2 rounded-full transition-all duration-200 ${
+                            x === l
+                              ? "bg-white scale-110"
+                              : "bg-white/60 hover:bg-white/80"
+                          }`,
+                        },
+                        x
+                      )
+                    ),
+                  }),
+                e.jsx("div", {
+                  className:
+                    "absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent",
+                }),
+              ],
+            }),
+            e.jsxs("div", {
+              className: "p-5",
+              children: [
+                e.jsx("div", {
+                  className: "flex items-center justify-between mb-3",
+                  children: e.jsxs("span", {
+                    className:
+                      "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800",
+                    children: [
+                      e.jsx(Ne, { size: 12, className: "mr-1" }),
+                      t.category,
+                    ],
+                  }),
+                }),
+                e.jsx("h3", {
+                  className:
+                    "font-bold text-gray-900 text-lg mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-200",
+                  children: t.title,
+                }),
+                e.jsx("p", {
+                  className:
+                    "text-gray-600 text-sm line-clamp-3 mb-4 leading-relaxed",
+                  children: t.description,
+                }),
+                e.jsxs("div", {
+                  className: "flex items-center justify-between",
+                  children: [
+                    e.jsxs("div", {
+                      className: "text-xs text-gray-500",
+                      children: ["by ", t.user?.split("@")[0] || "Advertiser"],
+                    }),
+                    e.jsxs("button", {
+                      className:
+                        "inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform group-hover:scale-105 shadow-md",
+                      children: [
+                        e.jsx("span", {
+                          className: "mr-2",
+                          children: "Learn More",
+                        }),
+                        e.jsx(ke, { size: 14 }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        });
+  },
+  Ws = ({
+    advertisements: t = [],
+    position: s = "center",
+    format: a = "card",
+    maxAds: r = 1,
+    className: c = "",
+    onAdView: l,
+  }) => {
+    const [d, u] = g.useState(new Set()),
+      f = (o) => {
+        u((m) => new Set(m).add(o));
+      },
+      h = g.useMemo(() => {
+        const o = t
+          .filter((m) => m.status === "approved" && !d.has(m.id))
+          .sort((m, A) => (A.views || 0) - (m.views || 0));
+        switch (s) {
+          case "center":
+            return o.slice(0, r);
+          case "sidebar-top":
+            return o.slice(0, r);
+          case "sidebar-mid":
+            return o.slice(1, 1 + r);
+          case "sidebar-bottom":
+            return o.slice(2, 2 + r);
+          case "bottom":
+            return o.slice(3, 3 + r);
+          case "mobile-top":
+            return o.slice(0, r);
+          case "mobile-mid":
+            return o.slice(1, 1 + r);
+          default:
+            return o.slice(0, r);
+        }
+      }, [t, d, s, r]);
+    if (h.length === 0)
+      return e.jsx("div", {
+        className: `text-center py-8 ${c}`,
+        children: e.jsx("div", {
+          className: "text-gray-400 text-sm",
+          children: "No advertisements available",
+        }),
+      });
+    const p = () => {
+      switch (a) {
+        case "banner":
+          return "space-y-3";
+        case "sidebar":
+          return "space-y-4";
+        case "card":
+          return r > 1
+            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            : "flex justify-center";
+        default:
+          return "space-y-4";
+      }
+    };
+    return e.jsx("div", {
+      className: `${p()} ${c}`,
+      children: h.map((o, m) =>
+        e.jsx(
+          Bs,
+          {
+            advertisement: o,
+            format: a,
+            onHide: f,
+            onView: l,
+            className: a === "card" && r === 1 ? "max-w-sm mx-auto" : "",
+          },
+          `${o.id}-${s}-${m}`
+        )
+      ),
+    });
+  },
+  te = ({
+    advertisements: t,
+    placement: s,
+    onAdView: a,
+    className: r = "",
+  }) => {
+    const l = (() => {
+      switch (s) {
+        case "header-banner":
+          return {
+            format: "banner",
+            position: "center",
+            maxAds: 1,
+            containerClass: "w-full max-w-4xl mx-auto mb-6",
+          };
+        case "content-top":
+          return {
+            format: "card",
+            position: "center",
+            maxAds: 1,
+            containerClass: "w-full max-w-sm mx-auto my-8",
+          };
+        case "content-middle":
+          return {
+            format: "banner",
+            position: "center",
+            maxAds: 1,
+            containerClass: "w-full max-w-3xl mx-auto my-8",
+          };
+        case "content-bottom":
+          return {
+            format: "card",
+            position: "bottom",
+            maxAds: 1,
+            containerClass: "w-full max-w-4xl mx-auto mt-8",
+          };
+        case "sidebar":
+          return {
+            format: "sidebar",
+            position: "sidebar-top",
+            maxAds: 1,
+            containerClass: "w-full max-w-xs",
+          };
+        case "footer":
+          return {
+            format: "banner",
+            position: "bottom",
+            maxAds: 1,
+            containerClass: "w-full max-w-6xl mx-auto",
+          };
+        default:
+          return {
+            format: "card",
+            position: "center",
+            maxAds: 1,
+            containerClass: "w-full",
+          };
+      }
+    })();
+    return e.jsx("div", {
+      className: `${l.containerClass} ${r}`,
+      children: e.jsx(Ws, {
+        advertisements: t,
+        format: l.format,
+        position: l.position,
+        maxAds: l.maxAds,
+        onAdView: a,
+      }),
+    });
+  };
+function Zs() {
+  const [t, s] = g.useState([]),
+    [a, r] = g.useState(!1),
+    c = g.useRef(null),
+    [l, d] = g.useState(""),
+    [u, f] = g.useState([]),
+    [h, p] = g.useState(!1),
+    o = async (n) => {
+      if (!n.trim()) {
+        p(!1), f([]);
+        return;
+      }
+      p(!0);
+      try {
+        const i = (await Jt({ search_term: n })).map(Ue);
+        f(i), await E(i);
+      } catch (w) {
+        console.error("Search failed:", w), f([]);
+      }
+    },
+    [m, A] = g.useState({ sections: [], loading: !0, error: null }),
+    [N, y] = g.useState({}),
+    [x, v] = g.useState({}),
+    D = async () => {
+      try {
+        r(!0);
+        const n = await Mt();
+        n.success
+          ? s(n.data || [])
+          : (console.error("Failed to fetch advertisements:", n.error), s([]));
+      } catch (n) {
+        console.error("Error fetching advertisements:", n), s([]);
+      } finally {
+        r(!1);
+      }
+    },
+    M = async (n) => {
+      if (!x[n])
+        try {
+          v((i) => ({ ...i, [n]: !0 }));
+          const w = await ts(n);
+          y((i) => ({ ...i, [n]: w }));
+        } catch (w) {
+          console.error(`Failed to fetch reactions for news ${n}:`, w);
+        } finally {
+          v((w) => ({ ...w, [n]: !1 }));
+        }
+    },
+    T = async (n, w) => {
+      try {
+        const i = await ss(n, w);
+        return (
+          y((b) => ({ ...b, [n]: b[n] ? [...b[n], i] : [i] })), await M(n), i
+        );
+      } catch (i) {
+        throw (
+          (console.error(`Failed to post love reaction for news ${n}:`, i), i)
+        );
+      }
+    },
+    I = async (n, w) => {
+      try {
+        if (!w || w.trim() === "") throw new Error("Comment cannot be empty");
+        const i = await as(n, w.trim());
+        return (
+          y((b) => ({ ...b, [n]: b[n] ? [...b[n], i] : [i] })), await M(n), i
+        );
+      } catch (i) {
+        throw (console.error(`Failed to post comment for news ${n}:`, i), i);
+      }
+    },
+    U = async (n, w) => {
+      try {
+        const i = [];
+        w.hasOwnProperty("love") && i.push(T(n, w.love)),
+          w.comment && w.comment.trim() !== "" && i.push(I(n, w.comment));
+        const b = await Promise.all(i);
+        return b.length > 0 ? b[b.length - 1] : null;
+      } catch (i) {
+        throw (console.error(`Failed to post reaction for news ${n}:`, i), i);
+      }
+    };
+  g.useEffect(() => {
+    (async () => {
+      try {
+        A((C) => ({ ...C, loading: !0 })), y({}), v({});
+        const w = await Ke();
+        if (!w || w.length === 0) throw new Error("No news data received");
+        const i = w
+            .map(Ue)
+            .filter((C) => C && C.id)
+            .sort(
+              (C, L) =>
+                new Date(L.publishedDateTime) - new Date(C.publishedDateTime)
+            ),
+          b = Date.now() + Math.floor(Math.random() * 1e3);
+        let W = [...i];
+        for (let C = 0; C < 3; C++) W = ie(W, 1, !0);
+        const F = S(W);
+        A({ sections: F, loading: !1, error: null }), await E(i);
+      } catch (w) {
+        console.error("Failed to fetch news data:", w),
+          A((i) => ({ ...i, loading: !1, error: w.message }));
+      }
+    })(),
+      D();
+  }, []);
+  const E = async (n) => {
+      const w = n
+        .filter((i) => i && i.id)
+        .map((i) =>
+          M(i.id).catch((b) =>
+            console.warn(`Failed to fetch reactions for article ${i.id}:`, b)
+          )
+        );
+      await Promise.allSettled(w);
+    },
+    S = (n) => {
+      const w = [];
+      let i = [...n];
+      const b = new Set();
+      if (!n || n.length === 0)
+        return console.warn("No news articles provided to organizeNewsData"), w;
+      if (((i = i.filter(O)), i.length === 0))
+        return console.warn("No valid news articles after filtering"), w;
+      const W = Math.min(3, Math.ceil(i.length / 20));
+      for (let F = 0; F < W && i.length > 10; F++) {
+        const C = {},
+          L = ie([...i], 0),
+          G = (j) => {
+            const k = [];
+            let V = 0;
+            const q = Math.min(j * 2, L.length * 2);
+            for (; k.length < j && L.length > 0 && V < q; ) {
+              const X = Math.floor(Math.random() * L.length),
+                Y = L[X];
+              if (O(Y) && !b.has(Y.id)) {
+                k.push(Y), b.add(Y.id), L.splice(X, 1);
+                const K = i.findIndex((pe) => O(pe) && pe.id === Y.id);
+                K > -1 && i.splice(K, 1);
+              } else X < L.length && L.splice(X, 1);
+              V++;
+            }
+            return k;
+          },
+          _ = G(1);
+        if (_.length === 0 && i.length > 0) {
+          const j = i.find((k) => O(k) && !b.has(k.id));
+          if (j) {
+            (C.featuredArticle = j), b.add(j.id);
+            const k = i.findIndex((V) => V.id === j.id);
+            k > -1 && i.splice(k, 1);
+          } else C.featuredArticle = null;
+        } else C.featuredArticle = _.length > 0 ? _[0] : null;
+        !C.featuredArticle &&
+          i.length === 0 &&
+          console.warn(
+            `No featured article available for section ${F} - no valid articles remaining`
+          ),
+          C.featuredArticle ||
+            console.warn(`No featured article available for section ${F}`);
+        const $ = G(1),
+          H = $.length > 0 ? $[0] : null;
+        C.audioNews = H
+          ? {
+              title: H.title || "Latest News Update",
+              description: H.description || "Stay updated with the latest news",
+              category: "THE HEADLINES",
+              sentiment: H.sentiment || "Neutral",
+              image: H.image || ce(),
+            }
+          : null;
+        const B = G(1);
+        C.longReadArticle = B.length > 0 ? B[0] : null;
+        const re = G(4);
+        C.liveUpdates = re
+          .filter(O)
+          .map((j) => ({
+            id: j.id,
+            title: j.title || "Untitled",
+            description: j.description || "",
+            timeAgo: j.publishedTime || "Recently",
+            category: j.category || "News",
+            image: j.image || ce(),
+          }));
+        const ge = G(6);
+        (C.sidebarArticles = ge.filter(O)), (C.tabsData = {});
+        const ne = i.filter((j) => O(j) && !b.has(j.id)),
+          ee = {};
+        ne.forEach((j) => {
+          if (!O(j)) return;
+          const k = j.category.toLowerCase();
+          ee[k] || (ee[k] = []), ee[k].push(j);
+        }),
+          Object.keys(ee).forEach((j) => {
+            ee[j] = ie(ee[j], 0);
+          });
+        const Z = (j, k) => {
+          if (!k) return !0;
+          const V = j.category.toLowerCase(),
+            q = j.title.toLowerCase(),
+            X = j.description.toLowerCase();
+          return k.some(
+            (Y) =>
+              V.includes(Y.toLowerCase()) ||
+              q.includes(Y.toLowerCase()) ||
+              X.includes(Y.toLowerCase())
+          );
+        };
+        Se.forEach((j) => {
+          let k = [];
+          if (j.categoryFilter) {
+            if (
+              ((k = [
+                ...ne
+                  .filter((q) => (O(q) ? Z(q, j.categoryFilter) : !1))
+                  .slice(0, j.count),
+              ]),
+              k.length < j.count)
+            ) {
+              const q = new Set(k.map((K) => K.id)),
+                X = ie(
+                  ne.filter((K) => O(K) && !q.has(K.id) && !b.has(K.id)),
+                  0
+                ),
+                Y = j.count - k.length;
+              k = [...k, ...X.slice(0, Y)];
+            }
+          } else {
+            const q = ne
+                .filter((K) => O(K) && !b.has(K.id))
+                .sort((K, pe) => {
+                  const jt = new Date(K.publishedDateTime || 0);
+                  return new Date(pe.publishedDateTime || 0) - jt;
+                }),
+              X = q.slice(0, 2),
+              Y = ie(q.slice(2), 0);
+            k = [...X, ...Y].slice(0, j.count);
+          }
+          (k = k.filter((V) => !!O(V))), (C.tabsData[j.key] = k);
+        }),
+          w.push(C);
+      }
+      if (w.length === 1 && i.length > 0) {
+        const F = i.filter((C) => O(C) && !b.has(C.id));
+        if (F.length > 0) {
+          const C = { ...w[0] },
+            L = ie(F, 0);
+          if (L.length > 0) {
+            if (
+              ((C.featuredArticle = L[0]),
+              (C.sidebarArticles = L.slice(1, 7).filter(O)),
+              L.length > 7)
+            ) {
+              const _ = L[7];
+              C.audioNews = {
+                title: _.title || "Latest News Update",
+                description:
+                  _.description || "Stay updated with the latest news",
+                category: "THE HEADLINES",
+                sentiment: _.sentiment || "Neutral",
+                image: _.image || ce(),
+              };
+            }
+            if ((L.length > 8 && (C.longReadArticle = L[8]), L.length > 9)) {
+              const _ = L.slice(9, 13);
+              C.liveUpdates = _.filter(O).map(($) => ({
+                id: $.id,
+                title: $.title || "Untitled",
+                description: $.description || "",
+                timeAgo: $.publishedTime || "Recently",
+                category: $.category || "News",
+                image: $.image || ce(),
+              }));
+            }
+            const G = L.slice(13);
+            G.length > 0 &&
+              Se.forEach((_) => {
+                let $ = [];
+                _.categoryFilter
+                  ? ($ = G.filter((B) =>
+                      O(B) ? matchesCategory(B, _.categoryFilter) : !1
+                    ).slice(0, Math.min(_.count, 4)))
+                  : ($ = G.sort(
+                      (H, B) =>
+                        new Date(B.publishedDateTime) -
+                        new Date(H.publishedDateTime)
+                    ).slice(0, Math.min(_.count, 4))),
+                  (C.tabsData[_.key] = $.filter(O));
+              }),
+              w.push(C);
+          }
+        }
+      }
+      return w;
+    },
+    z = () => {
+      c.current &&
+        c.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+  if (
+    (g.useEffect(() => {
+      const n = () => z();
+      return (
+        window.addEventListener("scrollToAbout", n),
+        () => window.removeEventListener("scrollToAbout", n)
+      );
+    }, []),
+    m.loading)
+  )
+    return e.jsx(St, {});
+  if (m.error) return e.jsx(Hs, { error: m.error });
+  const R = (n) => {
+    console.log(`Ad ${n} viewed`);
+  };
+  return e.jsxs(e.Fragment, {
+    children: [
+      e.jsxs(ve, {
+        children: [
+          e.jsx("title", {
+            children: "ALAMOCITYPULSE - Latest News and Updates",
+          }),
+          e.jsx("meta", {
+            name: "description",
+            content:
+              "Stay informed with the latest news, breaking stories, and in-depth analysis from ALAMOCITYPULSE",
+          }),
+        ],
+      }),
+      e.jsxs("div", {
+        className: "min-h-screen",
+        children: [
+          e.jsx(It, {
+            onScrollToAbout: z,
+            onSearch: o,
+            searchTerm: l,
+            setSearchTerm: d,
+          }),
+          e.jsx("main", {
+            className:
+              "w-full py-4 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]",
+            children: e.jsx("div", {
+              className: "",
+              children: h
+                ? e.jsxs("div", {
+                    className: "search-results",
+                    children: [
+                      e.jsxs("h2", {
+                        className: "text-2xl font-bold mb-4",
+                        children: ['Search Results for "', l, '"'],
+                      }),
+                      u.length > 0
+                        ? e.jsx("div", {
+                            className:
+                              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+                            children: u.map((n) =>
+                              e.jsx(
+                                ae,
+                                {
+                                  article: n,
+                                  reactions: N[n.id] || [],
+                                  onPostReaction: (w) => U(n.id, w),
+                                  onPostLove: (w) => T(n.id, w),
+                                  onPostComment: (w) => I(n.id, w),
+                                },
+                                n.id
+                              )
+                            ),
+                          })
+                        : e.jsx("p", { children: "No results found." }),
+                      e.jsx(Pt, {
+                        onClick: () => {
+                          p(!1), d("");
+                        },
+                        className: "mt-4",
+                        children: "Back to Home",
+                      }),
+                    ],
+                  })
+                : m.sections.map((n, w) =>
+                    e.jsx(
+                      "div",
+                      {
+                        children: e.jsxs("div", {
+                          className:
+                            "grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12",
+                          children: [
+                            e.jsxs("div", {
+                              className: "w-full",
+                              children: [
+                                n.featuredArticle &&
+                                  e.jsxs("div", {
+                                    className: "mb-5",
+                                    children: [
+                                      e.jsx($e, {
+                                        article: n.featuredArticle,
+                                        reactions:
+                                          N[n.featuredArticle.id] || [],
+                                        onPostReaction: (i) =>
+                                          U(n.featuredArticle.id, i),
+                                        onPostLove: (i) =>
+                                          T(n.featuredArticle.id, i),
+                                        onPostComment: (i) =>
+                                          I(n.featuredArticle.id, i),
+                                      }),
+                                      e.jsx(te, {
+                                        advertisements: t,
+                                        placement: "header-banner",
+                                        onAdView: R,
+                                        className: "mb-6",
+                                      }),
+                                    ],
+                                  }),
+                                n.audioNews &&
+                                  e.jsx("div", {
+                                    className: "mb-5",
+                                    children: e.jsx(rs, { ...n.audioNews }),
+                                  }),
+                                n.longReadArticle &&
+                                  e.jsxs(_e, {
+                                    children: [
+                                      e.jsx($e, {
+                                        article: n.longReadArticle,
+                                        reactions:
+                                          N[n.longReadArticle.id] || [],
+                                        onPostReaction: (i) =>
+                                          U(n.longReadArticle.id, i),
+                                        onPostLove: (i) =>
+                                          T(n.longReadArticle.id, i),
+                                        onPostComment: (i) =>
+                                          I(n.longReadArticle.id, i),
+                                      }),
+                                      e.jsx(te, {
+                                        advertisements: t,
+                                        placement: "content-middle",
+                                        onAdView: R,
+                                        className: "mb-6",
+                                      }),
+                                    ],
+                                  }),
+                                n.liveUpdates &&
+                                  n.liveUpdates.length > 0 &&
+                                  e.jsxs(e.Fragment, {
+                                    children: [
+                                      e.jsx(_e, {
+                                        children: e.jsx(ls, {
+                                          updates: n.liveUpdates,
+                                          newsReactions: N,
+                                          onPostLove: T,
+                                          onPostComment: I,
+                                        }),
+                                      }),
+                                      e.jsx("div", {
+                                        className: "w-full flex text-center",
+                                        children: e.jsx(te, {
+                                          advertisements: t,
+                                          placement: "header-banner",
+                                          onAdView: R,
+                                          className: "mb-6",
+                                        }),
+                                      }),
+                                    ],
+                                  }),
+                                Object.keys(n.tabsData).length > 0 &&
+                                  e.jsx("div", {
+                                    className: "mb-5",
+                                    children: e.jsx(Ss, {
+                                      dynamicTabsData: n.tabsData,
+                                      dynamicTabsConfig: Oe(n.tabsData),
+                                      newsReactions: N,
+                                      onPostLove: T,
+                                      onPostComment: I,
+                                    }),
+                                  }),
+                                e.jsx(te, {
+                                  advertisements: t,
+                                  placement: "content-middle",
+                                  onAdView: R,
+                                  className: "mb-6",
+                                }),
+                                Object.keys(n.tabsData).length > 0 &&
+                                  e.jsx("div", {
+                                    className: "mb-5",
+                                    children: e.jsx(Ms, {
+                                      dynamicTabsData: n.tabsData,
+                                      dynamicTabsConfig: Oe(n.tabsData),
+                                      newsReactions: N,
+                                      onPostLove: T,
+                                      onPostComment: I,
+                                    }),
+                                  }),
+                                e.jsx("div", {
+                                  className: "flex justify-center items-center",
+                                  children: e.jsx(te, {
+                                    advertisements: t,
+                                    placement: "content-middle",
+                                    onAdView: R,
+                                    className: "mb-6",
+                                  }),
+                                }),
+                              ],
+                            }),
+                            e.jsxs("aside", {
+                              className: "w-full xl:w-full",
+                              children: [
+                                n.sidebarArticles &&
+                                  Array.isArray(n.sidebarArticles) &&
+                                  n.sidebarArticles.length > 0 &&
+                                  e.jsxs("div", {
+                                    className: "xl:hidden w-full mb-6",
+                                    children: [
+                                      e.jsx("h4", {
+                                        className:
+                                          "text-md font-semibold text-gray-700 mb-4",
+                                        children: "Trending Now",
+                                      }),
+                                      e.jsxs("div", {
+                                        className: "space-y-4",
+                                        children: [
+                                          n.sidebarArticles
+                                            .filter(O)
+                                            .slice(0, 5)
+                                            .map((i) =>
+                                              e.jsx(
+                                                "div",
+                                                {
+                                                  className: "w-full",
+                                                  children: e.jsx(ae, {
+                                                    article: i,
+                                                    reactions: N[i.id] || [],
+                                                    onPostReaction: (b) =>
+                                                      U(i.id, b),
+                                                    onPostLove: (b) =>
+                                                      T(i.id, b),
+                                                    onPostComment: (b) =>
+                                                      I(i.id, b),
+                                                  }),
+                                                },
+                                                i.id
+                                              )
+                                            ),
+                                          e.jsx(te, {
+                                            advertisements: t,
+                                            placement: "card",
+                                            onAdView: R,
+                                            className: "mt-8",
+                                          }),
+                                        ],
+                                      }),
+                                    ],
+                                  }),
+                                e.jsx(xe, {
+                                  advertisements: t,
+                                  position: "mobile-mid",
+                                  width: "100%",
+                                  height: "200px",
+                                  className: "mb-6 xl:hidden",
+                                  maxAds: 1,
+                                }),
+                                n.sidebarArticles &&
+                                  Array.isArray(n.sidebarArticles) &&
+                                  n.sidebarArticles.length > 3 &&
+                                  e.jsx("div", {
+                                    className: "xl:hidden w-full mb-6",
+                                    children: e.jsx("div", {
+                                      className: "space-y-4",
+                                      children: n.sidebarArticles
+                                        .filter(O)
+                                        .slice(3, 8)
+                                        .map((i) =>
+                                          e.jsx(
+                                            "div",
+                                            {
+                                              className: "w-full",
+                                              children: e.jsx(ae, {
+                                                article: i,
+                                                reactions: N[i.id] || [],
+                                                onPostReaction: (b) =>
+                                                  U(i.id, b),
+                                                onPostLove: (b) => T(i.id, b),
+                                                onPostComment: (b) =>
+                                                  I(i.id, b),
+                                              }),
+                                            },
+                                            i.id
+                                          )
+                                        ),
+                                    }),
+                                  }),
+                                e.jsxs("div", {
+                                  className:
+                                    "xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center",
+                                  children: [
+                                    e.jsx(xe, {
+                                      advertisements: t,
+                                      position: "sidebar-top",
+                                      width: "100%",
+                                      height: "200px",
+                                      className: "mb-6",
+                                      maxAds: 1,
+                                    }),
+                                    n.sidebarArticles &&
+                                      Array.isArray(n.sidebarArticles) &&
+                                      n.sidebarArticles.length > 0 &&
+                                      e.jsxs("div", {
+                                        className: "w-full",
+                                        children: [
+                                          e.jsx("h4", {
+                                            className:
+                                              "text-md font-semibold text-gray-700 mb-4",
+                                            children: "Trending Now",
+                                          }),
+                                          e.jsxs("div", {
+                                            className: "space-y-4",
+                                            children: [
+                                              n.sidebarArticles
+                                                .filter(O)
+                                                .slice(0, 5)
+                                                .map((i) =>
+                                                  e.jsx(
+                                                    "div",
+                                                    {
+                                                      className: "w-full",
+                                                      children: e.jsx(ae, {
+                                                        article: i,
+                                                        reactions:
+                                                          N[i.id] || [],
+                                                        onPostReaction: (b) =>
+                                                          U(i.id, b),
+                                                        onPostLove: (b) =>
+                                                          T(i.id, b),
+                                                        onPostComment: (b) =>
+                                                          I(i.id, b),
+                                                      }),
+                                                    },
+                                                    i.id
+                                                  )
+                                                ),
+                                              e.jsx(te, {
+                                                advertisements: t,
+                                                placement: "card",
+                                                onAdView: R,
+                                                className: "my-6",
+                                              }),
+                                            ],
+                                          }),
+                                        ],
+                                      }),
+                                    e.jsx(xe, {
+                                      advertisements: t,
+                                      position: "sidebar-mid",
+                                      width: "100%",
+                                      height: "200px",
+                                      className: "my-6",
+                                      maxAds: 1,
+                                    }),
+                                    n.sidebarArticles &&
+                                      Array.isArray(n.sidebarArticles) &&
+                                      n.sidebarArticles.length > 3 &&
+                                      e.jsx("div", {
+                                        className: "w-full",
+                                        children: e.jsx("div", {
+                                          className: "space-y-4",
+                                          children: n.sidebarArticles
+                                            .filter(O)
+                                            .slice(3, 8)
+                                            .map((i) =>
+                                              e.jsx(
+                                                "div",
+                                                {
+                                                  className: "w-full",
+                                                  children: e.jsx(ae, {
+                                                    article: i,
+                                                    reactions: N[i.id] || [],
+                                                    onPostReaction: (b) =>
+                                                      U(i.id, b),
+                                                    onPostLove: (b) =>
+                                                      T(i.id, b),
+                                                    onPostComment: (b) =>
+                                                      I(i.id, b),
+                                                  }),
+                                                },
+                                                i.id
+                                              )
+                                            ),
+                                        }),
+                                      }),
+                                    e.jsx(xe, {
+                                      advertisements: t,
+                                      position: "sidebar-bottom",
+                                      width: "100%",
+                                      height: "192px",
+                                      className: "mt-6",
+                                      maxAds: 1,
+                                    }),
+                                  ],
+                                }),
+                              ],
+                            }),
+                          ],
+                        }),
+                      },
+                      w
+                    )
+                  ),
+            }),
+          }),
+          e.jsx(te, {
+            advertisements: t,
+            placement: "card",
+            onAdView: R,
+            className: "mb-6",
+          }),
+          e.jsx("div", { ref: c, children: e.jsx(zs, {}) }),
+        ],
+      }),
+    ],
+  });
+}
+export { Zs as default };

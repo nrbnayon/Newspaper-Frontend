@@ -39,15 +39,15 @@ const PaymentResult = () => {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className='min-h-screen bg-gray-50'>
         <Navbar />
-        <div className="flex items-center justify-center h-screen">
-          <div className="text-center">
-            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
+        <div className='flex items-center justify-center h-screen'>
+          <div className='text-center'>
+            <div className='w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4'></div>
+            <h2 className='text-xl font-semibold text-gray-700 mb-2'>
               Verifying Payment...
             </h2>
-            <p className="text-gray-600">
+            <p className='text-gray-600'>
               Please wait while we confirm your payment
             </p>
           </div>
@@ -58,41 +58,41 @@ const PaymentResult = () => {
 
   if (status === "success") {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className='min-h-screen bg-gray-50'>
         <Navbar />
-        <div className="flex items-center justify-center h-screen">
-          <div className="max-w-md mx-auto text-center bg-white rounded-lg shadow-lg p-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className='flex items-center justify-center h-screen'>
+          <div className='mt-10 md:mt-2 max-w-md mx-auto text-center bg-white rounded-lg shadow-lg p-8'>
+            <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6'>
               <svg
-                className="w-8 h-8 text-green-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                className='w-8 h-8 text-green-500'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   strokeWidth={2}
-                  d="M5 13l4 4L19 7"
+                  d='M5 13l4 4L19 7'
                 />
               </svg>
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <h1 className='text-2xl font-bold text-gray-900 mb-4'>
               Payment Successful! 🎉
             </h1>
 
-            <p className="text-gray-600 mb-6">
+            <p className='text-gray-600 mb-6'>
               Thank you for your subscription! Your account has been upgraded
               successfully.
             </p>
 
             {paymentData && (
-              <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
-                <h3 className="font-semibold text-gray-900 mb-2">
+              <div className='bg-gray-50 rounded-lg p-4 mb-6 text-left'>
+                <h3 className='font-semibold text-gray-900 mb-2'>
                   Order Details:
                 </h3>
-                <div className="space-y-1 text-sm text-gray-700">
+                <div className='space-y-1 text-sm text-gray-700'>
                   <p>
                     <strong>Plan:</strong> {paymentData.plan_name}
                   </p>
@@ -107,14 +107,14 @@ const PaymentResult = () => {
               </div>
             )}
 
-            <div className="space-y-3">
+            <div className='space-y-3'>
               <Button
                 onClick={handleReturnHome}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                className='w-full bg-blue-500 hover:bg-blue-600 text-white'
               >
                 Go to Dashboard
               </Button>
-              <p className="text-xs text-gray-500">
+              <p className='text-xs text-gray-500'>
                 A confirmation email has been sent to your registered email
                 address.
               </p>
@@ -127,46 +127,46 @@ const PaymentResult = () => {
 
   if (status === "canceled") {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className='min-h-screen bg-gray-50'>
         <Navbar />
-        <div className="flex items-center justify-center h-screen">
-          <div className="max-w-md mx-auto text-center bg-white rounded-lg shadow-lg p-8">
-            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className='flex items-center justify-center h-screen'>
+          <div className='mt-10 md:mt-2 max-w-md mx-auto text-center bg-white rounded-lg shadow-lg p-8'>
+            <div className='w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6'>
               <svg
-                className="w-8 h-8 text-yellow-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                className='w-8 h-8 text-yellow-500'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"
+                  d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z'
                 />
               </svg>
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <h1 className='text-2xl font-bold text-gray-900 mb-4'>
               Payment Canceled
             </h1>
 
-            <p className="text-gray-600 mb-6">
+            <p className='text-gray-600 mb-6'>
               Your payment was canceled. No charges have been made to your
               account.
             </p>
 
-            <div className="space-y-3">
+            <div className='space-y-3'>
               <Button
                 onClick={handleRetryPayment}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                className='w-full bg-blue-500 hover:bg-blue-600 text-white'
               >
                 Try Again
               </Button>
               <Button
                 onClick={handleReturnHome}
-                variant="outline"
-                className="w-full"
+                variant='outline'
+                className='w-full'
               >
                 Return Home
               </Button>
@@ -179,50 +179,50 @@ const PaymentResult = () => {
 
   if (status === "error") {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className='min-h-screen bg-gray-50'>
         <Navbar />
-        <div className="flex items-center justify-center h-screen">
-          <div className="max-w-md mx-auto text-center bg-white rounded-lg shadow-lg p-8">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className='flex items-center justify-center h-screen'>
+          <div className='mt-10 md:mt-2 max-w-md mx-auto text-center bg-white rounded-lg shadow-lg p-8'>
+            <div className=' w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6'>
               <svg
-                className="w-8 h-8 text-red-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                className='w-8 h-8 text-red-500'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
+                  d='M6 18L18 6M6 6l12 12'
                 />
               </svg>
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <h1 className='text-2xl font-bold text-gray-900 mb-4'>
               Payment Verification Failed
             </h1>
 
-            <p className="text-gray-600 mb-2">
+            <p className='text-gray-600 mb-2'>
               We couldn't verify your payment. Please try again or contact
               support if this issue persists.
             </p>
 
             {error && (
-              <p className="text-red-600 text-sm mb-6">Error: {error}</p>
+              <p className='text-red-600 text-sm mb-6'>Error: {error}</p>
             )}
 
-            <div className="space-y-3">
+            <div className='space-y-3'>
               <Button
                 onClick={handleRetryPayment}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                className='w-full bg-blue-500 hover:bg-blue-600 text-white'
               >
                 Try Payment Again
               </Button>
               <Button
                 onClick={handleReturnHome}
-                variant="outline"
-                className="w-full"
+                variant='outline'
+                className='w-full'
               >
                 Contact Support
               </Button>

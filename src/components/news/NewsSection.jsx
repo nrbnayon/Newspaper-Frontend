@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const NewsSection = ({ title, children, className }) => {
   return (
-    <section className={cn(" md:mb-12 py-2 border-b border-black", className)}>
+    <section className={cn(" md:mb-10 py-2 border-b border-black", className)}>
       {title && (
         <h2 className='text-xl font-bold mb-6 border-b border-gray-300 pb-2'>
           {title}

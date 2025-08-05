@@ -454,10 +454,10 @@ export default function Navbar({
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className='md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md'>
-            <div className='px-4 py-2 space-y-1'>
+            <div className='px-4 md:py-2 space-y-1'>
               <Link
                 to='/'
-                className='block px-4 py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                className='block px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
@@ -466,7 +466,7 @@ export default function Navbar({
               {!isDashboard && (
                 <button
                   onClick={handleAboutUsClick}
-                  className='block w-full text-left px-4 py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                  className='block w-full text-left px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
                 >
                   About Us
                 </button>
@@ -474,7 +474,7 @@ export default function Navbar({
 
               <Link
                 to='/dashboard/advertise'
-                className='block px-4 py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                className='block px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Make Advertise
@@ -482,7 +482,7 @@ export default function Navbar({
 
               <Link
                 to='/pricing'
-                className='block px-4 py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                className='block px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Pricing
@@ -490,7 +490,7 @@ export default function Navbar({
 
               {/* Mobile Auth Section */}
               {isLoggedIn ? (
-                <div className='px-4 py-4 border-t border-gray-100 mt-4'>
+                <div className='px-4 py-2 md:py-4 border-t border-gray-100 mt-4'>
                   <div className='flex flex-col space-y-3'>
                     <div className='text-center'>
                       <div className='text-sm font-medium text-gray-700'>
