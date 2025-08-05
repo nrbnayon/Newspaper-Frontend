@@ -5,8 +5,6 @@ import {
   User2,
   Menu,
   X,
-  Bell,
-  Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,6 +36,8 @@ export default function Navbar({
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
   const isPricing = location.pathname.startsWith("/pricing");
+  const isHome = location.pathname === "/";
+  const isAdvertise = location.pathname === "/dashboard/advertise";
 
   // Set current date on component mount
   useEffect(() => {
@@ -132,6 +132,24 @@ export default function Navbar({
     setIsMobileMenuOpen(false); // Close mobile menu if open
   };
 
+  // Helper function to get active link classes
+  const getNavLinkClasses = (isActive) => {
+    return `px-4 py-2 font-medium rounded-full transition-all ${
+      isActive
+        ? "text-white bg-gradient-to-r from-[#00254A] to-[#003d6b] shadow-md"
+        : "text-gray-700 hover:text-[#00254a] hover:bg-gray-50"
+    }`;
+  };
+
+  // Helper function for mobile nav link classes
+  const getMobileNavLinkClasses = (isActive) => {
+    return `block px-4 md:py-3 font-medium rounded-xl transition-all ${
+      isActive
+        ? "text-white bg-gradient-to-r from-[#00254A] to-[#003d6b] shadow-md"
+        : "text-gray-700 hover:text-[#00254a] hover:bg-gray-50"
+    }`;
+  };
+
   return (
     <>
       <nav
@@ -193,10 +211,10 @@ export default function Navbar({
               {isLoggedIn ? (
                 <div className='flex items-center space-x-3'>
                   {/* Notifications */}
-                  <button className='relative p-2 text-gray-600 hover:text-[#00254A] hover:bg-gray-100 rounded-full transition-colors'>
+                  {/* <button className=' relative p-2 text-gray-600 hover:text-[#00254A] hover:bg-gray-100 rounded-full transition-colors'>
                     <Bell size={20} />
                     <div className='absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full'></div>
-                  </button>
+                  </button> */}
 
                   {/* Profile Dropdown */}
                   <div className='relative profile-dropdown'>
@@ -423,10 +441,7 @@ export default function Navbar({
 
         {/* Navigation Menu - Desktop */}
         <div className='hidden md:flex items-center justify-center space-x-8 py-3 border-t border-gray-100 bg-white/80'>
-          <Link
-            to='/'
-            className='px-4 py-2 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-full transition-all'
-          >
+          <Link to='/' className={getNavLinkClasses(isHome)}>
             Home
           </Link>
           {!(isDashboard || isPricing) && (
@@ -439,14 +454,11 @@ export default function Navbar({
           )}
           <Link
             to='/dashboard/advertise'
-            className='px-4 py-2 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-full transition-all'
+            className={getNavLinkClasses(isAdvertise)}
           >
             Make Advertise
           </Link>
-          <Link
-            to='/pricing'
-            className='px-4 py-2 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-full transition-all'
-          >
+          <Link to='/pricing' className={getNavLinkClasses(isPricing)}>
             Pricing
           </Link>
         </div>
@@ -457,7 +469,7 @@ export default function Navbar({
             <div className='px-4 md:py-2 space-y-1'>
               <Link
                 to='/'
-                className='block px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                className={getMobileNavLinkClasses(isHome)}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
@@ -474,7 +486,7 @@ export default function Navbar({
 
               <Link
                 to='/dashboard/advertise'
-                className='block px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                className={getMobileNavLinkClasses(isAdvertise)}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Make Advertise
@@ -482,7 +494,7 @@ export default function Navbar({
 
               <Link
                 to='/pricing'
-                className='block px-4 md:py-3 text-gray-700 font-medium hover:text-[#00254a] hover:bg-gray-50 rounded-xl transition-all'
+                className={getMobileNavLinkClasses(isPricing)}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Pricing

@@ -66,7 +66,7 @@ const Pricing = () => {
     <div>
       <Navbar />
       {/* Pricing Section */}
-      <div className='mt-8 md:mt-10 lg:mt-0 flex justify-center h-screen items-center text-center'>
+      <div className='mt-8 md:mt-12 lg:mt-16 flex justify-center h-screen items-center text-center'>
         <div className=''>
           <h3 className='text-xl md:text-2xl font-semibold text-secondary mb-6'>
             Pricing

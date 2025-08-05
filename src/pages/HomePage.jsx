@@ -549,7 +549,7 @@ export default function HomePage() {
           setSearchTerm={setSearchTerm}
         />
 
-        <main className='w-full py-4 sm:py-8 pt-[120px] md:pt-[185px] lg:pt-[165px]'>
+        <main className='w-full py-4 sm:py-8 pt-[120px] md:pt-[185px] lg:pt-[170px]'>
           <div className=''>
             {isSearching ? (
               <div className='search-results'>
