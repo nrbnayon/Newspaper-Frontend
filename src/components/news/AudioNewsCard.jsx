@@ -33,7 +33,7 @@ const AudioNewsCard = ({
     return words.slice(0, 15).join(" ");
   };
   const truncatedContent = getTruncatedText(description);
-  const shouldShowReadMore = description && description.length > 200;
+  const shouldShowReadMore = description && description.length > 120;
 
   const handleReadMore = () => {
     if (!isLoggedIn) {
@@ -53,7 +53,7 @@ const AudioNewsCard = ({
             name='description'
             content={
               description
-                ? getTruncatedText(description, 160) 
+                ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
@@ -65,7 +65,7 @@ const AudioNewsCard = ({
             property='og:description'
             content={
               description
-                ? getTruncatedText(description, 160)
+                ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
@@ -74,38 +74,50 @@ const AudioNewsCard = ({
           <meta property='og:url' content={url || window.location.href} />
         </Helmet>
       )}
-      <div className={cn("flex border-y-1 border-black py-6", className)}>
-        <div className='flex-shrink-0 w-[150px] h-28 relative overflow-hidden'>
+      <div
+        className={cn(
+          "flex flex-col md:flex-row border-y border-black py-4 md:py-6",
+          className
+        )}
+      >
+        {/* Image */}
+        <div className='w-full md:w-[150px] h-48 md:h-28 relative overflow-hidden flex-shrink-0'>
           <img src={image} alt={title} className='w-full h-full object-cover' />
         </div>
 
-        <div className='ml-4 flex-1'>
+        {/* Content */}
+        <div className='mt-4 md:mt-0 md:ml-4 flex-1 flex flex-col justify-between'>
+          {/* Category */}
           <div className='flex items-center mb-1'>
             <span className='text-xs font-bold text-gray-800 mr-2'>
               {category}
             </span>
           </div>
 
-          <h3 className='text-xl font-bold mb-2 line-clamp-2'>{title}</h3>
+          {/* Title */}
+          <h3 className='text-lg md:text-xl font-bold mb-2 line-clamp-2'>
+            {title}
+          </h3>
 
-          <div className='flex mb-2 items-center'>
-            <button
-              onClick={handleReadMore}
-              className='flex items-center text-gray-700 mr-2 hover:text-gray-900 transition-colors'
-            >
-              <BookOpenText size={16} className='mr-1' />
-              <span className='text-sm mr-1'>
-                {isExpanded ? description : truncatedContent}
-                {!isExpanded && shouldShowReadMore && "..."}
-              </span>
-              {shouldShowReadMore && (
-                <span className='text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200'>
-                  {isExpanded ? "Read less" : "Read more"}
-                </span>
-              )}
-            </button>
+          {/* Description */}
+          <div className='mb-2'>
+            <div className='text-sm text-gray-700'>
+              {isExpanded ? description : truncatedContent}
+              {!isExpanded && shouldShowReadMore && "..."}
+            </div>
+            {shouldShowReadMore && (
+              <button
+                onClick={handleReadMore}
+                className='mt-1 flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200'
+              >
+                <BookOpenText size={16} className='mr-1' />
+                {isExpanded ? "Read less" : "Read more"}
+              </button>
+            )}
           </div>
-          <div className='ml-auto'>
+
+          {/* Sentiment */}
+          <div className='mt-auto md:ml-auto'>
             <SentimentBadge
               sentiment={sentiment}
               className='text-xs py-0.5 px-2'

@@ -57,8 +57,8 @@ const CommonNewsCard = ({
     url,
   } = article || {};
 
-  const truncatedContent = getTruncatedText(description, 200);
-  const shouldShowReadMore = description && description.length > 200;
+  const truncatedContent = getTruncatedText(description, 120);
+  const shouldShowReadMore = description && description.length > 120;
 
   // Format published time for display
   const formatPublishedTime = (dateTime) => {
@@ -144,7 +144,7 @@ const CommonNewsCard = ({
             name='description'
             content={
               description
-                ? getTruncatedText(description, 160)
+                ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
@@ -156,7 +156,7 @@ const CommonNewsCard = ({
             property='og:description'
             content={
               description
-                ? getTruncatedText(description, 160)
+                ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />

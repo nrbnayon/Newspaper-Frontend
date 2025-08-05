@@ -53,7 +53,7 @@ const StandardArticleCard = ({
   };
 
   const truncatedContent = getTruncatedText(description);
-  const shouldShowReadMore = description && description.length > 200;
+  const shouldShowReadMore = description && description.length > 120;
 
   const handleReadMore = () => {
     if (!isLoggedIn) {
@@ -113,7 +113,7 @@ const StandardArticleCard = ({
             name='description'
             content={
               description
-                ? getTruncatedText(description, 160)
+                ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
@@ -125,7 +125,7 @@ const StandardArticleCard = ({
             property='og:description'
             content={
               description
-                ? getTruncatedText(description, 160)
+                ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />

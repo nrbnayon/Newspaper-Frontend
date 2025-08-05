@@ -58,7 +58,7 @@ export const FooterSection = () => {
           </p>
         </div>
 
-        <div className='w-full sm:w-80 lg:w-[304px]'>
+        <div className='hidden w-full sm:w-80 lg:w-[304px]'>
           <button className='w-full h-12 sm:h-14 cursor-pointer rounded-xl border-[0.5px] border-solid border-white bg-transparent text-white text-lg sm:text-xl font-normal flex justify-between items-center px-4 sm:px-5 hover:bg-white hover:text-[#00254a] transition-colors'>
             <div>Reach Out</div>
             <div className='w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-lg flex items-center justify-center'>
@@ -70,7 +70,7 @@ export const FooterSection = () => {
 
       {/* Right Section */}
       <div className='flex flex-col w-full lg:w-1/2 items-start gap-4 lg:gap-[23px]'>
-        <div className='hidden xl:flex self-stretch w-full h-8  md:h-12 lg:h-20 bg-white' />
+        <div className='hidden xl:flex self-stretch w-full h-8  md:h-12 lg:h-20 bg-transparent' />
 
         <Card className='w-full bg-transparent border-none shadow-none'>
           <CardContent className='flex flex-col items-start justify-end gap-4 sm:gap-6 p-0 pt-2'>
@@ -137,7 +137,7 @@ export const FooterSection = () => {
             </div>
 
             {/* Social Media Icons */}
-            <div className='flex items-center justify-center sm:justify-start gap-3 sm:gap-4 lg:gap-5 flex-wrap w-full'>
+            <div className='hidden flex items-center justify-center sm:justify-start gap-3 sm:gap-4 lg:gap-5 flex-wrap w-full'>
               <button className='flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors'>
                 <Linkedin
                   size={14}

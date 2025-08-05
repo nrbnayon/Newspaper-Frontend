@@ -86,7 +86,7 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const truncatedContent = getTruncatedText(description);
-  const shouldShowReadMore = description && description.length > 200;
+  const shouldShowReadMore = description && description.length > 120;
 
   const handleReadMore = () => {
     if (!isLoggedIn) {
@@ -112,7 +112,7 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
             name="description"
             content={
               currentUpdate?.description
-                ? getTruncatedText(currentUpdate?.description, 160)
+                ? getTruncatedText(currentUpdate?.description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
@@ -124,7 +124,7 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
             property="og:description"
             content={
               currentUpdate?.description
-                ? getTruncatedText(currentUpdate?.description, 160)
+                ? getTruncatedText(currentUpdate?.description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
