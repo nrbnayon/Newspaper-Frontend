@@ -1,30 +1,87 @@
-// Updated news-service.js with proper distribution
+// Updated news-service.js with proper pagination handling
 
 import apiClient from "./auth-service";
 
 // ========================
 // NEWS API FUNCTIONS
 // ========================
-export const getAllNews = async () => {
+export const getAllNews = async (page = 1, pageSize = 30) => {
   try {
-    const response = await apiClient.get("/news/get/all-news/");
-    return response.data;
+    const response = await apiClient.get(
+      `/news/get/all-news/?page=${page}&page_size=${pageSize}`
+    );
+
+    console.log("get data with scroll pagination::", response.data);
+
+    // Handle different response formats
+    if (response.data && typeof response.data === "object") {
+      // Check if it's paginated response
+      if (response.data.results && Array.isArray(response.data.results)) {
+        return {
+          results: response.data.results,
+          count: response.data.count || response.data.results.length,
+          next: response.data.next,
+          previous: response.data.previous,
+        };
+      }
+      // Check if it's direct array
+      else if (Array.isArray(response.data)) {
+        return {
+          results: response.data,
+          count: response.data.length,
+          next: null,
+          previous: null,
+        };
+      }
+    }
+
+    // Fallback: if response.data is direct array
+    if (Array.isArray(response.data)) {
+      return {
+        results: response.data,
+        count: response.data.length,
+        next: null,
+        previous: null,
+      };
+    }
+
+    // If no valid data found
+    throw new Error("Invalid response format");
   } catch (error) {
     console.error("Failed to fetch all news:", error);
-    throw error;
+    // Return empty paginated structure on error
+    return {
+      results: [],
+      count: 0,
+      next: null,
+      previous: null,
+    };
   }
 };
 
-// Search news
-
-export const searchAllNews = async ({ search_term }) => {
+// Search news with pagination handling
+export const searchAllNews = async ({
+  search_term,
+  page = 1,
+  pageSize = 20,
+}) => {
   try {
     const encodedTerm = encodeURIComponent(search_term);
-    const response = await apiClient.get(`/news/search/?q=${encodedTerm}`);
+    const response = await apiClient.get(
+      `/news/search/?q=${encodedTerm}&page=${page}&page_size=${pageSize}`
+    );
+
+    // Handle both paginated and direct array responses
+    if (response.data && response.data.results) {
+      return response.data; // Return full paginated structure
+    } else if (Array.isArray(response.data)) {
+      return response.data; // Return direct array
+    }
+
     return response.data;
   } catch (error) {
     console.error("Failed to search news:", error);
-    throw error;
+    return [];
   }
 };
 
@@ -171,7 +228,22 @@ export const TAB_CONFIGS = [
   },
 ];
 
-// Updated organizeNewsByCategory function
+// Helper function to match categories
+const matchesCategory = (article, categoryFilters) => {
+  if (!categoryFilters) return true;
+  const articleCategory = article.category.toLowerCase();
+  const articleTitle = article.title.toLowerCase();
+  const articleDescription = article.description.toLowerCase();
+
+  return categoryFilters.some(
+    (filter) =>
+      articleCategory.includes(filter.toLowerCase()) ||
+      articleTitle.includes(filter.toLowerCase()) ||
+      articleDescription.includes(filter.toLowerCase())
+  );
+};
+
+// Updated organizeNewsByCategory function with better performance
 export const organizeNewsByCategory = (allNews, usedIds = new Set()) => {
   if (!Array.isArray(allNews) || allNews.length === 0) {
     return {};
@@ -184,14 +256,19 @@ export const organizeNewsByCategory = (allNews, usedIds = new Set()) => {
     );
 
   const tabsData = {};
-  // Use shared TAB_CONFIGS
+
+  // Use shared TAB_CONFIGS with optimized processing
   TAB_CONFIGS.forEach((config) => {
     let tabArticles = [];
+
     if (config.categoryFilter) {
+      // Filter by category first
       const categoryArticles = availableNews.filter((article) =>
         matchesCategory(article, config.categoryFilter)
       );
       tabArticles = categoryArticles.slice(0, config.count);
+
+      // Fill remaining slots if needed
       if (tabArticles.length < config.count) {
         const usedInThisTab = new Set(tabArticles.map((a) => a.id));
         const generalArticles = availableNews.filter(
@@ -201,9 +278,11 @@ export const organizeNewsByCategory = (allNews, usedIds = new Set()) => {
         tabArticles = [...tabArticles, ...generalArticles.slice(0, needed)];
       }
     } else {
+      // For latest news, just take the most recent
       tabArticles = availableNews.slice(0, config.count);
     }
-    tabsData[config.key] = tabArticles;
+
+    tabsData[config.key] = tabArticles.filter(Boolean);
   });
 
   return tabsData;
@@ -226,7 +305,7 @@ export const getNewsReactions = async (newsId) => {
     return response.data;
   } catch (error) {
     console.error(`Failed to fetch reactions for news ID ${newsId}:`, error);
-    throw error;
+    return []; // Return empty array on error
   }
 };
 
@@ -319,8 +398,6 @@ export const countComments = (reactions) => {
     (reaction) => reaction.comment && reaction.comment.trim() !== ""
   ).length;
 };
-
-// In src/lib/news-service.js
 
 export const hasUserLoved = (reactions, currentUserId) => {
   if (!Array.isArray(reactions) || !currentUserId) return false;

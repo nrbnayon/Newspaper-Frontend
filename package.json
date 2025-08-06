@@ -39,7 +39,6 @@
     "match-sorter": "^8.0.2",
     "path": "latest",
     "react": "^19",
-    "react-day-picker": "9.7.0",
     "react-dom": "^19",
     "react-helmet-async": "latest",
     "react-hook-form": "latest",
@@ -56,7 +55,6 @@
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
     "terser": "latest",
-    "vaul": "^1.1.2",
     "vite": "latest",
     "yaml": "latest",
     "zod": "^3.25.23"
