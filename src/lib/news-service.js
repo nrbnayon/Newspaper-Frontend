@@ -11,7 +11,7 @@ export const getAllNews = async (page = 1, pageSize = 30) => {
       `/news/get/all-news/?page=${page}&page_size=${pageSize}`
     );
 
-    console.log("get data with scroll pagination::", response.data);
+    // console.log("get data with scroll pagination::", response.data);
 
     // Handle different response formats
     if (response.data && typeof response.data === "object") {

@@ -46,6 +46,10 @@ export default function HomePage() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [allNewsData, setAllNewsData] = useState([]);
 
+  // Smooth scroll states
+  const [isLoadingTriggered, setIsLoadingTriggered] = useState(false);
+  const [scrollThreshold, setScrollThreshold] = useState(0.6); // Start loading at 60% scroll
+
   // Debounced search to prevent excessive API calls
   const handleSearch = useCallback(
     debounce(async (term) => {
@@ -147,7 +151,23 @@ export default function HomePage() {
         );
 
       if (append) {
-        setAllNewsData((prev) => [...prev, ...formattedNews]);
+        setAllNewsData((prev) => {
+          const newData = [...prev, ...formattedNews];
+
+          // Re-organize sections with new data immediately
+          setTimeout(() => {
+            const shuffledNews = shuffleWithLatest([...newData], 1, true);
+            const organizedSections = organizeNewsData(shuffledNews);
+
+            setNewsData((prevNewsData) => ({
+              ...prevNewsData,
+              sections: organizedSections,
+            }));
+          }, 0);
+
+          return newData;
+        });
+
         setCurrentPage(page);
         setHasNextPage(!!pagination.next);
         setTotalCount(pagination.count || 0);
@@ -173,6 +193,7 @@ export default function HomePage() {
 
       if (append) {
         setLoadingMore(false);
+        setIsLoadingTriggered(false); // Reset loading trigger
       }
     } catch (error) {
       console.error("Failed to fetch news:", error);
@@ -183,26 +204,19 @@ export default function HomePage() {
       }));
       if (append) {
         setLoadingMore(false);
+        setIsLoadingTriggered(false);
       }
     }
   }, []);
 
-  // Load more news function
+  // Load more news function with smooth loading
   const loadMoreNews = useCallback(async () => {
-    if (!hasNextPage || loadingMore) return;
+    if (!hasNextPage || loadingMore || isLoadingTriggered) return;
 
+    setIsLoadingTriggered(true);
     const nextPage = currentPage + 1;
     await fetchNews(nextPage, true);
-
-    // Re-organize sections with new data
-    const shuffledNews = shuffleWithLatest([...allNewsData], 1, true);
-    const organizedSections = organizeNewsData(shuffledNews);
-
-    setNewsData((prev) => ({
-      ...prev,
-      sections: organizedSections,
-    }));
-  }, [hasNextPage, loadingMore, currentPage, allNewsData, fetchNews]);
+  }, [hasNextPage, loadingMore, currentPage, isLoadingTriggered, fetchNews]);
 
   // Batch reaction fetching to reduce API calls
   const fetchNewsReactions = useCallback(
@@ -632,23 +646,78 @@ export default function HomePage() {
     console.log(`Ad ${adId} viewed`);
   }, []);
 
-  // Infinite scroll handler
+  // Enhanced infinite scroll handler with smooth loading
   useEffect(() => {
+    let scrollTimeout;
+
     const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight - 1000 &&
-        hasNextPage &&
-        !loadingMore &&
-        !isSearching
-      ) {
-        loadMoreNews();
+      // Clear previous timeout to debounce scroll events
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      scrollTimeout = setTimeout(() => {
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+
+        // Calculate scroll percentage
+        const scrollPercentage = (scrollTop + windowHeight) / documentHeight;
+
+        // Start loading when user scrolls past the threshold (default 60%)
+        const shouldLoadMore = scrollPercentage >= scrollThreshold;
+
+        if (
+          shouldLoadMore &&
+          hasNextPage &&
+          !loadingMore &&
+          !isSearching &&
+          !isLoadingTriggered
+        ) {
+          console.log(
+            `Loading more content at ${Math.round(
+              scrollPercentage * 100
+            )}% scroll`
+          );
+          loadMoreNews();
+        }
+      }, 100); // Debounce scroll events by 100ms
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    };
+  }, [
+    hasNextPage,
+    loadingMore,
+    isSearching,
+    loadMoreNews,
+    isLoadingTriggered,
+    scrollThreshold,
+  ]);
+
+  // Dynamic scroll threshold adjustment based on content length
+  useEffect(() => {
+    const adjustScrollThreshold = () => {
+      const contentSections = newsData.sections.length;
+      if (contentSections <= 1) {
+        setScrollThreshold(0.5); // 50% for less content
+      } else if (contentSections === 2) {
+        setScrollThreshold(0.6); // 60% for moderate content
+      } else {
+        setScrollThreshold(0.7); // 70% for more content
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasNextPage, loadingMore, isSearching, loadMoreNews]);
+    if (newsData.sections.length > 0) {
+      adjustScrollThreshold();
+    }
+  }, [newsData.sections.length]);
 
   if (newsData.loading) return <HomepageSkeleton />;
   if (newsData.error) return <ErrorComponent error={newsData.error} />;
@@ -670,7 +739,7 @@ export default function HomePage() {
           setSearchTerm={setSearchTerm}
         />
 
-        <main className="w-full py-4 sm:py-8 pt-[200px] md:pt-[180px] lg:pt-[160px]">
+        <main className="w-full py-4 sm:py-8 pt-[150px] md:pt-[180px] lg:pt-[175px]">
           <div className="">
             {isSearching ? (
               <div className="search-results">
