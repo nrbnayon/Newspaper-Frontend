@@ -739,7 +739,7 @@ export default function HomePage() {
           setSearchTerm={setSearchTerm}
         />
 
-        <main className="w-full py-4 sm:py-8 pt-[150px] md:pt-[180px] lg:pt-[175px]">
+        <main className="w-full mx-auto px-2 md:px-10 py-4 sm:py-8 pt-[150px] md:pt-[180px] lg:pt-[175px]">
           <div className="">
             {isSearching ? (
               <div className="search-results">
@@ -1154,10 +1154,9 @@ export default function HomePage() {
           onAdView={handleAdView}
           className="mb-6"
         />
-
-        <div ref={footerRef}>
-          <FooterSection />
-        </div>
+      </div>
+      <div ref={footerRef}>
+        <FooterSection />
       </div>
     </>
   );

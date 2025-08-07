@@ -3,7 +3,7 @@ import { Search, ChevronDown, User2, Menu, X, Megaphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AuthModal from "@/components/auth/AuthModal";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar({
@@ -20,9 +20,9 @@ export default function Navbar({
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const { isLoggedIn, user, logout } = useAuth();
+  const { isLoggedIn, user, logout, isAdmin } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate(); // For programmatic navigation
+  const navigate = useNavigate();
   const isDashboard = location.pathname.startsWith("/dashboard");
   const isPricing = location.pathname.startsWith("/pricing");
   const isHome = location.pathname === "/";
@@ -227,7 +227,7 @@ export default function Navbar({
                           }}
                         >
                           <Megaphone size={16} className="mr-3" />
-                          Advertise
+                          {isAdmin?.() ? "Manage Advertise" : "Make Advertise"}
                         </Link>
                         <div className="border-t border-gray-100 mt-2 pt-2">
                           <button
@@ -410,7 +410,7 @@ export default function Navbar({
             className={getNavLinkClasses(isAdvertise)}
             onClick={handleAdvertiseClick}
           >
-            Make Advertise
+            {isAdmin?.() ? "Manage Advertise" : "Make Advertise"}
           </Link>
           <Link to="/pricing" className={getNavLinkClasses(isPricing)}>
             Pricing
@@ -442,7 +442,7 @@ export default function Navbar({
                   setIsMobileMenuOpen(false);
                 }}
               >
-                Make Advertise
+                {isAdmin?.() ? "Manage Advertise" : "Make Advertise"}
               </Link>
               <Link
                 to="/pricing"
