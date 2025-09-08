@@ -36,6 +36,8 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   // Simple pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,14 +56,18 @@ export default function HomePage() {
   // Debounced search to prevent excessive API calls
   const handleSearch = useCallback(
     debounce(async (term) => {
-      if (!term.trim()) {
+      if (!term || !term.trim()) {
         setIsSearching(false);
         setSearchResults([]);
+        setSearchLoading(false);
         return;
       }
+
+      setSearchLoading(true);
       setIsSearching(true);
+
       try {
-        const results = await searchAllNews({ search_term: term });
+        const results = await searchAllNews({ search_term: term.trim() });
         // Handle paginated search results
         const searchData = Array.isArray(results)
           ? results
@@ -73,9 +79,49 @@ export default function HomePage() {
       } catch (error) {
         console.error("Search failed:", error);
         setSearchResults([]);
+      } finally {
+        setSearchLoading(false);
       }
-    }, 300),
+    }, 500),
     []
+  );
+
+  // Handle search term changes with real-time search
+  const handleSearchTermChange = useCallback(
+    (term) => {
+      setSearchTerm(term);
+
+      if (!term || !term.trim()) {
+        setIsSearching(false);
+        setSearchResults([]);
+        setSearchLoading(false);
+        // Cancel any pending search
+        if (handleSearch.cancel) {
+          handleSearch.cancel();
+        }
+        return;
+      }
+
+      handleSearch(term);
+    },
+    [handleSearch]
+  );
+
+  // Handle search submission (Enter key)
+  const handleSearchSubmit = useCallback(
+    (term) => {
+      if (!term || !term.trim()) {
+        setIsSearching(false);
+        setSearchResults([]);
+        setSearchLoading(false);
+        return;
+      }
+
+      setSearchLoading(true);
+      setIsSearching(true);
+      handleSearch(term);
+    },
+    [handleSearch]
   );
 
   // Memoize advertisement fetch to prevent unnecessary re-renders
@@ -673,19 +719,25 @@ export default function HomePage() {
       <div className="min-h-screen">
         <Navbar
           onScrollToAbout={scrollToFooter}
-          onSearch={handleSearch}
+          onSearch={handleSearchSubmit}
           searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
+          setSearchTerm={handleSearchTermChange}
         />
 
         <main className="w-full mx-auto px-2 md:px-10 py-4 sm:py-8 pt-[150px] md:pt-[180px] lg:pt-[175px]">
-          <div className="">
+          <div className="w-full justify-center items-center">
             {isSearching ? (
-              <div className="search-results">
-                <h2 className="text-2xl font-bold mb-4">
+              <div className="search-results w-full justify-center items-center my-8">
+                <h2 className="text-2xl font-bold mb-4 text-center">
                   Search Results for "{searchTerm}"
                 </h2>
-                {searchResults.length > 0 ? (
+                {/* Loading state */}
+                {searchLoading ? (
+                  <div className="flex justify-center items-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                    <span className="ml-2 text-gray-600">Searching...</span>
+                  </div>
+                ) : searchResults.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {searchResults.map((article) => (
                       <StandardArticleCard
@@ -705,17 +757,38 @@ export default function HomePage() {
                     ))}
                   </div>
                 ) : (
-                  <p>No results found.</p>
+                  <div className="text-center py-8">
+                    <p className="text-center text-gray-600 mb-4">
+                      No results found.
+                    </p>
+                    <div className="flex justify-center">
+                      <Button
+                        onClick={() => {
+                          setIsSearching(false);
+                          setSearchTerm("");
+                        }}
+                        className="mt-4"
+                      >
+                        Back to Home
+                      </Button>
+                    </div>
+                  </div>
                 )}
-                <Button
-                  onClick={() => {
-                    setIsSearching(false);
-                    setSearchTerm("");
-                  }}
-                  className="mt-4"
-                >
-                  Back to Home
-                </Button>
+
+                {/* Back to Home button when results are found */}
+                {searchResults.length > 0 && (
+                  <div className="flex justify-center items-center my-10">
+                    <Button
+                      onClick={() => {
+                        setIsSearching(false);
+                        setSearchTerm("");
+                      }}
+                      className="mt-4"
+                    >
+                      Back to Home
+                    </Button>
+                  </div>
+                )}
               </div>
             ) : (
               <>
@@ -1177,7 +1250,7 @@ export default function HomePage() {
 
 function debounce(func, wait) {
   let timeout;
-  return function executedFunction(...args) {
+  const debouncedFunction = function executedFunction(...args) {
     const later = () => {
       clearTimeout(timeout);
       func(...args);
@@ -1185,4 +1258,11 @@ function debounce(func, wait) {
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
+
+  // Add cancel method
+  debouncedFunction.cancel = () => {
+    clearTimeout(timeout);
+  };
+
+  return debouncedFunction;
 }

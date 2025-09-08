@@ -172,10 +172,11 @@ export default function Navbar({
                   placeholder="Search articles, topics..."
                   className="pl-12 pr-4 py-3 w-full border-gray-200 rounded-full bg-gray-50 focus:bg-white focus:border-[#00254A] transition-all duration-200 shadow-sm"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      onSearch(searchTerm);
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSearchTerm(value);
+                    if (!value || !value.trim()) {
+                      setTimeout(() => setSearchTerm(""), 0);
                     }
                   }}
                 />
@@ -247,7 +248,7 @@ export default function Navbar({
                 <div className="flex items-center space-x-3">
                   <Button
                     onClick={openSignIn}
-                    className="px-6 py-2 bg-white dark:text-black text-[#00254A] border border-[#00254A] hover:bg-[#00254A] hover:text-white transition-all duration-200 rounded-full font-medium"
+                    className="px-6 py-2 bg-white text-white dark:text-black border border-[#00254A] hover:bg-[#00254A] hover:text-white transition-all duration-200 rounded-full font-medium"
                   >
                     Sign In
                   </Button>
@@ -289,10 +290,11 @@ export default function Navbar({
                   placeholder="Search..."
                   className="pl-10 pr-4 py-2 w-64 border-gray-200 rounded-full bg-gray-50 focus:bg-white"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      onSearch(searchTerm);
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSearchTerm(value);
+                    if (!value || !value.trim()) {
+                      setTimeout(() => setSearchTerm(""), 0);
                     }
                   }}
                 />
@@ -316,7 +318,7 @@ export default function Navbar({
                 <div className="flex items-center space-x-2">
                   <Button
                     onClick={openSignIn}
-                    className="px-4 py-2 bg-white dark:text-black text-[#00254A] border border-[#00254A] hover:bg-[#00254A] hover:text-white rounded-full text-sm"
+                    className="px-4 py-2 bg-white text-white dark:text-black border border-[#00254A] hover:bg-[#00254A] hover:text-white rounded-full text-sm"
                   >
                     Sign In
                   </Button>
@@ -364,7 +366,7 @@ export default function Navbar({
               ) : (
                 <Button
                   onClick={openSignIn}
-                  className="px-3 py-1.5 bg-gradient-to-r from-[#00254A] to-[#003d6b] text-white rounded-full text-xs font-medium"
+                  className="px-3 py-1.5 bg-gradient-to-r from-[#00254A] to-[#003d6b] text-white dark:text-black rounded-full text-xs font-medium"
                 >
                   Sign In
                 </Button>
@@ -386,10 +388,11 @@ export default function Navbar({
               placeholder="Search articles, topics..."
               className="pl-12 pr-4 py-3 w-full border-gray-200 rounded-full bg-gray-50 focus:bg-white"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  onSearch(searchTerm);
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearchTerm(value);
+                if (!value || !value.trim()) {
+                  setTimeout(() => setSearchTerm(""), 0);
                 }
               }}
             />
