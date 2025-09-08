@@ -66,63 +66,70 @@ const Pricing = () => {
     <div>
       <Navbar />
       {/* Pricing Section */}
-      <div className='mt-8 md:mt-12 lg:mt-16 flex justify-center h-screen items-center text-center'>
-        <div className=''>
-          <h3 className='text-xl md:text-2xl font-semibold text-secondary mb-6'>
+      <div className="mt-8 md:mt-12 lg:mt-16 flex justify-center h-screen items-center text-center">
+        <div className="">
+          <h3 className="text-xl md:text-2xl font-semibold text-secondary mb-6">
             Pricing
           </h3>
-          <div className='bg-[#f2f2f2] m-auto rounded-lg p-6 max-w-md'>
-            <div className='text-center mb-6'>
-              <div className='flex items-center justify-center space-x-2 mb-4'>
-                <div className='w-4 h-4 rounded-full border-2 border-tertiary flex items-center justify-center'>
-                  <div className='w-2 h-2 rounded-full bg-gray-400'></div>
+          <div className="bg-[#f2f2f2] m-auto rounded-lg p-6 max-w-md">
+            <div className="text-center mb-6">
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <div className="w-4 h-4 rounded-full border-2 border-tertiary flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-gray-400"></div>
                 </div>
-                <span className='text-secondary text-base md:text-lg font-medium'>
+                <span className="text-secondary text-base md:text-lg font-medium">
                   Monthly
                 </span>
               </div>
-              <div className='text-2xl md:text-4xl font-bold text-primary mb-2'>
-                $4.99<span className='text-lg font-normal'>/monthly</span>
+              <div className="text-2xl md:text-4xl font-bold text-primary mb-2">
+                $4.99<span className="text-lg font-normal">/monthly</span>
               </div>
             </div>
 
-            <div className='space-y-3 mb-3'>
-              <div className='flex items-start text-left space-x-3'>
-                <div className='w-2 h-2 rounded-full bg-blue-500 mt-2'></div>
-                <span className='text-sm text-secondary'>
-                  Create your own automated bot effortlessly!
+            <div className="space-y-3 mb-3">
+              <div className="flex items-start text-left space-x-3">
+                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                <span className="text-sm text-secondary">
+                  Monthly membership with premium benefits
                 </span>
               </div>
-              <div className='flex items-start text-left space-x-3'>
-                <div className='w-2 h-2 rounded-full bg-blue-500 mt-2'></div>
-                <span className='text-sm text-secondary'>
-                  Join our community for seamless team collaboration!
+              <div className="flex items-start text-left space-x-3">
+                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                <span className="text-sm text-secondary">
+                  Be able to comment and engage with the community
                 </span>
               </div>
-              <div className='flex items-start text-left space-x-3'>
-                <div className='w-2 h-2 rounded-full bg-blue-500 mt-2'></div>
-                <span className='text-sm text-secondary'>
-                  Unlock the secrets of AI model training with us!
+              <div className="flex items-start text-left space-x-3">
+                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                <span className="text-sm text-secondary">
+                  Share and promote your ads and reach a wider audience effortlessly!
                 </span>
               </div>
-              <div className='flex items-start text-left space-x-3'>
-                <div className='w-2 h-2 rounded-full bg-blue-500 mt-2'></div>
-                <span className='text-sm text-secondary'>
-                  Subscribe for insights on multilingual AI advancements!
+              <div className="flex items-start text-left space-x-3">
+                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                <span className="text-sm text-secondary">
+                  Get access to exclusive paid advertising features
+                </span>
+              </div>
+
+              <div className="flex items-start text-left space-x-3">
+                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                <span className="text-sm text-secondary">
+                  Unlock extra premium tools and resources
                 </span>
               </div>
             </div>
 
             {/* Premium User Message */}
             {isPremiumUser && (
-              <div className='mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg'>
-                <div className='flex items-center space-x-2'>
-                  <span className='text-lg'>👑</span>
-                  <span className='font-semibold'>
+              <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg">👑</span>
+                  <span className="font-semibold">
                     You are already a premium user!
                   </span>
                 </div>
-                <p className='text-sm mt-1'>
+                <p className="text-sm mt-1">
                   You have access to all premium features. Thank you for being a
                   valued member!
                 </p>
@@ -130,13 +137,13 @@ const Pricing = () => {
             )}
 
             {error && (
-              <div className='mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded'>
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
                 {error}
               </div>
             )}
 
             <Button
-              className='w-full bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50'
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50"
               onClick={handlePayment}
               disabled={isLoading || isPremiumUser}
             >
@@ -148,13 +155,13 @@ const Pricing = () => {
             </Button>
 
             {!isLoggedIn && !isPremiumUser && (
-              <p className='text-xs text-gray-500 mt-2'>
+              <p className="text-xs text-gray-500 mt-2">
                 You'll need to sign in to complete your purchase
               </p>
             )}
 
             {isPremiumUser && (
-              <p className='text-xs text-gray-500 mt-2'>
+              <p className="text-xs text-gray-500 mt-2">
                 Contact support for plan upgrades or changes
               </p>
             )}

@@ -21,13 +21,11 @@ import {
   generateTabsConfig,
   searchAllNews,
 } from "@/lib/news-service";
-// Import as dynamic import instead of static
 const { getAllPublicAdvertisements } = await import("@/lib/advertise-service");
 import { isValidArticle, shuffleWithLatest } from "@/lib/utils";
 import HomepageSkeleton from "@/components/common/HomepageSkeleton";
 import { ErrorComponent } from "@/components/news/ErrorComponent";
 import { AdvertisementContainer } from "@/components/advertisements/DynamicAdvertisement";
-import AdvertisementSkeleton from "@/components/advertisements/AdvertisementSkeleton";
 import AdPlacement from "@/components/advertisements/AdPlacement";
 import { Button } from "@/components/ui/button";
 
@@ -39,16 +37,19 @@ export default function HomePage() {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  // Pagination states
+  // Simple pagination states
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [allNewsData, setAllNewsData] = useState([]);
 
-  // Smooth scroll states
-  const [isLoadingTriggered, setIsLoadingTriggered] = useState(false);
-  const [scrollThreshold, setScrollThreshold] = useState(0.6); // Start loading at 60% scroll
+  // News data state
+  const [newsData, setNewsData] = useState({
+    sections: [],
+    loading: true,
+    error: null,
+  });
+  const [newsReactions, setNewsReactions] = useState({});
+  const [loadingReactions, setLoadingReactions] = useState({});
 
   // Debounced search to prevent excessive API calls
   const handleSearch = useCallback(
@@ -77,14 +78,6 @@ export default function HomePage() {
     []
   );
 
-  const [newsData, setNewsData] = useState({
-    sections: [],
-    loading: true,
-    error: null,
-  });
-  const [newsReactions, setNewsReactions] = useState({});
-  const [loadingReactions, setLoadingReactions] = useState({});
-
   // Memoize advertisement fetch to prevent unnecessary re-renders
   const fetchAdvertisements = useCallback(async () => {
     try {
@@ -105,15 +98,11 @@ export default function HomePage() {
   }, []);
 
   // Optimized news fetching with pagination
-  const fetchNews = useCallback(async (page = 1, append = false) => {
+  const fetchNews = useCallback(async (page = 1) => {
     try {
-      if (!append) {
-        setNewsData((prev) => ({ ...prev, loading: true }));
-      } else {
-        setLoadingMore(true);
-      }
+      setNewsData((prev) => ({ ...prev, loading: true }));
 
-      const response = await getAllNews(page, 30);
+      const response = await getAllNews(page, 50);
 
       // Handle paginated response structure
       let newsResults;
@@ -136,10 +125,7 @@ export default function HomePage() {
       }
 
       if (!newsResults || newsResults.length === 0) {
-        if (page === 1) {
-          throw new Error("No news data received");
-        }
-        return;
+        throw new Error("No news data received");
       }
 
       const formattedNews = newsResults
@@ -150,51 +136,23 @@ export default function HomePage() {
             new Date(b.publishedDateTime) - new Date(a.publishedDateTime)
         );
 
-      if (append) {
-        setAllNewsData((prev) => {
-          const newData = [...prev, ...formattedNews];
+      // Update pagination info
+      setCurrentPage(page);
+      setTotalCount(pagination.count || 0);
+      setTotalPages(Math.ceil((pagination.count || 0) / 50));
 
-          // Re-organize sections with new data immediately
-          setTimeout(() => {
-            const shuffledNews = shuffleWithLatest([...newData], 1, true);
-            const organizedSections = organizeNewsData(shuffledNews);
+      // Organize news data
+      const shuffledNews = shuffleWithLatest([...formattedNews], 1, true);
+      const organizedSections = organizeNewsData(shuffledNews);
 
-            setNewsData((prevNewsData) => ({
-              ...prevNewsData,
-              sections: organizedSections,
-            }));
-          }, 0);
+      setNewsData({
+        sections: organizedSections,
+        loading: false,
+        error: null,
+      });
 
-          return newData;
-        });
-
-        setCurrentPage(page);
-        setHasNextPage(!!pagination.next);
-        setTotalCount(pagination.count || 0);
-      } else {
-        setAllNewsData(formattedNews);
-        setCurrentPage(1);
-        setHasNextPage(!!pagination.next);
-        setTotalCount(pagination.count || 0);
-
-        // Organize first batch of news
-        const shuffledNews = shuffleWithLatest([...formattedNews], 1, true);
-        const organizedSections = organizeNewsData(shuffledNews);
-
-        setNewsData({
-          sections: organizedSections,
-          loading: false,
-          error: null,
-        });
-
-        // Fetch reactions for first 15 articles only
-        fetchAllReactions(formattedNews.slice(0, 15));
-      }
-
-      if (append) {
-        setLoadingMore(false);
-        setIsLoadingTriggered(false); // Reset loading trigger
-      }
+      // Fetch reactions for first 15 articles only
+      fetchAllReactions(formattedNews.slice(0, 15));
     } catch (error) {
       console.error("Failed to fetch news:", error);
       setNewsData((prev) => ({
@@ -202,21 +160,8 @@ export default function HomePage() {
         loading: false,
         error: error.message,
       }));
-      if (append) {
-        setLoadingMore(false);
-        setIsLoadingTriggered(false);
-      }
     }
   }, []);
-
-  // Load more news function with smooth loading
-  const loadMoreNews = useCallback(async () => {
-    if (!hasNextPage || loadingMore || isLoadingTriggered) return;
-
-    setIsLoadingTriggered(true);
-    const nextPage = currentPage + 1;
-    await fetchNews(nextPage, true);
-  }, [hasNextPage, loadingMore, currentPage, isLoadingTriggered, fetchNews]);
 
   // Batch reaction fetching to reduce API calls
   const fetchNewsReactions = useCallback(
@@ -312,7 +257,7 @@ export default function HomePage() {
 
         // Fetch news and ads in parallel
         const [newsResult, adsResult] = await Promise.allSettled([
-          fetchNews(1, false),
+          fetchNews(1),
           fetchAdvertisements(),
         ]);
 
@@ -646,81 +591,75 @@ export default function HomePage() {
     console.log(`Ad ${adId} viewed`);
   }, []);
 
-  // Enhanced infinite scroll handler with smooth loading
-  useEffect(() => {
-    let scrollTimeout;
-
-    const handleScroll = () => {
-      // Clear previous timeout to debounce scroll events
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-
-      scrollTimeout = setTimeout(() => {
-        const scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-
-        // Calculate scroll percentage
-        const scrollPercentage = (scrollTop + windowHeight) / documentHeight;
-
-        // Start loading when user scrolls past the threshold (default 60%)
-        const shouldLoadMore = scrollPercentage >= scrollThreshold;
-
-        if (
-          shouldLoadMore &&
-          hasNextPage &&
-          !loadingMore &&
-          !isSearching &&
-          !isLoadingTriggered
-        ) {
-          console.log(
-            `Loading more content at ${Math.round(
-              scrollPercentage * 100
-            )}% scroll`
-          );
-          loadMoreNews();
-        }
-      }, 100); // Debounce scroll events by 100ms
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-    };
-  }, [
-    hasNextPage,
-    loadingMore,
-    isSearching,
-    loadMoreNews,
-    isLoadingTriggered,
-    scrollThreshold,
-  ]);
-
-  // Dynamic scroll threshold adjustment based on content length
-  useEffect(() => {
-    const adjustScrollThreshold = () => {
-      const contentSections = newsData.sections.length;
-      if (contentSections <= 1) {
-        setScrollThreshold(0.5); // 50% for less content
-      } else if (contentSections === 2) {
-        setScrollThreshold(0.6); // 60% for moderate content
-      } else {
-        setScrollThreshold(0.7); // 70% for more content
-      }
-    };
-
-    if (newsData.sections.length > 0) {
-      adjustScrollThreshold();
+  // Pagination handlers
+  const handlePreviousPage = useCallback(() => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      fetchNews(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [newsData.sections.length]);
+  }, [currentPage, fetchNews]);
+
+  const handleNextPage = useCallback(() => {
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      fetchNews(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [currentPage, totalPages, fetchNews]);
+
+  const handlePageClick = useCallback(
+    (pageNumber) => {
+      if (
+        pageNumber !== currentPage &&
+        pageNumber >= 1 &&
+        pageNumber <= totalPages
+      ) {
+        fetchNews(pageNumber);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    },
+    [currentPage, totalPages, fetchNews]
+  );
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      let start = Math.max(1, currentPage - 2);
+      let end = Math.min(totalPages, start + maxVisiblePages - 1);
+
+      if (end - start + 1 < maxVisiblePages) {
+        start = Math.max(1, end - maxVisiblePages + 1);
+      }
+
+      if (start > 1) {
+        pages.push(1);
+        if (start > 2) pages.push("...");
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (end < totalPages) {
+        if (end < totalPages - 1) pages.push("...");
+        pages.push(totalPages);
+      }
+    }
+
+    return pages;
+  };
 
   if (newsData.loading) return <HomepageSkeleton />;
   if (newsData.error) return <ErrorComponent error={newsData.error} />;
+
   return (
     <>
       <Helmet>
@@ -779,37 +718,54 @@ export default function HomePage() {
                 </Button>
               </div>
             ) : (
-              newsData.sections.map((section, index) => (
-                <div key={index}>
-                  <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
-                    {/* Main Content Area */}
-                    <div className="w-full">
-                      {section.featuredArticle && (
-                        <div className="mb-8">
-                          <CommonNewsCard
-                            article={section.featuredArticle}
-                            reactions={
-                              newsReactions[section.featuredArticle.id] || []
-                            }
-                            onPostReaction={(reactionData) =>
-                              handlePostReaction(
-                                section.featuredArticle.id,
-                                reactionData
-                              )
-                            }
-                            onPostLove={(loveStatus) =>
-                              handlePostLove(
-                                section.featuredArticle.id,
-                                loveStatus
-                              )
-                            }
-                            onPostComment={(commentText) =>
-                              handlePostComment(
-                                section.featuredArticle.id,
-                                commentText
-                              )
-                            }
-                          />
+              <>
+                {newsData.sections.map((section, index) => (
+                  <div key={index}>
+                    <div className="grid grid-cols-1 xl:grid-cols-[3fr_1fr] gap-6 xl:gap-8 mb-12">
+                      {/* Main Content Area */}
+                      <div className="w-full">
+                        {section.featuredArticle && (
+                          <div className="mb-8">
+                            <CommonNewsCard
+                              article={section.featuredArticle}
+                              reactions={
+                                newsReactions[section.featuredArticle.id] || []
+                              }
+                              onPostReaction={(reactionData) =>
+                                handlePostReaction(
+                                  section.featuredArticle.id,
+                                  reactionData
+                                )
+                              }
+                              onPostLove={(loveStatus) =>
+                                handlePostLove(
+                                  section.featuredArticle.id,
+                                  loveStatus
+                                )
+                              }
+                              onPostComment={(commentText) =>
+                                handlePostComment(
+                                  section.featuredArticle.id,
+                                  commentText
+                                )
+                              }
+                            />
+                            <AdPlacement
+                              advertisements={advertisements}
+                              placement="header-banner"
+                              onAdView={handleAdView}
+                              className="mb-6"
+                            />
+                          </div>
+                        )}
+
+                        {section.audioNews && (
+                          <div className="mb-8">
+                            <AudioNewsCard {...section.audioNews} />
+                          </div>
+                        )}
+
+                        <div className="w-full flex text-center">
                           <AdPlacement
                             advertisements={advertisements}
                             placement="header-banner"
@@ -817,236 +773,121 @@ export default function HomePage() {
                             className="mb-6"
                           />
                         </div>
-                      )}
 
-                      {section.audioNews && (
-                        <div className="mb-8">
-                          <AudioNewsCard {...section.audioNews} />
-                        </div>
-                      )}
-
-                      {section.longReadArticle && (
-                        <NewsSection>
-                          <CommonNewsCard
-                            article={section.longReadArticle}
-                            reactions={
-                              newsReactions[section.longReadArticle.id] || []
-                            }
-                            onPostReaction={(reactionData) =>
-                              handlePostReaction(
-                                section.longReadArticle.id,
-                                reactionData
-                              )
-                            }
-                            onPostLove={(loveStatus) =>
-                              handlePostLove(
-                                section.longReadArticle.id,
-                                loveStatus
-                              )
-                            }
-                            onPostComment={(commentText) =>
-                              handlePostComment(
-                                section.longReadArticle.id,
-                                commentText
-                              )
-                            }
-                          />
-                          <AdPlacement
-                            advertisements={advertisements}
-                            placement="content-middle"
-                            onAdView={handleAdView}
-                            className="mb-6"
-                          />
-                        </NewsSection>
-                      )}
-
-                      {section.liveUpdates &&
-                        section.liveUpdates.length > 0 && (
-                          <>
-                            <NewsSection>
-                              <LiveUpdateCard
-                                updates={section.liveUpdates}
-                                newsReactions={newsReactions}
-                                onPostLove={handlePostLove}
-                                onPostComment={handlePostComment}
-                              />
-                            </NewsSection>
-                            <div className="w-full flex text-center">
-                              <AdPlacement
-                                advertisements={advertisements}
-                                placement="header-banner"
-                                onAdView={handleAdView}
-                                className="mb-6"
-                              />
-                            </div>
-                          </>
+                        {section.longReadArticle && (
+                          <NewsSection>
+                            <CommonNewsCard
+                              article={section.longReadArticle}
+                              reactions={
+                                newsReactions[section.longReadArticle.id] || []
+                              }
+                              onPostReaction={(reactionData) =>
+                                handlePostReaction(
+                                  section.longReadArticle.id,
+                                  reactionData
+                                )
+                              }
+                              onPostLove={(loveStatus) =>
+                                handlePostLove(
+                                  section.longReadArticle.id,
+                                  loveStatus
+                                )
+                              }
+                              onPostComment={(commentText) =>
+                                handlePostComment(
+                                  section.longReadArticle.id,
+                                  commentText
+                                )
+                              }
+                            />
+                            <AdPlacement
+                              advertisements={advertisements}
+                              placement="content-middle"
+                              onAdView={handleAdView}
+                              className="mb-6"
+                            />
+                          </NewsSection>
                         )}
 
-                      {Object.keys(section.tabsData).length > 0 && (
-                        <div className="mb-8">
-                          <TabbedNewsSection
-                            dynamicTabsData={section.tabsData}
-                            dynamicTabsConfig={generateTabsConfig(
-                              section.tabsData
-                            )}
-                            newsReactions={newsReactions}
-                            onPostLove={handlePostLove}
-                            onPostComment={handlePostComment}
-                          />
-                        </div>
-                      )}
+                        {Object.keys(section.tabsData).length > 0 && (
+                          <div className="mb-8">
+                            <TabbedNewsSection
+                              dynamicTabsData={section.tabsData}
+                              dynamicTabsConfig={generateTabsConfig(
+                                section.tabsData
+                              )}
+                              newsReactions={newsReactions}
+                              onPostLove={handlePostLove}
+                              onPostComment={handlePostComment}
+                            />
+                          </div>
+                        )}
 
-                      {/* Content Middle Ad */}
-                      <AdPlacement
-                        advertisements={advertisements}
-                        placement="content-middle"
-                        onAdView={handleAdView}
-                        className="mb-6"
-                      />
-
-                      {Object.keys(section.tabsData).length > 0 && (
-                        <div className="mb-8">
-                          <ListedNewsSection
-                            dynamicTabsData={section.tabsData}
-                            dynamicTabsConfig={generateTabsConfig(
-                              section.tabsData
-                            )}
-                            newsReactions={newsReactions}
-                            onPostLove={handlePostLove}
-                            onPostComment={handlePostComment}
-                          />
-                        </div>
-                      )}
-
-                      {/* Content Bottom Ad */}
-                      <div className="flex justify-center items-center">
+                        {/* Content Middle Ad */}
                         <AdPlacement
                           advertisements={advertisements}
                           placement="content-middle"
                           onAdView={handleAdView}
                           className="mb-6"
                         />
+
+                        {section.liveUpdates &&
+                          section.liveUpdates.length > 0 && (
+                            <>
+                              <NewsSection>
+                                <LiveUpdateCard
+                                  updates={section.liveUpdates}
+                                  newsReactions={newsReactions}
+                                  onPostLove={handlePostLove}
+                                  onPostComment={handlePostComment}
+                                />
+                              </NewsSection>
+                            </>
+                          )}
+
+                        {Object.keys(section.tabsData).length > 0 && (
+                          <div className="mb-8">
+                            <ListedNewsSection
+                              dynamicTabsData={section.tabsData}
+                              dynamicTabsConfig={generateTabsConfig(
+                                section.tabsData
+                              )}
+                              newsReactions={newsReactions}
+                              onPostLove={handlePostLove}
+                              onPostComment={handlePostComment}
+                            />
+                          </div>
+                        )}
+
+                        {/* Content Bottom Ad */}
+                        <div className="flex justify-center items-center">
+                          <AdPlacement
+                            advertisements={advertisements}
+                            placement="content-middle"
+                            onAdView={handleAdView}
+                            className="mb-6"
+                          />
+                        </div>
+                        {section.audioNews && (
+                          <div className="mb-8">
+                            <AudioNewsCard {...section.audioNews} />
+                          </div>
+                        )}
                       </div>
-                    </div>
 
-                    {/* Sidebar */}
-                    <aside className="w-full xl:w-full">
-                      {section.sidebarArticles &&
-                        Array.isArray(section.sidebarArticles) &&
-                        section.sidebarArticles.length > 0 && (
-                          <div className="xl:hidden w-full mb-6">
-                            <h4 className="text-md font-semibold text-gray-700 mb-4">
-                              Trending Now
-                            </h4>
-                            <div className="space-y-4">
-                              {section.sidebarArticles
-                                .filter(isValidArticle)
-                                .slice(0, 5)
-                                .map((article) => (
-                                  <div key={article.id} className="w-full">
-                                    <StandardArticleCard
-                                      article={article}
-                                      reactions={
-                                        newsReactions[article.id] || []
-                                      }
-                                      onPostReaction={(reactionData) =>
-                                        handlePostReaction(
-                                          article.id,
-                                          reactionData
-                                        )
-                                      }
-                                      onPostLove={(loveStatus) =>
-                                        handlePostLove(article.id, loveStatus)
-                                      }
-                                      onPostComment={(commentText) =>
-                                        handlePostComment(
-                                          article.id,
-                                          commentText
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                ))}
-                              <AdPlacement
-                                advertisements={advertisements}
-                                placement="card"
-                                onAdView={handleAdView}
-                                className="mt-8"
-                              />
-                            </div>
-                          </div>
-                        )}
-
-                      {/* Sidebar Ad - Mobile Mid */}
-                      <AdvertisementContainer
-                        advertisements={advertisements}
-                        position="mobile-mid"
-                        width="100%"
-                        height="200px"
-                        className="mb-6 xl:hidden"
-                        maxAds={1}
-                      />
-
-                      {section.sidebarArticles &&
-                        Array.isArray(section.sidebarArticles) &&
-                        section.sidebarArticles.length > 3 && (
-                          <div className="xl:hidden w-full mb-6">
-                            <div className="space-y-4">
-                              {section.sidebarArticles
-                                .filter(isValidArticle)
-                                .slice(3, 8)
-                                .map((article) => (
-                                  <div key={article.id} className="w-full">
-                                    <StandardArticleCard
-                                      article={article}
-                                      reactions={
-                                        newsReactions[article.id] || []
-                                      }
-                                      onPostReaction={(reactionData) =>
-                                        handlePostReaction(
-                                          article.id,
-                                          reactionData
-                                        )
-                                      }
-                                      onPostLove={(loveStatus) =>
-                                        handlePostLove(article.id, loveStatus)
-                                      }
-                                      onPostComment={(commentText) =>
-                                        handlePostComment(
-                                          article.id,
-                                          commentText
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                        )}
-
-                      {/* Desktop Sidebar */}
-                      <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
-                        {/* Sidebar Top Ad */}
-                        <AdvertisementContainer
-                          advertisements={advertisements}
-                          position="sidebar-top"
-                          width="100%"
-                          height="200px"
-                          className="mb-6"
-                          maxAds={1}
-                        />
-
+                      {/* Sidebar */}
+                      <aside className="w-full xl:w-full">
                         {section.sidebarArticles &&
                           Array.isArray(section.sidebarArticles) &&
                           section.sidebarArticles.length > 0 && (
-                            <div className="w-full">
+                            <div className="xl:hidden w-full mb-6">
                               <h4 className="text-md font-semibold text-gray-700 mb-4">
                                 Trending Now
                               </h4>
                               <div className="space-y-4">
                                 {section.sidebarArticles
                                   .filter(isValidArticle)
-                                  .slice(0, 5)
+                                  .slice(0, 7)
                                   .map((article) => (
                                     <div key={article.id} className="w-full">
                                       <StandardArticleCard
@@ -1076,30 +917,30 @@ export default function HomePage() {
                                   advertisements={advertisements}
                                   placement="card"
                                   onAdView={handleAdView}
-                                  className="my-6"
+                                  className="mt-8"
                                 />
                               </div>
                             </div>
                           )}
 
-                        {/* Sidebar Mid Ad */}
+                        {/* Sidebar Ad - Mobile Mid */}
                         <AdvertisementContainer
                           advertisements={advertisements}
-                          position="sidebar-mid"
+                          position="mobile-mid"
                           width="100%"
                           height="200px"
-                          className="my-6"
+                          className="mb-6 xl:hidden"
                           maxAds={1}
                         />
 
                         {section.sidebarArticles &&
                           Array.isArray(section.sidebarArticles) &&
-                          section.sidebarArticles.length > 3 && (
-                            <div className="w-full">
+                          section.sidebarArticles.length > 4 && (
+                            <div className="xl:hidden w-full mb-6">
                               <div className="space-y-4">
                                 {section.sidebarArticles
                                   .filter(isValidArticle)
-                                  .slice(3, 8)
+                                  .slice(4, 10)
                                   .map((article) => (
                                     <div key={article.id} className="w-full">
                                       <StandardArticleCard
@@ -1129,31 +970,203 @@ export default function HomePage() {
                             </div>
                           )}
 
-                        {/* Sidebar Bottom Ad */}
-                        <AdvertisementContainer
-                          advertisements={advertisements}
-                          position="sidebar-bottom"
-                          width="100%"
-                          height="192px"
-                          className="mt-6"
-                          maxAds={1}
-                        />
-                      </div>
-                    </aside>
+                        {/* Desktop Sidebar */}
+                        <div className="xl:block bg-gray-200 rounded-lg p-4 sm:p-6 flex flex-col items-center">
+                          {/* Sidebar Top Ad */}
+                          <AdvertisementContainer
+                            advertisements={advertisements}
+                            position="sidebar-top"
+                            width="100%"
+                            height="200px"
+                            className="mb-6"
+                            maxAds={1}
+                          />
+
+                          {section.sidebarArticles &&
+                            Array.isArray(section.sidebarArticles) &&
+                            section.sidebarArticles.length > 0 && (
+                              <div className="w-full">
+                                <h4 className="text-md font-semibold text-gray-700 mb-4">
+                                  Trending Now
+                                </h4>
+                                <div className="space-y-4">
+                                  {section.sidebarArticles
+                                    .filter(isValidArticle)
+                                    .slice(0, 7)
+                                    .map((article) => (
+                                      <div key={article.id} className="w-full">
+                                        <StandardArticleCard
+                                          article={article}
+                                          reactions={
+                                            newsReactions[article.id] || []
+                                          }
+                                          onPostReaction={(reactionData) =>
+                                            handlePostReaction(
+                                              article.id,
+                                              reactionData
+                                            )
+                                          }
+                                          onPostLove={(loveStatus) =>
+                                            handlePostLove(
+                                              article.id,
+                                              loveStatus
+                                            )
+                                          }
+                                          onPostComment={(commentText) =>
+                                            handlePostComment(
+                                              article.id,
+                                              commentText
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    ))}
+                                  <AdPlacement
+                                    advertisements={advertisements}
+                                    placement="card"
+                                    onAdView={handleAdView}
+                                    className="my-6"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                          {/* Sidebar Mid Ad */}
+                          <AdvertisementContainer
+                            advertisements={advertisements}
+                            position="sidebar-mid"
+                            width="100%"
+                            height="200px"
+                            className="my-6"
+                            maxAds={1}
+                          />
+
+                          {section.sidebarArticles &&
+                            Array.isArray(section.sidebarArticles) &&
+                            section.sidebarArticles.length > 3 && (
+                              <div className="w-full">
+                                <div className="space-y-4">
+                                  {section.sidebarArticles
+                                    .filter(isValidArticle)
+                                    .slice(4, 10)
+                                    .map((article) => (
+                                      <div key={article.id} className="w-full">
+                                        <StandardArticleCard
+                                          article={article}
+                                          reactions={
+                                            newsReactions[article.id] || []
+                                          }
+                                          onPostReaction={(reactionData) =>
+                                            handlePostReaction(
+                                              article.id,
+                                              reactionData
+                                            )
+                                          }
+                                          onPostLove={(loveStatus) =>
+                                            handlePostLove(
+                                              article.id,
+                                              loveStatus
+                                            )
+                                          }
+                                          onPostComment={(commentText) =>
+                                            handlePostComment(
+                                              article.id,
+                                              commentText
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    ))}
+                                </div>
+                              </div>
+                            )}
+
+                          {/* Sidebar Bottom Ad */}
+                          <AdvertisementContainer
+                            advertisements={advertisements}
+                            position="sidebar-bottom"
+                            width="100%"
+                            height="192px"
+                            className="mt-6"
+                            maxAds={1}
+                          />
+                        </div>
+                      </aside>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+
+                {/* Pagination Component */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center items-center mt-12 mb-8">
+                    <div className="flex items-center space-x-2">
+                      {/* Previous Button */}
+                      <Button
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                        variant="outline"
+                        className="px-4 py-2"
+                      >
+                        Previous
+                      </Button>
+
+                      {/* Page Numbers */}
+                      <div className="flex items-center space-x-1">
+                        {getPageNumbers().map((pageNum, index) => {
+                          if (pageNum === "...") {
+                            return (
+                              <span
+                                key={`ellipsis-${index}`}
+                                className="px-3 py-2 text-gray-500"
+                              >
+                                ...
+                              </span>
+                            );
+                          }
+
+                          return (
+                            <Button
+                              key={pageNum}
+                              onClick={() => handlePageClick(pageNum)}
+                              variant={
+                                currentPage === pageNum ? "default" : "outline"
+                              }
+                              className={`px-3 py-2 min-w-[40px] ${
+                                currentPage === pageNum
+                                  ? "bg-blue-600 text-white"
+                                  : "hover:bg-gray-100"
+                              }`}
+                            >
+                              {pageNum}
+                            </Button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Next Button */}
+                      <Button
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
+                        variant="outline"
+                        className="px-4 py-2"
+                      >
+                        Next
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Page Info */}
+                {/* {totalCount > 0 && (
+                  <div className="text-center text-gray-600 text-sm mb-8">
+                    Showing page {currentPage} of {totalPages} ({totalCount}{" "}
+                    total articles)
+                  </div>
+                )} */}
+              </>
             )}
           </div>
         </main>
-
-        {/* Footer Ad */}
-        <AdPlacement
-          advertisements={advertisements}
-          placement="header-banner"
-          onAdView={handleAdView}
-          className="mb-6"
-        />
       </div>
       <div ref={footerRef}>
         <FooterSection />

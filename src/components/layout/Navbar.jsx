@@ -141,15 +141,17 @@ export default function Navbar({
         <div className="mx-auto">
           <div className="hidden lg:grid lg:grid-cols-3 items-center py-2 gap-8">
             <div className="flex items-center space-x-4">
-              <img
-                src="/logo.png"
-                alt="Alamo City Pulse"
-                className="h-20 w-auto object-contain rounded-md"
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  e.target.nextSibling.style.display = "block";
-                }}
-              />
+              <Link to="/">
+                <img
+                  src="/logo.png"
+                  alt="Alamo City Pulse"
+                  className="h-20 w-auto object-contain rounded-md cursor-pointer"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    e.currentTarget.nextElementSibling.style.display = "block";
+                  }}
+                />
+              </Link>
               <div className="hidden text-2xl font-bold text-gray-900 tracking-wide">
                 ALAMOCITYPULSE
               </div>

@@ -6,12 +6,9 @@
 
   // Responsive grid configuration
   const getResponsiveGridProps = (articles) => {
-    const articleCount = articles?.length || 0;
     return {
       columns: 4,
       gap: 4,
-      // You can customize based on article count if needed
-      // For example: articleCount <= 2 ? 2 : 4
     };
   };
 

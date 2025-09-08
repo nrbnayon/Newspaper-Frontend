@@ -21,12 +21,8 @@ const StandardArticleCard = ({
     description,
     category,
     publishedTime,
-    publishedDateTime,
     image = "/placeholder.svg?height=200&width=300",
     sentiment,
-    isFeatured,
-    imageAttribution,
-    readTime,
   },
   className,
   imagePosition = "top",
@@ -65,22 +61,16 @@ const StandardArticleCard = ({
     setIsExpanded(!isExpanded);
   };
 
+  const handleAuthRequired = () => {
+    setAuthMode("signin");
+    setAuthModalOpen(true);
+  };
+
   const handleCommentClick = () => {
-    if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
-      return;
-    }
     setShowComments(!showComments);
   };
 
   const handleLoveClick = async (loveStatus) => {
-    if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
-      return;
-    }
-
     try {
       await onPostLove?.(loveStatus);
     } catch (error) {
@@ -89,12 +79,6 @@ const StandardArticleCard = ({
   };
 
   const handleCommentSubmit = async (commentText) => {
-    if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
-      return;
-    }
-
     try {
       await onPostComment?.(commentText);
     } catch (error) {
@@ -109,9 +93,9 @@ const StandardArticleCard = ({
     <>
       {isExpanded && (
         <Helmet>
-          <title>{ "ALAMOCITYPULSE - News Article"}</title>
+          <title>{"ALAMOCITYPULSE - News Article"}</title>
           <meta
-            name='description'
+            name="description"
             content={
               description
                 ? getTruncatedText(description, 120)
@@ -119,19 +103,19 @@ const StandardArticleCard = ({
             }
           />
           <meta
-            property='og:title'
+            property="og:title"
             content={title || "ALAMOCITYPULSE - News Article"}
           />
           <meta
-            property='og:description'
+            property="og:description"
             content={
               description
                 ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
-          <meta property='og:image' content={image || "/default-image.jpg"} />
-          <meta property='og:type' content='article' />
+          <meta property="og:image" content={image || "/default-image.jpg"} />
+          <meta property="og:type" content="article" />
         </Helmet>
       )}
       <div
@@ -151,13 +135,13 @@ const StandardArticleCard = ({
           <img
             src={image}
             alt={title}
-            className='w-full h-72 xl:h-48 object-cover'
+            className="w-full h-72 xl:h-48 object-cover"
           />
           {sentiment && (
-            <div className='absolute top-1 left-1'>
+            <div className="absolute top-1 left-1">
               <SentimentBadge
                 sentiment={sentiment}
-                className='text-xs py-0.5 px-2'
+                className="text-xs py-0.5 px-2"
               />
             </div>
           )}
@@ -169,22 +153,22 @@ const StandardArticleCard = ({
             imagePosition === "right" ? "order-1" : "order-2"
           )}
         >
-          <div className='w-full bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2 self-start'>
+          <div className="w-full bg-custom-red text-white px-2 py-1.5 text-xs font-medium mb-2 self-start">
             {category}
           </div>
-          <h3 className='font-bold text-gray-900 mb-2 line-clamp-2 leading-tight'>
+          <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 leading-tight">
             {title}
           </h3>
 
           {description && (
-            <div className='text-gray-600 text-sm mb-3'>
-              <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
+            <div className="text-gray-600 text-sm mb-3">
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                 {isExpanded ? description : truncatedContent}
                 {!isExpanded && shouldShowReadMore && "... "}
                 {shouldShowReadMore && (
                   <button
                     onClick={handleReadMore}
-                    className='text-blue-400 hover:text-blue-500 cursor-pointer text-sm sm:text-base font-medium transition-colors duration-200 focus:outline-none focus:underline'
+                    className="text-blue-400 hover:text-blue-500 cursor-pointer text-sm sm:text-base font-medium transition-colors duration-200 focus:outline-none focus:underline"
                   >
                     {isExpanded ? "Read less" : "Read more"}
                   </button>
@@ -192,7 +176,7 @@ const StandardArticleCard = ({
               </p>
             </div>
           )}
-          <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
+          <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
             <div>{publishedTime && <span>{publishedTime}</span>}</div>
             <div>
               <InteractionButtons
@@ -201,7 +185,8 @@ const StandardArticleCard = ({
                 showCommentsCount={commentCount}
                 isLoved={isLoved}
                 loveCount={loveCount}
-                disabled={!isLoggedIn}
+                isLoggedIn={isLoggedIn}
+                onAuthRequired={handleAuthRequired}
               />
             </div>
           </div>

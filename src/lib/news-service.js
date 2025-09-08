@@ -5,7 +5,7 @@ import apiClient from "./auth-service";
 // ========================
 // NEWS API FUNCTIONS
 // ========================
-export const getAllNews = async (page = 1, pageSize = 30) => {
+export const getAllNews = async (page = 1, pageSize = 50) => {
   try {
     const response = await apiClient.get(
       `/news/get/all-news/?page=${page}&page_size=${pageSize}`

@@ -128,6 +128,11 @@ const CommonNewsCard = ({
     }
   };
 
+  const handleAuthRequired = () => {
+    setAuthMode("signin");
+    setAuthModalOpen(true);
+  };
+
   const handleSourceClick = (e) => {
     if (url) {
       e.preventDefault();
@@ -141,7 +146,7 @@ const CommonNewsCard = ({
         <Helmet>
           <title>{title || "ALAMOCITYPULSE - News Article"}</title>
           <meta
-            name='description'
+            name="description"
             content={
               description
                 ? getTruncatedText(description, 120)
@@ -149,19 +154,19 @@ const CommonNewsCard = ({
             }
           />
           <meta
-            property='og:title'
+            property="og:title"
             content={title || "ALAMOCITYPULSE - News Article"}
           />
           <meta
-            property='og:description'
+            property="og:description"
             content={
               description
                 ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
-          <meta property='og:image' content={image || "/default-image.jpg"} />
-          <meta property='og:type' content='article' />
+          <meta property="og:image" content={image || "/default-image.jpg"} />
+          <meta property="og:type" content="article" />
         </Helmet>
       )}
       <article
@@ -186,36 +191,36 @@ const CommonNewsCard = ({
             )}
           >
             {/* Header Meta Info */}
-            <div className='flex items-center justify-between mb-3 flex-wrap gap-2'>
-              <div className='flex items-center gap-2 text-sm text-gray-500 flex-wrap'>
+            <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
                 {source && (
                   <button
                     onClick={handleSourceClick}
-                    className='font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer'
+                    className="font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
                   >
                     {source}
                   </button>
                 )}
                 {source && (publishedDateTime || publishedTime) && (
-                  <span className='text-gray-300'>•</span>
+                  <span className="text-gray-300">•</span>
                 )}
                 {(publishedDateTime || publishedTime) && (
-                  <time className='text-gray-500'>
+                  <time className="text-gray-500">
                     {formatPublishedTime(publishedDateTime || publishedTime)}
                   </time>
                 )}
                 {author && (
                   <>
-                    <span className='text-gray-300'>•</span>
-                    <span className='text-gray-600 font-medium'>
+                    <span className="text-gray-300">•</span>
+                    <span className="text-gray-600 font-medium">
                       By {author}
                     </span>
                   </>
                 )}
                 {category && (
                   <>
-                    <span className='text-gray-300'>•</span>
-                    <span className='inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800'>
+                    <span className="text-gray-300">•</span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
                       {category.toUpperCase()}
                     </span>
                   </>
@@ -225,36 +230,36 @@ const CommonNewsCard = ({
 
             <SentimentBadge
               sentiment={sentiment}
-              className='mb-3 sm:mb-4 w-full'
+              className="mb-3 sm:mb-4 w-full"
             />
 
-            <h1 className='text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight'>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
               {title}
               {isFeatured && (
-                <span className='ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800'>
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
                   FEATURED
                 </span>
               )}
             </h1>
 
-            <div className='mb-3 sm:mb-4'>
-              <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
+            <div className="mb-3 sm:mb-4">
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                 {isExpanded ? description : truncatedContent}
                 {!isExpanded && shouldShowReadMore && "... "}
                 {shouldShowReadMore && (
                   <button
                     onClick={handleReadMore}
-                    className='text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline inline-flex items-center gap-1'
+                    className="text-blue-600 hover:text-blue-800 cursor-pointer text-sm sm:text-base font-medium mt-2 transition-colors duration-200 focus:outline-none focus:underline inline-flex items-center gap-1"
                   >
                     {isExpanded ? (
                       <>
                         Read less
-                        <ChevronUp className='w-4 h-4 mt-1' />
+                        <ChevronUp className="w-4 h-4 mt-1" />
                       </>
                     ) : (
                       <>
                         Read more
-                        <ChevronDown className='w-4 h-4 mt-1' />
+                        <ChevronDown className="w-4 h-4 mt-1" />
                       </>
                     )}
                   </button>
@@ -264,17 +269,17 @@ const CommonNewsCard = ({
 
             {/* Tags */}
             {tags && tags.length > 0 && (
-              <div className='flex flex-wrap gap-2 mb-4'>
+              <div className="flex flex-wrap gap-2 mb-4">
                 {tags.slice(0, 4).map((tag, index) => (
                   <span
                     key={index}
-                    className='inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer'
+                    className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     #{tag}
                   </span>
                 ))}
                 {tags.length > 4 && (
-                  <span className='inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-500'>
+                  <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-gray-500">
                     +{tags.length - 4} more
                   </span>
                 )}
@@ -283,8 +288,8 @@ const CommonNewsCard = ({
 
             {/* Comment section in content area when expanded */}
             {isHorizontal && (
-              <div className='flex flex-col justify-between w-full'>
-                <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+              <div className="flex flex-col justify-between w-full">
+                <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
                   <div>
                     <InteractionButtons
                       onCommentClick={handleCommentClick}
@@ -292,43 +297,10 @@ const CommonNewsCard = ({
                       showCommentsCount={commentCount}
                       isLoved={isLoved}
                       loveCount={loveCount}
-                      disabled={!isLoggedIn}
+                      isLoggedIn={isLoggedIn}
+                      onAuthRequired={handleAuthRequired}
                     />
                   </div>
-
-                  {/* Share/Save Options */}
-                  {/* <div className="flex items-center gap-2">
-                  <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
-                      />
-                    </svg>
-                  </button>
-                  <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                      />
-                    </svg>
-                  </button>
-                </div> */}
                 </div>
               </div>
             )}
@@ -343,7 +315,7 @@ const CommonNewsCard = ({
                 isExpanded && "w-full"
               )}
             >
-              <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
+              <div className="relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center">
                 <img
                   src={image}
                   alt={title}
@@ -353,24 +325,24 @@ const CommonNewsCard = ({
                     isExpanded &&
                       "h-56 sm:h-96 md:h-96 lg:h-[36rem] xl:h-[44rem]"
                   )}
-                  loading='lazy'
+                  loading="lazy"
                 />
 
                 {/* TimeIndicator - Bottom Left */}
-                <div className='absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+                <div className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
                   <TimeIndicator
-                    type='readTime'
+                    type="readTime"
                     value={readTime || publishedTime}
-                    className='text-xs sm:text-sm text-white'
+                    className="text-xs sm:text-sm text-white"
                   />
                 </div>
 
                 {/* ImageAttribution - Bottom Right */}
                 {imageAttribution && (
-                  <div className='absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1'>
+                  <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm rounded-md px-2 py-1">
                     <ImageAttribution
                       attribution={imageAttribution}
-                      className='text-xs sm:text-sm text-white'
+                      className="text-xs sm:text-sm text-white"
                     />
                   </div>
                 )}
@@ -378,8 +350,8 @@ const CommonNewsCard = ({
 
               {/* Comment section in image area when not expanded */}
               {!isHorizontal && (
-                <div className='flex flex-col justify-between w-full'>
-                  <div className='w-full flex justify-between items-center mt-2 sm:mt-3'>
+                <div className="flex flex-col justify-between w-full">
+                  <div className="w-full flex justify-between items-center mt-2 sm:mt-3">
                     {isFeatured && (
                       <div>
                         <InteractionButtons
@@ -392,7 +364,7 @@ const CommonNewsCard = ({
                         />
                       </div>
                     )}
-                    {!isFeatured && <div className=''></div>}
+                    {!isFeatured && <div className=""></div>}
                   </div>
                 </div>
               )}

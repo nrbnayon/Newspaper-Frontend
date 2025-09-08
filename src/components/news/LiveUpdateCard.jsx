@@ -24,7 +24,7 @@ const CarouselDots = ({ currentIndex, setCurrentIndex, totalItems }) => {
   };
 
   return (
-    <div className='flex items-center gap-2'>
+    <div className="flex items-center gap-2">
       {Array.from({ length: totalItems }).map((_, index) => (
         <button
           key={index}
@@ -54,7 +54,7 @@ const NavigationArrows = ({ currentIndex, setCurrentIndex, totalItems }) => {
   const canGoNext = currentIndex < totalItems - 1;
 
   return (
-    <div className='flex items-center gap-1'>
+    <div className="flex items-center gap-1">
       <button
         onClick={handlePrev}
         disabled={!canGoPrev}
@@ -64,7 +64,7 @@ const NavigationArrows = ({ currentIndex, setCurrentIndex, totalItems }) => {
             : "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
         }`}
       >
-        <ChevronLeft className='w-4 h-4' />
+        <ChevronLeft className="w-4 h-4" />
       </button>
       <button
         onClick={handleNext}
@@ -75,7 +75,7 @@ const NavigationArrows = ({ currentIndex, setCurrentIndex, totalItems }) => {
             : "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
         }`}
       >
-        <ChevronRight className='w-4 h-4' />
+        <ChevronRight className="w-4 h-4" />
       </button>
     </div>
   );
@@ -97,7 +97,7 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
   };
 
   if (!shouldShowReadMore) {
-    return <p className='text-gray-600 mb-4'>{description}</p>;
+    return <p className="text-gray-600 mb-4">{description}</p>;
   }
 
   return (
@@ -107,24 +107,24 @@ const ReadMoreContent = ({ description, isLoggedIn, onAuthRequired }) => {
         <Helmet>
           <title>{"ALAMOCITYPULSE - News Article"}</title>
           <meta
-            name='description'
+            name="description"
             content={"Read the latest news and updates from ALAMOCITYPULSE"}
           />
-          <meta property='og:title' content={"ALAMOCITYPULSE - News Article"} />
+          <meta property="og:title" content={"ALAMOCITYPULSE - News Article"} />
           <meta
-            property='og:description'
+            property="og:description"
             content={"Read the latest news and updates from ALAMOCITYPULSE"}
           />
-          <meta property='og:image' content={"/default-image.jpg"} />
-          <meta property='og:type' content='article' />
+          <meta property="og:image" content={"/default-image.jpg"} />
+          <meta property="og:type" content="article" />
         </Helmet>
       )}
-      <div className='mb-4'>
-        <p className='text-gray-600'>
+      <div className="mb-4">
+        <p className="text-gray-600">
           {isExpanded ? description : `${truncatedContent}...`}
           <button
             onClick={handleReadMore}
-            className='text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors duration-200 focus:outline-none focus:underline'
+            className="text-blue-600 cursor-pointer hover:text-blue-800 font-medium text-sm mt-1 transition-colors duration-200 focus:outline-none focus:underline"
           >
             {isExpanded ? "Read less" : "Read more >"}
           </button>
@@ -198,27 +198,27 @@ const LiveUpdateCard = ({
   return (
     <>
       <div className={cn("pb-6", className)}>
-        <div className='flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10'>
+        <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start lg:gap-8 xl:gap-10">
           {/* Content Section */}
-          <div className='flex flex-col w-full lg:w-2/5 xl:w-1/3'>
-            <div className='font-bold text-xl mb-1'>
+          <div className="flex flex-col w-full lg:w-2/5 xl:w-1/3">
+            <div className="font-bold text-xl mb-1">
               {currentUpdate.category}
             </div>
-            <div className='flex justify-start items-center gap-3 mt-2 text-custom-red'>
-              <TimeIndicator type='live' value={null} />
-              <span className='text-sm'>{currentUpdate.timeAgo}</span>
+            <div className="flex justify-start items-center gap-3 mt-2 text-custom-red">
+              <TimeIndicator type="live" value={null} />
+              <span className="text-sm">{currentUpdate.timeAgo}</span>
             </div>
-            <h2 className='text-2xl font-bold mb-3'>{currentUpdate.title}</h2>
+            <h2 className="text-2xl font-bold mb-3">{currentUpdate.title}</h2>
             <ReadMoreContent
               description={currentUpdate.description}
               isLoggedIn={isLoggedIn}
               onAuthRequired={handleAuthRequired}
             />
-            <div className='flex items-center mb-4'>
-              <button className='text-gray-700 font-medium mr-2'>
+            <div className="flex items-center mb-4">
+              <button className="text-gray-700 font-medium mr-2">
                 See more updates
               </button>
-              <span className='bg-gray-700 text-white text-xs px-2 py-1 rounded-full'>
+              <span className="bg-gray-700 text-white text-xs px-2 py-1 rounded-full">
                 {updates.length}
               </span>
             </div>
@@ -229,24 +229,25 @@ const LiveUpdateCard = ({
                 showCommentsCount={commentCount}
                 isLoved={isLoved}
                 loveCount={loveCount}
-                disabled={!isLoggedIn}
+                isLoggedIn={isLoggedIn}
+                onAuthRequired={handleAuthRequired}
               />
             </div>
           </div>
 
           {/* Image Section */}
-          <div className='relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end'>
-            <div className='relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center'>
+          <div className="relative w-full order-1 md:order-2 lg:w-2/3 flex flex-col items-end">
+            <div className="relative overflow-hidden w-full rounded-lg sm:rounded-none flex justify-end items-center">
               <img
                 src={currentUpdate.image}
                 alt={currentUpdate.title}
-                className='w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105'
-                loading='lazy'
+                className="w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem] object-cover transition-transform duration-300 hover:scale-105"
+                loading="lazy"
               />
             </div>
-            <div className='w-full py-2'>
-              <div className='flex justify-between items-center'>
-                <div className='flex-1 flex justify-center'>
+            <div className="w-full py-2">
+              <div className="flex justify-between items-center">
+                <div className="flex-1 flex justify-center">
                   {updates.length > 1 && (
                     <CarouselDots
                       currentIndex={currentIndex}
@@ -255,7 +256,7 @@ const LiveUpdateCard = ({
                     />
                   )}
                 </div>
-                <div className='flex items-center md:mt-6'>
+                <div className="flex items-center md:mt-6">
                   {updates.length > 1 && (
                     <NavigationArrows
                       currentIndex={currentIndex}
