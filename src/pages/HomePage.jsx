@@ -739,21 +739,26 @@ export default function HomePage() {
                   </div>
                 ) : searchResults.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {searchResults.map((article) => (
-                      <StandardArticleCard
+                    {searchResults.map((article, index) => (
+                      <div
                         key={article.id}
-                        article={article}
-                        reactions={newsReactions[article.id] || []}
-                        onPostReaction={(reactionData) =>
-                          handlePostReaction(article.id, reactionData)
-                        }
-                        onPostLove={(loveStatus) =>
-                          handlePostLove(article.id, loveStatus)
-                        }
-                        onPostComment={(commentText) =>
-                          handlePostComment(article.id, commentText)
-                        }
-                      />
+                        className="opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]"
+                        style={{ animationDelay: `${index * 0.2}s` }}
+                      >
+                        <StandardArticleCard
+                          article={article}
+                          reactions={newsReactions[article.id] || []}
+                          onPostReaction={(reactionData) =>
+                            handlePostReaction(article.id, reactionData)
+                          }
+                          onPostLove={(loveStatus) =>
+                            handlePostLove(article.id, loveStatus)
+                          }
+                          onPostComment={(commentText) =>
+                            handlePostComment(article.id, commentText)
+                          }
+                        />
+                      </div>
                     ))}
                   </div>
                 ) : (
@@ -798,7 +803,7 @@ export default function HomePage() {
                       {/* Main Content Area */}
                       <div className="w-full">
                         {section.featuredArticle && (
-                          <div className="mb-8">
+                          <div className="mb-8 opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]">
                             <CommonNewsCard
                               article={section.featuredArticle}
                               reactions={
@@ -833,7 +838,7 @@ export default function HomePage() {
                         )}
 
                         {section.audioNews && (
-                          <div className="mb-8">
+                          <div className="mb-8 opacity-0 animate-[fadeIn_1s_ease-in-out_forwards] animation-delay-200">
                             <AudioNewsCard {...section.audioNews} />
                           </div>
                         )}
@@ -849,36 +854,39 @@ export default function HomePage() {
 
                         {section.longReadArticle && (
                           <NewsSection>
-                            <CommonNewsCard
-                              article={section.longReadArticle}
-                              reactions={
-                                newsReactions[section.longReadArticle.id] || []
-                              }
-                              onPostReaction={(reactionData) =>
-                                handlePostReaction(
-                                  section.longReadArticle.id,
-                                  reactionData
-                                )
-                              }
-                              onPostLove={(loveStatus) =>
-                                handlePostLove(
-                                  section.longReadArticle.id,
-                                  loveStatus
-                                )
-                              }
-                              onPostComment={(commentText) =>
-                                handlePostComment(
-                                  section.longReadArticle.id,
-                                  commentText
-                                )
-                              }
-                            />
-                            <AdPlacement
-                              advertisements={advertisements}
-                              placement="content-middle"
-                              onAdView={handleAdView}
-                              className="mb-6"
-                            />
+                            <div className="opacity-0 animate-[fadeIn_1s_ease-in-out_forwards] animation-delay-400">
+                              <CommonNewsCard
+                                article={section.longReadArticle}
+                                reactions={
+                                  newsReactions[section.longReadArticle.id] ||
+                                  []
+                                }
+                                onPostReaction={(reactionData) =>
+                                  handlePostReaction(
+                                    section.longReadArticle.id,
+                                    reactionData
+                                  )
+                                }
+                                onPostLove={(loveStatus) =>
+                                  handlePostLove(
+                                    section.longReadArticle.id,
+                                    loveStatus
+                                  )
+                                }
+                                onPostComment={(commentText) =>
+                                  handlePostComment(
+                                    section.longReadArticle.id,
+                                    commentText
+                                  )
+                                }
+                              />
+                              <AdPlacement
+                                advertisements={advertisements}
+                                placement="content-middle"
+                                onAdView={handleAdView}
+                                className="mb-6"
+                              />
+                            </div>
                           </NewsSection>
                         )}
 
@@ -942,7 +950,7 @@ export default function HomePage() {
                           />
                         </div>
                         {section.audioNews && (
-                          <div className="mb-8">
+                          <div className="mb-8 opacity-0 animate-[fadeIn_1s_ease-in-out_forwards] animation-delay-600">
                             <AudioNewsCard {...section.audioNews} />
                           </div>
                         )}
@@ -961,8 +969,14 @@ export default function HomePage() {
                                 {section.sidebarArticles
                                   .filter(isValidArticle)
                                   .slice(0, 7)
-                                  .map((article) => (
-                                    <div key={article.id} className="w-full">
+                                  .map((article, idx) => (
+                                    <div
+                                      key={article.id}
+                                      className="w-full opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]"
+                                      style={{
+                                        animationDelay: `${idx * 0.2}s`,
+                                      }}
+                                    >
                                       <StandardArticleCard
                                         article={article}
                                         reactions={
@@ -1014,8 +1028,14 @@ export default function HomePage() {
                                 {section.sidebarArticles
                                   .filter(isValidArticle)
                                   .slice(4, 10)
-                                  .map((article) => (
-                                    <div key={article.id} className="w-full">
+                                  .map((article, idx) => (
+                                    <div
+                                      key={article.id}
+                                      className="w-full opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]"
+                                      style={{
+                                        animationDelay: `${(idx + 7) * 0.2}s`,
+                                      }}
+                                    >
                                       <StandardArticleCard
                                         article={article}
                                         reactions={
@@ -1066,8 +1086,14 @@ export default function HomePage() {
                                   {section.sidebarArticles
                                     .filter(isValidArticle)
                                     .slice(0, 7)
-                                    .map((article) => (
-                                      <div key={article.id} className="w-full">
+                                    .map((article, idx) => (
+                                      <div
+                                        key={article.id}
+                                        className="w-full opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]"
+                                        style={{
+                                          animationDelay: `${idx * 0.2}s`,
+                                        }}
+                                      >
                                         <StandardArticleCard
                                           article={article}
                                           reactions={
@@ -1122,8 +1148,14 @@ export default function HomePage() {
                                   {section.sidebarArticles
                                     .filter(isValidArticle)
                                     .slice(4, 10)
-                                    .map((article) => (
-                                      <div key={article.id} className="w-full">
+                                    .map((article, idx) => (
+                                      <div
+                                        key={article.id}
+                                        className="w-full opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]"
+                                        style={{
+                                          animationDelay: `${(idx + 7) * 0.2}s`,
+                                        }}
+                                      >
                                         <StandardArticleCard
                                           article={article}
                                           reactions={
