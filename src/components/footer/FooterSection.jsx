@@ -1,37 +1,28 @@
-import {
-  Instagram,
-  Linkedin,
-  MessageSquareIcon,
-  Twitter,
-  Youtube,
-} from "lucide-react";
-import { FaPinterestP } from "react-icons/fa";
+import { MessageSquareIcon } from "lucide-react";
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 
 export const FooterSection = () => {
   // Resources section links
   const resourceLinks = [
-    { title: "News" },
-    { title: "About Us" },
-    { title: "Home" },
-    { title: "Make Advertise" },
+    { title: "News", link: "/" },
+    { title: "About Us", link: "/about" },
+    { title: "Make Advertise", link: "/advertise" },
   ];
 
-  // JETSTRATIX section links
-  const jetstratixLinks = [
-    { title: "Terms and Conditions" },
-    { title: "Privacy Policy" },
+  const termsLinks = [
+    { title: "Terms and Conditions", link: "/terms" },
+    { title: "Privacy Policy", link: "/terms" },
   ];
 
   // Category section links
   const categoryLinks = [
-    "Breaking News",
-    "Politics",
-    "Business",
-    "Technology",
-    "Sports",
-    "Etc. all"
+    { title: "Breaking News", link: "/" },
+    { title: "Politics", link: "/" },
+    { title: "Business", link: "/" },
+    { title: "Technology", link: "/" },
+    { title: "Sports", link: "/" },
+    { title: "Etc. all", link: "/" },
   ];
 
   return (
@@ -86,7 +77,7 @@ export const FooterSection = () => {
                   {resourceLinks.map((link, index) => (
                     <a
                       key={index}
-                      href="#"
+                      href={link.link}
                       className="font-normal text-white text-sm lg:text-base tracking-[0] leading-normal font-sans hover:text-gray-300 transition-colors"
                     >
                       {link.title}
@@ -95,18 +86,18 @@ export const FooterSection = () => {
                 </div>
               </div>
 
-              {/* JETSTRATIX Column */}
+              {/* Terms Column */}
               <div className="flex flex-col w-full sm:w-auto items-start gap-3 sm:gap-4 min-w-0">
                 <h3 className="font-bold text-white text-lg sm:text-xl tracking-[0] leading-6 font-sans">
-                  JETSTRATIX
+                  ALAMOCITYPULSE
                 </h3>
 
                 <div className="flex flex-col gap-2 sm:gap-3">
-                  {jetstratixLinks.map((link, index) => (
+                  {termsLinks.map((link, index) => (
                     <a
                       key={index}
-                      href="#"
-                      className="font-normal text-white text-sm lg:text-base racking-[0] leading-[21px] font-sans hover:text-gray-300 transition-colors"
+                      href={link.link}
+                      className="font-normal text-white text-sm lg:text-base tracking-[0] leading-[21px] font-sans hover:text-gray-300 transition-colors"
                     >
                       {link.title}
                     </a>
@@ -124,55 +115,16 @@ export const FooterSection = () => {
                   {categoryLinks.map((category, index) => (
                     <React.Fragment key={index}>
                       <a
-                        href="#"
+                        href={category.link}
                         className="hover:text-gray-300 transition-colors"
                       >
-                        {category}
+                        {category.title}
                       </a>
                       {index < categoryLinks.length - 1 && <br />}
                     </React.Fragment>
                   ))}
                 </div>
               </div>
-            </div>
-
-            {/* Social Media Icons */}
-            <div className="hidden items-center justify-center sm:justify-start gap-3 sm:gap-4 lg:gap-5 flex-wrap w-full">
-              <button className="flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors">
-                <Linkedin
-                  size={14}
-                  className="sm:w-4 sm:h-4"
-                  color="#fdfdfd"
-                  strokeWidth={3}
-                />
-              </button>
-              <button className="flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors">
-                <Twitter
-                  size={14}
-                  className="sm:w-4 sm:h-4"
-                  color="#fdfdfd"
-                  strokeWidth={3}
-                />
-              </button>
-              <button className="flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors">
-                <Youtube
-                  size={14}
-                  className="sm:w-4 sm:h-4"
-                  color="#fdfdfd"
-                  strokeWidth={3}
-                />
-              </button>
-              <button className="flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors">
-                <Instagram
-                  size={14}
-                  className="sm:w-4 sm:h-4"
-                  color="#fdfdfd"
-                  strokeWidth={3}
-                />
-              </button>
-              <button className="flex items-center cursor-pointer text-white justify-center p-2 sm:p-2.5 bg-[#094A8B] rounded-full border-none hover:bg-[#0a5aa0] transition-colors">
-                <FaPinterestP size={14} className="sm:w-4 sm:h-4" />
-              </button>
             </div>
           </CardContent>
         </Card>

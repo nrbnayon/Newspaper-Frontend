@@ -14,6 +14,7 @@ import AdvertiseList from "../admin/Advertise/AdvertiseList";
 import AdvertiseInfo from "../admin/Advertise/AdvertiseInfo";
 import Pricing from "../Pricing/Pricing";
 import PaymentResult from "@/components/common/PaymentResult";
+import TermsAndConditions from "@/components/common/Terms";
 
 const HomePage = lazy(() => import("../HomePage"));
 const Profile = lazy(() => import("./../Profile/Profile"));
@@ -37,6 +38,7 @@ const AppRoutes = () => {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/payment/success" element={<PaymentResult />} />
             <Route path="/payment/cancel" element={<PaymentResult />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
           </Route>
         </Route>
 
