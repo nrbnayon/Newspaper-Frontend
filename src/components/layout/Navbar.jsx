@@ -248,7 +248,7 @@ export default function Navbar({
                 <div className="flex items-center space-x-3">
                   <Button
                     onClick={openSignIn}
-                    className="px-6 py-2 bg-white text-white dark:text-black border border-[#00254A] hover:bg-[#00254A] hover:text-white transition-all duration-200 rounded-full font-medium"
+                    className="px-6 py-2 bg-white text-black dark:text-black border border-[#00254A] hover:bg-[#00254A] hover:text-white transition-all duration-200 rounded-full font-medium"
                   >
                     Sign In
                   </Button>
@@ -318,7 +318,7 @@ export default function Navbar({
                 <div className="flex items-center space-x-2">
                   <Button
                     onClick={openSignIn}
-                    className="px-4 py-2 bg-white text-white dark:text-black border border-[#00254A] hover:bg-[#00254A] hover:text-white rounded-full text-sm"
+                    className="px-4 py-2 bg-white text-black dark:text-black border border-[#00254A] hover:bg-[#00254A] hover:text-white rounded-full text-sm"
                   >
                     Sign In
                   </Button>
@@ -366,7 +366,7 @@ export default function Navbar({
               ) : (
                 <Button
                   onClick={openSignIn}
-                  className="px-3 py-1.5 bg-gradient-to-r from-[#00254A] to-[#003d6b] text-white dark:text-black rounded-full text-xs font-medium"
+                  className="px-3 py-1.5 bg-gradient-to-r from-[#00254A] to-[#003d6b]  text-black dark:text-black rounded-full text-xs font-medium"
                 >
                   Sign In
                 </Button>

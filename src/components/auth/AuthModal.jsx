@@ -251,10 +251,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }) {
                     : "opacity-0 translate-y-4"
                 )}
               >
-                <h2 className="text-2xl font-bold">
-                  You have to Sign Up or Sign In
-                </h2>
-                <p className="mb-4 text-2xl font-bold">for view more News</p>
+                <h2 className="text-2xl font-bold">Welcome to AlamoCityPlus!</h2>
               </div>
 
               {/* Form Container */}

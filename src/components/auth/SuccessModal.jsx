@@ -54,10 +54,10 @@ export const SuccessModal = ({ onClose }) => {
         </div>
       </ModalContent>
       <AuthModal
-              isOpen={authModalOpen}
-              onClose={() => setAuthModalOpen(false)}
-              initialMode={authMode}
-            />
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authMode}
+      />
     </Modal>
   );
 };

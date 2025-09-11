@@ -173,7 +173,7 @@ const Pricing = () => {
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
         initialMode={authMode}
-        onAuthSuccess={handleAuthSuccess} // Add this prop if your AuthModal supports it
+        onAuthSuccess={handleAuthSuccess} 
       />
     </div>
   );

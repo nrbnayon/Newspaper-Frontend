@@ -13,6 +13,7 @@ import {
   hasUserLoved,
 } from "@/lib/news-service";
 import { Helmet } from "react-helmet-async";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 // Carousel Dots Component
 const CarouselDots = ({ currentIndex, setCurrentIndex, totalItems }) => {
@@ -143,9 +144,9 @@ const LiveUpdateCard = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isLoggedIn, user } = useAuth();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signin");
   const [showComments, setShowComments] = useState(false);
+    const { openModal } = useAuthModal();
+  
 
   const currentUpdate = updates[currentIndex];
   const currentReactions = newsReactions[currentUpdate.id] || [];
@@ -156,8 +157,7 @@ const LiveUpdateCard = ({
 
   const handleCommentClick = () => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     setShowComments(!showComments);
@@ -165,8 +165,7 @@ const LiveUpdateCard = ({
 
   const handleLoveClick = async (loveStatus) => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     try {
@@ -178,8 +177,7 @@ const LiveUpdateCard = ({
 
   const handleCommentSubmit = async (commentText) => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     try {
@@ -191,8 +189,7 @@ const LiveUpdateCard = ({
   };
 
   const handleAuthRequired = () => {
-    setAuthMode("signin");
-    setAuthModalOpen(true);
+    openModal("signin");
   };
 
   return (
@@ -278,11 +275,6 @@ const LiveUpdateCard = ({
           allComments={currentReactions}
         />
       )}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authMode}
-      />
     </>
   );
 };

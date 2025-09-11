@@ -1,13 +1,12 @@
-// src\components\news\CommonNewsCard.jsx
 import { useState } from "react";
 import InteractionButtons from "../common/InteractionButtons";
-import AuthModal from "../auth/AuthModal";
 import { cn, getTruncatedText } from "@/lib/utils";
 import ImageAttribution from "../common/ImageAttribution";
 import SentimentBadge from "../common/SentimentBadge";
 import TimeIndicator from "../common/TimeIndicator";
 import CommentsSection from "../common/CommentSection";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 import {
   transformReactionsToComments,
   countLoves,
@@ -29,8 +28,7 @@ const CommonNewsCard = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const isHorizontal = layout === "horizontal";
   const { isLoggedIn, user } = useAuth();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signin");
+  const { openModal } = useAuthModal();
   const [showComments, setShowComments] = useState(false);
 
   const comments = transformReactionsToComments(reactions);
@@ -83,8 +81,7 @@ const CommonNewsCard = ({
 
   const handleReadMore = () => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     setIsExpanded(!isExpanded);
@@ -92,8 +89,7 @@ const CommonNewsCard = ({
 
   const handleCommentClick = () => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     setShowComments(!showComments);
@@ -101,8 +97,7 @@ const CommonNewsCard = ({
 
   const handleLoveClick = async (loveStatus) => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
 
@@ -115,8 +110,7 @@ const CommonNewsCard = ({
 
   const handleCommentSubmit = async (commentText) => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
 
@@ -129,8 +123,7 @@ const CommonNewsCard = ({
   };
 
   const handleAuthRequired = () => {
-    setAuthMode("signin");
-    setAuthModalOpen(true);
+    openModal("signin");
   };
 
   const handleSourceClick = (e) => {
@@ -382,12 +375,6 @@ const CommonNewsCard = ({
             allComments={reactions}
           />
         )}
-
-        <AuthModal
-          isOpen={authModalOpen}
-          onClose={() => setAuthModalOpen(false)}
-          initialMode={authMode}
-        />
       </article>
     </>
   );

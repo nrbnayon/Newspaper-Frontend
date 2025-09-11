@@ -1,10 +1,9 @@
-// src\components\news\AudioNewsCard.jsx
 import SentimentBadge from "../common/SentimentBadge";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 import { BookOpenText } from "lucide-react";
 import { useState } from "react";
-import AuthModal from "../auth/AuthModal";
 import { Helmet } from "react-helmet-async";
 
 const AudioNewsCard = ({
@@ -21,10 +20,9 @@ const AudioNewsCard = ({
   readTime,
   className,
 }) => {
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn } = useAuth();
+  const { openModal } = useAuthModal();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signin");
 
   const getTruncatedText = (text) => {
     if (!text) return "";
@@ -37,20 +35,19 @@ const AudioNewsCard = ({
 
   const handleReadMore = () => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <>
+    <div>
       {isExpanded && (
         <Helmet>
           <title>{title || "ALAMOCITYPULSE - News Article"}</title>
           <meta
-            name='description'
+            name="description"
             content={
               description
                 ? getTruncatedText(description, 120)
@@ -58,19 +55,19 @@ const AudioNewsCard = ({
             }
           />
           <meta
-            property='og:title'
+            property="og:title"
             content={title || "ALAMOCITYPULSE - News Article"}
           />
           <meta
-            property='og:description'
+            property="og:description"
             content={
               description
                 ? getTruncatedText(description, 120)
                 : "Read the latest news and updates from ALAMOCITYPULSE"
             }
           />
-          <meta property='og:image' content={image || "/default-image.jpg"} />
-          <meta property='og:type' content='article' />
+          <meta property="og:image" content={image || "/default-image.jpg"} />
+          <meta property="og:type" content="article" />
         </Helmet>
       )}
       <div
@@ -80,57 +77,51 @@ const AudioNewsCard = ({
         )}
       >
         {/* Image */}
-        <div className='w-full md:w-[150px] h-48 md:h-28 relative overflow-hidden flex-shrink-0'>
-          <img src={image} alt={title} className='w-full h-full object-cover' />
+        <div className="w-full md:w-[150px] h-48 md:h-28 relative overflow-hidden flex-shrink-0">
+          <img src={image} alt={title} className="w-full h-full object-cover" />
         </div>
 
         {/* Content */}
-        <div className='mt-4 md:mt-0 md:ml-4 flex-1 flex flex-col justify-between'>
+        <div className="mt-4 md:mt-0 md:ml-4 flex-1 flex flex-col justify-between">
           {/* Category */}
-          <div className='flex items-center mb-1'>
-            <span className='text-xs font-bold text-gray-800 mr-2'>
+          <div className="flex items-center mb-1">
+            <span className="text-xs font-bold text-gray-800 mr-2">
               {category}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className='text-lg md:text-xl font-bold mb-2 line-clamp-2'>
+          <h3 className="text-lg md:text-xl font-bold mb-2 line-clamp-2">
             {title}
           </h3>
 
           {/* Description */}
-          <div className='mb-2'>
-            <div className='text-sm text-gray-700'>
+          <div className="mb-2">
+            <div className="text-sm text-gray-700">
               {isExpanded ? description : truncatedContent}
               {!isExpanded && shouldShowReadMore && "..."}
             </div>
             {shouldShowReadMore && (
               <button
                 onClick={handleReadMore}
-                className='mt-1 flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200'
+                className="mt-1 flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200"
               >
-                <BookOpenText size={16} className='mr-1' />
+                <BookOpenText size={16} className="mr-1" />
                 {isExpanded ? "Read less" : "Read more"}
               </button>
             )}
           </div>
 
           {/* Sentiment */}
-          <div className='mt-auto md:ml-auto'>
+          <div className="mt-auto md:ml-auto">
             <SentimentBadge
               sentiment={sentiment}
-              className='text-xs py-0.5 px-2'
+              className="text-xs py-0.5 px-2"
             />
           </div>
         </div>
       </div>
-
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authMode}
-      />
-    </>
+    </div>
   );
 };
 

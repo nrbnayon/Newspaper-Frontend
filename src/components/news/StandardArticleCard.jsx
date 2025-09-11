@@ -13,6 +13,7 @@ import {
   hasUserLoved,
 } from "@/lib/news-service";
 import { Helmet } from "react-helmet-async";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 const StandardArticleCard = ({
   article: {
@@ -32,9 +33,9 @@ const StandardArticleCard = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { isLoggedIn, user } = useAuth();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signin");
   const [showComments, setShowComments] = useState(false);
+
+  const { openModal } = useAuthModal();
 
   // Process reactions data
   const comments = transformReactionsToComments(reactions);
@@ -54,16 +55,14 @@ const StandardArticleCard = ({
 
   const handleReadMore = () => {
     if (!isLoggedIn) {
-      setAuthMode("signin");
-      setAuthModalOpen(true);
+      openModal("signin");
       return;
     }
     setIsExpanded(!isExpanded);
   };
 
   const handleAuthRequired = () => {
-    setAuthMode("signin");
-    setAuthModalOpen(true);
+    openModal("signin");
   };
 
   const handleCommentClick = () => {
@@ -199,11 +198,6 @@ const StandardArticleCard = ({
             />
           )}
         </div>
-        <AuthModal
-          isOpen={authModalOpen}
-          onClose={() => setAuthModalOpen(false)}
-          initialMode={authMode}
-        />
       </div>
     </>
   );
